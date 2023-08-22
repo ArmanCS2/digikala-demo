@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        dd(1);
+        return view('admin.market.category.index');
     }
 
     /**
