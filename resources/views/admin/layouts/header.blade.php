@@ -3,7 +3,7 @@
         <section class="d-flex justify-content-between flex-md-row-reverse px-2">
             <span id="sidebar-toggle-show" class="d-inline d-md-none pointer"><i class="fas fa-toggle-off"></i></span>
             <span id="sidebar-toggle-hide" class="d-none d-md-inline pointer"><i class="fas fa-toggle-on"></i></span>
-            <span><img class="logo" src="assets/images/logo.png" alt=""></span>
+            <span><img class="logo" src="{{asset('admin-assets/images/logo.png')}}" alt=""></span>
             <span class="d-md-none" id="menu-toggle"><i class="fas fa-ellipsis-h"></i></span>
         </section>
     </section>
