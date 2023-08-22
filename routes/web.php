@@ -25,4 +25,14 @@ Route::get('/', function () {
 
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function (){
     Route::get('/','AdminDashboardController@index')->name('admin.home');
+    Route::prefix('market')->namespace('Market')->group(function (){
+        Route::prefix('category')->group(function (){
+        Route::get('/','CategoryController@index')->name('admin.market.index');
+        Route::get('/create','CategoryController@create')->name('admin.market.create');
+        Route::post('/store','CategoryController@store')->name('admin.market.store');
+        Route::get('/edit/{id}','CategoryController@edit')->name('admin.market.edit');
+        Route::get('/update/{id}','CategoryController@update')->name('admin.market.update');
+        Route::get('/delete/{id}','CategoryController@destroy')->name('admin.market.destroy');
+        });
+    });
 });
