@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function (){
+    Route::get('/','AdminDashboardController@index')->name('admin.home');
+});
