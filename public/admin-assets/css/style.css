@@ -39,6 +39,18 @@
     font-size: 12px;
 }
 
+.max-width-16-rem{
+    max-width: 16rem;
+}
+
 .width-16-rem{
     width: 16rem;
+}
+
+.main-body table{
+    font-size: .75rem;
+}
+
+.main-body{
+    font-size: 0.8rem;
 }
