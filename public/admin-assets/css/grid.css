@@ -72,8 +72,8 @@
 
 .header-comment {
     position: absolute;
-    left: 0;
     height: calc(100vh - 3.5rem);
+    left: 0;
     width: 18rem;
     background-color: #FFFFFF;
     color: black;
