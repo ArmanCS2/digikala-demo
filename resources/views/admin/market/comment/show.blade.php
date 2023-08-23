@@ -11,7 +11,7 @@
             <li class="breadcrumb-item font-size-12"> <a href="#"> خانه</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#"> بخش فروش</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#"> نظرات</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> نمایش نظر ها</li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page"> نمایش نظر</li>
         </ol>
     </nav>
 
