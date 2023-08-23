@@ -92,5 +92,19 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
                 Route::delete('/destroy/{id}','DiscountController@amazingSaleDestroy')->name('admin.market.discount.amazing-sale.destroy');
             });
         });
+
+
+        Route::prefix('order')->group(function (){
+            Route::get('/','OrderController@all')->name('admin.market.order.all');
+            Route::get('/new-order','OrderController@newOrder')->name('admin.market.order.new-order');
+            Route::get('/sending','OrderController@sending')->name('admin.market.order.sending');
+            Route::get('/unpaid','OrderController@unpaid')->name('admin.market.order.unpaid');
+            Route::get('/canceled','OrderController@canceled')->name('admin.market.order.canceled');
+            Route::get('/returned','OrderController@returned')->name('admin.market.order.returned');
+            Route::get('/show','OrderController@show')->name('admin.market.order.show');
+            Route::get('/change-send-status','OrderController@changeSendStatus')->name('admin.market.order.change-send-status');
+            Route::get('/change-order-status','OrderController@changeOrderStatus')->name('admin.market.order.change-order-status');
+            Route::get('/cancel-order','OrderController@cancel-order')->name('admin.market.order.cancel-order');
+        });
     });
 });
