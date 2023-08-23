@@ -341,3 +341,7 @@ button:hover {
 .body-content p {
     font-size: .8rem;
 }
+
+.max-height-2rem{
+    max-height: 2rem;
+}

@@ -24,8 +24,11 @@ Route::get('/', function () {
 */
 
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function (){
+
     Route::get('/','AdminDashboardController@index')->name('admin.home');
+
     Route::prefix('market')->namespace('Market')->group(function (){
+
         Route::prefix('category')->group(function (){
         Route::get('/','CategoryController@index')->name('admin.market.category.index');
         Route::get('/create','CategoryController@create')->name('admin.market.category.create');
@@ -33,6 +36,15 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::get('/edit/{id}','CategoryController@edit')->name('admin.market.category.edit');
         Route::get('/update/{id}','CategoryController@update')->name('admin.market.category.update');
         Route::get('/delete/{id}','CategoryController@destroy')->name('admin.market.category.destroy');
+        });
+
+        Route::prefix('brand')->group(function (){
+            Route::get('/','BrandController@index')->name('admin.market.brand.index');
+            Route::get('/create','BrandController@create')->name('admin.market.brand.create');
+            Route::post('/store','BrandController@store')->name('admin.market.brand.store');
+            Route::get('/edit/{id}','BrandController@edit')->name('admin.market.brand.edit');
+            Route::get('/update/{id}','BrandController@update')->name('admin.market.brand.update');
+            Route::get('/delete/{id}','BrandController@destroy')->name('admin.market.brand.destroy');
         });
     });
 });
