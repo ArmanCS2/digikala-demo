@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>دسته بندی</title>
+    <title>برند ها</title>
 @endsection
 
 @section('content')
