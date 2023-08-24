@@ -14,7 +14,7 @@ class OrderController extends Controller
      */
     public function all()
     {
-        return view('admin.market.order.all');
+        return view('admin.market.order.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class OrderController extends Controller
      */
     public function newOrder()
     {
-        return view('admin.market.order.new-orders');
+        return view('admin.market.order.index');
     }
 
     /**
@@ -35,7 +35,7 @@ class OrderController extends Controller
      */
     public function sending()
     {
-        return view('admin.market.order.sending');
+        return view('admin.market.order.index');
     }
 
     /**
@@ -46,7 +46,7 @@ class OrderController extends Controller
      */
     public function canceled()
     {
-        return view('admin.market.order.canceled');
+        return view('admin.market.order.index');
     }
 
     /**
@@ -57,7 +57,7 @@ class OrderController extends Controller
      */
     public function unpaid()
     {
-        return view('admin.market.order.unpaid');
+        return view('admin.market.order.index');
     }
 
     /**
@@ -68,7 +68,7 @@ class OrderController extends Controller
      */
     public function returned()
     {
-        return view('admin.market.order.returned');
+        return view('admin.market.order.index');
     }
 
     /**
@@ -80,7 +80,7 @@ class OrderController extends Controller
      */
     public function show()
     {
-        return view('admin.market.order.show');
+        return view('admin.market.order.index');
     }
 
     /**
@@ -91,16 +91,16 @@ class OrderController extends Controller
      */
     public function changeSendStatus()
     {
-        return view('admin.market.order.change-send-status');
+        return view('admin.market.order.index');
     }
 
     public function changeOrderStatus()
     {
-        return view('admin.market.order.change-order-status');
+        return view('admin.market.order.index');
     }
 
     public function cancelOrder()
     {
-        return view('admin.market.order.cancel-order');
+        return view('admin.market.order.index');
     }
 }
