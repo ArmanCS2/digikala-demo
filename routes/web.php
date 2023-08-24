@@ -101,10 +101,22 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/unpaid','OrderController@unpaid')->name('admin.market.order.unpaid');
             Route::get('/canceled','OrderController@canceled')->name('admin.market.order.canceled');
             Route::get('/returned','OrderController@returned')->name('admin.market.order.returned');
-            Route::get('/show','OrderController@show')->name('admin.market.order.show');
-            Route::get('/change-send-status','OrderController@changeSendStatus')->name('admin.market.order.change-send-status');
-            Route::get('/change-order-status','OrderController@changeOrderStatus')->name('admin.market.order.change-order-status');
-            Route::get('/cancel-order','OrderController@cancel-order')->name('admin.market.order.cancel-order');
+            Route::get('/show/{id}','OrderController@show')->name('admin.market.order.show');
+            Route::get('/change-send-status/{id}','OrderController@changeSendStatus')->name('admin.market.order.change-send-status');
+            Route::get('/change-order-status/{id}','OrderController@changeOrderStatus')->name('admin.market.order.change-order-status');
+            Route::get('/cancel-order/{id}','OrderController@cancel-order')->name('admin.market.order.cancel-order');
+        });
+
+
+        Route::prefix('payment')->group(function (){
+            Route::get('/','PaymentController@all')->name('admin.market.payment.all');
+            Route::get('/online','PaymentController@online')->name('admin.market.payment.online');
+            Route::get('/offline','PaymentController@offline')->name('admin.market.payment.offline');
+            Route::get('/attendance','PaymentController@attendance')->name('admin.market.payment.attendance');
+            Route::get('/confirm','PaymentController@confirm')->name('admin.market.payment.confirm');
+            Route::get('/show','PaymentController@show')->name('admin.market.payment.show');
+            Route::get('/cancel','PaymentController@cancel')->name('admin.market.payment.cancel');
+            Route::get('/payback','PaymentController@payback')->name('admin.market.payment.payback');
         });
     });
 });
