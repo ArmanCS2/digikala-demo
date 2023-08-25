@@ -74,6 +74,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
                 Route::put('/update/{id}','DiscountController@copanUpdate')->name('admin.market.discount.copan.update');
                 Route::delete('/destroy/{id}','DiscountController@copanDestroy')->name('admin.market.discount.copan.destroy');
             });
+
             Route::prefix('common-discount')->group(function (){
                 Route::get('/','DiscountController@commonDiscountIndex')->name('admin.market.discount.common-discount.index');
                 Route::get('/create','DiscountController@commonDiscountCreate')->name('admin.market.discount.common-discount.create');
@@ -130,6 +131,24 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/gallery','ProductGalleryController@index')->name('admin.market.product.gallery.index');
             Route::post('/gallery/store','ProductGalleryController@store')->name('admin.market.product.gallery.store');
             Route::delete('/gallery/destroy/{id}','ProductGalleryController@destroy')->name('admin.market.product.gallery.destroy');
+        });
+
+        Route::prefix('property')->group(function (){
+            Route::get('/','PropertyController@index')->name('admin.market.property.index');
+            Route::get('/create','PropertyController@create')->name('admin.market.property.create');
+            Route::post('/store','PropertyController@store')->name('admin.market.property.store');
+            Route::get('/edit/{id}','PropertyController@edit')->name('admin.market.property.edit');
+            Route::put('/update/{id}','PropertyController@update')->name('admin.market.property.update');
+            Route::delete('/destroy/{id}','PropertyController@destroy')->name('admin.market.property.destroy');
+        });
+
+        Route::prefix('storage')->group(function (){
+            Route::get('/','PropertyController@index')->name('admin.market.storage.index');
+            Route::get('/add-product','PropertyController@addProduct')->name('admin.market.storage.add-product');
+            Route::post('/store','PropertyController@store')->name('admin.market.storage.store');
+            Route::get('/edit/{id}','PropertyController@edit')->name('admin.market.storage.edit');
+            Route::put('/update/{id}','PropertyController@update')->name('admin.market.storage.update');
+            Route::delete('/destroy/{id}','PropertyController@destroy')->name('admin.market.storage.destroy');
         });
     });
 });
