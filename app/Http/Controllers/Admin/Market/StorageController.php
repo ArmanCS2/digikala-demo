@@ -14,7 +14,7 @@ class StorageController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.market.storage.index');
     }
 
     /**
@@ -22,9 +22,9 @@ class StorageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function addProduct()
     {
-        //
+        return view('admin.market.storage.add-product');
     }
 
     /**
@@ -35,7 +35,7 @@ class StorageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('admin.market.storage.store');
     }
 
     /**
@@ -57,7 +57,7 @@ class StorageController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.market.storage.edit');
     }
 
     /**

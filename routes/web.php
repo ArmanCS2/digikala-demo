@@ -143,12 +143,12 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         });
 
         Route::prefix('storage')->group(function (){
-            Route::get('/','PropertyController@index')->name('admin.market.storage.index');
-            Route::get('/add-product','PropertyController@addProduct')->name('admin.market.storage.add-product');
-            Route::post('/store','PropertyController@store')->name('admin.market.storage.store');
-            Route::get('/edit/{id}','PropertyController@edit')->name('admin.market.storage.edit');
-            Route::put('/update/{id}','PropertyController@update')->name('admin.market.storage.update');
-            Route::delete('/destroy/{id}','PropertyController@destroy')->name('admin.market.storage.destroy');
+            Route::get('/','StorageController@index')->name('admin.market.storage.index');
+            Route::get('/add-product','StorageController@addProduct')->name('admin.market.storage.add-product');
+            Route::post('/store','StorageController@store')->name('admin.market.storage.store');
+            Route::get('/edit/{id}','StorageController@edit')->name('admin.market.storage.edit');
+            Route::put('/update/{id}','StorageController@update')->name('admin.market.storage.update');
+            Route::delete('/destroy/{id}','StorageController@destroy')->name('admin.market.storage.destroy');
         });
     });
 });
