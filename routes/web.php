@@ -118,5 +118,18 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/cancel','PaymentController@cancel')->name('admin.market.payment.cancel');
             Route::get('/payback','PaymentController@payback')->name('admin.market.payment.payback');
         });
+
+        Route::prefix('product')->group(function (){
+            Route::get('/','ProductController@index')->name('admin.market.product.index');
+            Route::get('/create','ProductController@create')->name('admin.market.product.create');
+            Route::post('/store','ProductController@store')->name('admin.market.product.store');
+            Route::get('/edit/{id}','ProductController@edit')->name('admin.market.product.edit');
+            Route::put('/update/{id}','ProductController@update')->name('admin.market.product.update');
+            Route::delete('/destroy/{id}','ProductController@destroy')->name('admin.market.product.destroy');
+
+            Route::get('/gallery','ProductGalleryController@index')->name('admin.market.product.gallery.index');
+            Route::post('/gallery/store','ProductGalleryController@store')->name('admin.market.product.gallery.store');
+            Route::delete('/gallery/destroy/{id}','ProductGalleryController@destroy')->name('admin.market.product.gallery.destroy');
+        });
     });
 });
