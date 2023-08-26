@@ -182,5 +182,15 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::put('/update/{id}', 'FAQController@update')->name('admin.content.faq.update');
             Route::delete('/destroy/{id}', 'FAQController@destroy')->name('admin.content.faq.destroy');
         });
+
+
+        Route::prefix('menu')->group(function () {
+            Route::get('/', 'MenuController@index')->name('admin.content.menu.index');
+            Route::get('/create', 'MenuController@create')->name('admin.content.menu.create');
+            Route::post('/store', 'MenuController@store')->name('admin.content.menu.store');
+            Route::get('/edit/{id}', 'MenuController@edit')->name('admin.content.menu.edit');
+            Route::put('/update/{id}', 'MenuController@update')->name('admin.content.menu.update');
+            Route::delete('/destroy/{id}', 'MenuController@destroy')->name('admin.content.menu.destroy');
+        });
     });
 });
