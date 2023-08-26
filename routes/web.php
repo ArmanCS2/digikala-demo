@@ -172,5 +172,15 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::put('/update/{id}', 'CommentController@update')->name('admin.content.comment.update');
             Route::delete('/destroy/{id}', 'CommentController@destroy')->name('admin.content.comment.destroy');
         });
+
+
+        Route::prefix('faq')->group(function () {
+            Route::get('/', 'FAQController@index')->name('admin.content.faq.index');
+            Route::get('/create', 'FAQController@create')->name('admin.content.faq.create');
+            Route::post('/store', 'FAQController@store')->name('admin.content.faq.store');
+            Route::get('/edit/{id}', 'FAQController@edit')->name('admin.content.faq.edit');
+            Route::put('/update/{id}', 'FAQController@update')->name('admin.content.faq.update');
+            Route::delete('/destroy/{id}', 'FAQController@destroy')->name('admin.content.faq.destroy');
+        });
     });
 });
