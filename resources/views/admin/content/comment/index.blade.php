@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
+            <li class="breadcrumb-item font-size-12"> <a href="#">بخش محتوا</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page"> نظرات</li>
         </ol>
     </nav>
@@ -52,7 +52,7 @@
                             <td></td>
                             <td></td>
                             <td class="width-22-rem text-left">
-                                <a href="{{route('admin.market.comment.show')}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
+                                <a href="{{route('admin.content.comment.show')}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
                                 <a href="#" class="btn btn-success btn-sm"><i class="fa fa-check"></i> تایید</a>
                                 <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-clock"></i> عدم تایید</a>
                                 <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
