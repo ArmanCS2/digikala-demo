@@ -233,5 +233,21 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::put('/update/{id}', 'CustomerController@update')->name('admin.user.customer.update');
             Route::delete('/destroy/{id}', 'CustomerController@destroy')->name('admin.user.customer.destroy');
         });
+        Route::prefix('role')->group(function () {
+            Route::get('/', 'RoleController@index')->name('admin.user.role.index');
+            Route::get('/create', 'RoleController@create')->name('admin.user.role.create');
+            Route::post('/store', 'RoleController@store')->name('admin.user.role.store');
+            Route::get('/edit/{id}', 'RoleController@edit')->name('admin.user.role.edit');
+            Route::put('/update/{id}', 'RoleController@update')->name('admin.user.role.update');
+            Route::delete('/destroy/{id}', 'RoleController@destroy')->name('admin.user.role.destroy');
+        });
+        Route::prefix('permission')->group(function () {
+            Route::get('/', 'PermissionController@index')->name('admin.user.permission.index');
+            Route::get('/create', 'PermissionController@create')->name('admin.user.permission.create');
+            Route::post('/store', 'PermissionController@store')->name('admin.user.permission.store');
+            Route::get('/edit/{id}', 'PermissionController@edit')->name('admin.user.permission.edit');
+            Route::put('/update/{id}', 'PermissionController@update')->name('admin.user.permission.update');
+            Route::delete('/destroy/{id}', 'PermissionController@destroy')->name('admin.user.permission.destroy');
+        });
     });
 });
