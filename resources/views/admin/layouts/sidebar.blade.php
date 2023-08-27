@@ -120,15 +120,15 @@
 
 
             <section class="sidebar-part-title">تیکت ها</section>
-            <a href="#" class="sidebar-link">
+            <a href="{{route('admin.ticket.new-ticket')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>تیکت های جدید</span>
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="{{route('admin.ticket.open-ticket')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>تیکت های باز</span>
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="{{route('admin.ticket.close-ticket')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>تیکت های بسته</span>
             </a>
