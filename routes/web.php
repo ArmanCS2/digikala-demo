@@ -283,4 +283,23 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::put('/update/{id}', 'TicketController@update')->name('admin.ticket.update');
         Route::delete('/destroy/{id}', 'TicketController@destroy')->name('admin.ticket.destroy');
     });
+
+    Route::prefix('setting')->namespace('Setting')->group(function () {
+        Route::get('/', 'SettingController@index')->name('admin.setting.index');
+        Route::get('/create', 'SettingController@create')->name('admin.setting.create');
+        Route::post('/store', 'SettingController@store')->name('admin.setting.store');
+        Route::get('/edit/{id}', 'SettingController@edit')->name('admin.setting.edit');
+        Route::put('/update/{id}', 'SettingController@update')->name('admin.setting.update');
+        Route::delete('/destroy/{id}', 'SettingController@destroy')->name('admin.setting.destroy');
+    });
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
