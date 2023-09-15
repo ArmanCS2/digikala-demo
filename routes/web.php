@@ -162,6 +162,8 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'CategoryController@edit')->name('admin.content.category.edit');
             Route::put('/update/{id}', 'CategoryController@update')->name('admin.content.category.update');
             Route::delete('/destroy/{id}', 'CategoryController@destroy')->name('admin.content.category.destroy');
+            Route::get('/change-status/{id}', 'CategoryController@changeStatus')->name('admin.content.category.change-status');
+            Route::get('/ajax/change-status/{id}', 'CategoryController@ajaxChangeStatus')->name('admin.content.category.ajax.change-status');
         });
 
         Route::prefix('comment')->group(function () {
