@@ -30,33 +30,68 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{route('admin.content.menu.store')}}" method="post" id="form">
+                        @csrf
                         <section class="row">
 
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">عنوان منو</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <label for="">نام منو</label>
+                                    <input type="text" class="form-control form-control-sm" name="name"
+                                           value="{{old('name')}}">
                                 </div>
+                                @error('name')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
 
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">منو والد</label>
-                                    <select name="" id="" class="form-control form-control-sm">
-                                        <option value="">منو را انتخاب کنید</option>
-                                        <option value="">وسایل الکترونیکی</option>
+                                    <select name="parent_id" id="" class="form-control form-control-sm">
+                                        <option value="">دسته را انتخاب کنید</option>
+                                        @foreach($menus as $menu)
+                                            <option value="{{$menu->id}}"
+                                                    @if(old('parent_id')==$menu->id) selected @endif>{{$menu->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+                                @error('parent_id')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
 
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">آدرس url</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input type="text" class="form-control form-control-sm" name="url"
+                                           value="{{old('url')}}">
                                 </div>
+                                @error('url')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
 
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">وضعیت</label>
+                                    <select name="status" id="" class="form-control form-control-sm">
+                                        <option value="0" @if(old('status')==0) selected @endif>غیر فعال</option>
+                                        <option value="1" @if(old('status')==1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
 
 
                             <section class="col-12">

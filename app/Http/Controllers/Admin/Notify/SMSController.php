@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Notify\SMSRequest;
+use App\Models\Notify\SMS;
 use Illuminate\Http\Request;
 
 class SMSController extends Controller
@@ -14,7 +16,8 @@ class SMSController extends Controller
      */
     public function index()
     {
-        return view('admin.notify.sms.index');
+        $smses=SMS::all();
+        return view('admin.notify.sms.index',compact('smses'));
     }
 
     /**
@@ -33,9 +36,12 @@ class SMSController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SMSRequest $request)
     {
-        //
+        $inputs=$request->all();
+        $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
+        SMS::create($inputs);
+        return redirect()->route('admin.notify.sms.index')->with('swal-success', 'پیامک جدید با موفقیت ساخته شد');
     }
 
     /**
@@ -57,7 +63,8 @@ class SMSController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.notify.sms.edit');
+        $sms=SMS::find($id);
+        return view('admin.notify.sms.edit',compact('sms'));
     }
 
     /**
@@ -67,9 +74,13 @@ class SMSController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SMSRequest $request, $id)
     {
-        //
+        $sms=SMS::find($id);
+        $inputs=$request->all();
+        $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
+        $sms->update($inputs);
+        return redirect()->route('admin.notify.sms.index')->with('swal-success', 'پیامک با موفقیت ویرایش شد');
     }
 
     /**
@@ -80,6 +91,22 @@ class SMSController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sms=SMS::find($id);
+        $sms->delete();
+        return redirect()->route('admin.notify.sms.index')->with('swal-success', 'پیامک با موفقیت حذف شد');
+    }
+
+    public function ajaxChangeStatus($id)
+    {
+        $sms =SMS::find($id);
+        $sms->status == 1 ? $sms->status = 0 : $sms->status = 1;
+        $result = $sms->save();
+        if ($result) {
+            if ($sms->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            }
+            return response()->json(['status' => true, 'checked' => true]);
+        }
+        return response()->json(['status' => true]);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Content;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Content\FAQRequest;
+use App\Models\Content\FAQ;
 use Illuminate\Http\Request;
 
 class FAQController extends Controller
@@ -14,7 +16,8 @@ class FAQController extends Controller
      */
     public function index()
     {
-        return view('admin.content.faq.index');
+        $faqs=FAQ::all();
+        return view('admin.content.faq.index',compact('faqs'));
 
     }
 
@@ -34,9 +37,12 @@ class FAQController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FAQRequest $request)
     {
-        //
+        $inputs=$request->all();
+        FAQ::create($inputs);
+        return redirect()->route('admin.content.faq.index')->with('swal-success', 'سوال جدید با موفقیت ساخته شد');
+
     }
 
     /**
@@ -58,7 +64,8 @@ class FAQController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.content.faq.edit');
+        $faq=FAQ::find($id);
+        return view('admin.content.faq.edit',compact('faq'));
     }
 
     /**
@@ -70,7 +77,10 @@ class FAQController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $faq=FAQ::find($id);
+        $inputs=$request->all();
+        $faq->update($inputs);
+        return redirect()->route('admin.content.faq.index')->with('swal-success', 'سوال با موفقیت ویرایش شد');
     }
 
     /**
@@ -81,6 +91,23 @@ class FAQController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $faq=FAQ::find($id);
+        $faq->delete();
+        return redirect()->route('admin.content.faq.index')->with('swal-success', 'سوال با موفقیت حذف شد');
+
+    }
+
+    public function ajaxChangeStatus($id)
+    {
+        $faq = FAQ::find($id);
+        $faq->status == 1 ? $faq->status = 0 : $faq->status = 1;
+        $result = $faq->save();
+        if ($result) {
+            if ($faq->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            }
+            return response()->json(['status' => true, 'checked' => true]);
+        }
+        return response()->json(['status' => true]);
     }
 }

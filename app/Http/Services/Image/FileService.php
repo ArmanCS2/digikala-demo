@@ -6,7 +6,7 @@ namespace App\Http\Services\Image;
 use Illuminate\Support\Facades\Config;
 use Intervention\Image\Facades\Image;
 
-class ImageService extends ImageToolsService
+class FileService extends FileToolsService
 {
 
 
@@ -80,7 +80,7 @@ class ImageService extends ImageToolsService
     public function deleteIndex($image)
     {
         $directory = public_path($image['directory']);
-        $this->deleteDiretoryAndFiles($directory);
+        $this->deleteDirectoryAndFiles($directory);
     }
 
     public function deleteDirectoryAndFiles($directory)

@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
@@ -13,8 +16,10 @@
         "intervention/imagecache": "^2.6",
         "laravel/framework": "^8.54",
         "laravel/jetstream": "^2.9",
+        "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
+        "morilog/jalali": "^3.4",
         "nwidart/laravel-modules": "8.0"
     },
     "require-dev": {
@@ -26,6 +31,9 @@
         "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
+        "files": [
+            "app/Helpers/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Modules\\": "Modules/",

@@ -51,11 +51,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($postCategories as $postCategory)
+                        @foreach($postCategories as $key => $postCategory)
                             <tr>
-                                <th>{{$postCategory->id}}</th>
+                                <th>{{{$key+1}}}</th>
                                 <td>{{$postCategory->name}}</td>
-                                <th>{{$postCategory->parent_id}}</th>
+                                <th>{{$postCategory->parent->name ?? 'اصلی'}}</th>
                                 <td>{{$postCategory->description}}</td>
                                 <td><img src="{{asset($postCategory->image['indexArray'][$postCategory->image['currentImage']])}}" width="50px" height="50px"></td>
                                 <td>{{$postCategory->slug}}</td>

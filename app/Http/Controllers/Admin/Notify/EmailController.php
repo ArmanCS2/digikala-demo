@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Notify\EmailRequest;
+use App\Models\Notify\Email;
 use Illuminate\Http\Request;
 
 class EmailController extends Controller
@@ -14,7 +16,8 @@ class EmailController extends Controller
      */
     public function index()
     {
-        return view('admin.notify.email.index');
+        $emails=Email::all();
+        return view('admin.notify.email.index',compact('emails'));
     }
 
     /**
@@ -33,9 +36,12 @@ class EmailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmailRequest $request)
     {
-        //
+        $inputs=$request->all();
+        $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
+        Email::create($inputs);
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل جدید با موفقیت ساخته شد');
     }
 
     /**
@@ -57,7 +63,8 @@ class EmailController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.notify.email.edit');
+        $email=Email::find($id);
+        return view('admin.notify.email.edit',compact('email'));
     }
 
     /**
@@ -67,9 +74,13 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmailRequest $request, $id)
     {
-        //
+        $email=Email::find($id);
+        $inputs=$request->all();
+        $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
+        $email->update($inputs);
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل با موفقیت ویرایش شد');
     }
 
     /**
@@ -80,6 +91,22 @@ class EmailController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $email=Email::find($id);
+        $email->delete();
+        return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل با موفقیت حذف شد');
+    }
+
+    public function ajaxChangeStatus($id)
+    {
+        $email =Email::find($id);
+        $email->status == 1 ? $email->status = 0 : $email->status = 1;
+        $result = $email->save();
+        if ($result) {
+            if ($email->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            }
+            return response()->json(['status' => true, 'checked' => true]);
+        }
+        return response()->json(['status' => true]);
     }
 }

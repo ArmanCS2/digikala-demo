@@ -21,4 +21,8 @@ class PostCategory extends Model
 
     protected $fillable =['name','tags','description','image','slug','status','parent_id'];
     protected $casts=['image'=>'array'];
+
+    public function parent(){
+        return $this->belongsTo(PostCategory::class,'parent_id');
+    }
 }

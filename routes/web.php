@@ -168,11 +168,11 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
         Route::prefix('comment')->group(function () {
             Route::get('/', 'CommentController@index')->name('admin.content.comment.index');
-            Route::get('/show', 'CommentController@show')->name('admin.content.comment.show');
-            Route::post('/store', 'CommentController@store')->name('admin.content.comment.store');
-            Route::get('/edit/{id}', 'CommentController@edit')->name('admin.content.comment.edit');
-            Route::put('/update/{id}', 'CommentController@update')->name('admin.content.comment.update');
+            Route::get('/show/{id}', 'CommentController@show')->name('admin.content.comment.show');
             Route::delete('/destroy/{id}', 'CommentController@destroy')->name('admin.content.comment.destroy');
+            Route::get('/approved/{id}', 'CommentController@approved')->name('admin.content.comment.approved');
+            Route::get('/ajax/change-status/{id}', 'CommentController@ajaxChangeStatus')->name('admin.content.comment.ajax.change-status');
+            Route::post('answer/{id}', 'CommentController@answer')->name('admin.content.comment.answer');
         });
 
 
@@ -183,6 +183,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'FAQController@edit')->name('admin.content.faq.edit');
             Route::put('/update/{id}', 'FAQController@update')->name('admin.content.faq.update');
             Route::delete('/destroy/{id}', 'FAQController@destroy')->name('admin.content.faq.destroy');
+            Route::get('/ajax/change-status/{id}', 'FAQController@ajaxChangeStatus')->name('admin.content.faq.ajax.change-status');
         });
 
 
@@ -193,6 +194,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'MenuController@edit')->name('admin.content.menu.edit');
             Route::put('/update/{id}', 'MenuController@update')->name('admin.content.menu.update');
             Route::delete('/destroy/{id}', 'MenuController@destroy')->name('admin.content.menu.destroy');
+            Route::get('/ajax/change-status/{id}', 'MenuController@ajaxChangeStatus')->name('admin.content.menu.ajax.change-status');
         });
 
 
@@ -203,6 +205,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'PageController@edit')->name('admin.content.page.edit');
             Route::put('/update/{id}', 'PageController@update')->name('admin.content.page.update');
             Route::delete('/destroy/{id}', 'PageController@destroy')->name('admin.content.page.destroy');
+            Route::get('/ajax/change-status/{id}', 'PageController@ajaxChangeStatus')->name('admin.content.page.ajax.change-status');
         });
 
 
@@ -213,6 +216,8 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'PostController@edit')->name('admin.content.post.edit');
             Route::put('/update/{id}', 'PostController@update')->name('admin.content.post.update');
             Route::delete('/destroy/{id}', 'PostController@destroy')->name('admin.content.post.destroy');
+            Route::get('/ajax/change-status/{id}', 'PostController@ajaxChangeStatus')->name('admin.content.post.ajax.change-status');
+            Route::get('/ajax/change-commentable/{id}', 'PostController@ajaxChangeCommentable')->name('admin.content.post.ajax.change-commentable');
         });
     });
 
@@ -254,6 +259,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     });
 
     Route::prefix('notify')->namespace('Notify')->group(function () {
+
         Route::prefix('email')->group(function () {
             Route::get('/', 'EmailController@index')->name('admin.notify.email.index');
             Route::get('/create', 'EmailController@create')->name('admin.notify.email.create');
@@ -261,7 +267,20 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'EmailController@edit')->name('admin.notify.email.edit');
             Route::put('/update/{id}', 'EmailController@update')->name('admin.notify.email.update');
             Route::delete('/destroy/{id}', 'EmailController@destroy')->name('admin.notify.email.destroy');
+            Route::get('/ajax/change-status/{id}', 'EmailController@ajaxChangeStatus')->name('admin.notify.email.ajax.change-status');
         });
+
+        Route::prefix('email-file')->group(function () {
+            Route::get('/{email}', 'EmailFileController@index')->name('admin.notify.email-file.index');
+            Route::get('/{email}/create', 'EmailFileController@create')->name('admin.notify.email-file.create');
+            Route::post('/{email}/store', 'EmailFileController@store')->name('admin.notify.email-file.store');
+            Route::get('/edit/{file}', 'EmailFileController@edit')->name('admin.notify.email-file.edit');
+            Route::put('/update/{file}', 'EmailFileController@update')->name('admin.notify.email-file.update');
+            Route::delete('/destroy/{file}', 'EmailFileController@destroy')->name('admin.notify.email-file.destroy');
+            Route::get('/ajax/change-status/{file}', 'EmailFileController@ajaxChangeStatus')->name('admin.notify.email-file.ajax.change-status');
+        });
+
+
         Route::prefix('sms')->group(function () {
             Route::get('/', 'SMSController@index')->name('admin.notify.sms.index');
             Route::get('/create', 'SMSController@create')->name('admin.notify.sms.create');
@@ -269,6 +288,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'SMSController@edit')->name('admin.notify.sms.edit');
             Route::put('/update/{id}', 'SMSController@update')->name('admin.notify.sms.update');
             Route::delete('/destroy/{id}', 'SMSController@destroy')->name('admin.notify.sms.destroy');
+            Route::get('/ajax/change-status/{id}', 'SMSController@ajaxChangeStatus')->name('admin.notify.sms.ajax.change-status');
         });
     });
 
@@ -288,11 +308,8 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
     Route::prefix('setting')->namespace('Setting')->group(function () {
         Route::get('/', 'SettingController@index')->name('admin.setting.index');
-        Route::get('/create', 'SettingController@create')->name('admin.setting.create');
-        Route::post('/store', 'SettingController@store')->name('admin.setting.store');
         Route::get('/edit/{id}', 'SettingController@edit')->name('admin.setting.edit');
         Route::put('/update/{id}', 'SettingController@update')->name('admin.setting.update');
-        Route::delete('/destroy/{id}', 'SettingController@destroy')->name('admin.setting.destroy');
     });
 });
 

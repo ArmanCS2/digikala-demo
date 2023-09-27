@@ -23,24 +23,23 @@ class PostCategoryRequest extends FormRequest
      */
     public function rules()
     {
+        //regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u
         if($this->isMethod('post')){
             return [
-                'name'=>'required|max:100|min:2',
+                'name'=>'required|max:100|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
                 'parent_id'=>'nullable',
                 'description'=>'required|max:500|min:5',
-                'slug'=>'nullable',
-                'image'=>'required',
-                'tags'=>'required',
+                'image'=>'required|image|mimes:jpg,png,jpeg,gif',
+                'tags'=>'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
                 'status'=>'required|numeric|in:1,0',
             ];
         }
         return [
-            'name'=>'required|max:100|min:2',
+            'name'=>'required|max:100|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
             'parent_id'=>'nullable',
             'description'=>'required|max:500|min:5',
-            'slug'=>'nullable',
-            'image'=>'',
-            'tags'=>'required',
+            'image'=>'image|mimes:jpg,png,jpeg,gif',
+            'tags'=>'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
             'status'=>'required|numeric|in:1,0',
         ];
     }
