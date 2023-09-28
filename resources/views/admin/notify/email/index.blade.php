@@ -58,9 +58,9 @@
                                                @if($email->status==1) checked @endif>
                                     </label>
                                 </td>
-                                <td class="width-16-rem text-left">
+                                <td class="width-22-rem text-left">
                                     <a href="{{route('admin.notify.email-file.index',[$email->id])}}"
-                                       class="btn btn-warning btn-sm"><i class="fa fa-file"></i>فایل های ضمیمه شده</a>
+                                       class="btn btn-warning btn-sm"><i class="fa fa-file"></i> فایل های ضمیمه شده</a>
                                     <a href="{{route('admin.notify.email.edit',[$email->id])}}"
                                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                                     <form class="d-inline" action="{{route('admin.notify.email.destroy',[$email->id])}}"

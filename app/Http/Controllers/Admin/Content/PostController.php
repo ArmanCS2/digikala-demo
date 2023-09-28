@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Content;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Content\PostRequest;
-use App\Http\Services\Image\FileService;
+use App\Http\Services\Image\ImageService;
 use App\Models\Content\Post;
 use App\Models\Content\PostCategory;
 use Illuminate\Http\Request;
@@ -39,7 +39,7 @@ class PostController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request, FileService $imageService)
+    public function store(PostRequest $request, ImageService $imageService)
     {
         $inputs = $request->all();
         if ($request->hasFile('image')) {
@@ -87,7 +87,7 @@ class PostController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, FileService $imageService)
+    public function update(Request $request, $id, ImageService $imageService)
     {
         $inputs = $request->all();
         $post=Post::find($id);

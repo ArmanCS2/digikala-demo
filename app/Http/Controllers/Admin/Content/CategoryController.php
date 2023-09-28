@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Content\PostCategoryRequest;
 use App\Http\Services\Image\ImageCacheService;
-use App\Http\Services\Image\FileService;
+use App\Http\Services\Image\ImageService;
 use App\Models\Content\PostCategory;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class CategoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostCategoryRequest $request, FileService $imageService)
+    public function store(PostCategoryRequest $request, ImageService $imageService)
     {
         $inputs = $request->all();
         if ($request->hasFile('image')){
@@ -90,7 +90,7 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostCategoryRequest $request, $id, FileService $imageService)
+    public function update(PostCategoryRequest $request, $id, ImageService $imageService)
     {
         $postCategory=PostCategory::find($id);
         $inputs = $request->all();

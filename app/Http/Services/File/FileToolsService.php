@@ -111,6 +111,7 @@ class FileToolsService
         $this->getFileDirectory() ?? $this->setFileDirectory(str_replace('/', DIRECTORY_SEPARATOR, date('Y/m/d')));
         $this->getFileName() ?? $this->setFileName(time());
         $this->setFileFormat(pathinfo($this->file->getClientOriginalName(),PATHINFO_EXTENSION));
+        $this->getFileSize() ?? $this->setFileSize($this->file);
 
         $finalImageDirectory = empty($this->getExclusiveDirectory()) ? $this->getFileDirectory() : $this->getExclusiveDirectory() . DIRECTORY_SEPARATOR . $this->getFileDirectory();
 

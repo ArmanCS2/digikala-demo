@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\Image\FileService;
+use App\Http\Services\Image\ImageService;
 use App\Models\Setting\Setting;
 use Database\Seeders\SettingSeeder;
 use Illuminate\Http\Request;
@@ -77,7 +77,7 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, FileService $imageService)
+    public function update(Request $request, $id, ImageService $imageService)
     {
         $setting=Setting::find($id);
         $inputs=$request->all();
