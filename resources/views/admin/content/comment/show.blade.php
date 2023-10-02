@@ -44,13 +44,18 @@
                     <form action="{{route('admin.content.comment.answer',[$comment->id])}}" method="post">
                         @csrf
                         <section class="row">
-                            <section class="col-12">
+                            <section class="col-12 my-1">
                                 <div class="form-group">
                                     <label for="">پاسخ ادمین</label>
                                     ‍<textarea name="body" class="form-control form-control-sm" rows="4"></textarea>
                                 </div>
+                                @error('body')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
-                            <section class="col-12">
+                            <section class="col-12 my-1">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                             </section>
                         </section>

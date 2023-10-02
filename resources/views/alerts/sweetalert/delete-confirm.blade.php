@@ -23,7 +23,7 @@
                 showCancelButton: true,
                 confirmButtonText: 'بله داده حذف شود.',
                 cancelButtonText: 'خیر درخواست لغو شود.',
-                reverseButtons: true
+                reverseButtons: false
             }).then((result) => {
 
                 if (result.value == true) {

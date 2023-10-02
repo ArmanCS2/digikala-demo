@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Notify;
+namespace App\Http\Requests\Admin\Market;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmailRequest extends FormRequest
+class DeliveryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,11 @@ class EmailRequest extends FormRequest
     public function rules()
     {
         return [
-            'subject'=>'required|max:100|min:2',
-            'body'=>'required|max:2000|min:5',
-            'status'=>'required|numeric|in:1,0',
-            'published_at'=>'required|numeric'
+            'name'=>'required|string|min:1|max:100',
+            'amount'=>'required|numeric',
+            'delivery_time'=>'required|numeric',
+            'delivery_time_unit'=>'required|string|min:1|max:100',
+            'status'=>'required|numeric|in:0,1',
         ];
     }
 }

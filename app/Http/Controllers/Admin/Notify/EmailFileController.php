@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Notify\EmailFileRequest;
 use App\Http\Services\File\FileService;
-use App\Http\Services\Image\ImageService;
 use App\Models\Notify\Email;
 use App\Models\Notify\EmailFile;
 use Illuminate\Http\Request;
@@ -37,11 +37,11 @@ class EmailFileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Email $email, FileService $fileService)
+    public function store(EmailFileRequest $request, Email $email, FileService $fileService)
     {
         $inputs=$request->all();
         if ($request->hasFile('file')){
-            $fileService->setExclusiveDirectory('files');
+            $fileService->setExclusiveDirectory('files' . DIRECTORY_SEPARATOR . 'email-files');
             $result=$fileService->moveToPublic($request->file('file'));
             if (!$result){
                 return redirect()->route('admin.notify.email-file.index',[$email->id])->with('swal-error', 'آپلود فایل با خطا مواجه شد');
@@ -74,9 +74,9 @@ class EmailFileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EmailFile $file)
     {
-        //
+        return view('admin.notify.email.file.edit',compact('file'));
     }
 
     /**
@@ -86,9 +86,23 @@ class EmailFileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmailFileRequest $request, EmailFile $file,FileService $fileService)
     {
-        //
+        $inputs=$request->all();
+        if ($request->hasFile('file')){
+            $fileService->deleteFile($file->file_path);
+            $fileService->setExclusiveDirectory('files' . DIRECTORY_SEPARATOR . 'email-files');
+            $result=$fileService->moveToPublic($request->file('file'));
+            if (!$result){
+                return redirect()->route('admin.notify.email-file.index',[$file->email->id])->with('swal-error', 'آپلود فایل با خطا مواجه شد');
+            }
+            $inputs['file_path']=$result;
+            $inputs['file_type']=$fileService->getFileFormat();
+            $inputs['file_size']=$fileService->getFileSize();
+        }
+        $file->update($inputs);
+        return redirect()->route('admin.notify.email-file.index',[$file->email->id])->with('swal-success', 'فایل با موفقیت ویرایش شد');
+
     }
 
     /**
@@ -97,9 +111,11 @@ class EmailFileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EmailFile $file)
     {
-        //
+        $file->delete();
+        return redirect()->route('admin.notify.email-file.index',[$file->email->id])->with('swal-success', 'فایل با موفقیت حذف شد');
+
     }
 
     public function ajaxChangeStatus($id)

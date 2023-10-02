@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Notify\EmailRequest;
+use App\Http\Requests\Admin\Notify\EmailRequest;
 use App\Models\Notify\Email;
-use Illuminate\Http\Request;
 
 class EmailController extends Controller
 {

@@ -8,10 +8,10 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">روش های ارسال</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> تغییر روش ارسال</li>
+            <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش فروش</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">روش های ارسال</a></li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page"> ویرایش روش ارسال</li>
         </ol>
     </nav>
 
@@ -21,7 +21,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        تغییر روش ارسال
+                        ویرایش روش ارسال
                     </h5>
                 </section>
 
@@ -30,30 +30,78 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.market.delivery.update',[$delivery->id]) }}" method="post">
+                        @csrf
+                        @method('put')
                         <section class="row">
 
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">نام روش ارسال</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input type="text" class="form-control form-control-sm" name="name"
+                                           value="{{old('name',$delivery->name)}}">
                                 </div>
+                                @error('name')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
 
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">هزینه روش ارسال</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input type="text" class="form-control form-control-sm" name="amount"
+                                           value="{{old('amount',$delivery->amount)}}">
                                 </div>
+                                @error('amount')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
 
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">زمان ارسال</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input type="text" class="form-control form-control-sm" name="delivery_time"
+                                           value="{{old('delivery_time',$delivery->delivery_time)}}">
                                 </div>
+                                @error('delivery_time')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
-                            <section class="col-12">
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">واحد زمان ارسال</label>
+                                    <input type="text" class="form-control form-control-sm" name="delivery_time_unit"
+                                           value="{{old('delivery_time_unit',$delivery->delivery_time_unit)}}">
+                                </div>
+                                @error('delivery_time_unit')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">وضعیت</label>
+                                    <select name="status" id="" class="form-control form-control-sm">
+                                        <option value="0" @if(old('status',$delivery->status)==0) selected @endif>غیر فعال</option>
+                                        <option value="1" @if(old('status',$delivery->status)==1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 my-1">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                             </section>
                         </section>

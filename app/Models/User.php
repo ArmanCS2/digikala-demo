@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Ticket\Ticket;
+use App\Models\Ticket\TicketAdmin;
+use App\Models\User\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,7 +27,15 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'mobile',
+        'user_type',
+        'profile_photo_path',
+        'activation',
+        'national_code',
+        'activation_date',
+        'status',
         'email',
         'password',
     ];
@@ -62,5 +73,20 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function ticketAdmin()
+    {
+        return $this->hasOne(TicketAdmin::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }

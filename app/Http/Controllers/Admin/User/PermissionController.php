@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\User\PermissionRequest;
+use App\Models\User\Permission;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -14,7 +16,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $permissions=Permission::all();
+        return view('admin.user.permission.index',compact('permissions'));
     }
 
     /**
@@ -24,7 +27,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.permission.create');
     }
 
     /**
@@ -33,9 +36,11 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
-        //
+        $inputs=$request->all();
+        Permission::create($inputs);
+        return redirect()->route('admin.user.permission.index')->with('swal-success','دسترسی با موفقیت ساخته شد');
     }
 
     /**
@@ -57,7 +62,8 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permission=Permission::find($id);
+        return view('admin.user.permission.edit',compact('permission'));
     }
 
     /**
@@ -67,9 +73,12 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PermissionRequest $request, $id)
     {
-        //
+        $permission=Permission::find($id);
+        $inputs=$request->all();
+        $permission->update($inputs);
+        return redirect()->route('admin.user.permission.index')->with('swal-success','دسترسی با موفقیت ویرایش شد');
     }
 
     /**
@@ -80,6 +89,22 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permission=Permission::find($id);
+        $permission->delete();
+        return redirect()->route('admin.user.permission.index')->with('swal-success','دسترسی با موفقیت حذف شد');
+    }
+
+    public function ajaxChangeStatus($id)
+    {
+        $permission = Permission::find($id);
+        $permission->status == 1 ? $permission->status = 0 : $permission->status = 1;
+        $result = $permission->save();
+        if ($result) {
+            if ($permission->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            }
+            return response()->json(['status' => true, 'checked' => true]);
+        }
+        return response()->json(['status' => true]);
     }
 }

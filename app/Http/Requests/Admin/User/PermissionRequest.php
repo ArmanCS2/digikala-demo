@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Notify;
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use function Symfony\Component\Translation\t;
 
-class EmailFileRequest extends FormRequest
+class PermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +24,10 @@ class EmailFileRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->isMethod('post')) {
-            return [
-                'file'=>'required|file',
-                'status'=>'required|in:0,1|numeric',
-            ];
-        }
         return [
-            'file'=>'file',
-            'status'=>'required|in:0,1|numeric',
+            'name'=>'required|min:2|max:100',
+            'description'=>'required|min:2|max:500',
+            'status'=>'required|numeric|in:0,1',
         ];
     }
 }

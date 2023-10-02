@@ -8,8 +8,8 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">بخش کاربران</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش کاربران</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page"> نقش ها</li>
         </ol>
     </nav>
@@ -38,25 +38,50 @@
                             <th>#</th>
                             <th>نام نقش</th>
                             <th>دسترسی ها</th>
+                            <th>توضیحات</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>پشتیبان فروش</td>
-                            <td>
-                                1-مشاهده سفارش ها<br>
-                                2-مشاهده پرداخت ها<br>
-                                3-مشاهده تخفیف ها<br>
-                            </td>
+                        @foreach($roles as $key => $role)
+                            <tr>
+                                <th>{{$key + 1}}</th>
+                                <td>{{$role->name}}</td>
+                                <td>
+                                    @if(empty($role->permissions()->get()->toArray()))
+                                        <span class="text-danger">
+                                            {{'دسترسی مشخص نشده است'}}
+                                        </span>
+                                    @else
+                                        @foreach($role->permissions as $permission)
+                                            {{$permission->name}}<br>
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td>{{$role->description}}</td>
+                                <td>
+                                    <label>
+                                        <input type="checkbox" id="change_status_{{$role->id}}"
+                                               onchange="changeStatus({{$role->id}})"
+                                               data-url="{{route('admin.user.role.ajax.change-status',[$role->id])}}"
+                                               @if($role->status==1) checked @endif>
+                                    </label>
+                                </td>
+                                <td class="width-22-rem text-left">
+                                    <a href="{{route('admin.user.role.edit.permission',[$role->id])}}" class="btn btn-success btn-sm"><i class="fa fa-user-plus"></i> دسترسی ها</a>
+                                    <a href="{{route('admin.user.role.edit',[$role->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                    <form action="{{route('admin.user.role.destroy',[$role->id])}}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i>
+                                            حذف
+                                        </button>
+                                    </form>
 
-                            <td class="width-22-rem text-left">
-                                <a href="#" class="btn btn-success btn-sm"><i class="fa fa-user-plus"></i> دسترسی ها</a>
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -65,4 +90,67 @@
         </section>
     </section>
 
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        function changeStatus(id) {
+            var element = $('#change_status_' + id);
+            var url = element.attr('data-url');
+            var elementValue=!element.prop('checked');
+
+            $.ajax({
+                url : url,
+                type:"GET",
+                success:function (response){
+                    if (response.status){
+                        if (response.checked){
+                            element.prop('checked',true);
+                            successToast('نقش با موفقیت فعال شد');
+                        }else {
+                            element.prop('checked',false);
+                            successToast('نقش با موفقیت غیر فعال شد');
+                        }
+                    }else {
+                        element.prop('checked',elementValue);
+                        errorToast('خطا در تغییر وضعیت');
+                    }
+                },
+                error:function () {
+                    element.prop('checked',elementValue);
+                    errorToast('خطا در برقراری ارتباط');
+                }
+            });
+
+            function successToast(message){
+                var successToastTag='<section class="toast" data-delay="5000">\n' +
+                    '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
+                    '<strong class="ml-auto">'+message+'</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n'+
+                    '</button>\n' +
+                    '</section>\n'+
+                    '</section>';
+                $('.toast-wrapper').append(successToastTag);
+                $('.toast').toast('show').delay(3000).queue(function () {
+                    $(this).remove();
+                });
+            }
+
+            function errorToast(message){
+                var errorToastTag='<section class="toast" data-delay="5000">\n' +
+                    '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
+                    '<strong class="ml-auto">'+message+'</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n'+
+                    '</button>\n' +
+                    '</section>\n'+
+                    '</section>';
+                $('.toast-wrapper').append(errorToastTag);
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $(this).remove();
+                });
+            }
+        }
+    </script>
 @endsection

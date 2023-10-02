@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Notify;
+namespace App\Http\Requests\Admin\Notify;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SMSRequest extends FormRequest
+class EmailFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,15 @@ class SMSRequest extends FormRequest
      */
     public function rules()
     {
+        if($this->isMethod('post')) {
+            return [
+                'file'=>'required|file|mimes:jpg,png,jpeg,gif,zip,pdf',
+                'status'=>'required|in:0,1|numeric',
+            ];
+        }
         return [
-            'title'=>'required|max:100|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-            'body'=>'required|max:1000|min:5',
-            'status'=>'required|numeric|in:1,0',
-            'published_at'=>'required|numeric'
+            'file'=>'file|mimes:jpg,png,jpeg,gif,zip,pdf',
+            'status'=>'required|in:0,1|numeric',
         ];
     }
 }

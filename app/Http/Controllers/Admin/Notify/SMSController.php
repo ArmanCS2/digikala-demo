@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Notify\SMSRequest;
+use App\Http\Requests\Admin\Notify\SMSRequest;
 use App\Models\Notify\SMS;
-use Illuminate\Http\Request;
 
 class SMSController extends Controller
 {

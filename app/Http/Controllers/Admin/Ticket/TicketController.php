@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Ticket;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Ticket\TicketRequest;
+use App\Models\Ticket\Ticket;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -14,8 +16,14 @@ class TicketController extends Controller
      */
     public function newTicket()
     {
-        return view('admin.ticket.index');
+        $tickets = Ticket::where('seen', 0)->get();
+        foreach ($tickets as $ticket) {
+            $ticket->seen = 1;
+            $ticket->save();
+        }
+        return view('admin.ticket.index', compact('tickets'));
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +31,10 @@ class TicketController extends Controller
      */
     public function openTicket()
     {
-        return view('admin.ticket.index');
+        $tickets = Ticket::where('status', 0)->get();
+        return view('admin.ticket.index', compact('tickets'));
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,8 +42,10 @@ class TicketController extends Controller
      */
     public function closeTicket()
     {
-        return view('admin.ticket.index');
+        $tickets = Ticket::where('status', 1)->get();
+        return view('admin.ticket.index', compact('tickets'));
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +53,32 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('admin.ticket.index');
+        $tickets = Ticket::all();
+        return view('admin.ticket.index', compact('tickets'));
+    }
+
+    public function changeStatus($id)
+    {
+        $ticket = Ticket::find($id);
+        $ticket->status == 1 ? $ticket->status = 0 : $ticket->status = 1;
+        $ticket->save();
+        return redirect()->back()->with('swal-success', 'وضعیت تیکت با موفقیت تغییر یافت');
+    }
+
+    public function answer(TicketRequest $request, $id)
+    {
+        $ticket = Ticket::find($id);
+        $inputs = $request->all();
+        $inputs['subject'] = $ticket->subject;
+        $inputs['description'] = $request->description;
+        $inputs['seen'] = 1;
+        $inputs['reference_id'] = $ticket->reference_id;
+        $inputs['user_id'] = 1;
+        $inputs['category_id'] = $ticket->category_id;
+        $inputs['priority_id'] = $ticket->priority_id;
+        $inputs['ticket_id'] = $ticket->id;
+        Ticket::create($inputs);
+        return redirect()->route('admin.ticket.index')->with('swal-success', 'پاسخ با موفقیت ثبت شد');
     }
 
     /**
@@ -57,9 +94,10 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         //
@@ -68,18 +106,19 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('admin.ticket.show');
+        $ticket = Ticket::find($id);
+        return view('admin.ticket.show', compact('ticket'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -90,8 +129,8 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -102,7 +141,7 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

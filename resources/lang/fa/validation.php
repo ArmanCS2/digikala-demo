@@ -161,7 +161,10 @@ return [
         "summary"=>'خلاصه متن',
         'question'=>'پرسش',
         'answer'=>'پاسخ',
-        'subject'=>'عنوان'
+        'subject'=>'عنوان',
+        'amount'=>'هزینه',
+        'delivery_time'=>'زمان رسال',
+        'delivery_time_unit'=>'واحد زمان رسال',
 
     ],
 ];

@@ -36,6 +36,9 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'CategoryController@edit')->name('admin.market.category.edit');
             Route::put('/update/{id}', 'CategoryController@update')->name('admin.market.category.update');
             Route::delete('/destroy/{id}', 'CategoryController@destroy')->name('admin.market.category.destroy');
+            Route::get('/ajax/change-status/{id}', 'CategoryController@ajaxChangeStatus')->name('admin.market.category.ajax.change-status');
+            Route::get('/ajax/change-visibility/{id}', 'CategoryController@ajaxChangeVisibility')->name('admin.market.category.ajax.change-visibility');
+
         });
 
         Route::prefix('brand')->group(function () {
@@ -63,6 +66,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'DeliveryController@edit')->name('admin.market.delivery.edit');
             Route::put('/update/{id}', 'DeliveryController@update')->name('admin.market.delivery.update');
             Route::delete('/destroy/{id}', 'DeliveryController@destroy')->name('admin.market.delivery.destroy');
+            Route::get('/ajax/change-status/{id}', 'DeliveryController@ajaxChangeStatus')->name('admin.market.delivery.ajax.change-status');
         });
 
         Route::prefix('discount')->group(function () {
@@ -231,6 +235,8 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'AdminUserController@edit')->name('admin.user.admin-user.edit');
             Route::put('/update/{id}', 'AdminUserController@update')->name('admin.user.admin-user.update');
             Route::delete('/destroy/{id}', 'AdminUserController@destroy')->name('admin.user.admin-user.destroy');
+            Route::get('/ajax/change-status/{id}', 'AdminUserController@ajaxChangeStatus')->name('admin.user.admin-user.ajax.change-status');
+            Route::get('/ajax/change-activation/{id}', 'AdminUserController@ajaxChangeActivation')->name('admin.user.admin-user.ajax.change-activation');
         });
         Route::prefix('customer')->group(function () {
             Route::get('/', 'CustomerController@index')->name('admin.user.customer.index');
@@ -239,22 +245,29 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'CustomerController@edit')->name('admin.user.customer.edit');
             Route::put('/update/{id}', 'CustomerController@update')->name('admin.user.customer.update');
             Route::delete('/destroy/{id}', 'CustomerController@destroy')->name('admin.user.customer.destroy');
+            Route::get('/ajax/change-status/{id}', 'CustomerController@ajaxChangeStatus')->name('admin.user.customer.ajax.change-status');
+            Route::get('/ajax/change-activation/{id}', 'CustomerController@ajaxChangeActivation')->name('admin.user.customer.ajax.change-activation');
         });
         Route::prefix('role')->group(function () {
             Route::get('/', 'RoleController@index')->name('admin.user.role.index');
             Route::get('/create', 'RoleController@create')->name('admin.user.role.create');
             Route::post('/store', 'RoleController@store')->name('admin.user.role.store');
             Route::get('/edit/{id}', 'RoleController@edit')->name('admin.user.role.edit');
+            Route::get('/edit-permissions/{id}', 'RoleController@editPermission')->name('admin.user.role.edit.permission');
             Route::put('/update/{id}', 'RoleController@update')->name('admin.user.role.update');
+            Route::put('/update-permission/{id}', 'RoleController@updatePermission')->name('admin.user.role.update.permission');
             Route::delete('/destroy/{id}', 'RoleController@destroy')->name('admin.user.role.destroy');
+            Route::get('/ajax/change-status/{id}', 'RoleController@ajaxChangeStatus')->name('admin.user.role.ajax.change-status');
         });
         Route::prefix('permission')->group(function () {
             Route::get('/', 'PermissionController@index')->name('admin.user.permission.index');
             Route::get('/create', 'PermissionController@create')->name('admin.user.permission.create');
             Route::post('/store', 'PermissionController@store')->name('admin.user.permission.store');
             Route::get('/edit/{id}', 'PermissionController@edit')->name('admin.user.permission.edit');
+
             Route::put('/update/{id}', 'PermissionController@update')->name('admin.user.permission.update');
             Route::delete('/destroy/{id}', 'PermissionController@destroy')->name('admin.user.permission.destroy');
+            Route::get('/ajax/change-status/{id}', 'PermissionController@ajaxChangeStatus')->name('admin.user.permission.ajax.change-status');
         });
     });
 
@@ -294,16 +307,41 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
 
     Route::prefix('ticket')->namespace('Ticket')->group(function () {
+
+        Route::prefix('category')->group(function () {
+            Route::get('/', 'CategoryController@index')->name('admin.ticket.category.index');
+            Route::get('/create', 'CategoryController@create')->name('admin.ticket.category.create');
+            Route::post('/store', 'CategoryController@store')->name('admin.ticket.category.store');
+            Route::get('/edit/{id}', 'CategoryController@edit')->name('admin.ticket.category.edit');
+            Route::put('/update/{id}', 'CategoryController@update')->name('admin.ticket.category.update');
+            Route::delete('/destroy/{id}', 'CategoryController@destroy')->name('admin.ticket.category.destroy');
+            Route::get('/ajax/change-status/{id}', 'CategoryController@ajaxChangeStatus')->name('admin.ticket.category.ajax.change-status');
+        });
+
+        Route::prefix('priority')->group(function () {
+            Route::get('/', 'PriorityController@index')->name('admin.ticket.priority.index');
+            Route::get('/create', 'PriorityController@create')->name('admin.ticket.priority.create');
+            Route::post('/store', 'PriorityController@store')->name('admin.ticket.priority.store');
+            Route::get('/edit/{id}', 'PriorityController@edit')->name('admin.ticket.priority.edit');
+            Route::put('/update/{id}', 'PriorityController@update')->name('admin.ticket.priority.update');
+            Route::delete('/destroy/{id}', 'PriorityController@destroy')->name('admin.ticket.priority.destroy');
+            Route::get('/ajax/change-status/{id}', 'PriorityController@ajaxChangeStatus')->name('admin.ticket.priority.ajax.change-status');
+        });
+
+
+        Route::prefix('admin')->group(function () {
+            Route::get('/', 'TicketAdminController@index')->name('admin.ticket.admin.index');
+            Route::get('/ajax/change-ability/{id}', 'TicketAdminController@ajaxChangeAbility')->name('admin.ticket.admin.ajax.change-ability');
+        });
+
+        Route::get('/', 'TicketController@index')->name('admin.ticket.index');
         Route::get('/new-ticket', 'TicketController@newTicket')->name('admin.ticket.new-ticket');
         Route::get('/open-ticket', 'TicketController@openTicket')->name('admin.ticket.open-ticket');
         Route::get('/close-ticket', 'TicketController@closeTicket')->name('admin.ticket.close-ticket');
-        Route::get('/', 'TicketController@index')->name('admin.ticket.index');
-        Route::get('/show', 'TicketController@show')->name('admin.ticket.show');
-        Route::get('/create', 'TicketController@create')->name('admin.ticket.create');
-        Route::post('/store', 'TicketController@store')->name('admin.ticket.store');
-        Route::get('/edit/{id}', 'TicketController@edit')->name('admin.ticket.edit');
-        Route::put('/update/{id}', 'TicketController@update')->name('admin.ticket.update');
+        Route::get('/show/{id}', 'TicketController@show')->name('admin.ticket.show');
+        Route::post('/answer/{id}', 'TicketController@answer')->name('admin.ticket.answer');
         Route::delete('/destroy/{id}', 'TicketController@destroy')->name('admin.ticket.destroy');
+        Route::get('/change-status/{id}', 'TicketController@changeStatus')->name('admin.ticket.change-status');
     });
 
     Route::prefix('setting')->namespace('Setting')->group(function () {

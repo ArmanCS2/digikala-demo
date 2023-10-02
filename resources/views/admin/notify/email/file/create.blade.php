@@ -36,7 +36,7 @@
 
                             <section class="row">
 
-                                <section class="col-12 col-md-6 my-1">
+                                <section class="col-12 my-1">
                                     <div class="form-group">
                                         <label for="">آپلود فایل </label>
                                         <input type="file" class="form-control form-control-sm" name="file">
@@ -48,7 +48,7 @@
                                     @enderror
                                 </section>
 
-                                <section class="col-12 col-md-6 my-1">
+                                <section class="col-12 my-1">
                                     <div class="form-group">
                                         <label for="">وضعیت</label>
                                         <select name="status" id="" class="form-control form-control-sm">
@@ -62,11 +62,6 @@
                                 </span>
                                     @enderror
                                 </section>
-
-
-
-
-
 
 
                                 <section class="col-12 my-1">
