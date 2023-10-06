@@ -25,7 +25,7 @@
                 </section>
 
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.property.create') }}" class="btn btn-info btn-sm">ایجاد فرم جدید</a>
+                    <a href="{{ route('admin.market.attribute.create') }}" class="btn btn-info btn-sm">ایجاد فرم جدید</a>
                     <div class="max-width-16-rem">
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                     </div>
@@ -37,21 +37,30 @@
                         <tr>
                             <th>#</th>
                             <th>نام فرم کالا</th>
-                            <th>فرم والد</th>
+                            <th>واحد اندازه گیری</th>
+                            <th>دسته والد</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($attributes as $key => $attribute)
                         <tr>
-                            <th>1</th>
-                            <td>نمایشگر	</td>
-                            <td>کالای الکترونیکی</td>
+                            <th>{{$key + 1}}</th>
+                            <td>{{$attribute->name}}</td>
+                            <td>{{$attribute->unit}}</td>
+                            <td>{{$attribute->category->name}}</td>
                             <td class="width-22-rem text-left">
                                 <a href="#" class="btn btn-info btn-sm"><i class="fa fa-list-ul"></i> ویژگی ها</a>
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                <a href="{{route('admin.market.attribute.edit',[$attribute->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                <form action="{{route('admin.market.attribute.destroy',[$attribute->id])}}" method="post" class="d-inline">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                </form>
+
                             </td>
                         </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>

@@ -54,8 +54,10 @@
                                 <div class="form-group">
                                     <label for="">وضعیت</label>
                                     <select name="status" id="" class="form-control form-control-sm">
-                                        <option value="0" @if(old('status',$sms->status)==0) selected @endif>غیر فعال</option>
-                                        <option value="1" @if(old('status',$sms->status)==1) selected @endif>فعال</option>
+                                        <option value="0" @if(old('status',$sms->status)==0) selected @endif>غیر فعال
+                                        </option>
+                                        <option value="1" @if(old('status',$sms->status)==1) selected @endif>فعال
+                                        </option>
                                     </select>
                                 </div>
                                 @error('status')

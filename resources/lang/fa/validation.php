@@ -165,6 +165,18 @@ return [
         'amount'=>'هزینه',
         'delivery_time'=>'زمان رسال',
         'delivery_time_unit'=>'واحد زمان رسال',
+        'logo'=>'لوگو',
+        'persian_name'=>'نام به فارسی',
+        'original_name'=>'نام اصلی',
+        'brand_id'=>'برند',
+        'weight'=>'وزن',
+        'height'=>'ارتفاع',
+        'width'=>'عرض',
+        'length'=>'طول',
+        'price'=>'قیمت',
+        'introduction'=>'معرفی',
+        'marketable'=>'قابل فروش',
+        'price_increase'=>'میزان افزایش قیمت',
 
     ],
 ];

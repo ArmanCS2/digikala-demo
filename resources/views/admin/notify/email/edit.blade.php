@@ -34,75 +34,76 @@
                     <form action="{{route('admin.notify.email.update',[$email->id])}}" method="post">
                         @csrf
                         @method('put')
+
                         <section class="row">
 
-                            <section class="row">
-
-                                <section class="col-12 col-md-6 my-1">
-                                    <div class="form-group">
-                                        <label for="">عنوان ایمیل</label>
-                                        <input type="text" class="form-control form-control-sm" name="subject"
-                                               value="{{old('subject',$email->subject)}}">
-                                    </div>
-                                    @error('subject')
-                                    <span class="text-danger">
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">عنوان ایمیل</label>
+                                    <input type="text" class="form-control form-control-sm" name="subject"
+                                           value="{{old('subject',$email->subject)}}">
+                                </div>
+                                @error('subject')
+                                <span class="text-danger">
                                     <strong>{{$message}}</strong>
                                 </span>
-                                    @enderror
-                                </section>
-
-                                <section class="col-12 col-md-6 my-1">
-                                    <div class="form-group">
-                                        <label for="">وضعیت</label>
-                                        <select name="status" id="" class="form-control form-control-sm">
-                                            <option value="0" @if(old('status',$email->status)==0) selected @endif>غیر فعال</option>
-                                            <option value="1" @if(old('status',$email->status)==1) selected @endif>فعال</option>
-                                        </select>
-                                    </div>
-                                    @error('status')
-                                    <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                    @enderror
-                                </section>
-
-                                <section class="col-12 col-md-6 my-1">
-                                    <div class="form-group">
-                                        <label for="">تاریخ انتشار</label>
-                                        <input type="text" class="form-control form-control-sm d-none"
-                                               name="published_at"
-                                               id="published_at" value="{{$email->published_at}}">
-                                        <input type="text" class="form-control form-control-sm" id="published_at_view"
-                                               name="published_at_view" value="{{$email->published_at}}">
-                                    </div>
-                                    @error('published_at')
-                                    <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                    @enderror
-                                </section>
-
-
-                                <section class="col-12 my-1">
-                                    <div class="form-group">
-                                        <label for="">متن ایمیل</label>
-                                        <textarea name="body" id="body" class="form-control form-control-sm"
-                                                  rows="6">{{old('body',$email->body)}}</textarea>
-                                    </div>
-                                    @error('body')
-                                    <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                    @enderror
-                                </section>
-
-
-                                <section class="col-12 my-1">
-                                    <button class="btn btn-primary btn-sm">ثبت</button>
-                                </section>
+                                @enderror
                             </section>
 
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">وضعیت</label>
+                                    <select name="status" id="" class="form-control form-control-sm">
+                                        <option value="0" @if(old('status',$email->status)==0) selected @endif>غیر
+                                            فعال
+                                        </option>
+                                        <option value="1" @if(old('status',$email->status)==1) selected @endif>فعال
+                                        </option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">تاریخ انتشار</label>
+                                    <input type="text" class="form-control form-control-sm d-none"
+                                           name="published_at"
+                                           id="published_at" value="{{$email->published_at}}">
+                                    <input type="text" class="form-control form-control-sm" id="published_at_view"
+                                           name="published_at_view" value="{{$email->published_at}}">
+                                </div>
+                                @error('published_at')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+
+                            <section class="col-12 my-1">
+                                <div class="form-group">
+                                    <label for="">متن ایمیل</label>
+                                    <textarea name="body" id="body" class="form-control form-control-sm"
+                                              rows="6">{{old('body',$email->body)}}</textarea>
+                                </div>
+                                @error('body')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+
+                            <section class="col-12 my-1">
+                                <button class="btn btn-primary btn-sm">ثبت</button>
+                            </section>
                         </section>
+
                     </form>
                 </section>
 

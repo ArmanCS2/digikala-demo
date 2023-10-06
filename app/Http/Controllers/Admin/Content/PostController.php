@@ -92,6 +92,9 @@ class PostController extends Controller
         $inputs = $request->all();
         $post=Post::find($id);
         if ($request->hasFile('image')) {
+            if (!empty($post->image)){
+                $imageService->deleteIndex($post->image);
+            }
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'posts');
             $result = $imageService->createIndexAndSave($request->file('image'));
             if (!$result) {
@@ -109,7 +112,7 @@ class PostController extends Controller
         }
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         $post->update($inputs);
-        return redirect()->route('admin.content.post.index')->with('swal-success', 'پست جدید با موفقیت ویرایش شد');
+        return redirect()->route('admin.content.post.index')->with('swal-success', 'پست با موفقیت ویرایش شد');
     }
 
     /**

@@ -48,6 +48,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'BrandController@edit')->name('admin.market.brand.edit');
             Route::put('/update/{id}', 'BrandController@update')->name('admin.market.brand.update');
             Route::delete('/destroy/{id}', 'BrandController@destroy')->name('admin.market.brand.destroy');
+            Route::get('/ajax/change-status/{id}', 'BrandController@ajaxChangeStatus')->name('admin.market.brand.ajax.change-status');
         });
 
         Route::prefix('comment')->group(function () {
@@ -131,19 +132,29 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/edit/{id}', 'ProductController@edit')->name('admin.market.product.edit');
             Route::put('/update/{id}', 'ProductController@update')->name('admin.market.product.update');
             Route::delete('/destroy/{id}', 'ProductController@destroy')->name('admin.market.product.destroy');
+            Route::get('/ajax/change-status/{id}', 'ProductController@ajaxChangeStatus')->name('admin.market.product.ajax.change-status');
+            Route::get('/ajax/change-marketable/{id}', 'ProductController@ajaxChangeMarketable')->name('admin.market.product.ajax.change-marketable');
 
-            Route::get('/gallery', 'ProductGalleryController@index')->name('admin.market.product.gallery.index');
-            Route::post('/gallery/store', 'ProductGalleryController@store')->name('admin.market.product.gallery.store');
-            Route::delete('/gallery/destroy/{id}', 'ProductGalleryController@destroy')->name('admin.market.product.gallery.destroy');
+            Route::get('/color/{id}', 'ProductColorController@index')->name('admin.market.product.color.index');
+            Route::get('/color/create/{id}', 'ProductColorController@create')->name('admin.market.product.color.create');
+            Route::post('/color/store/{id}', 'ProductColorController@store')->name('admin.market.product.color.store');
+            Route::get('/color/edit/{id}', 'ProductColorController@edit')->name('admin.market.product.color.edit');
+            Route::put('/color/update/{id}', 'ProductColorController@update')->name('admin.market.product.color.update');
+            Route::delete('/color/destroy/{id}', 'ProductColorController@destroy')->name('admin.market.product.color.destroy');
+
+            Route::get('/image/{id}', 'ProductImageController@index')->name('admin.market.product.image.index');
+            Route::get('/image/create/{id}', 'ProductImageController@create')->name('admin.market.product.image.create');
+            Route::post('/image/store/{id}', 'ProductImageController@store')->name('admin.market.product.image.store');
+            Route::delete('/image/destroy/{id}', 'ProductImageController@destroy')->name('admin.market.product.image.destroy');
         });
 
-        Route::prefix('property')->group(function () {
-            Route::get('/', 'PropertyController@index')->name('admin.market.property.index');
-            Route::get('/create', 'PropertyController@create')->name('admin.market.property.create');
-            Route::post('/store', 'PropertyController@store')->name('admin.market.property.store');
-            Route::get('/edit/{id}', 'PropertyController@edit')->name('admin.market.property.edit');
-            Route::put('/update/{id}', 'PropertyController@update')->name('admin.market.property.update');
-            Route::delete('/destroy/{id}', 'PropertyController@destroy')->name('admin.market.property.destroy');
+        Route::prefix('attribute')->group(function () {
+            Route::get('/', 'AttributeController@index')->name('admin.market.attribute.index');
+            Route::get('/create', 'AttributeController@create')->name('admin.market.attribute.create');
+            Route::post('/store', 'AttributeController@store')->name('admin.market.attribute.store');
+            Route::get('/edit/{id}', 'AttributeController@edit')->name('admin.market.attribute.edit');
+            Route::put('/update/{id}', 'AttributeController@update')->name('admin.market.attribute.update');
+            Route::delete('/destroy/{id}', 'AttributeController@destroy')->name('admin.market.attribute.destroy');
         });
 
         Route::prefix('storage')->group(function () {

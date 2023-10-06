@@ -30,45 +30,42 @@
                 </section>
 
                 <section class="mx-4">
-                    <form action="{{route('admin.notify.email-file.store',[$email->id])}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('admin.notify.email-file.store',[$email->id])}}" method="post"
+                          enctype="multipart/form-data">
                         @csrf
                         <section class="row">
 
-                            <section class="row">
-
-                                <section class="col-12 my-1">
-                                    <div class="form-group">
-                                        <label for="">آپلود فایل </label>
-                                        <input type="file" class="form-control form-control-sm" name="file">
-                                    </div>
-                                    @error('file')
-                                    <span class="text-danger">
+                            <section class="col-12 my-1">
+                                <div class="form-group">
+                                    <label for="">آپلود فایل </label>
+                                    <input type="file" class="form-control form-control-sm" name="file">
+                                </div>
+                                @error('file')
+                                <span class="text-danger">
                                     <strong>{{$message}}</strong>
                                 </span>
-                                    @enderror
-                                </section>
-
-                                <section class="col-12 my-1">
-                                    <div class="form-group">
-                                        <label for="">وضعیت</label>
-                                        <select name="status" id="" class="form-control form-control-sm">
-                                            <option value="0" @if(old('status')==0) selected @endif>غیر فعال</option>
-                                            <option value="1" @if(old('status')==1) selected @endif>فعال</option>
-                                        </select>
-                                    </div>
-                                    @error('status')
-                                    <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                    @enderror
-                                </section>
-
-
-                                <section class="col-12 my-1">
-                                    <button class="btn btn-primary btn-sm">ثبت</button>
-                                </section>
+                                @enderror
                             </section>
 
+                            <section class="col-12 my-1">
+                                <div class="form-group">
+                                    <label for="">وضعیت</label>
+                                    <select name="status" id="" class="form-control form-control-sm">
+                                        <option value="0" @if(old('status')==0) selected @endif>غیر فعال</option>
+                                        <option value="1" @if(old('status')==1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+
+                            <section class="col-12 my-1">
+                                <button class="btn btn-primary btn-sm">ثبت</button>
+                            </section>
                         </section>
                     </form>
                 </section>

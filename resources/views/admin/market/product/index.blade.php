@@ -39,39 +39,66 @@
                             <th>نام کالا</th>
                             <th>تصویر کالا</th>
                             <th>قیمت</th>
-                            <th>وزن</th>
                             <th>دسته</th>
-                            <th>فرم</th>
+                            <th>برند</th>
+                            <th>قابل فروش</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td></td>
-                            <td><img src="{{asset('admin-assets/images/avatar-2.jpg')}}" class="max-height-4rem"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="width-16-rem text-left">
-                                <div class="dropdown">
-                                    <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
-                                       id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-tools"></i> عملیات
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a href="#" class="dropdown-item text-right"><i class="fa fa-images"></i> گالری </a>
-                                        <a href="#" class="dropdown-item text-right"><i class="fa fa-list-ul"></i> فرم کالا </a>
-                                        <a href="#" class="dropdown-item text-right"><i class="fa fa-edit"></i> ویرایش </a>
-                                        <form action="" method="POST">
-                                            <button type="submit" class="dropdown-item text-right"><i class="fa fa-window-close"></i> حذف </button>
-                                        </form>
+                        @foreach($products as $product)
+                            <tr>
+                                <th>{{$loop->iteration}}</th>
+                                <td>{{$product->name}}</td>
+                                <td><img src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
+                                         width="100px"></td>
+                                <td>{{number_format($product->price)}} تومان</td>
+                                <td>{{$product->category->name}}</td>
+                                <td>{{$product->brand->original_name}}</td>
+                                <td>
+                                    <label>
+                                        <input type="checkbox" id="change_marketable_{{$product->id}}"
+                                               onchange="changeMarketable({{$product->id}})"
+                                               data-url="{{route('admin.market.product.ajax.change-marketable',[$product->id])}}"
+                                               @if($product->marketable==1) checked @endif>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input type="checkbox" id="change_status_{{$product->id}}"
+                                               onchange="changeStatus({{$product->id}})"
+                                               data-url="{{route('admin.market.product.ajax.change-status',[$product->id])}}"
+                                               @if($product->status==1) checked @endif>
+                                    </label>
+                                </td>
+                                <td class="width-16-rem text-left">
+                                    <div class="dropdown">
+                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
+                                           role="button"
+                                           id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-tools"></i> عملیات
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a href="{{route('admin.market.product.image.index',[$product->id])}}" class="dropdown-item text-right"><i class="fa fa-images"></i>
+                                                تصاویر </a>
+                                            <a href="{{route('admin.market.product.color.index',[$product->id])}}" class="dropdown-item text-right"><i class="fa fa-paint-brush"></i>
+                                                رنگ کالا </a>
+                                            <a href="{{route('admin.market.product.edit',[$product->id])}}"
+                                               class="dropdown-item text-right"><i class="fa fa-edit"></i> ویرایش </a>
+                                            <form action="{{route('admin.market.product.destroy',[$product->id])}}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="dropdown-item text-right delete"><i
+                                                        class="fa fa-window-close"></i> حذف
+                                                </button>
+                                            </form>
 
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -80,4 +107,126 @@
         </section>
     </section>
 
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        function changeStatus(id) {
+            var element = $('#change_status_' + id);
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (response) {
+                    if (response.status) {
+                        if (response.checked) {
+                            element.prop('checked', true);
+                            successToast('محصول با موفقیت فعال شد');
+                        } else {
+                            element.prop('checked', false);
+                            successToast('محصول با موفقیت غیر فعال شد');
+                        }
+                    } else {
+                        element.prop('checked', elementValue);
+                        errorToast('خطا در تغییر وضعیت');
+                    }
+                },
+                error: function () {
+                    element.prop('checked', elementValue);
+                    errorToast('خطا در برقراری ارتباط');
+                }
+            });
+
+            function successToast(message) {
+                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                    '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
+                    '<strong class="ml-auto">' + message + '</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n' +
+                    '</button>\n' +
+                    '</section>\n' +
+                    '</section>';
+                $('.toast-wrapper').append(successToastTag);
+                $('.toast').toast('show').delay(3000).queue(function () {
+                    $(this).remove();
+                });
+            }
+
+            function errorToast(message) {
+                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                    '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
+                    '<strong class="ml-auto">' + message + '</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n' +
+                    '</button>\n' +
+                    '</section>\n' +
+                    '</section>';
+                $('.toast-wrapper').append(errorToastTag);
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $(this).remove();
+                });
+            }
+        }
+
+        function changeMarketable(id) {
+            var element = $('#change_marketable_' + id);
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (response) {
+                    if (response.status) {
+                        if (response.checked) {
+                            element.prop('checked', true);
+                            successToast('قابلیت فروش با موفقیت فعال شد');
+                        } else {
+                            element.prop('checked', false);
+                            successToast('قابلیت فروش با موفقیت غیر فعال شد');
+                        }
+                    } else {
+                        element.prop('checked', elementValue);
+                        errorToast('خطا در تغییر وضعیت');
+                    }
+                },
+                error: function () {
+                    element.prop('checked', elementValue);
+                    errorToast('خطا در برقراری ارتباط');
+                }
+            });
+
+            function successToast(message) {
+                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                    '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
+                    '<strong class="ml-auto">' + message + '</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n' +
+                    '</button>\n' +
+                    '</section>\n' +
+                    '</section>';
+                $('.toast-wrapper').append(successToastTag);
+                $('.toast').toast('show').delay(3000).queue(function () {
+                    $(this).remove();
+                });
+            }
+
+            function errorToast(message) {
+                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                    '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
+                    '<strong class="ml-auto">' + message + '</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n' +
+                    '</button>\n' +
+                    '</section>\n' +
+                    '</section>';
+                $('.toast-wrapper').append(errorToastTag);
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $(this).remove();
+                });
+            }
+        }
+    </script>
 @endsection
