@@ -54,8 +54,8 @@
                                 <td><img src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
                                          width="100px"></td>
                                 <td>{{number_format($product->price)}} تومان</td>
-                                <td>{{$product->category->name}}</td>
-                                <td>{{$product->brand->original_name}}</td>
+                                <td>{{$product->category->name ?? 'فاقد دسته بندی'}}</td>
+                                <td>{{$product->brand->original_name ?? 'فاقد برند'}}</td>
                                 <td>
                                     <label>
                                         <input type="checkbox" id="change_marketable_{{$product->id}}"
@@ -84,6 +84,8 @@
                                                 تصاویر </a>
                                             <a href="{{route('admin.market.product.color.index',[$product->id])}}" class="dropdown-item text-right"><i class="fa fa-paint-brush"></i>
                                                 رنگ کالا </a>
+                                            <a href="{{route('admin.market.product.guarantee.index',[$product->id])}}" class="dropdown-item text-right"><i class="fa fa-shield-alt"></i>
+                                                گارانتی کالا </a>
                                             <a href="{{route('admin.market.product.edit',[$product->id])}}"
                                                class="dropdown-item text-right"><i class="fa fa-edit"></i> ویرایش </a>
                                             <form action="{{route('admin.market.product.destroy',[$product->id])}}" method="POST">

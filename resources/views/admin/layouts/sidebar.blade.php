@@ -17,7 +17,7 @@
                 </section>
                 <section class="sidebar-dropdown">
                     <a href="{{route('admin.market.category.index')}}">دسته بندی</a>
-                    <a href="{{route('admin.market.attribute.index')}}">فرم کالا</a>
+                    <a href="{{route('admin.market.category.attribute.index')}}">فرم کالا</a>
                     <a href="{{route('admin.market.brand.index')}}">برندها</a>
                     <a href="{{route('admin.market.product.index')}}">کالاها</a>
                     <a href="{{route('admin.market.storage.index')}}">انبار</a>
@@ -48,10 +48,10 @@
                     <i class="fas fa-angle-left angle"></i>
                 </section>
                 <section class="sidebar-dropdown">
-                    <a href="{{route('admin.market.payment.all')}}">تمام پرداخت ها</a>
+                    <a href="{{route('admin.market.payment.index')}}">تمام پرداخت ها</a>
                     <a href="{{route('admin.market.payment.online')}}">پرداخت های آنلاین</a>
                     <a href="{{route('admin.market.payment.offline')}}">پرداخت های آفلاین</a>
-                    <a href="{{route('admin.market.payment.attendance')}}">پرداخت در محل</a>
+                    <a href="{{route('admin.market.payment.cash')}}">پرداخت در محل</a>
                 </section>
             </section>
 
@@ -64,7 +64,7 @@
                 <section class="sidebar-dropdown">
                     <a href="{{route('admin.market.discount.copan.index')}}">کوپن تخفیف</a>
                     <a href="{{route('admin.market.discount.common-discount.index')}}">تخفیف عمومی</a>
-                    <a href="{{route('admin.market.discount.amazing-sale.index')}}">فروش شگفت انگیز</a>
+                    <a href="{{route('admin.market.discount.amazing-sale.index')}}">تخفیف شگفت انگیز</a>
                 </section>
             </section>
 
@@ -76,6 +76,10 @@
 
 
             <section class="sidebar-part-title">بخش محتوا</section>
+            <a href="{{route('admin.content.banner.index')}}" class="sidebar-link">
+                <i class="fas fa-bars"></i>
+                <span>بنر ها</span>
+            </a>
             <a href="{{route('admin.content.category.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>دسته بندی</span>

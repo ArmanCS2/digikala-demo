@@ -16,12 +16,12 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $unSeenComments=Comment::where('seen',0)->get();
+        $unSeenComments=Comment::where('commentable_type','App\Models\Content\Post')->where('seen',0)->get();
         foreach ($unSeenComments as $unSeenComment){
             $unSeenComment->seen=1;
             $unSeenComment->save();
         }
-        $comments=Comment::all();
+        $comments=Comment::where('commentable_type','App\Models\Content\Post')->get();
         return view('admin.content.comment.index',compact('comments'));
     }
 
@@ -55,6 +55,8 @@ class CommentController extends Controller
     public function show($id)
     {
         $comment=Comment::find($id);
+        $comment->seen=1;
+        $comment->save();
         return view('admin.content.comment.show',compact('comment'));
 
     }

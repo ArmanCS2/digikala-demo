@@ -11,7 +11,7 @@
             <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">انبار</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> اضافه کردن به انبار</li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page">اصلاح موجودی</li>
         </ol>
     </nav>
 
@@ -20,8 +20,11 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
+                    <h6>
+                        اصلاح موجودی برای:
+                    </h6>
                     <h5>
-                        اضافه کردن به انبار
+                        {{$product->name}}
                     </h5>
                 </section>
 
@@ -30,36 +33,50 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.market.storage.update',[$product->id]) }}" method="post">
+                        @csrf
+                        @method('put')
                         <section class="row">
 
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">نام تحویل گیرنده</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <label for="">تعداد قابل فروش</label>
+                                    <input type="text" name="marketable_number" class="form-control form-control-sm" value="{{old('marketable_number',$product->marketable_number)}}">
                                 </div>
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="">نام تحویل دهنده</label>
-                                    <input type="text" class="form-control form-control-sm">
-                                </div>
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="">تعداد</label>
-                                    <input type="text" class="form-control form-control-sm">
-                                </div>
-                            </section>
-                            <section class="col-12">
-                                <div class="form-group">
-                                    <label for="">توضیحات</label>
-                                    <textarea row="4" name="" class="form-control form-control-sm"></textarea>
-                                </div>
+                                @error('marketable_number')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
 
 
-                            <section class="col-12">
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">تعداد رزرو شده</label>
+                                    <input type="text" name="frozen_number" class="form-control form-control-sm" value="{{old('frozen_number',$product->frozen_number)}}">
+                                </div>
+                                @error('frozen_number')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">تعداد فروخته شده</label>
+                                    <input type="text" name="sold_number" class="form-control form-control-sm" value="{{old('sold_number',$product->sold_number)}}">
+                                </div>
+                                @error('sold_number')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+
+                            <section class="col-12 my-1">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                             </section>
                         </section>

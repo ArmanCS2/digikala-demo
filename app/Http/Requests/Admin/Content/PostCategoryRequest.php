@@ -24,13 +24,14 @@ class PostCategoryRequest extends FormRequest
     public function rules()
     {
         //regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u
+        //regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u
         if($this->isMethod('post')){
             return [
-                'name'=>'required|max:100|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+                'name'=>'required|max:100|min:2|string',
                 'parent_id'=>'nullable',
                 'description'=>'required|max:500|min:5',
                 'image'=>'required|image|mimes:jpg,png,jpeg,gif',
-                'tags'=>'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+                'tags'=>'required|string',
                 'status'=>'required|numeric|in:1,0',
             ];
         }

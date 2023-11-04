@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::simplePaginate(15);
+        $products=Product::all();
         return view('admin.market.product.index',compact('products'));
     }
 
@@ -58,13 +58,15 @@ class ProductController extends Controller
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         DB::transaction(function ()use ($request,$inputs){
             $product=Product::create($inputs);
-            $metas=array_combine($request->meta_key,$request->meta_value);
-            foreach ($metas as $key => $value){
-                ProductMeta::create([
-                    'meta_key'=>$key,
-                    'meta_value'=>$value,
-                    'product_id'=>$product->id
-                ]);
+            if (!empty($request->meta_key[0]) && !empty($request->meta_value[0])) {
+                $metas = array_combine($request->meta_key, $request->meta_value);
+                foreach ($metas as $key => $value) {
+                    ProductMeta::create([
+                        'meta_key' => $key,
+                        'meta_value' => $value,
+                        'product_id' => $product->id
+                    ]);
+                }
             }
         });
 

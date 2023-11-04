@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Market\Payment;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
 use App\Models\User\Role;
@@ -38,6 +39,8 @@ class User extends Authenticatable
         'status',
         'email',
         'password',
+        'email_verified_at',
+        'mobile_verified_at',
     ];
 
     /**
@@ -88,5 +91,10 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function payments()
+    {
+        return $this->belongsToMany(Payment::class);
     }
 }

@@ -134,9 +134,9 @@
                                 <div class="form-group">
                                     <label for="">تاریخ انتشار</label>
                                     <input type="text" class="form-control form-control-sm d-none" name="published_at"
-                                           id="published_at">
+                                           id="published_at" value="{{$product->published_at}}">
                                     <input type="text" class="form-control form-control-sm" id="published_at_view"
-                                           name="published_at_view">
+                                           name="published_at_view" value="{{$product->published_at}}">
                                 </div>
                                 @error('published_at')
                                 <span class="text-danger">

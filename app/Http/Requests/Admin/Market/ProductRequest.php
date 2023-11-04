@@ -30,7 +30,7 @@ class ProductRequest extends FormRequest
                 'brand_id'=>'required|regex:/^[0-9]+$/u|exists:brands,id',
                 'introduction'=>'required|max:1000|min:5',
                 'image'=>'required|image|mimes:jpg,png,jpeg,gif',
-                'tags'=>'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+                'tags'=>'required|string',
                 'status'=>'required|numeric|in:1,0',
                 'marketable'=>'required|numeric|in:1,0',
                 'published_at'=>'required|numeric',
@@ -39,8 +39,8 @@ class ProductRequest extends FormRequest
                 'height'=>'numeric',
                 'width'=>'numeric',
                 'price'=>'required|numeric',
-                'meta_key.*'=>'string',
-                'meta_value.*'=>'string',
+                'meta_key.*'=>'nullable|string',
+                'meta_value.*'=>'nullable|string',
 
             ];
         }
@@ -48,9 +48,9 @@ class ProductRequest extends FormRequest
             'name'=>'required|max:100|min:2',
             'category_id'=>'required|regex:/^[0-9]+$/u|exists:product_categories,id',
             'brand_id'=>'required|regex:/^[0-9]+$/u|exists:brands,id',
-            'introduction'=>'required|max:1000|min:5',
+            'introduction'=>'required|min:5',
             'image'=>'image|mimes:jpg,png,jpeg,gif',
-            'tags'=>'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+            'tags'=>'required|string',
             'status'=>'required|numeric|in:1,0',
             'marketable'=>'required|numeric|in:1,0',
             'published_at'=>'required|numeric',
@@ -59,8 +59,8 @@ class ProductRequest extends FormRequest
             'height'=>'numeric',
             'width'=>'numeric',
             'price'=>'required|numeric',
-            'meta_key.*'=>'string',
-            'meta_value.*'=>'string',
+            'meta_key.*'=>'nullable|string',
+            'meta_value.*'=>'nullable|string',
         ];
     }
 }

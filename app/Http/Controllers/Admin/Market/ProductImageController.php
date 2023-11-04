@@ -101,6 +101,6 @@ class ProductImageController extends Controller
             unlink($image->image);
         }
         $image->delete();
-        return redirect()->route('admin.market.product.image.index', [$id])->with('swal-success', 'تصویر کالا با موفقیت حذف شد');
+        return redirect()->route('admin.market.product.image.index', [$image->product_id])->with('swal-success', 'تصویر کالا با موفقیت حذف شد');
     }
 }

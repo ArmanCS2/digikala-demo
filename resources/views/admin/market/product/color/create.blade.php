@@ -52,6 +52,19 @@
 
                                 <section class="col-12 col-md-6 my-1">
                                     <div class="form-group">
+                                        <label for="">رنگ</label>
+                                        <input type="color" class="form-control form-control-sm" name="color"
+                                               value="{{old('color')}}">
+                                    </div>
+                                    @error('color')
+                                    <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                    @enderror
+                                </section>
+
+                                <section class="col-12 col-md-6 my-1">
+                                    <div class="form-group">
                                         <label for="">میزان افزایش قیمت</label>
                                         <input type="text" class="form-control form-control-sm" name="price_increase"
                                                value="{{old('price_increase')}}">

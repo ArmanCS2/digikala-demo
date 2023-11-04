@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Market\StorageRequest;
+use App\Models\Market\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StorageController extends Controller
 {
@@ -14,7 +17,8 @@ class StorageController extends Controller
      */
     public function index()
     {
-        return view('admin.market.storage.index');
+        $products=Product::all();
+        return view('admin.market.storage.index',compact('products'));
     }
 
     /**
@@ -22,9 +26,10 @@ class StorageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addProduct()
+    public function addProduct($id)
     {
-        return view('admin.market.storage.add-product');
+        $product=Product::find($id);
+        return view('admin.market.storage.add-product',compact('product'));
     }
 
     /**
@@ -33,9 +38,13 @@ class StorageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorageRequest $request,$id)
     {
-        return view('admin.market.storage.store');
+        $product=Product::find($id);
+        $product->marketable_number+=$request->product_count;
+        $product->save();
+        Log::info("receiver => $request->receiver , deliverer => $request->deliverer , product_count => $request->product_count ");
+        return redirect()->route('admin.market.storage.index')->with('swal-success','موجودی با موفقیت افزایش یافت');
     }
 
     /**
@@ -57,7 +66,8 @@ class StorageController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.market.storage.edit');
+        $product=Product::find($id);
+        return view('admin.market.storage.edit',compact('product'));
     }
 
     /**
@@ -67,9 +77,12 @@ class StorageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorageRequest $request, $id)
     {
-        //
+        $product=Product::find($id);
+        $inputs=$request->all();
+        $product->update($inputs);
+        return redirect()->route('admin.market.storage.index')->with('swal-success','موجودی با موفقیت اصلاح یافت');
     }
 
     /**

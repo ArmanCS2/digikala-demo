@@ -11,7 +11,7 @@
             <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">انبار</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> اضافه کردن به انبار</li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page">افزایش موجودی</li>
         </ol>
     </nav>
 
@@ -20,8 +20,11 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
+                    <h6>
+                        افزایش موجودی برای:
+                    </h6>
                     <h5>
-                        اضافه کردن به انبار
+                        {{$product->name}}
                     </h5>
                 </section>
 
@@ -30,36 +33,57 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.market.storage.store',[$product->id]) }}" method="post">
+                        @csrf
                         <section class="row">
 
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">نام تحویل گیرنده</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input type="text" name="receiver" class="form-control form-control-sm" value="{{old('receiver')}}">
                                 </div>
+                                @error('receiver')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">نام تحویل دهنده</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input type="text" name="deliverer" class="form-control form-control-sm" value="{{old('deliverer')}}">
                                 </div>
+                                @error('deliverer')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">تعداد</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <label for="">میزان افزایش موجودی</label>
+                                    <input type="text" name="product_count" class="form-control form-control-sm" value="{{old('product_count')}}">
                                 </div>
+                                @error('product_count')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
-                            <section class="col-12">
+                            <section class="col-12 my-1">
                                 <div class="form-group">
                                     <label for="">توضیحات</label>
-                                    <textarea row="4" name="" class="form-control form-control-sm"></textarea>
+                                    <textarea row="4" name="description" class="form-control form-control-sm">{{old('description')}}</textarea >
                                 </div>
+                                @error('description')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </section>
 
 
-                            <section class="col-12">
+                            <section class="col-12 my-1">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                             </section>
                         </section>

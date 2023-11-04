@@ -25,7 +25,8 @@ class ProductColorRequest extends FormRequest
     {
         return [
             'name'=>'required|string',
-            'price_increase'=>'required|numeric'
+            'color'=>'required|string',
+            'price_increase'=>'required|numeric',
         ];
     }
 }

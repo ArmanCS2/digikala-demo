@@ -14,10 +14,10 @@ class CreateProductUserTable extends Migration
     public function up()
     {
         Schema::create('product_user', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade')->onUpdate('cascade');
-            $table->primary(['user_id','product_id']);
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

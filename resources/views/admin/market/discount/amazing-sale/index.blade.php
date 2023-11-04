@@ -40,22 +40,36 @@
                             <th>درصد تخفیف</th>
                             <th>تاریخ شروع</th>
                             <th>تاریخ پایان</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($amazingSales as $key => $amazingSale)
                         <tr>
-                            <th>1</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>{{$key+1}}</th>
+                            <th>{{$amazingSale->product->name}}</th>
+                            <th>{{$amazingSale->percentage}} % </th>
+                            <td>{{jalaliDate($amazingSale->start_date)}}</td>
+                            <td>{{jalaliDate($amazingSale->end_date)}}</td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" id="change_status_{{$amazingSale->id}}"
+                                           onchange="changeStatus({{$amazingSale->id}})"
+                                           data-url="{{route('admin.market.discount.amazing-sale.ajax.change-status',[$amazingSale->id])}}"
+                                           @if($amazingSale->status==1) checked @endif>
+                                </label>
+                            </td>
                             <td class="width-16-rem text-left">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                <a href="{{route('admin.market.discount.amazing-sale.edit',[$amazingSale->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                <form action="{{route('admin.market.discount.amazing-sale.destroy',[$amazingSale->id])}}" method="post" class="d-inline">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                </form>
                             </td>
                         </tr>
-
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -64,4 +78,68 @@
         </section>
     </section>
 
+@endsection
+
+
+@section('scripts')
+    <script type="text/javascript">
+        function changeStatus(id) {
+            var element = $('#change_status_' + id);
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (response) {
+                    if (response.status) {
+                        if (response.checked) {
+                            element.prop('checked', true);
+                            successToast('تخفیف شگفت انگیز با موفقیت فعال شد');
+                        } else {
+                            element.prop('checked', false);
+                            successToast('تخفیف شگفت انگیز با موفقیت غیر فعال شد');
+                        }
+                    } else {
+                        element.prop('checked', elementValue);
+                        errorToast('خطا در تغییر وضعیت');
+                    }
+                },
+                error: function () {
+                    element.prop('checked', elementValue);
+                    errorToast('خطا در برقراری ارتباط');
+                }
+            });
+
+            function successToast(message) {
+                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                    '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
+                    '<strong class="ml-auto">' + message + '</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n' +
+                    '</button>\n' +
+                    '</section>\n' +
+                    '</section>';
+                $('.toast-wrapper').append(successToastTag);
+                $('.toast').toast('show').delay(3000).queue(function () {
+                    $(this).remove();
+                });
+            }
+
+            function errorToast(message) {
+                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                    '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
+                    '<strong class="ml-auto">' + message + '</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n' +
+                    '</button>\n' +
+                    '</section>\n' +
+                    '</section>';
+                $('.toast-wrapper').append(errorToastTag);
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $(this).remove();
+                });
+            }
+        }
+    </script>
 @endsection

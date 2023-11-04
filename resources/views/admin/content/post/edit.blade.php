@@ -31,7 +31,8 @@
                 </section>
 
                 <section>
-                    <form action="{{route('admin.content.post.update',[$post->id])}}" method="POST" enctype="multipart/form-data"
+                    <form action="{{route('admin.content.post.update',[$post->id])}}" method="POST"
+                          enctype="multipart/form-data"
                           id="form">
                         @csrf
                         @method('put')
@@ -86,15 +87,14 @@
                             </section>
 
 
-
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">تاریخ انتشار</label>
                                     <input type="text" class="form-control form-control-sm d-none" name="published_at"
                                            id="published_at"
-                                           value="{{$postCategory->published_at}}">
+                                           value="{{$post->published_at}}">
                                     <input type="text" class="form-control form-control-sm" id="published_at_view"
-                                           name="published_at_view" value="{{$postCategory->published_at}}">
+                                           name="published_at_view" value="{{$post->published_at}}">
                                 </div>
                                 @error('published_at')
                                 <span class="text-danger">
@@ -107,8 +107,10 @@
                                 <div class="form-group">
                                     <label for="">وضعیت</label>
                                     <select name="status" id="" class="form-control form-control-sm">
-                                        <option value="0" @if(old('status',$post->status)==0) selected @endif>غیر فعال</option>
-                                        <option value="1" @if(old('status',$post->status)==1) selected @endif>فعال</option>
+                                        <option value="0" @if(old('status',$post->status)==0) selected @endif>غیر فعال
+                                        </option>
+                                        <option value="1" @if(old('status',$post->status)==1) selected @endif>فعال
+                                        </option>
                                     </select>
                                 </div>
                                 @error('status')
@@ -122,8 +124,12 @@
                                 <div class="form-group">
                                     <label for="">امکان درج کامنت</label>
                                     <select name="commentable" id="" class="form-control form-control-sm">
-                                        <option value="0" @if(old('commentable',$post->commentable)==0) selected @endif>غیر فعال</option>
-                                        <option value="1" @if(old('commentable',$post->commentable)==1) selected @endif>فعال</option>
+                                        <option value="0" @if(old('commentable',$post->commentable)==0) selected @endif>
+                                            غیر فعال
+                                        </option>
+                                        <option value="1" @if(old('commentable',$post->commentable)==1) selected @endif>
+                                            فعال
+                                        </option>
                                     </select>
                                 </div>
                                 @error('commentable')

@@ -25,6 +25,7 @@
 <section class="toast-wrapper flex-row-reverse">
     @include('alerts.toast.success')
     @include('alerts.toast.error')
+    @include('alerts.toast.info')
 </section>
 
 @include('alerts.sweetalert.success')

@@ -20,7 +20,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        دسته بندی
+                        انبار
                     </h5>
                 </section>
 
@@ -37,25 +37,28 @@
                             <th>#</th>
                             <th>نام کالا</th>
                             <th>تصویر کالا</th>
-                            <th>موجودی</th>
-                            <th>ورودی انبار</th>
-                            <th>خروجی انبار</th>
+                            <th>قابل فروش</th>
+                            <th>رزرو شده</th>
+                            <th>فروخته شده</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($products as $key => $product)
                         <tr>
-                            <th>1</th>
-                            <td></td>
-                            <td><img src="{{asset('admin-assets/images/avatar-2.jpg')}}" class="max-height-4rem"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <th>{{$key+1}}</th>
+                            <td>{{$product->name}}</td>
+                            <td><img src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
+                                     width="100px"></td>
+                            <td>{{$product->marketable_number}}</td>
+                            <td>{{$product->frozen_number}}</td>
+                            <td>{{$product->sold_number}}</td>
                             <td class="width-22-rem text-left">
-                                <a href="{{route('admin.market.storage.add-product')}}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> افزایش موجودی</a>
-                                <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> اصلاح موجودی</a>
+                                <a href="{{route('admin.market.storage.add-product',[$product->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> افزایش موجودی</a>
+                                <a href="{{route('admin.market.storage.edit',[$product->id])}}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> اصلاح موجودی</a>
                             </td>
                         </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>

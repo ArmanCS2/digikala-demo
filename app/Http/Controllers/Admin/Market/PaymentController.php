@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Models\Market\Payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -12,9 +13,10 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function index()
     {
-        return view('admin.market.payment.index');
+        $payments=Payment::all();
+        return view('admin.market.payment.index',compact('payments'));
     }
 
     /**
@@ -24,7 +26,8 @@ class PaymentController extends Controller
      */
     public function online()
     {
-        return view('admin.market.payment.index');
+        $payments=Payment::where('paymentable_type','App\Models\Market\OnlinePayment')->get();
+        return view('admin.market.payment.index',compact('payments'));
     }
 
     /**
@@ -35,7 +38,8 @@ class PaymentController extends Controller
      */
     public function offline()
     {
-        return view('admin.market.payment.index');
+        $payments=Payment::where('paymentable_type','App\Models\Market\OfflinePayment')->get();
+        return view('admin.market.payment.index',compact('payments'));
     }
 
     /**
@@ -44,9 +48,10 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function attendance()
+    public function cash()
     {
-        return view('admin.market.payment.index');
+        $payments=Payment::where('paymentable_type','App\Models\Market\CashPayment')->get();
+        return view('admin.market.payment.index',compact('payments'));
     }
 
     /**
@@ -67,9 +72,10 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('admin.market.payment.index');
+        $payment=Payment::find($id);
+        return view('admin.market.payment.show',compact('payment'));
     }
 
     /**
@@ -78,9 +84,12 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function cancel()
+    public function cancel($id)
     {
-        return view('admin.market.payment.index');
+        $payment=Payment::find($id);
+        $payment->status=2;
+        $payment->save();
+        return redirect()->back()->with('swal-success','پرداخت با موفقیت لغو شد');
     }
 
 
@@ -90,8 +99,11 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function payback()
+    public function payback($id)
     {
-        return view('admin.market.payment.index');
+        $payment=Payment::find($id);
+        $payment->status=3;
+        $payment->save();
+        return redirect()->back()->with('swal-success','پرداخت با موفقیت بازگردانده شد');
     }
 }

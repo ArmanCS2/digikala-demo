@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\App\HomeController;
+use App\Http\Controllers\App\Market\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +15,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+/*
+|--------------------------------------------------------------------------
+| Home Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::prefix('market')->group(function () {
+    Route::get('/product/{product:slug}', [ProductController::class, 'product'])->name('market.product');
+    Route::post('/product/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
+    Route::get('/product/{product:slug}/is-favorite', [ProductController::class, 'isFavorite'])->name('market.product.is-favorite');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('auth')->namespace('App\Http\Controllers\Auth')->group(function () {
+    Route::prefix('customer')->namespace('Customer')->group(function () {
+        Route::get('login-register', 'LoginRegisterController@loginRegisterForm')->name('auth.customer.login-register-form');
+        Route::middleware('throttle:login-register-limiter')->post('login-register', 'LoginRegisterController@loginRegister')->name('auth.customer.login-register');
+
+        Route::get('login-confirm/{token}', 'LoginRegisterController@loginConfirmForm')->name('auth.customer.login-confirm-form');
+        Route::middleware('throttle:login-confirm-limiter')->post('login-confirm/{token}', 'LoginRegisterController@loginConfirm')->name('auth.customer.login-confirm');
+
+        Route::middleware('throttle:login-resend-otp-limiter')->get('login-resend-otp/{token}', 'LoginRegisterController@loginResendOtp')->name('auth.customer.login-resend-otp');
+
+        Route::get('logout', 'LoginRegisterController@logout')->name('auth.customer.logout');
+    });
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +59,7 @@ Route::get('/', function () {
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
 
     Route::get('/', 'AdminDashboardController@index')->name('admin.home');
+    Route::post('/notification/read-all', 'NotificationController@readAll')->name('admin.notification.read-all');
 
     Route::prefix('market')->namespace('Market')->group(function () {
 
@@ -38,6 +72,23 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::delete('/destroy/{id}', 'CategoryController@destroy')->name('admin.market.category.destroy');
             Route::get('/ajax/change-status/{id}', 'CategoryController@ajaxChangeStatus')->name('admin.market.category.ajax.change-status');
             Route::get('/ajax/change-visibility/{id}', 'CategoryController@ajaxChangeVisibility')->name('admin.market.category.ajax.change-visibility');
+
+
+            Route::prefix('attribute')->group(function () {
+                Route::get('/', 'CategoryAttributeController@index')->name('admin.market.category.attribute.index');
+                Route::get('/create', 'CategoryAttributeController@create')->name('admin.market.category.attribute.create');
+                Route::post('/store', 'CategoryAttributeController@store')->name('admin.market.category.attribute.store');
+                Route::get('/edit/{id}', 'CategoryAttributeController@edit')->name('admin.market.category.attribute.edit');
+                Route::put('/update/{id}', 'CategoryAttributeController@update')->name('admin.market.category.attribute.update');
+                Route::delete('/destroy/{id}', 'CategoryAttributeController@destroy')->name('admin.market.category.attribute.destroy');
+
+                Route::get('/value/{id}', 'CategoryValueController@index')->name('admin.market.category.attribute.value.index');
+                Route::get('/value/create/{id}', 'CategoryValueController@create')->name('admin.market.category.attribute.value.create');
+                Route::post('/value/store/{id}', 'CategoryValueController@store')->name('admin.market.category.attribute.value.store');
+                Route::get('/value/edit/{id}', 'CategoryValueController@edit')->name('admin.market.category.attribute.value.edit');
+                Route::put('/value/update/{id}', 'CategoryValueController@update')->name('admin.market.category.attribute.value.update');
+                Route::delete('/value/destroy/{id}', 'CategoryValueController@destroy')->name('admin.market.category.attribute.value.destroy');
+            });
 
         });
 
@@ -52,12 +103,14 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         });
 
         Route::prefix('comment')->group(function () {
+
             Route::get('/', 'CommentController@index')->name('admin.market.comment.index');
-            Route::get('/show', 'CommentController@show')->name('admin.market.comment.show');
-            Route::post('/store', 'CommentController@store')->name('admin.market.comment.store');
-            Route::get('/edit/{id}', 'CommentController@edit')->name('admin.market.comment.edit');
-            Route::put('/update/{id}', 'CommentController@update')->name('admin.market.comment.update');
+            Route::get('/show/{id}', 'CommentController@show')->name('admin.market.comment.show');
             Route::delete('/destroy/{id}', 'CommentController@destroy')->name('admin.market.comment.destroy');
+            Route::get('/approved/{id}', 'CommentController@approved')->name('admin.market.comment.approved');
+            Route::get('/ajax/change-status/{id}', 'CommentController@ajaxChangeStatus')->name('admin.market.comment.ajax.change-status');
+            Route::post('answer/{id}', 'CommentController@answer')->name('admin.market.comment.answer');
+
         });
 
         Route::prefix('delivery')->group(function () {
@@ -78,6 +131,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
                 Route::get('/edit/{id}', 'DiscountController@copanEdit')->name('admin.market.discount.copan.edit');
                 Route::put('/update/{id}', 'DiscountController@copanUpdate')->name('admin.market.discount.copan.update');
                 Route::delete('/destroy/{id}', 'DiscountController@copanDestroy')->name('admin.market.discount.copan.destroy');
+                Route::get('/ajax/change-status/{id}', 'DiscountController@ajaxChangeCopanStatus')->name('admin.market.discount.copan.ajax.change-status');
             });
 
             Route::prefix('common-discount')->group(function () {
@@ -87,6 +141,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
                 Route::get('/edit/{id}', 'DiscountController@commonDiscountEdit')->name('admin.market.discount.common-discount.edit');
                 Route::put('/update/{id}', 'DiscountController@commonDiscountUpdate')->name('admin.market.discount.common-discount.update');
                 Route::delete('/destroy/{id}', 'DiscountController@commonDiscountDestroy')->name('admin.market.discount.common-discount.destroy');
+                Route::get('/ajax/change-status/{id}', 'DiscountController@ajaxChangeCommonDiscountStatus')->name('admin.market.discount.common-discount.ajax.change-status');
             });
 
             Route::prefix('amazing-sale')->group(function () {
@@ -96,6 +151,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
                 Route::get('/edit/{id}', 'DiscountController@amazingSaleEdit')->name('admin.market.discount.amazing-sale.edit');
                 Route::put('/update/{id}', 'DiscountController@amazingSaleUpdate')->name('admin.market.discount.amazing-sale.update');
                 Route::delete('/destroy/{id}', 'DiscountController@amazingSaleDestroy')->name('admin.market.discount.amazing-sale.destroy');
+                Route::get('/ajax/change-status/{id}', 'DiscountController@ajaxChangeAmazingSaleStatus')->name('admin.market.discount.amazing-sale.ajax.change-status');
             });
         });
 
@@ -107,22 +163,23 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::get('/unpaid', 'OrderController@unpaid')->name('admin.market.order.unpaid');
             Route::get('/canceled', 'OrderController@canceled')->name('admin.market.order.canceled');
             Route::get('/returned', 'OrderController@returned')->name('admin.market.order.returned');
-            Route::get('/show/{id}', 'OrderController@show')->name('admin.market.order.show');
+            Route::get('/show-factor/{id}', 'OrderController@showFactor')->name('admin.market.order.show-factor');
+            Route::get('/show-detail/{id}', 'OrderController@showDetail')->name('admin.market.order.show-detail');
             Route::get('/change-send-status/{id}', 'OrderController@changeSendStatus')->name('admin.market.order.change-send-status');
             Route::get('/change-order-status/{id}', 'OrderController@changeOrderStatus')->name('admin.market.order.change-order-status');
-            Route::get('/cancel-order/{id}', 'OrderController@cancel-order')->name('admin.market.order.cancel-order');
+            Route::get('/cancel-order/{id}', 'OrderController@cancelOrder')->name('admin.market.order.cancel-order');
         });
 
 
         Route::prefix('payment')->group(function () {
-            Route::get('/', 'PaymentController@all')->name('admin.market.payment.all');
+            Route::get('/', 'PaymentController@index')->name('admin.market.payment.index');
             Route::get('/online', 'PaymentController@online')->name('admin.market.payment.online');
             Route::get('/offline', 'PaymentController@offline')->name('admin.market.payment.offline');
-            Route::get('/attendance', 'PaymentController@attendance')->name('admin.market.payment.attendance');
-            Route::get('/confirm', 'PaymentController@confirm')->name('admin.market.payment.confirm');
-            Route::get('/show', 'PaymentController@show')->name('admin.market.payment.show');
-            Route::get('/cancel', 'PaymentController@cancel')->name('admin.market.payment.cancel');
-            Route::get('/payback', 'PaymentController@payback')->name('admin.market.payment.payback');
+            Route::get('/cash', 'PaymentController@cash')->name('admin.market.payment.cash');
+            Route::get('/confirm/{id}', 'PaymentController@confirm')->name('admin.market.payment.confirm');
+            Route::get('/show/{id}', 'PaymentController@show')->name('admin.market.payment.show');
+            Route::get('/cancel/{id}', 'PaymentController@cancel')->name('admin.market.payment.cancel');
+            Route::get('/payback/{id}', 'PaymentController@payback')->name('admin.market.payment.payback');
         });
 
         Route::prefix('product')->group(function () {
@@ -142,33 +199,43 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::put('/color/update/{id}', 'ProductColorController@update')->name('admin.market.product.color.update');
             Route::delete('/color/destroy/{id}', 'ProductColorController@destroy')->name('admin.market.product.color.destroy');
 
+            Route::get('/guarantee/{id}', 'GuaranteeController@index')->name('admin.market.product.guarantee.index');
+            Route::get('/guarantee/create/{id}', 'GuaranteeController@create')->name('admin.market.product.guarantee.create');
+            Route::post('/guarantee/store/{id}', 'GuaranteeController@store')->name('admin.market.product.guarantee.store');
+            Route::get('/guarantee/edit/{id}', 'GuaranteeController@edit')->name('admin.market.product.guarantee.edit');
+            Route::put('/guarantee/update/{id}', 'GuaranteeController@update')->name('admin.market.product.guarantee.update');
+            Route::delete('/guarantee/destroy/{id}', 'GuaranteeController@destroy')->name('admin.market.product.guarantee.destroy');
+            Route::get('/guarantee/ajax/change-status/{id}', 'GuaranteeController@ajaxChangeStatus')->name('admin.market.product.guarantee.ajax.change-status');
+
             Route::get('/image/{id}', 'ProductImageController@index')->name('admin.market.product.image.index');
             Route::get('/image/create/{id}', 'ProductImageController@create')->name('admin.market.product.image.create');
             Route::post('/image/store/{id}', 'ProductImageController@store')->name('admin.market.product.image.store');
             Route::delete('/image/destroy/{id}', 'ProductImageController@destroy')->name('admin.market.product.image.destroy');
         });
 
-        Route::prefix('attribute')->group(function () {
-            Route::get('/', 'AttributeController@index')->name('admin.market.attribute.index');
-            Route::get('/create', 'AttributeController@create')->name('admin.market.attribute.create');
-            Route::post('/store', 'AttributeController@store')->name('admin.market.attribute.store');
-            Route::get('/edit/{id}', 'AttributeController@edit')->name('admin.market.attribute.edit');
-            Route::put('/update/{id}', 'AttributeController@update')->name('admin.market.attribute.update');
-            Route::delete('/destroy/{id}', 'AttributeController@destroy')->name('admin.market.attribute.destroy');
-        });
 
         Route::prefix('storage')->group(function () {
             Route::get('/', 'StorageController@index')->name('admin.market.storage.index');
-            Route::get('/add-product', 'StorageController@addProduct')->name('admin.market.storage.add-product');
-            Route::post('/store', 'StorageController@store')->name('admin.market.storage.store');
+            Route::get('/add-product/{id}', 'StorageController@addProduct')->name('admin.market.storage.add-product');
+            Route::post('/store/{id}', 'StorageController@store')->name('admin.market.storage.store');
             Route::get('/edit/{id}', 'StorageController@edit')->name('admin.market.storage.edit');
             Route::put('/update/{id}', 'StorageController@update')->name('admin.market.storage.update');
-            Route::delete('/destroy/{id}', 'StorageController@destroy')->name('admin.market.storage.destroy');
         });
     });
 
 
     Route::prefix('content')->namespace('Content')->group(function () {
+
+
+        Route::prefix('banner')->group(function () {
+            Route::get('/', 'BannerController@index')->name('admin.content.banner.index');
+            Route::get('/create', 'BannerController@create')->name('admin.content.banner.create');
+            Route::post('/store', 'BannerController@store')->name('admin.content.banner.store');
+            Route::get('/edit/{id}', 'BannerController@edit')->name('admin.content.banner.edit');
+            Route::put('/update/{id}', 'BannerController@update')->name('admin.content.banner.update');
+            Route::delete('/destroy/{id}', 'BannerController@destroy')->name('admin.content.banner.destroy');
+            Route::get('/ajax/change-status/{id}', 'BannerController@ajaxChangeStatus')->name('admin.content.banner.ajax.change-status');
+        });
 
         Route::prefix('category')->group(function () {
             Route::get('/', 'CategoryController@index')->name('admin.content.category.index');

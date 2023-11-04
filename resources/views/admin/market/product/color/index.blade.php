@@ -39,6 +39,7 @@
                             <th>#</th>
                             <th>نام رنگ</th>
                             <th>میزان افزایش قیمت</th>
+                            <th>رنگ</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                         </thead>
@@ -48,6 +49,7 @@
                                 <th>{{$key+1}}</th>
                                 <td>{{$color->name}}</td>
                                 <td>{{number_format($color->price_increase)}} تومان </td>
+                                <td><a class="btn" style="background-color: {{$color->color}}"></a></td>
                                 <td class="width-22-rem text-left">
                                     <a href="{{route('admin.market.product.color.edit',[$color->id])}}"
                                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>

@@ -25,7 +25,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('delivery_id')->nullable()->constrained('delivery')->onDelete('cascade')->onUpdate('cascade');
             $table->longText('delivery_object')->nullable();
             $table->decimal('delivery_amount',20,3)->nullable();
-            $table->tinyInteger('delivery_status')->default(0);
+            $table->tinyInteger('delivery_status')->default(0)->comment('0 => storage , 1 => sending , 2 => sent , 3 => delivered  ');
             $table->timestamp('delivery_date')->nullable();
             $table->decimal('order_final_amount',20,3)->nullable();
             $table->decimal('order_discount_amount',20,3)->nullable();
