@@ -56,7 +56,7 @@
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
-                                                <section class="product-add-to-cart"><a href="#"
+                                                <section class="product-add-to-cart"><a href="{{route('market.cart.add-product',[$product])}}"
                                                                                         data-bs-toggle="tooltip"
                                                                                         data-bs-placement="left"
                                                                                         title="افزودن به سبد خرید"><i
@@ -186,7 +186,7 @@
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
-                                                <section class="product-add-to-cart"><a href="#"
+                                                <section class="product-add-to-cart"><a href="{{route('market.cart.add-product',[$product])}}"
                                                                                         data-bs-toggle="tooltip"
                                                                                         data-bs-placement="left"
                                                                                         title="افزودن به سبد خرید"><i
@@ -313,7 +313,7 @@
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
-                                                <section class="product-add-to-cart"><a href="#"
+                                                <section class="product-add-to-cart"><a href="{{route('market.cart.add-product',[$product])}}"
                                                                                         data-bs-toggle="tooltip"
                                                                                         data-bs-placement="left"
                                                                                         title="افزودن به سبد خرید"><i

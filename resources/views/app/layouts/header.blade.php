@@ -79,7 +79,7 @@
                     @endguest
 
                     <section class="header-cart d-inline ps-3 border-start position-relative">
-                        <a class="btn btn-link position-relative text-dark header-cart-link" href="javascript:void(0)">
+                        <a class="btn btn-link position-relative text-dark header-cart-link" href="{{route('market.cart')}}">
                             <i class="fa fa-shopping-cart"></i> <span style="top: 80%;"
                                                                       class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">2</span>
                         </a>

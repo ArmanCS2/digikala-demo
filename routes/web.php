@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\App\HomeController;
+use App\Http\Controllers\App\Market\CartController;
 use App\Http\Controllers\App\Market\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,9 +25,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('market')->group(function () {
-    Route::get('/product/{product:slug}', [ProductController::class, 'product'])->name('market.product');
-    Route::post('/product/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
-    Route::get('/product/{product:slug}/is-favorite', [ProductController::class, 'isFavorite'])->name('market.product.is-favorite');
+    Route::prefix('product')->group(function () {
+        Route::get('/{product:slug}', [ProductController::class, 'product'])->name('market.product');
+        Route::post('/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
+        Route::get('/{product:slug}/is-favorite', [ProductController::class, 'isFavorite'])->name('market.product.is-favorite');
+    });
+    Route::prefix('cart')->group(function () {
+        Route::get('/', [CartController::class, 'cart'])->name('market.cart');
+        Route::put('update', [CartController::class, 'update'])->name('market.cart.update');
+        Route::post('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
+        Route::get('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
+        Route::get('remove-product/{cartItem}', [CartController::class, 'removeProduct'])->name('market.cart.remove-product');
+
+    });
 });
 
 
@@ -35,6 +46,8 @@ Route::prefix('market')->group(function () {
 | Auth Routes
 |--------------------------------------------------------------------------
 */
+
+
 Route::prefix('auth')->namespace('App\Http\Controllers\Auth')->group(function () {
     Route::prefix('customer')->namespace('Customer')->group(function () {
         Route::get('login-register', 'LoginRegisterController@loginRegisterForm')->name('auth.customer.login-register-form');
@@ -429,11 +442,9 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     });
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
+//
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('notifications',Notification::where('read_at',null)->get());
         });
 
-        view()->composer(['app.index','app.market.product'],function ($view){
+        view()->composer(['app.index','app.market.product','app.market.cart'],function ($view){
             $view->with('productCategories',ProductCategory::whereNull('parent_id')->where('status',1)->where('show_in_menu',1)->get());
         });
     }
