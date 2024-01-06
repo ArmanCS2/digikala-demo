@@ -9,7 +9,7 @@
 
     <!-- start cart -->
     <section class="mb-4">
-        <section class="container-xxl" >
+        <section class="container-xxl">
             <section class="row">
                 <section class="col">
                     <!-- start vontent header -->
@@ -40,7 +40,8 @@
                                     </section>
                                 </section>
 
-                                <section class="payment-alert alert alert-primary d-flex align-items-center p-2" role="alert">
+                                <section class="payment-alert alert alert-primary d-flex align-items-center p-2"
+                                         role="alert">
                                     <i class="fa fa-info-circle flex-shrink-0 me-2"></i>
                                     <secrion>
                                         کد تخفیف خود را در این بخش وارد کنید.
@@ -49,10 +50,16 @@
 
                                 <section class="row">
                                     <section class="col-md-5">
-                                        <section class="input-group input-group-sm">
-                                            <input type="text" class="form-control" placeholder="کد تخفیف را وارد کنید">
-                                            <button class="btn btn-primary" type="button">اعمال کد</button>
-                                        </section>
+                                        <form action="{{route('market.payment.copan-discount')}}" method="post">
+                                            @csrf
+                                            <section class="input-group input-group-sm">
+
+                                                <input type="text" name="copan" class="form-control"
+                                                       placeholder="کد تخفیف را وارد کنید">
+                                                <button class="btn btn-primary" type="submit">اعمال کد</button>
+
+                                            </section>
+                                        </form>
                                     </section>
 
                                 </section>
@@ -74,10 +81,11 @@
                                 </section>
                                 <section class="payment-select">
 
-                                    <section class="payment-alert alert alert-primary d-flex align-items-center p-2" role="alert">
+                                    <section class="payment-alert alert alert-primary d-flex align-items-center p-2"
+                                             role="alert">
                                         <i class="fa fa-info-circle flex-shrink-0 me-2"></i>
                                         <secrion>
-                                            برای پیشگیری از انتقال ویروس کرونا پیشنهاد می کنیم روش پرداخت اینترنتی رو پرداخت کنید.
+                                            روش پرداخت را انتخاب کنید
                                         </secrion>
                                     </section>
 
@@ -126,52 +134,68 @@
                             </section>
 
 
-
-
                         </section>
                         <section class="col-md-3">
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
                                 <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">قیمت کالاها (2)</p>
-                                    <p class="text-muted">398,000 تومان</p>
+                                    <p class="text-muted">قیمت کالاها ({{priceFormat($cartItems->count())}})</p>
+                                    <p class="text-muted">{{priceFormat($productPrices)}} تومان</p>
                                 </section>
 
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">تخفیف کالاها</p>
-                                    <p class="text-danger fw-bolder">78,000 تومان</p>
+                                    <p class="text-danger fw-bolder">{{priceFormat($order->order_discount_amount ?? 0)}}
+                                        تومان</p>
                                 </section>
 
                                 <section class="border-bottom mb-3"></section>
 
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">جمع سبد خرید</p>
-                                    <p class="fw-bolder">320,000 تومان</p>
+                                    <p class="fw-bolder">{{priceFormat($totalProductPrices)}} تومان</p>
                                 </section>
 
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">هزینه ارسال</p>
-                                    <p class="text-warning">54,000 تومان</p>
+                                    <p class="text-warning">{{priceFormat($order->delivery->amount ?? 0)}} تومان</p>
                                 </section>
 
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">تخفیف اعمال شده</p>
-                                    <p class="text-danger">100,000 تومان</p>
-                                </section>
+                                @if(!empty($order->commonDiscount))
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted">تخفیف عمومی اعمال شده</p>
+                                        <p class="text-danger">{{priceFormat($order->order_common_discount_amount)}}
+                                            تومان</p>
+                                    </section>
+                                @endif
+
+                                @if(!empty($order->copan))
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted">کد تخفیف اعمال شده</p>
+                                        <p class="text-danger">{{priceFormat($order->order_copan_discount_amount)}}
+                                            تومان</p>
+                                    </section>
+                                @endif
 
                                 <p class="my-3">
-                                    <i class="fa fa-info-circle me-1"></i> کاربر گرامی کالاها بر اساس نوع ارسالی که انتخاب می کنید در مدت زمان ذکر شده ارسال می شود.
+                                    <i class="fa fa-info-circle me-1"></i> کاربر گرامی کالاها بر اساس نوع ارسالی که
+                                    انتخاب می کنید در مدت زمان ذکر شده ارسال می شود.
                                 </p>
 
                                 <section class="border-bottom mb-3"></section>
 
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">مبلغ قابل پرداخت</p>
-                                    <p class="fw-bold">274,000 تومان</p>
+                                    <p class="fw-bold">{{priceFormat($order->order_final_amount + ($order->delivery_amount ??0 ))}}
+                                        تومان</p>
                                 </section>
 
                                 <section class="">
-                                    <section id="payment-button" class="text-warning border border-warning text-center py-2 pointer rounded-2 d-block">نوع پرداخت را انتخاب کن</section>
-                                    <a id="final-level" href="my-orders.html" class="btn btn-danger d-none">ثبت سفارش و گرفتن کد رهگیری</a>
+                                    <section id="payment-button"
+                                             class="text-warning border border-warning text-center py-2 pointer rounded-2 d-block">
+                                        روش پرداخت را انتخاب کنید
+                                    </section>
+                                    <a id="final-level" href="my-orders.html" class="btn btn-danger d-none">ثبت سفارش و
+                                        گرفتن کد رهگیری</a>
                                 </section>
 
                             </section>
@@ -213,10 +237,10 @@
 
 
             //edit-address
-            var addresses={!! auth()->user()->addresses !!} ;
+            var addresses = {!! auth()->user()->addresses !!};
             addresses.map(function (address) {
-                var id=address.id;
-                var target='#province-' + id;
+                var id = address.id;
+                var target = '#province-' + id;
                 var selected = target + ' option:selected';
                 $(target).change(function () {
                     var element = $(selected);
@@ -228,9 +252,9 @@
                         success: function (response) {
                             if (response.status) {
                                 let cities = response.cities;
-                                $('#city-'+id).empty();
+                                $('#city-' + id).empty();
                                 cities.map((city) => {
-                                    $('#city-'+id).append($('<option/>').val(city.id).text(city.title));
+                                    $('#city-' + id).append($('<option/>').val(city.id).text(city.title));
                                 });
 
                             }

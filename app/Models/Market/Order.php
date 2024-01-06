@@ -13,7 +13,9 @@ class Order extends Model
     protected $guarded=[];
     protected $casts=[
         'address_object'=>'object',
-        'delivery_object'=>'object'
+        'delivery_object'=>'object',
+        'common_discount_object'=>'object',
+        'copan_object'=>'object'
         ];
 
     public function user()

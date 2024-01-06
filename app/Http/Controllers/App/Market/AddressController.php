@@ -8,6 +8,7 @@ use App\Http\Requests\App\Market\StoreAddressRequest;
 use App\Http\Requests\App\Market\UpdateAddressRequest;
 use App\Models\Market\Address;
 use App\Models\Market\CartItem;
+use App\Models\Market\CommonDiscount;
 use App\Models\Market\Delivery;
 use App\Models\Market\Order;
 use App\Models\Market\Province;
@@ -115,11 +116,21 @@ class AddressController extends Controller
         $productDiscounts = 0;
         $finalProductDiscounts = 0;
         $totalProductPrices = 0;
-        foreach ($cartItems as $cartItem){
-            $productPrices+=$cartItem->productPrice();
-            $productDiscounts+=$cartItem->productDiscount();
-            $finalProductDiscounts+=$cartItem->finalProductDiscount();
-            $totalProductPrices+=$cartItem->totalProductPrice();
+        foreach ($cartItems as $cartItem) {
+            $productPrices += $cartItem->productPrice();
+            $productDiscounts += $cartItem->productDiscount();
+            $finalProductDiscounts += $cartItem->finalProductDiscount();
+            $totalProductPrices += $cartItem->totalProductPrice();
+        }
+        $commonDiscount = CommonDiscount::where('start_date', '<=', now())->where('end_date', '>=', now())->where('status', 1)->orderBy('created_at', 'desc')->first();
+        if (!empty($commonDiscount)) {
+            $commonDiscountTotalProductPrices = $totalProductPrices * ($commonDiscount->percentage / 100);
+            if ($commonDiscountTotalProductPrices > $commonDiscount->discount_ceiling) {
+                $commonDiscountTotalProductPrices = $commonDiscount->discount_ceiling;
+            }
+            if ($totalProductPrices > $commonDiscount->minimal_order_amount) {
+                $totalProductPrices = $totalProductPrices - $commonDiscountTotalProductPrices;
+            }
         }
         Order::updateOrCreate([
             'user_id' => $user->id,
@@ -130,6 +141,14 @@ class AddressController extends Controller
                 'address_object' => Address::find($request->address_id),
                 'delivery_id' => $request->delivery_id,
                 'delivery_object' => Delivery::find($request->delivery_id),
+                'delivery_amount' => Delivery::find($request->delivery_id)->amount,
+                'order_final_amount' => $totalProductPrices,
+                'order_discount_amount' => $finalProductDiscounts,
+                'common_discount_id' => $commonDiscount->id ?? null,
+                'common_discount_object' => $commonDiscount ?? null,
+                'order_common_discount_amount' => $commonDiscountTotalProductPrices ?? 0,
+                'order_total_products_discount_amount' =>$finalProductDiscounts + ($commonDiscountTotalProductPrices ?? 0),
+
             ]);
         return redirect()->route('market.payment');
     }

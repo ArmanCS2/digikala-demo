@@ -58,6 +58,7 @@ Route::prefix('market')->group(function () {
 
         //payment
         Route::get('payment', [PaymentController::class, 'payment'])->name('market.payment');
+        Route::post('payment-copan-discount', [PaymentController::class, 'copanDiscount'])->name('market.payment.copan-discount');
     });
 
 });
