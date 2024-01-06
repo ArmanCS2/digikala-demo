@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $guarded=[];
+    protected $casts=[
+        'address_object'=>'object',
+        'delivery_object'=>'object'
+        ];
 
     public function user()
     {

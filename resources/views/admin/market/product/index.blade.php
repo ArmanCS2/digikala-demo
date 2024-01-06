@@ -80,15 +80,19 @@
                                             <i class="fa fa-tools"></i> عملیات
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a href="{{route('admin.market.product.image.index',[$product->id])}}" class="dropdown-item text-right"><i class="fa fa-images"></i>
+                                            <a href="{{route('admin.market.product.image.index',[$product->id])}}"
+                                               class="dropdown-item text-right"><i class="fa fa-images"></i>
                                                 تصاویر </a>
-                                            <a href="{{route('admin.market.product.color.index',[$product->id])}}" class="dropdown-item text-right"><i class="fa fa-paint-brush"></i>
+                                            <a href="{{route('admin.market.product.color.index',[$product->id])}}"
+                                               class="dropdown-item text-right"><i class="fa fa-paint-brush"></i>
                                                 رنگ کالا </a>
-                                            <a href="{{route('admin.market.product.guarantee.index',[$product->id])}}" class="dropdown-item text-right"><i class="fa fa-shield-alt"></i>
+                                            <a href="{{route('admin.market.product.guarantee.index',[$product->id])}}"
+                                               class="dropdown-item text-right"><i class="fa fa-shield-alt"></i>
                                                 گارانتی کالا </a>
                                             <a href="{{route('admin.market.product.edit',[$product->id])}}"
                                                class="dropdown-item text-right"><i class="fa fa-edit"></i> ویرایش </a>
-                                            <form action="{{route('admin.market.product.destroy',[$product->id])}}" method="POST">
+                                            <form action="{{route('admin.market.product.destroy',[$product->id])}}"
+                                                  method="POST">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="dropdown-item text-right delete"><i
@@ -142,7 +146,7 @@
             });
 
             function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -151,13 +155,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -166,7 +172,9 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(errorToastTag);
+                $('.toast-wrapper').removeClass('d-none');
                 $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
@@ -201,7 +209,7 @@
             });
 
             function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -210,13 +218,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -225,7 +235,9 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(errorToastTag);
+                $('.toast-wrapper').removeClass('d-none');
                 $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }

@@ -8,8 +8,9 @@
             <section class="d-md-flex justify-content-md-between align-items-md-center py-3">
 
                 <section class="d-flex justify-content-between align-items-center d-md-block">
-                    <a class="text-decoration-none" href="{{route('home')}}"><img src="{{asset('app-assets/images/logo/9.png')}}" alt="logo"
-                                                                           width="200px" height="60px"></a>
+                    <a class="text-decoration-none" href="{{route('home')}}"><img
+                            src="{{asset('app-assets/images/logo/9.png')}}" alt="logo"
+                            width="200px" height="60px"></a>
                     <button class="btn btn-link text-dark d-md-none" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                         <i class="fa fa-bars me-1"></i>
@@ -79,49 +80,65 @@
                     @endguest
 
                     <section class="header-cart d-inline ps-3 border-start position-relative">
-                        <a class="btn btn-link position-relative text-dark header-cart-link" href="{{route('market.cart')}}">
+                        <a class="btn btn-link position-relative text-dark header-cart-link"
+                           href="{{route('market.cart')}}">
                             <i class="fa fa-shopping-cart"></i> <span style="top: 80%;"
-                                                                      class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">2</span>
+                                                                      class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">{{empty($cartItems) ? 0 : $cartItems->count()}}</span>
                         </a>
                         <section class="header-cart-dropdown">
                             <section class="border-bottom d-flex justify-content-between p-2">
-                                <span class="text-muted">2 کالا</span>
-                                <a class="text-decoration-none text-info" href="cart.html">مشاهده سبد خرید </a>
-                            </section>
-                            <section class="header-cart-dropdown-body">
+                                <span class="text-muted">{{empty($cartItems) ? 0 : priceFormat($cartItems->count())}} کالا</span>
 
+                                <a class="text-decoration-none text-info" href="{{route('market.cart')}}">مشاهده سبد
+                                    خرید </a>
+                            </section>
+                            @auth
+                                <section class="header-cart-dropdown-body">
+                                    @php
+                                        $totalProductPrices=0;
+                                    @endphp
+                                    @foreach($cartItems as $cartItem)
+                                        @php
+                                            $totalProductPrices+=$cartItem->totalProductPrice();
+                                        @endphp
+                                        <section
+                                            class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
+                                            <a href="{{route('market.product',[$cartItem->product])}}"><img
+                                                    class="flex-shrink-1"
+                                                    src="{{asset($cartItem->product->image['indexArray'][$cartItem->product->image['currentImage']])}}"
+                                                    alt="{{$cartItem->product->slug}}"></a>
+                                            <section class="w-100 text-truncate"><a
+                                                    class="text-decoration-none text-dark"
+                                                    href="{{route('market.product',[$cartItem->product])}}">{{$cartItem->product->name}}</a>
+                                            </section>
+                                            <section class="flex-shrink-1"><a
+                                                    class="text-muted text-decoration-none p-1"
+                                                    href="{{route('market.cart.remove-product',[$cartItem])}}"><i
+                                                        class="fa fa-trash-alt"></i></a>
+                                            </section>
+                                        </section>
+                                    @endforeach
+                                </section>
+                                <section
+                                    class="header-cart-dropdown-footer border-top d-flex justify-content-between align-items-center p-2">
+                                    <section class="">
+                                        <section>مبلغ قابل پرداخت</section>
+                                        <section> {{priceFormat($totalProductPrices)}} تومان</section>
+                                    </section>
+                                    <section class=""><a class="btn btn-danger btn-sm d-block" href="cart.html">ثبت
+                                            سفارش</a></section>
+                                </section>
+                            @endauth
+                            @guest
                                 <section
                                     class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
-                                    <img class="flex-shrink-1" src="assets/images/products/1.jpg" alt="">
-                                    <section class="w-100 text-truncate"><a class="text-decoration-none text-dark"
-                                                                            href="#">کتاب اثر مرکب اثر دارن هاردی
-                                            انتشارات معیار علم</a></section>
-                                    <section class="flex-shrink-1"><a class="text-muted text-decoration-none p-1"
-                                                                      href="#"><i class="fa fa-trash-alt"></i></a>
+                                    <section class="w-100 text-truncate"><p class="my-2 mx-3"> وارد حساب کاربری خود شوید
+                                            <a
+                                                class=" text-dark fw-bold mx-4"
+                                                href="{{ route('auth.customer.login-register-form') }}"> ورود </a></p>
                                     </section>
                                 </section>
-
-                                <section
-                                    class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
-                                    <img class="flex-shrink-1" src="assets/images/products/2.jpg" alt="">
-                                    <section class="w-100 text-truncate"><a class="text-decoration-none text-dark"
-                                                                            href="#">دستگاه آبمیوه گیری دنویر با کد
-                                            1016</a></section>
-                                    <section class="flex-shrink-1"><a class="text-muted text-decoration-none p-1"
-                                                                      href="#"><i class="fa fa-trash-alt"></i></a>
-                                    </section>
-                                </section>
-
-                            </section>
-                            <section
-                                class="header-cart-dropdown-footer border-top d-flex justify-content-between align-items-center p-2">
-                                <section class="">
-                                    <section>مبلغ قابل پرداخت</section>
-                                    <section> 1,326,000 تومان</section>
-                                </section>
-                                <section class=""><a class="btn btn-danger btn-sm d-block" href="cart.html">ثبت
-                                        سفارش</a></section>
-                            </section>
+                            @endguest
                         </section>
                     </section>
                 </section>
@@ -152,12 +169,12 @@
                                                 class="sublist-item-sublist-wrapper d-flex justify-content-around align-items-center">
                                                 @foreach($category->children as $subCategory)
                                                     <section class="sublist-column col">
+                                                        <a href="#"
+                                                           class="sub-category">{{$subCategory->name}}</a>
+                                                        @foreach($subCategory->children as $subSubCategory)
                                                             <a href="#"
-                                                               class="sub-category">{{$subCategory->name}}</a>
-                                                            @foreach($subCategory->children as $subSubCategory)
-                                                                <a href="#"
-                                                                   class="sub-sub-category">{{$subSubCategory->name}}</a>
-                                                            @endforeach
+                                                               class="sub-sub-category">{{$subSubCategory->name}}</a>
+                                                        @endforeach
                                                     </section>
                                                 @endforeach
                                             </section>
@@ -175,7 +192,8 @@
                     <section class="navbar-item"><a href="https://armanafzali.ir">درباره ما</a></section>
                     <section class="navbar-item"><a href="https://armanafzali.ir">فروشنده شوید</a></section>
                     <section class="navbar-item"><a href="https://armanafzali.ir">فرصت های شغلی</a></section>
-                    <section class="navbar-item"><a class="text-danger" href="https://armanafzali.ir">سایت رزومه من</a></section>
+                    <section class="navbar-item"><a class="text-danger" href="https://armanafzali.ir">سایت رزومه من</a>
+                    </section>
                 </section>
 
 

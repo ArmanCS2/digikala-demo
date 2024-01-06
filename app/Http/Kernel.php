@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CartEmpty;
+use App\Http\Middleware\ProfileComplete;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -62,5 +64,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'profile.complete' => ProfileComplete::class,
+        'cart.empty' => CartEmpty::class,
     ];
 }

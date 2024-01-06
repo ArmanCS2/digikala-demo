@@ -16,7 +16,8 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('province_id')->constrained('province_cities')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('city_id')->constrained('province_cities')->onDelete('cascade')->onUpdate('cascade');
             $table->string('postal_code');
             $table->text('address');
             $table->string('no');

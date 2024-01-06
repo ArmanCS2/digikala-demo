@@ -26,7 +26,7 @@
                 </section>
                 <section>
                     <h6>
-                    توضیحات : {{$role->description}}
+                        توضیحات : {{$role->description}}
                     </h6>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">

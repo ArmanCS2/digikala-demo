@@ -8,9 +8,9 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"> <a href="#"> خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#"> بخش محتوا</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#"> نظرات</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#"> خانه</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#"> بخش محتوا</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#"> نظرات</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page"> نمایش نظر</li>
         </ol>
     </nav>
@@ -34,32 +34,33 @@
                         {{$comment->user->full_name}} - {{$comment->user->id}}
                     </section>
                     <section class="card-body">
-                        <h5 class="card-title">عنوان پست : {{$comment->commentable->title}} کد پست : {{$comment->commentable->id}}</h5>
+                        <h5 class="card-title">عنوان پست : {{$comment->commentable->title}} کد پست
+                            : {{$comment->commentable->id}}</h5>
                         <p class="card-text">{{$comment->body}}</p>
                     </section>
                 </section>
 
                 <section>
                     @if(empty($comment->parent_id))
-                    <form action="{{route('admin.content.comment.answer',[$comment->id])}}" method="post">
-                        @csrf
-                        <section class="row">
-                            <section class="col-12 my-1">
-                                <div class="form-group">
-                                    <label for="">پاسخ ادمین</label>
-                                    ‍<textarea name="body" class="form-control form-control-sm" rows="4"></textarea>
-                                </div>
-                                @error('body')
-                                <span class="text-danger">
+                        <form action="{{route('admin.content.comment.answer',[$comment->id])}}" method="post">
+                            @csrf
+                            <section class="row">
+                                <section class="col-12 my-1">
+                                    <div class="form-group">
+                                        <label for="">پاسخ ادمین</label>
+                                        ‍<textarea name="body" class="form-control form-control-sm" rows="4"></textarea>
+                                    </div>
+                                    @error('body')
+                                    <span class="text-danger">
                                     <strong>{{$message}}</strong>
                                 </span>
-                                @enderror
+                                    @enderror
+                                </section>
+                                <section class="col-12 my-1">
+                                    <button class="btn btn-primary btn-sm">ثبت</button>
+                                </section>
                             </section>
-                            <section class="col-12 my-1">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
+                        </form>
                     @endif
                 </section>
 

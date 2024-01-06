@@ -35,13 +35,14 @@
                         <tbody>
 
                         <tr class="table-active">
-                            <th> شماره سفارش :  {{ $order->id }}</th>
+                            <th> شماره سفارش : {{ $order->id }}</th>
                             <td class="width-8-rem text-left">
                                 <a href="" class="btn btn-dark btn-sm text-white" id="print">
                                     <i class="fa fa-print"></i>
                                     چاپ
                                 </a>
-                                <a href="{{route('admin.market.order.show-detail',[$order->id])}}" class="btn btn-warning btn-sm">
+                                <a href="{{route('admin.market.order.show-detail',[$order->id])}}"
+                                   class="btn btn-warning btn-sm">
                                     <i class="fa fa-book"></i>
                                     جزئیات
                                 </a>

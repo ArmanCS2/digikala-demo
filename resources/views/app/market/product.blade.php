@@ -276,10 +276,11 @@
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
-                                                <section class="product-add-to-cart"><a href="{{route('market.cart.add-product',[$relatedProduct])}}"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        data-bs-placement="left"
-                                                                                        title="افزودن به سبد خرید"><i
+                                                <section class="product-add-to-cart"><a
+                                                        href="{{route('market.cart.add-product',[$relatedProduct])}}"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="left"
+                                                        title="افزودن به سبد خرید"><i
                                                             class="fa fa-cart-plus"></i></a></section>
                                                 @auth
                                                     @if($relatedProduct->user->contains(auth()->user()->id))
@@ -638,7 +639,7 @@
 
 
             function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -646,13 +647,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function infoToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
@@ -661,13 +664,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -675,7 +680,9 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(errorToastTag);
+                $('.toast-wrapper').removeClass('d-none');
                 $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
@@ -709,7 +716,7 @@
 
 
             function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -717,13 +724,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function infoToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
@@ -732,13 +741,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -746,7 +757,9 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(errorToastTag);
+                $('.toast-wrapper').removeClass('d-none');
                 $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Market\Address;
 use App\Models\Market\Payment;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
@@ -96,5 +97,10 @@ class User extends Authenticatable
     public function payments()
     {
         return $this->belongsToMany(Payment::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 }

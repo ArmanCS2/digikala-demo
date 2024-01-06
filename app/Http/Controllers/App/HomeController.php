@@ -7,6 +7,7 @@ use App\Models\Content\Banner;
 use App\Models\Market\Brand;
 use App\Models\Market\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {

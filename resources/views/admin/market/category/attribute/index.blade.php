@@ -8,8 +8,8 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page"> فرم کالا</li>
         </ol>
     </nav>
@@ -25,7 +25,8 @@
                 </section>
 
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.category.attribute.create') }}" class="btn btn-info btn-sm">ایجاد فرم جدید</a>
+                    <a href="{{ route('admin.market.category.attribute.create') }}" class="btn btn-info btn-sm">ایجاد
+                        فرم جدید</a>
                     <div class="max-width-16-rem">
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                     </div>
@@ -44,22 +45,27 @@
                         </thead>
                         <tbody>
                         @foreach($attributes as $key => $attribute)
-                        <tr>
-                            <th>{{$key + 1}}</th>
-                            <td>{{$attribute->name}}</td>
-                            <td>{{$attribute->unit}}</td>
-                            <td>{{$attribute->category->name ?? '-'}}</td>
-                            <td class="width-22-rem text-left">
-                                <a href="{{route('admin.market.category.attribute.value.index',[$attribute->id])}}" class="btn btn-info btn-sm"><i class="fa fa-list-ul"></i> مقادیر</a>
-                                <a href="{{route('admin.market.category.attribute.edit',[$attribute->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <form action="{{route('admin.market.category.attribute.destroy',[$attribute->id])}}" method="post" class="d-inline">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                                </form>
+                            <tr>
+                                <th>{{$key + 1}}</th>
+                                <td>{{$attribute->name}}</td>
+                                <td>{{$attribute->unit}}</td>
+                                <td>{{$attribute->category->name ?? '-'}}</td>
+                                <td class="width-22-rem text-left">
+                                    <a href="{{route('admin.market.category.attribute.value.index',[$attribute->id])}}"
+                                       class="btn btn-info btn-sm"><i class="fa fa-list-ul"></i> مقادیر</a>
+                                    <a href="{{route('admin.market.category.attribute.edit',[$attribute->id])}}"
+                                       class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                    <form action="{{route('admin.market.category.attribute.destroy',[$attribute->id])}}"
+                                          method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger btn-sm delete" type="submit"><i
+                                                class="fa fa-trash-alt"></i> حذف
+                                        </button>
+                                    </form>
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>

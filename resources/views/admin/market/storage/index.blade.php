@@ -8,8 +8,8 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page"> انبار</li>
         </ol>
     </nav>
@@ -45,19 +45,21 @@
                         </thead>
                         <tbody>
                         @foreach($products as $key => $product)
-                        <tr>
-                            <th>{{$key+1}}</th>
-                            <td>{{$product->name}}</td>
-                            <td><img src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
-                                     width="100px"></td>
-                            <td>{{$product->marketable_number}}</td>
-                            <td>{{$product->frozen_number}}</td>
-                            <td>{{$product->sold_number}}</td>
-                            <td class="width-22-rem text-left">
-                                <a href="{{route('admin.market.storage.add-product',[$product->id])}}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> افزایش موجودی</a>
-                                <a href="{{route('admin.market.storage.edit',[$product->id])}}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> اصلاح موجودی</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <th>{{$key+1}}</th>
+                                <td>{{$product->name}}</td>
+                                <td><img src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
+                                         width="100px"></td>
+                                <td>{{$product->marketable_number}}</td>
+                                <td>{{$product->frozen_number}}</td>
+                                <td>{{$product->sold_number}}</td>
+                                <td class="width-22-rem text-left">
+                                    <a href="{{route('admin.market.storage.add-product',[$product->id])}}"
+                                       class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> افزایش موجودی</a>
+                                    <a href="{{route('admin.market.storage.edit',[$product->id])}}"
+                                       class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> اصلاح موجودی</a>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>

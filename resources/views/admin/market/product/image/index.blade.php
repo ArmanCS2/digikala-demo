@@ -26,7 +26,8 @@
                 </section>
 
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.product.image.create',[$product->id]) }}" class="btn btn-info btn-sm">ایجاد تصویر جدید</a>
+                    <a href="{{ route('admin.market.product.image.create',[$product->id]) }}"
+                       class="btn btn-info btn-sm">ایجاد تصویر جدید</a>
                     <div class="max-width-16-rem">
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                     </div>
@@ -47,7 +48,8 @@
                                 <th>{{$key+1}}</th>
                                 <td><img src="{{asset($image->image)}}" width="100"></td>
                                 <td class="width-22-rem text-left">
-                                    <form class="d-inline" action="{{route('admin.market.product.image.destroy',[$image->id])}}"
+                                    <form class="d-inline"
+                                          action="{{route('admin.market.product.image.destroy',[$image->id])}}"
                                           method="post">
                                         @csrf
                                         @method('delete')

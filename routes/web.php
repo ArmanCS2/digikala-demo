@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\App\HomeController;
+use App\Http\Controllers\App\Market\AddressController;
 use App\Http\Controllers\App\Market\CartController;
+use App\Http\Controllers\App\Market\PaymentController;
 use App\Http\Controllers\App\Market\ProductController;
+use App\Http\Controllers\App\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,20 +27,39 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::prefix('profile')->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/complete', [ProfileController::class, 'complete'])->name('profile.complete');
+    Route::put('/update-complete', [ProfileController::class, 'updateComplete'])->name('profile.update.complete');
+});
 Route::prefix('market')->group(function () {
     Route::prefix('product')->group(function () {
         Route::get('/{product:slug}', [ProductController::class, 'product'])->name('market.product');
         Route::post('/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
         Route::get('/{product:slug}/is-favorite', [ProductController::class, 'isFavorite'])->name('market.product.is-favorite');
     });
+
     Route::prefix('cart')->group(function () {
         Route::get('/', [CartController::class, 'cart'])->name('market.cart');
         Route::put('update', [CartController::class, 'update'])->name('market.cart.update');
         Route::post('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
         Route::get('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
         Route::get('remove-product/{cartItem}', [CartController::class, 'removeProduct'])->name('market.cart.remove-product');
-
     });
+
+    Route::middleware(['profile.complete', 'cart.empty'])->group(function () {
+        //address and delivery
+        Route::get('address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('market.address-and-delivery');
+        Route::post('add-address', [AddressController::class, 'addAddress'])->name('market.add-address');
+        Route::post('store-address-delivery', [AddressController::class, 'storeAddressDelivery'])->name('market.store-address-delivery');
+        Route::put('edit-address/{address}', [AddressController::class, 'editAddress'])->name('market.edit-address');
+        Route::get('get-cities/{province}', [AddressController::class, 'getCities'])->name('market.get-cities');
+
+        //payment
+        Route::get('payment', [PaymentController::class, 'payment'])->name('market.payment');
+    });
+
 });
 
 

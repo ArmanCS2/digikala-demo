@@ -8,8 +8,8 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page"> جزئیات سفارش</li>
         </ol>
     </nav>
@@ -45,11 +45,11 @@
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
                                 <td>{{ $item->singleProduct->name ?? '-' }}</td>
-                                <td>{{ $item->amazingSale->percentage ?? '-' }} % </td>
-                                <td>{{ number_format($item->amazing_sale_discount_amount) ?? '-' }} تومان </td>
+                                <td>{{ $item->amazingSale->percentage ?? '-' }} %</td>
+                                <td>{{ number_format($item->amazing_sale_discount_amount) ?? '-' }} تومان</td>
                                 <td>{{ $item->number }} </td>
-                                <td>{{ number_format($item->final_product_price) ?? '-' }} تومان </td>
-                                <td>{{ number_format($item->final_total_price) ?? '-'}} تومان </td>
+                                <td>{{ number_format($item->final_product_price) ?? '-' }} تومان</td>
+                                <td>{{ number_format($item->final_total_price) ?? '-'}} تومان</td>
                                 <td>{{ $item->color->color_name ?? '-' }}</td>
                                 <td>{{ $item->guarantee->name ?? '-' }}</td>
                                 <td>
@@ -68,7 +68,6 @@
                         </tbody>
                     </table>
                 </section>
-
 
 
             </section>

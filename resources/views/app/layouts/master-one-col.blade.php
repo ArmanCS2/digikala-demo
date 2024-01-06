@@ -38,11 +38,13 @@
 @yield('scripts')
 
 
-<section class="toast-wrapper flex-row-reverse">
-    @include('alerts.toast.success')
-    @include('alerts.toast.error')
-    @include('alerts.toast.info')
+
+<section class="toast-wrapper flex-row-reverse d-none">
 </section>
+@include('alerts.toast.success')
+@include('alerts.toast.error')
+@include('alerts.toast.info')
+
 
 @include('alerts.sweetalert.success')
 @include('alerts.sweetalert.error')

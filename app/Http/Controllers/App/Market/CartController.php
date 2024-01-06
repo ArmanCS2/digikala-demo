@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\App\Market\CartRequest;
 use App\Models\Market\CartItem;
 use App\Models\Market\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 
 class CartController extends Controller
 {
@@ -16,11 +16,23 @@ class CartController extends Controller
         if (Auth::check()) {
             $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
             $relatedProducts = Product::inRandomOrder()->take(10)->get();
-            return view('app.market.cart',compact('cartItems','relatedProducts'));
+            return view('app.market.cart', compact('cartItems', 'relatedProducts'));
         }
 
         return redirect()->back()->with('toast-info', 'برای مشاهده سبد خرید باید وارد حساب کاربری خود شوید');
 
+    }
+
+    public function update(Request $request)
+    {
+        $numbers = $request->number;
+        foreach ($numbers as $id => $number) {
+            $cartItem = CartItem::find($id);
+            $cartItem->number = $number;
+            $cartItem->save();
+        }
+
+        return redirect()->route('market.address-and-delivery');
     }
 
     public function addProduct(CartRequest $request, Product $product)
@@ -54,7 +66,10 @@ class CartController extends Controller
 
     public function removeProduct(CartItem $cartItem)
     {
-        $cartItem->delete();
-        return redirect()->back()->with('swal-success', 'محصول با موفقیت از سبد خرید حذف شد');
+        if ($cartItem->user_id == Auth::user()->id) {
+            $cartItem->delete();
+            return redirect()->back()->with('swal-success', 'محصول با موفقیت از سبد خرید حذف شد');
+        }
+        return redirect()->back()->with('toast-error', 'شما مجاز به حذف این آیتم نیستید');
     }
 }

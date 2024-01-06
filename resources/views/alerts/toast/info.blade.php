@@ -1,5 +1,6 @@
 @if(session('toast-info'))
-    <section class="toast" data-delay="3000">
+    <section class="toast-wrapper flex-row-reverse">
+    <section class="toast">
         <section class="toast-body py-3 d-flex bg-info text-white">
             <strong class="ml-auto">{{session('toast-info')}}</strong>
             <a  class="mr-2 close" data-dismiss="toast" aria-label="Close">
@@ -7,9 +8,13 @@
 
         </section>
     </section>
+    </section>
     <script>
         $(document).ready(function () {
-            $('.toast').toast('show');
+            $('.toast').toast('show').delay(4000).queue(function () {
+                $('.toast-wrapper').addClass('d-none');
+                $(this).remove();
+            });
         })
     </script>
 @endif

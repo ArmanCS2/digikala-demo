@@ -26,27 +26,30 @@
                     <section class="row mt-4">
                         <section class="col-md-9 mb-3">
 
-                            <form action="" method="post" id="cart-items"
+                            <form action="{{route('market.cart.update')}}" method="post" id="cart-items"
                                   class="content-wrapper bg-white p-3 rounded-2">
                                 @csrf
+                                @method('put')
                                 @php
-                                    $productCount=0;
                                     $finalProductPrices=0;
                                     $finalProductDiscounts=0;
                                     $totalProductPrices=0;
                                 @endphp
                                 @foreach($cartItems as $cartItem)
                                     @php
-                                        $productCount += $cartItem->number;
                                         $finalProductPrices += $cartItem->finalProductPrice();
                                         $finalProductDiscounts += $cartItem->finalProductDiscount();
                                         $totalProductPrices += $cartItem->totalProductPrice();
                                     @endphp
                                     <section class="cart-item d-md-flex py-3">
-                                        <section class="cart-img align-self-start flex-shrink-1"><img
-                                                src="{{asset($cartItem->product->image['indexArray'][$cartItem->product->image['currentImage']])}}" alt="{{$cartItem->product->name}}"></section>
+                                        <section class="cart-img align-self-start flex-shrink-1"><a
+                                                href="{{route('market.product',[$cartItem->product])}}"><img
+                                                    src="{{asset($cartItem->product->image['indexArray'][$cartItem->product->image['currentImage']])}}"
+                                                    alt="{{$cartItem->product->name}}"></a></section>
                                         <section class="align-self-start w-100">
-                                            <p class="fw-bold">{{$cartItem->product->name}}</p>
+                                            <a class="fw-bold text-decoration-none text-dark"
+                                               href="{{route('market.product',[$cartItem->product])}}">
+                                                <p>{{$cartItem->product->name}}</p></a>
                                             @if(!empty($cartItem->color_id))
                                                 <p><span style="background-color: {{$cartItem->color->color}};"
                                                          class="cart-product-selected-color me-1"></span>
@@ -62,13 +65,19 @@
                                             </p>
                                             <section>
                                                 <section class="cart-product-number d-inline-block ">
-                                                    <button class="cart-number cart-number-down" type="button">-</button>
-                                                    <input class="number" data-product-discount="{{$cartItem->productDiscount()}}" data-product-price="{{$cartItem->productPrice()}}" type="number" min="1" max="5" step="1"
+                                                    <button class="cart-number cart-number-down" type="button">-
+                                                    </button>
+                                                    <input class="number"
+                                                           name="number[{{$cartItem->id}}]"
+                                                           data-product-discount="{{$cartItem->productDiscount()}}"
+                                                           data-product-price="{{$cartItem->productPrice()}}"
+                                                           type="number" min="1" max="5" step="1"
                                                            value="{{$cartItem->number}}"
                                                            readonly="readonly">
                                                     <button class="cart-number cart-number-up" type="button">+</button>
                                                 </section>
-                                                <a class="text-decoration-none ms-4 cart-delete" href="{{route('market.cart.remove-product',[$cartItem])}}"><i
+                                                <a class="text-decoration-none ms-4 cart-delete"
+                                                   href="{{route('market.cart.remove-product',[$cartItem])}}"><i
                                                         class="fa fa-trash-alt"></i> حذف از سبد</a>
                                             </section>
                                         </section>
@@ -91,18 +100,22 @@
                         <section class="col-md-3">
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
                                 <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">قیمت کالاها ({{priceFormat($productCount)}})</p>
-                                    <p class="text-muted" id="final-product-prices">{{priceFormat($finalProductPrices)}}</p>
+                                    <p class="text-muted">قیمت کالاها ({{priceFormat($cartItems->count()) }})</p>
+                                    <p class="text-muted"
+                                       id="final-product-prices">{{priceFormat($finalProductPrices)}}</p>
                                 </section>
-
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">تخفیف کالاها</p>
-                                    <p class="text-danger fw-bolder" id="final-product-discounts">{{priceFormat($finalProductDiscounts)}}</p>
-                                </section>
+                                @if($finalProductDiscounts != 0)
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted">تخفیف کالاها</p>
+                                        <p class="text-danger fw-bolder"
+                                           id="final-product-discounts">{{priceFormat($finalProductDiscounts)}}</p>
+                                    </section>
+                                @endif
                                 <section class="border-bottom mb-3"></section>
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">جمع سبد خرید</p>
-                                    <p class="fw-bolder" id="total-product-prices">{{priceFormat($totalProductPrices)}}</p>
+                                    <p class="fw-bolder"
+                                       id="total-product-prices">{{priceFormat($totalProductPrices)}}</p>
                                 </section>
 
                                 <p class="my-3">
@@ -114,7 +127,9 @@
 
 
                                 <section class="">
-                                    <a href="address.html" class="btn btn-danger d-block">تکمیل فرآیند خرید</a>
+                                    <button onclick="document.getElementById('cart-items').submit();"
+                                            class="btn btn-danger d-block w-100">تکمیل فرآیند خرید
+                                    </button>
                                 </section>
 
                             </section>
@@ -155,10 +170,11 @@
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
-                                                <section class="product-add-to-cart"><a href="{{route('market.cart.add-product',[$relatedProduct])}}"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        data-bs-placement="left"
-                                                                                        title="افزودن به سبد خرید"><i
+                                                <section class="product-add-to-cart"><a
+                                                        href="{{route('market.cart.add-product',[$relatedProduct])}}"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="left"
+                                                        title="افزودن به سبد خرید"><i
                                                             class="fa fa-cart-plus"></i></a></section>
                                                 @auth
                                                     @if($relatedProduct->user->contains(auth()->user()->id))
@@ -244,7 +260,6 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            console.log('hi');
             bill();
             //number
             $('.cart-number').click(function () {
@@ -258,7 +273,7 @@
             var final_product_discounts = 0;
             var total_product_prices = 0;
 
-            $('.number').each(function() {
+            $('.number').each(function () {
                 var productPrice = parseFloat($(this).data('product-price'));
                 var productDiscount = parseFloat($(this).data('product-discount'));
                 var number = parseFloat($(this).val());
@@ -271,8 +286,8 @@
 
 
             $('#final-product-prices').html(toPersianNumber(final_product_prices) + '  تومان  ');
-            $('#final-product-discounts').html(toPersianNumber(final_product_discounts)+ '  تومان  ');
-            $('#total-product-prices').html(toPersianNumber(total_product_prices)  + '  تومان  ');
+            $('#final-product-discounts').html(toPersianNumber(final_product_discounts) + '  تومان  ');
+            $('#total-product-prices').html(toPersianNumber(total_product_prices) + '  تومان  ');
         }
 
         function toPersianNumber(number) {
@@ -310,7 +325,7 @@
 
 
             function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -318,13 +333,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function infoToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
@@ -333,13 +350,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -347,7 +366,9 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(errorToastTag);
+                $('.toast-wrapper').removeClass('d-none');
                 $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
@@ -381,7 +402,7 @@
 
 
             function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -389,13 +410,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function infoToast(message) {
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
+                var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
@@ -404,13 +427,15 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(3000).queue(function () {
+                $('.toast-wrapper').removeClass('d-none');
+                $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
 
             function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="5000">\n' +
+                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
@@ -418,7 +443,9 @@
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(errorToastTag);
+                $('.toast-wrapper').removeClass('d-none');
                 $('.toast').toast('show').delay(4000).queue(function () {
+                    $('.toast-wrapper').addClass('d-none');
                     $(this).remove();
                 });
             }
