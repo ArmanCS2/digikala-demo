@@ -89,45 +89,51 @@
                                         </secrion>
                                     </section>
 
-                                    <input type="radio" name="payment_type" value="1" id="d1"/>
-                                    <label for="d1" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
-                                        <section class="mb-2">
-                                            <i class="fa fa-credit-card mx-1"></i>
-                                            پرداخت آنلاین
-                                        </section>
-                                        <section class="mb-2">
-                                            <i class="fa fa-calendar-alt mx-1"></i>
-                                            درگاه پرداخت زرین پال
-                                        </section>
-                                    </label>
+                                    <form action="{{route('market.payment.type')}}" method="post" id="payment_type">
+                                        @csrf
 
-                                    <section class="mb-2"></section>
 
-                                    <input type="radio" name="payment_type" value="2" id="d2"/>
-                                    <label for="d2" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
-                                        <section class="mb-2">
-                                            <i class="fa fa-id-card-alt mx-1"></i>
-                                            پرداخت آفلاین
-                                        </section>
-                                        <section class="mb-2">
-                                            <i class="fa fa-calendar-alt mx-1"></i>
-                                            حداکثر در 2 روز کاری بررسی می شود
-                                        </section>
-                                    </label>
+                                        <input type="radio" name="payment_type" value="1" id="d1"/>
+                                        <label for="d1" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
+                                            <section class="mb-2">
+                                                <i class="fa fa-credit-card mx-1"></i>
+                                                پرداخت آنلاین
+                                            </section>
+                                            <section class="mb-2">
+                                                <i class="fa fa-calendar-alt mx-1"></i>
+                                                درگاه پرداخت زرین پال
+                                            </section>
+                                        </label>
 
-                                    <section class="mb-2"></section>
+                                        <section class="mb-2"></section>
 
-                                    <input type="radio" name="payment_type" value="3" id="d3"/>
-                                    <label for="d3" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
-                                        <section class="mb-2">
-                                            <i class="fa fa-money-check mx-1"></i>
-                                            پرداخت در محل
-                                        </section>
-                                        <section class="mb-2">
-                                            <i class="fa fa-calendar-alt mx-1"></i>
-                                            پرداخت به پیک هنگام دریافت کالا
-                                        </section>
-                                    </label>
+                                        <input type="radio" name="payment_type" value="2" id="d2"/>
+                                        <label for="d2" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
+                                            <section class="mb-2">
+                                                <i class="fa fa-id-card-alt mx-1"></i>
+                                                پرداخت آفلاین
+                                            </section>
+                                            <section class="mb-2">
+                                                <i class="fa fa-calendar-alt mx-1"></i>
+                                                حداکثر در 2 روز کاری بررسی می شود
+                                            </section>
+                                        </label>
+
+                                        <section class="mb-2"></section>
+
+                                        <input type="radio" name="payment_type" value="3" id="cash_payment"/>
+                                        <label for="cash_payment" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
+                                            <section class="mb-2">
+                                                <i class="fa fa-money-check mx-1"></i>
+                                                پرداخت در محل
+                                            </section>
+                                            <section class="mb-2">
+                                                <i class="fa fa-calendar-alt mx-1"></i>
+                                                پرداخت به پیک هنگام دریافت کالا
+                                            </section>
+                                        </label>
+
+                                    </form>
 
 
                                 </section>
@@ -194,8 +200,8 @@
                                              class="text-warning border border-warning text-center py-2 pointer rounded-2 d-block">
                                         روش پرداخت را انتخاب کنید
                                     </section>
-                                    <a id="final-level" href="my-orders.html" class="btn btn-danger d-none">ثبت سفارش و
-                                        گرفتن کد رهگیری</a>
+                                    <button id="final-level" onclick="document.getElementById('payment_type').submit()" class="btn btn-danger d-none w-100">ثبت سفارش و
+                                        گرفتن کد رهگیری</button>
                                 </section>
 
                             </section>
@@ -211,63 +217,17 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
-            $('#province').change(function () {
-                var element = $('#province option:selected');
-                var url = element.attr('data-url');
-
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (response) {
-                        if (response.status) {
-                            let cities = response.cities;
-                            $('#city').empty();
-                            cities.map((city) => {
-                                $('#city').append($('<option/>').val(city.id).text(city.title));
-                            });
-
-                        }
-                    },
-                    error: function (response) {
-                        console.log(response);
-                    }
-                });
-            });
-
-
-            //edit-address
-            var addresses = {!! auth()->user()->addresses !!};
-            addresses.map(function (address) {
-                var id = address.id;
-                var target = '#province-' + id;
-                var selected = target + ' option:selected';
-                $(target).change(function () {
-                    var element = $(selected);
-                    var url = element.attr('data-url');
-
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        success: function (response) {
-                            if (response.status) {
-                                let cities = response.cities;
-                                $('#city-' + id).empty();
-                                cities.map((city) => {
-                                    $('#city-' + id).append($('<option/>').val(city.id).text(city.title));
-                                });
-
-                            }
-                        },
-                        error: function (response) {
-                            console.log(response);
-                        }
-                    });
-                });
-            });
-
-
-        })
+        /*$(function () {
+            $('#cash_payment').click(function(){
+                var newDiv = document.createElement('div');
+                newDiv.innerHTML = `
+                <section class="input-group input-group-sm">
+                    <input type="text" name="cash_receiver" class="form-control" form="payment_type" placeholder="نام و نام خانوادگی دریافت کننده" >
+                </section>
+                `;
+                document.getElementsByClassName('content-wrapper')[1].appendChild(newDiv)
+            })
+        })*/
     </script>
 
 

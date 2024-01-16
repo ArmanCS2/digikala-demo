@@ -42,6 +42,13 @@ class ProfileController extends Controller
         return redirect()->route('market.address-and-delivery');
     }
 
+    public function orders()
+    {
+        $user=Auth::user();
+        $orders=$user->orders;
+        return view('app.profile.orders',compact('orders'));
+    }
+
 
 
 

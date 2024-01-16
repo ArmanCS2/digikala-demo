@@ -32,6 +32,7 @@ Route::prefix('profile')->group(function () {
     Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/complete', [ProfileController::class, 'complete'])->name('profile.complete');
     Route::put('/update-complete', [ProfileController::class, 'updateComplete'])->name('profile.update.complete');
+    Route::get('/orders',[ProfileController::class,'orders'])->name('profile.orders');
 });
 Route::prefix('market')->group(function () {
     Route::prefix('product')->group(function () {
@@ -41,7 +42,7 @@ Route::prefix('market')->group(function () {
     });
 
     Route::prefix('cart')->group(function () {
-        Route::get('/', [CartController::class, 'cart'])->name('market.cart');
+        Route::middleware('cart.empty')->get('/', [CartController::class, 'cart'])->name('market.cart');
         Route::put('update', [CartController::class, 'update'])->name('market.cart.update');
         Route::post('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
         Route::get('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
@@ -59,6 +60,8 @@ Route::prefix('market')->group(function () {
         //payment
         Route::get('payment', [PaymentController::class, 'payment'])->name('market.payment');
         Route::post('payment-copan-discount', [PaymentController::class, 'copanDiscount'])->name('market.payment.copan-discount');
+        Route::post('payment-type', [PaymentController::class, 'paymentType'])->name('market.payment.type');
+        Route::any('payment-callback/{order}/{amount}/{onlinePayment}', [PaymentController::class, 'paymentCallback'])->name('market.payment-callback');
     });
 
 });

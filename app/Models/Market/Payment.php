@@ -5,10 +5,13 @@ namespace App\Models\Market;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Payment extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $guarded = [];
 
     public function paymentable()
     {
@@ -22,11 +25,11 @@ class Payment extends Model
 
     public function type()
     {
-        if ($this->type==0){
+        if ($this->type == 0) {
             return 'آنلاین';
         }
 
-        if ($this->type==1){
+        if ($this->type == 1) {
             return 'آفلاین';
         }
 
@@ -35,15 +38,15 @@ class Payment extends Model
 
     public function status()
     {
-        if ($this->status==0){
+        if ($this->status == 0) {
             return 'پرداخت نشده';
         }
 
-        if ($this->status==1){
+        if ($this->status == 1) {
             return 'پرداخت شده';
         }
 
-        if ($this->status==2){
+        if ($this->status == 2) {
             return 'لغو شده';
         }
 

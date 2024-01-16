@@ -9,26 +9,18 @@
 
 @include('app.layouts.header')
 
-<section class="container-xxl body-container">
-    @include('app.layouts.sidebar')
-</section>
-<!-- start main one col -->
-<main id="main-body-one-col" class="main-body">
-
-    @yield('content')
-
-</main>
-<!-- end main one col -->
-
-
 <!-- start body -->
-<section class="container-xxl body-container">
-    <aside id="sidebar" class="sidebar">
-
-    </aside>
-    <main id="main-body" class="main-body">
-
-    </main>
+<section class="">
+    <section id="main-body-two-col" class="container-xxl body-container">
+        <section class="row">
+            @include('app.layouts.sidebar')
+            <main id="main-body" class="main-body col-md-9">
+                <section class="content-wrapper bg-white p-3 rounded-2 mb-2">
+                    @yield('content')
+                </section>
+            </main>
+        </section>
+    </section>
 </section>
 <!-- end body -->
 

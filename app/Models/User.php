@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Market\Address;
+use App\Models\Market\Order;
 use App\Models\Market\Payment;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
@@ -102,5 +103,10 @@ class User extends Authenticatable
     public function addresses()
     {
         return $this->hasMany(Address::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class)->orderBy('created_at','desc');
     }
 }

@@ -87,17 +87,18 @@
             <section class="col">
                 <section class="fw-bold">درباره من</section>
                 <section class="text-muted footer-intro">
-                    این وبسایت صرفا جهت نمونه کار پیاده سازی جهت سفارش پروژه های خود از این راه های ارتباطی کمک بگیرید
-                    وبسایت : <a href="https://armanafzali.ir">armanafzali.ir</a>
-                    ایمیل : <a href="mailto:armanafzali31@gmail.com">armanafzali31@gmail.com</a>
-                    شماره تماس : <a href="tel:+989223618018">09223618018</a>
+                    این وبسایت صرفا جهت نمونه کار پیاده سازی جهت سفارش پروژه های خود از این راه های ارتباطی زیر کمک بگیرید :
+                    <br>
+                    وبسایت : <a href="https://armanafzali.ir" class="text-dark">armanafzali.ir</a>
+                    ایمیل : <a href="mailto:armanafzali31@gmail.com" class="text-dark">armanafzali31@gmail.com</a>
+                    شماره تماس : <a href="tel:+989223618018" class="text-dark">09223618018</a>
                 </section>
             </section>
         </section>
 
         <section class="row border-top pt-4">
             <section class="col">
-                <section class="text-muted footer-intro text-center">کلیه حقوق این وبسایت متعلق به <a href="https://armanafzali.ir">armanafzali.ir</a> می
+                <section class="text-muted footer-intro text-center">کلیه حقوق این وبسایت متعلق به <a href="https://armanafzali.ir" class="text-dark">armanafzali.ir</a> می
                     باشد.
                 </section>
             </section>

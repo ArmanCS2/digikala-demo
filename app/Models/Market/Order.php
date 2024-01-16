@@ -15,7 +15,8 @@ class Order extends Model
         'address_object'=>'object',
         'delivery_object'=>'object',
         'common_discount_object'=>'object',
-        'copan_object'=>'object'
+        'copan_object'=>'object',
+        'payment_object'=>'object'
         ];
 
     public function user()

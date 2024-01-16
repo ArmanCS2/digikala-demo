@@ -128,7 +128,7 @@ class AddressController extends Controller
             if ($commonDiscountTotalProductPrices > $commonDiscount->discount_ceiling) {
                 $commonDiscountTotalProductPrices = $commonDiscount->discount_ceiling;
             }
-            if ($totalProductPrices > $commonDiscount->minimal_order_amount) {
+            if ($totalProductPrices >= $commonDiscount->minimal_order_amount) {
                 $totalProductPrices = $totalProductPrices - $commonDiscountTotalProductPrices;
             }
         }
