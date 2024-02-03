@@ -55,7 +55,7 @@
                                                                     <strong>{{$message}}</strong>
                                                                 </span>
                                     @enderror
-                                    @foreach($addresses as $address)
+                                    @forelse($addresses as $address)
                                         <input type="radio" form="store-address-delivery" name="address_id"
                                                value="{{$address->id}}" id="a-{{$address->id}}"/>
                                         <!--checked="checked"-->
@@ -91,6 +91,8 @@
                                             <a class="" data-bs-toggle="modal"
                                                data-bs-target="#edit-address-{{$address->id}}"><i
                                                     class="fa fa-edit"></i> ویرایش آدرس</a>
+                                            <a class="mt-4" href="{{route('market.delete-address',$address)}}"><i
+                                                    class="fa fa-trash"></i> حذف آدرس</a>
                                             <span class="address-selected">کالاها به این آدرس ارسال می شوند</span>
                                         </label>
                                         <section class="address-add-wrapper">
@@ -280,7 +282,11 @@
                                             </section>
                                             <!-- end add address Modal -->
                                         </section>
-                                    @endforeach
+                                    @empty
+                                        <section class="my-address-wrapper mb-2 p-2">
+                                            <p>آدرسی وجود ندارد</p>
+                                        </section>
+                                    @endforelse
 
 
                                     <section class="address-add-wrapper">

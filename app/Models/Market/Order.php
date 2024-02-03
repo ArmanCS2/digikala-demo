@@ -72,6 +72,11 @@ class Order extends Model
         return 'تحویل داده شده';
     }
 
+    public function delivery_type()
+    {
+        return $this->belongsTo(Delivery::class,'delivery_id');
+    }
+
     public function payment_status()
     {
         if ($this->payment_status == 0) {

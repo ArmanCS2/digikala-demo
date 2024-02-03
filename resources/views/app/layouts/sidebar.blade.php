@@ -3,19 +3,21 @@
         <!-- start sidebar nav-->
         <section class="sidebar-nav">
             <section class="sidebar-nav-item">
-                <span class="sidebar-nav-item-title"><a class="p-3" href="my-orders.html">سفارش های من</a></span>
+                <span class="sidebar-nav-item-title"><a class="p-3" href="{{route('profile.orders')}}">سفارش های من</a></span>
             </section>
             <section class="sidebar-nav-item">
-                <span class="sidebar-nav-item-title"><a class="p-3" href="my-addresses.html">آدرس های من</a></span>
+                <span class="sidebar-nav-item-title"><a class="p-3"
+                                                        href="{{route('profile.addresses')}}">آدرس های من</a></span>
             </section>
             <section class="sidebar-nav-item">
-                <span class="sidebar-nav-item-title"><a class="p-3" href="my-favorites.html">لیست علاقه مندی</a></span>
+                <span class="sidebar-nav-item-title"><a class="p-3" href="{{route('profile.favorites')}}">لیست علاقه مندی</a></span>
             </section>
             <section class="sidebar-nav-item">
-                <span class="sidebar-nav-item-title"><a class="p-3" href="my-profile.html">ویرایش حساب</a></span>
+                <span class="sidebar-nav-item-title"><a class="p-3"
+                                                        href="{{route('profile.index')}}">حساب کاربری</a></span>
             </section>
             <section class="sidebar-nav-item">
-                <span class="sidebar-nav-item-title"><a class="p-3" href="#">خروج از حساب کاربری</a></span>
+                <span class="sidebar-nav-item-title"><a class="p-3" href="{{route('auth.customer.logout')}}">خروج از حساب کاربری</a></span>
             </section>
 
         </section>

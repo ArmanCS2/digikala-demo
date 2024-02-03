@@ -10,12 +10,15 @@ class OrderItem extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $guarded=[];
+    protected $casts=['product'=>'object'];
+
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
 
-    public function singleProduct()
+    public function product()
     {
         return $this->belongsTo(Product::class,'product_id');
     }

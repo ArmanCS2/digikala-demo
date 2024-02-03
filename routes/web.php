@@ -33,6 +33,9 @@ Route::prefix('profile')->group(function () {
     Route::get('/complete', [ProfileController::class, 'complete'])->name('profile.complete');
     Route::put('/update-complete', [ProfileController::class, 'updateComplete'])->name('profile.update.complete');
     Route::get('/orders',[ProfileController::class,'orders'])->name('profile.orders');
+    Route::get('/addresses',[ProfileController::class,'addresses'])->name('profile.addresses');
+    Route::get('/favorites',[ProfileController::class,'favorites'])->name('profile.favorites');
+    Route::get('/delete-from-favorites/{product}',[ProfileController::class,'deleteFromFavorites'])->name('profile.delete-from-favorites');
 });
 Route::prefix('market')->group(function () {
     Route::prefix('product')->group(function () {
@@ -55,6 +58,7 @@ Route::prefix('market')->group(function () {
         Route::post('add-address', [AddressController::class, 'addAddress'])->name('market.add-address');
         Route::post('store-address-delivery', [AddressController::class, 'storeAddressDelivery'])->name('market.store-address-delivery');
         Route::put('edit-address/{address}', [AddressController::class, 'editAddress'])->name('market.edit-address');
+        Route::get('delete-address/{address}', [AddressController::class, 'deleteAddress'])->name('market.delete-address');
         Route::get('get-cities/{province}', [AddressController::class, 'getCities'])->name('market.get-cities');
 
         //payment

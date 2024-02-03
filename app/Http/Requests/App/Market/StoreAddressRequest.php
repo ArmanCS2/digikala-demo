@@ -32,9 +32,9 @@ class StoreAddressRequest extends FormRequest
             'no'=>'required|string',
             'unit'=>'required|string',
             'receiver'=>'nullable',
-            'recipient_first_name'=>'required_if:receiver,on|string',
-            'recipient_last_name'=>'required_if:receiver,on|string',
-            'mobile'=>'required_if:receiver,on|numeric|digits:11',
+            'recipient_first_name'=>'nullable|string',
+            'recipient_last_name'=>'nullable|string',
+            'mobile'=>'required_if:nullable|numeric|digits:11',
         ];
     }
 }

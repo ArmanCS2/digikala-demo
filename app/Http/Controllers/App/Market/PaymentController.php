@@ -10,6 +10,7 @@ use App\Models\Market\Copan;
 use App\Models\Market\OfflinePayment;
 use App\Models\Market\OnlinePayment;
 use App\Models\Market\Order;
+use App\Models\Market\OrderItem;
 use App\Models\Market\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -133,6 +134,19 @@ class PaymentController extends Controller
             'paymentable_type' => $targetModel
         ]);
         foreach ($cartItems as $cartItem) {
+            OrderItem::create([
+                'order_id'=>$order->id,
+                'product_id'=>$cartItem->product_id,
+                'product'=>$cartItem->product,
+                'color_id'=>$cartItem->color_id,
+                'guarantee_id'=>$cartItem->guarantee_id,
+                'amazing_sale_id'=>$cartItem->product->activeAmazingSale()->id ?? null,
+                'amazing_sale_object'=>$cartItem->product->activeAmazingSale() ?? null,
+                'amazing_sale_discount_amount'=>$cartItem->productDiscount(),
+                'number'=>$cartItem->number,
+                'final_product_price'=>$cartItem->finalProductPrice(),
+                'final_total_price'=>$cartItem->totalProductPrice()
+            ]);
             $cartItem->delete();
         }
         $order->update([
@@ -152,6 +166,19 @@ class PaymentController extends Controller
         $result = $paymentService->zarinpalVerify($amount, $onlinePayment);
         if ($result['success']) {
             foreach ($cartItems as $cartItem) {
+                OrderItem::create([
+                    'order_id'=>$order->id,
+                    'product_id'=>$cartItem->product_id,
+                    'product'=>$cartItem->product,
+                    'color_id'=>$cartItem->color_id,
+                    'guarantee_id'=>$cartItem->guarantee_id,
+                    'amazing_sale_id'=>$cartItem->product->activeAmazingSale()->id ?? null,
+                    'amazing_sale_object'=>$cartItem->product->activeAmazingSale() ?? null,
+                    'amazing_sale_discount_amount'=>$cartItem->productDiscount(),
+                    'number'=>$cartItem->number,
+                    'final_product_price'=>$cartItem->finalProductPrice(),
+                    'final_total_price'=>$cartItem->totalProductPrice()
+                ]);
                 $cartItem->delete();
             }
             $order->update([

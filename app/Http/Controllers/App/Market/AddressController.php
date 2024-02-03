@@ -92,6 +92,12 @@ class AddressController extends Controller
         return redirect()->back();
     }
 
+    public function deleteAddress(Address $address)
+    {
+        $address->delete();
+        return redirect()->back()->with('swal-success','آدرس با موفقیت حذف شد');
+    }
+
     public function getCities(ProvinceCity $province)
     {
         $cities = $province->cities()->get()->toArray();
