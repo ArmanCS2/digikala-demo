@@ -40,7 +40,8 @@
                             <th>نام کاربری</th>
                             <th>ایمیل</th>
                             <th>شماره موبایل</th>
-                            <th>نقش</th>
+                            <th>نقش ها</th>
+                            <th>دسترسی ها</th>
                             <th>وضعیت کاربر</th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
@@ -53,7 +54,28 @@
                                 <td>{{$admin->full_name}}</td>
                                 <td>{{$admin->email}}</td>
                                 <td>{{$admin->mobile}}</td>
-                                <td>ادمین</td>
+                                <td>
+                                    @forelse($admin->roles as $role)
+                                        <div>
+                                            {{$role->name}}
+                                        </div>
+                                    @empty
+                                        <div class="text-danger">
+                                            نقشی یافت نشد
+                                        </div>
+                                    @endforelse
+                                </td>
+                                <td>
+                                    @forelse($admin->permissions as $permission)
+                                        <div>
+                                            {{$permission->name}}
+                                        </div>
+                                    @empty
+                                        <div class="text-danger">
+                                            دسترسی یافت نشد
+                                        </div>
+                                    @endforelse
+                                </td>
                                 <td>
                                     <label>
                                         <input type="checkbox" id="change_activation_{{$admin->id}}"
@@ -70,8 +92,9 @@
                                                @if($admin->status==1) checked @endif>
                                     </label>
                                 </td>
-                                <td class="width-22-rem text-left">
-                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-list-ul"></i> نقش</a>
+                                <td class="width-44-rem text-left">
+                                    <a href="{{route('admin.user.admin-user.roles',[$admin->id])}}" class="btn btn-info btn-sm"><i class="fa fa-list-ul"></i> نقش ها</a>
+                                    <a href="{{route('admin.user.admin-user.permissions',[$admin->id])}}" class="btn btn-warning btn-sm"><i class="fa fa-list-ul"></i> دسترسی ها</a>
                                     <a href="{{route('admin.user.admin-user.edit',[$admin->id])}}"
                                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                                     <form action="{{route('admin.user.admin-user.destroy',[$admin->id])}}" method="post"

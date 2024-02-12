@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\AdminUserRequest;
 use App\Http\Services\Image\ImageService;
 use App\Models\User;
+use App\Models\User\Permission;
+use App\Models\User\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -147,5 +149,38 @@ class AdminUserController extends Controller
             return response()->json(['status' => true, 'checked' => true]);
         }
         return response()->json(['status' => true]);
+    }
+
+    public function roles($id)
+    {
+        $admin=User::find($id);
+        $roles=Role::all();
+        return view('admin.user.admin-user.edit-roles',compact('admin','roles'));
+    }
+
+    public function rolesUpdate(Request $request,$id)
+    {
+        $inputs=$request->all();
+        $admin=User::find($id);
+        $inputs['roles']=$inputs['roles'] ?? [];
+        $admin->roles()->sync($inputs['roles']);
+        return redirect()->route('admin.user.admin-user.index')->with('swal-success','نقش ها با موفقیت ویرایش شد');
+    }
+
+
+    public function permissions($id)
+    {
+        $admin=User::find($id);
+        $permissions=Permission::all();
+        return view('admin.user.admin-user.edit-permission',compact('admin','permissions'));
+    }
+
+    public function permissionsUpdate(Request $request, $id)
+    {
+        $inputs=$request->all();
+        $admin=User::find($id);
+        $inputs['permissions']=$inputs['permissions'] ?? [];
+        $admin->permissions()->sync($inputs['permissions']);
+        return redirect()->route('admin.user.admin-user.index')->with('swal-success','دسترسی ها با موفقیت ویرایش شد');
     }
 }

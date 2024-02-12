@@ -407,8 +407,6 @@
     <!-- end product lazy load -->
 
 
-
-
     <!-- start ads section -->
     <section class="mb-3">
         <section class="container-xxl">

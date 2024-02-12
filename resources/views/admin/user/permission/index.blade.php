@@ -37,6 +37,7 @@
                         <tr>
                             <th>#</th>
                             <th>نام دسترسی</th>
+                            <th>نقش ها</th>
                             <th>توضیحات</th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
@@ -47,6 +48,17 @@
                             <tr>
                                 <th>{{{$key+1}}}</th>
                                 <td>{{$permission->name}}</td>
+                                <td>
+                                    @forelse($permission->roles as $role)
+                                        <div>
+                                            {{$role->name}}
+                                        </div>
+                                    @empty
+                                        <div class="text-danger">
+                                            نقشی یافت نشد
+                                        </div>
+                                    @endforelse
+                                </td>
                                 <td>{{$permission->description}}</td>
                                 <td>
                                     <label>

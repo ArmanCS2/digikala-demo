@@ -3,7 +3,9 @@
 namespace App\Http;
 
 use App\Http\Middleware\CartEmpty;
+use App\Http\Middleware\PermissionMiddleware;
 use App\Http\Middleware\ProfileComplete;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,5 +68,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'profile.complete' => ProfileComplete::class,
         'cart.empty' => CartEmpty::class,
+        'role'=>RoleMiddleware::class,
+        'permission'=>PermissionMiddleware::class,
     ];
 }

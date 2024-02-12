@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\User\AdminUserController;
 use App\Http\Controllers\App\HomeController;
 use App\Http\Controllers\App\Market\AddressController;
 use App\Http\Controllers\App\Market\CartController;
@@ -271,7 +272,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
 
         Route::prefix('banner')->group(function () {
-            Route::get('/', 'BannerController@index')->name('admin.content.banner.index');
+            Route::middleware('role:admin')->get('/', 'BannerController@index')->name('admin.content.banner.index');
             Route::get('/create', 'BannerController@create')->name('admin.content.banner.create');
             Route::post('/store', 'BannerController@store')->name('admin.content.banner.store');
             Route::get('/edit/{id}', 'BannerController@edit')->name('admin.content.banner.edit');
@@ -281,7 +282,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         });
 
         Route::prefix('category')->group(function () {
-            Route::get('/', 'CategoryController@index')->name('admin.content.category.index');
+            Route::middleware('permission:show-category')->get('/', 'CategoryController@index')->name('admin.content.category.index');
             Route::get('/create', 'CategoryController@create')->name('admin.content.category.create');
             Route::post('/store', 'CategoryController@store')->name('admin.content.category.store');
             Route::get('/edit/{id}', 'CategoryController@edit')->name('admin.content.category.edit');
@@ -358,6 +359,10 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::delete('/destroy/{id}', 'AdminUserController@destroy')->name('admin.user.admin-user.destroy');
             Route::get('/ajax/change-status/{id}', 'AdminUserController@ajaxChangeStatus')->name('admin.user.admin-user.ajax.change-status');
             Route::get('/ajax/change-activation/{id}', 'AdminUserController@ajaxChangeActivation')->name('admin.user.admin-user.ajax.change-activation');
+            Route::get('/roles/{id}',[AdminUserController::class,'roles'])->name('admin.user.admin-user.roles');
+            Route::put('/roles/{id}/update',[AdminUserController::class,'rolesUpdate'])->name('admin.user.admin-user.roles.update');
+            Route::get('/permissions/{id}',[AdminUserController::class,'permissions'])->name('admin.user.admin-user.permissions');
+            Route::put('/permissions/{id}/update',[AdminUserController::class,'permissionsUpdate'])->name('admin.user.admin-user.permissions.update');
         });
         Route::prefix('customer')->group(function () {
             Route::get('/', 'CustomerController@index')->name('admin.user.customer.index');

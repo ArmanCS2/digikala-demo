@@ -8,6 +8,7 @@ use App\Http\Services\Image\ImageService;
 use App\Models\Content\Post;
 use App\Models\Content\PostCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -50,7 +51,7 @@ class PostController extends Controller
             }
             $inputs['image'] = $result;
         }
-        $inputs['author_id'] = 1;
+        $inputs['author_id'] = Auth::user()->id;
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         Post::create($inputs);
         return redirect()->route('admin.content.post.index')->with('swal-success', 'پست جدید با موفقیت ساخته شد');
