@@ -17,7 +17,7 @@ class CategoryController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:show-category')->only(['index']);
+        //$this->middleware('can:show-category')->only(['index']);
     }
     /**
      * Display a listing of the resource.
@@ -26,9 +26,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->cannot('show-category')){
+        /*if(Auth::user()->cannot('show-category')){
             return redirect()->back()->with('toast-error','دسترسی غیرمجاز');
-        }
+        }*/
         $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
         return view('admin.content.category.index', compact('postCategories'));
     }
@@ -40,9 +40,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->cannot('create-category')){
+        /*if(Auth::user()->cannot('create-category')){
             return redirect()->back()->with('toast-error','دسترسی غیرمجاز');
-        }
+        }*/
         $categories = PostCategory::all();
         return view('admin.content.category.create', compact('categories'));
     }
@@ -55,9 +55,9 @@ class CategoryController extends Controller
      */
     public function store(PostCategoryRequest $request, ImageService $imageService)
     {
-        if(Auth::user()->cannot('create-category')){
+        /*if(Auth::user()->cannot('create-category')){
             return redirect()->back()->with('toast-error','دسترسی غیرمجاز');
-        }
+        }*/
         $inputs = $request->all();
         if ($request->hasFile('image')){
             /*$img = new ImageCacheService();
@@ -93,9 +93,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->cannot('update-category')){
+        /*if(Auth::user()->cannot('update-category')){
             return redirect()->back()->with('toast-error','دسترسی غیرمجاز');
-        }
+        }*/
         $categories = PostCategory::all();
         $category = PostCategory::find($id);
         return view('admin.content.category.edit', compact('categories', 'category'));
@@ -110,9 +110,9 @@ class CategoryController extends Controller
      */
     public function update(PostCategoryRequest $request, $id, ImageService $imageService)
     {
-        if(Auth::user()->cannot('update-category')){
+        /*if(Auth::user()->cannot('update-category')){
             return redirect()->back()->with('toast-error','دسترسی غیرمجاز');
-        }
+        }*/
         $postCategory=PostCategory::find($id);
         $inputs = $request->all();
         if ($request->hasFile('image')){
@@ -146,9 +146,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::user()->cannot('delete-category')){
+        /*if(Auth::user()->cannot('delete-category')){
             return redirect()->back()->with('toast-error','دسترسی غیرمجاز');
-        }
+        }*/
         $category = PostCategory::find($id);
         $category->delete();
         return redirect()->back()->with('swal-success', 'دسته بندی با موفقیت حذف شد');

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Ticket;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TicketRequest extends FormRequest
+class TicketAnswerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class TicketRequest extends FormRequest
     public function rules()
     {
         return [
-            'description'=>'required|max:1000|min:5',
+            'description'=>'required|max:1000|min:1',
         ];
     }
 }

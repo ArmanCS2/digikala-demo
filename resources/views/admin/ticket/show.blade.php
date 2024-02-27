@@ -31,13 +31,32 @@
 
                 <section class="card mb-3">
                     <section class="card-header text-white bg-custom-blue">
-                        {{$ticket->user->full_name}} - {{$ticket->user->id}}
+                        {{$ticket->user->full_name}}
                     </section>
                     <section class="card-body">
                         <h5 class="card-title">موضوع : {{$ticket->subject}}</h5>
                         <p class="card-text">{{$ticket->description}}</p>
                     </section>
                 </section>
+
+                @forelse($ticket->children as $child)
+                    <section class="card m-3">
+                        <section class="card-header text-white bg-primary d-flex justify-content-between">
+                            <p>{{!empty($child->admin) ? $child->admin->full_name : $child->user->full_name}}</p>
+                            <small class="text-white">{{jalaliDate($child->created_at)}}</small>
+                        </section>
+                        <section class="card-body">
+                            <p class="card-text">{{$child->description}}</p>
+                        </section>
+
+                    </section>
+                @empty
+                    <section class="card m-3">
+                        <section class="card-body">
+                            <p class="card-text">پاسخی وجود ندارد</p>
+                        </section>
+                    </section>
+                @endforelse
 
                 <section>
                     <form action="{{route('admin.ticket.answer',[$ticket->id])}}" method="post">

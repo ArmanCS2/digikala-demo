@@ -20,7 +20,7 @@ class Ticket extends Model
 
     public function admin()
     {
-        return $this->belongsTo(TicketAdmin::class,'reference_id');
+        return $this->belongsTo(User::class,'reference_id');
     }
 
     public function priority()
@@ -41,5 +41,10 @@ class Ticket extends Model
     public function children()
     {
         return $this->hasMany($this,'ticket_id');
+    }
+
+    public function file()
+    {
+        return $this->hasOne(TicketFile::class,'ticket_id');
     }
 }

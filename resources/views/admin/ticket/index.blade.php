@@ -39,8 +39,6 @@
                             <th>عنوان تیکت</th>
                             <th>دسته تیکت</th>
                             <th>اولویت تیکت</th>
-                            <th>ارجاع شده به</th>
-                            <th>تیکت مرجع</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                         </thead>
@@ -52,15 +50,13 @@
                                 <td>{{$ticket->subject}}</td>
                                 <td>{{$ticket->category->name}}</td>
                                 <td>{{$ticket->priority->name}}</td>
-                                <td>{{$ticket->admin->user->full_name}}</td>
-                                <td>{{$ticket->parent->subject ?? '-'}}</td>
                                 <td class="width-22-rem text-left">
                                     @if($ticket->status == 0)
                                         <a href="{{ route('admin.ticket.change-status',[$ticket->id]) }}"
-                                           class="btn btn-danger btn-sm">پاسخ داده نشده</a>
+                                           class="btn btn-danger btn-sm"><i class="fa fa-times"></i> بستن </a>
                                     @else
                                         <a href="{{ route('admin.ticket.change-status',[$ticket->id]) }}"
-                                           class="btn btn-success btn-sm">بسته شده</a>
+                                           class="btn btn-success btn-sm"><i class="fa fa-check"></i> بسته شده</a>
                                     @endif
                                     <a href="{{route('admin.ticket.show',[$ticket->id])}}"
                                        class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>

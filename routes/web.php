@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/download/{file_path}',[HomeController::class, 'download'])->name('download');
 Route::prefix('profile')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -37,6 +38,14 @@ Route::prefix('profile')->group(function () {
     Route::get('/addresses',[ProfileController::class,'addresses'])->name('profile.addresses');
     Route::get('/favorites',[ProfileController::class,'favorites'])->name('profile.favorites');
     Route::get('/delete-from-favorites/{product}',[ProfileController::class,'deleteFromFavorites'])->name('profile.delete-from-favorites');
+    Route::prefix('ticket')->group(function (){
+        Route::get('/',[\App\Http\Controllers\App\TicketController::class,'index'])->name('profile.ticket.index');
+        Route::get('/show/{id}', [\App\Http\Controllers\App\TicketController::class,'show'])->name('profile.ticket.show');
+        Route::get('/change-status/{id}', [\App\Http\Controllers\App\TicketController::class,'changeStatus'])->name('profile.ticket.change-status');
+        Route::post('/answer/{id}', [\App\Http\Controllers\App\TicketController::class,'answer'])->name('profile.ticket.answer');
+        Route::get('/create',[\App\Http\Controllers\App\TicketController::class,'create'])->name('profile.ticket.create');
+        Route::post('/store',[\App\Http\Controllers\App\TicketController::class,'store'])->name('profile.ticket.store');
+    });
 });
 Route::prefix('market')->group(function () {
     Route::prefix('product')->group(function () {

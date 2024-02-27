@@ -407,6 +407,42 @@
     <!-- end product lazy load -->
 
 
+    <!-- start brand part-->
+    <section class="brand-part mb-4 py-4">
+        <section class="container-xl">
+            <section class="row">
+                <section class="col">
+                    <!-- start vontent header -->
+                    <section class="content-header">
+                        <section class="d-flex align-items-center">
+                            <h2 class="content-header-title">
+                                <span>آخرین مقالات</span>
+                            </h2>
+                        </section>
+                    </section>
+                    <!-- start vontent header -->
+                    <section class="brands-wrapper py-4">
+                        <section class="brands dark-owl-nav owl-carousel owl-theme">
+                            @foreach($posts as $post)
+                                <section class="item">
+                                    <section class="brand-item">
+                                        <a href="https://armanafzali.ir"><img class="rounded-2"
+                                                                              src="{{asset($post->image['indexArray'][$post->image['currentImage']])}}"
+                                                                              alt=""></a>
+                                    </section>
+                                    <section class="brand-item mt-2">
+                                        در باره {{$post->title}} بیشتر بخوانید ...
+                                    </section>
+                                </section>
+                            @endforeach
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+    <!-- end brand part-->
+
     <!-- start ads section -->
     <section class="mb-3">
         <section class="container-xxl">
@@ -458,6 +494,8 @@
         </section>
     </section>
     <!-- end brand part-->
+
+
 @endsection
 
 @section('scripts')

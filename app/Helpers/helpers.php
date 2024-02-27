@@ -1,7 +1,7 @@
 <?php
 
 
-function jalaliDate($date = 'today', $format = '%A, %d %B %y')
+function jalaliDate($date = 'today', $format = 'H:i:s Y/m/d ')
 {
     return Morilog\Jalali\Jalalian::forge($date)->format($format);
 }

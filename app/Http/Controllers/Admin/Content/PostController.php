@@ -124,7 +124,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-
+        $post=Post::find($id);
+        $post->delete();
+        return redirect()->route('admin.content.post.index')->with('swal-success', 'پست با موفقیت حذف شد');
     }
 
     public function ajaxChangeStatus($id)

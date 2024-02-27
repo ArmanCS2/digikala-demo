@@ -220,7 +220,7 @@
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.js') }}"></script>
     <script>
         CKEDITOR.replace('body');
-        CKEDITOR.replace('summary');
+        //CKEDITOR.replace('summary');
     </script>
 
     <script>
