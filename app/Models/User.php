@@ -19,6 +19,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Nagy\LaravelRating\Traits\CanRate;
 
 class User extends Authenticatable
 {
@@ -29,6 +30,7 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
 
     use HasPermissions;
+    use CanRate;
 
     /**
      * The attributes that are mass assignable.

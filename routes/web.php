@@ -26,28 +26,31 @@ use Illuminate\Support\Facades\Route;
 | Home Routes
 |--------------------------------------------------------------------------
 */
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/download/{file_path}',[HomeController::class, 'download'])->name('download');
+Route::get('/download/{file_path}', [HomeController::class, 'download'])->name('download');
+
 Route::prefix('profile')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/complete', [ProfileController::class, 'complete'])->name('profile.complete');
     Route::put('/update-complete', [ProfileController::class, 'updateComplete'])->name('profile.update.complete');
-    Route::get('/orders',[ProfileController::class,'orders'])->name('profile.orders');
-    Route::get('/addresses',[ProfileController::class,'addresses'])->name('profile.addresses');
-    Route::get('/favorites',[ProfileController::class,'favorites'])->name('profile.favorites');
-    Route::get('/delete-from-favorites/{product}',[ProfileController::class,'deleteFromFavorites'])->name('profile.delete-from-favorites');
-    Route::prefix('ticket')->group(function (){
-        Route::get('/',[\App\Http\Controllers\App\TicketController::class,'index'])->name('profile.ticket.index');
-        Route::get('/show/{id}', [\App\Http\Controllers\App\TicketController::class,'show'])->name('profile.ticket.show');
-        Route::get('/change-status/{id}', [\App\Http\Controllers\App\TicketController::class,'changeStatus'])->name('profile.ticket.change-status');
-        Route::post('/answer/{id}', [\App\Http\Controllers\App\TicketController::class,'answer'])->name('profile.ticket.answer');
-        Route::get('/create',[\App\Http\Controllers\App\TicketController::class,'create'])->name('profile.ticket.create');
-        Route::post('/store',[\App\Http\Controllers\App\TicketController::class,'store'])->name('profile.ticket.store');
+    Route::get('/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+    Route::get('/addresses', [ProfileController::class, 'addresses'])->name('profile.addresses');
+    Route::get('/favorites', [ProfileController::class, 'favorites'])->name('profile.favorites');
+    Route::get('/delete-from-favorites/{product}', [ProfileController::class, 'deleteFromFavorites'])->name('profile.delete-from-favorites');
+    Route::prefix('ticket')->group(function () {
+        Route::get('/', [\App\Http\Controllers\App\TicketController::class, 'index'])->name('profile.ticket.index');
+        Route::get('/show/{id}', [\App\Http\Controllers\App\TicketController::class, 'show'])->name('profile.ticket.show');
+        Route::get('/change-status/{id}', [\App\Http\Controllers\App\TicketController::class, 'changeStatus'])->name('profile.ticket.change-status');
+        Route::post('/answer/{id}', [\App\Http\Controllers\App\TicketController::class, 'answer'])->name('profile.ticket.answer');
+        Route::get('/create', [\App\Http\Controllers\App\TicketController::class, 'create'])->name('profile.ticket.create');
+        Route::post('/store', [\App\Http\Controllers\App\TicketController::class, 'store'])->name('profile.ticket.store');
     });
 });
+
 Route::prefix('market')->group(function () {
+
+    Route::get('/products', [ProductController::class, 'products'])->name('market.products');
     Route::prefix('product')->group(function () {
         Route::get('/{product:slug}', [ProductController::class, 'product'])->name('market.product');
         Route::post('/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
@@ -368,10 +371,10 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
             Route::delete('/destroy/{id}', 'AdminUserController@destroy')->name('admin.user.admin-user.destroy');
             Route::get('/ajax/change-status/{id}', 'AdminUserController@ajaxChangeStatus')->name('admin.user.admin-user.ajax.change-status');
             Route::get('/ajax/change-activation/{id}', 'AdminUserController@ajaxChangeActivation')->name('admin.user.admin-user.ajax.change-activation');
-            Route::get('/roles/{id}',[AdminUserController::class,'roles'])->name('admin.user.admin-user.roles');
-            Route::put('/roles/{id}/update',[AdminUserController::class,'rolesUpdate'])->name('admin.user.admin-user.roles.update');
-            Route::get('/permissions/{id}',[AdminUserController::class,'permissions'])->name('admin.user.admin-user.permissions');
-            Route::put('/permissions/{id}/update',[AdminUserController::class,'permissionsUpdate'])->name('admin.user.admin-user.permissions.update');
+            Route::get('/roles/{id}', [AdminUserController::class, 'roles'])->name('admin.user.admin-user.roles');
+            Route::put('/roles/{id}/update', [AdminUserController::class, 'rolesUpdate'])->name('admin.user.admin-user.roles.update');
+            Route::get('/permissions/{id}', [AdminUserController::class, 'permissions'])->name('admin.user.admin-user.permissions');
+            Route::put('/permissions/{id}/update', [AdminUserController::class, 'permissionsUpdate'])->name('admin.user.admin-user.permissions.update');
         });
         Route::prefix('customer')->group(function () {
             Route::get('/', 'CustomerController@index')->name('admin.user.customer.index');
@@ -493,3 +496,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         return view('dashboard');
     })->name('dashboard');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

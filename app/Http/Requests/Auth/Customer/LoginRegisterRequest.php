@@ -28,16 +28,19 @@ class LoginRegisterRequest extends FormRequest
         if ($currentRouteName == 'auth.customer.login-register') {
             if (is_numeric(request()->all()['id'])) {
                 return [
-                    'id' => 'required|digits:11'
+                    'id' => 'required|digits:11',
+                    'g-recaptcha-response' => 'recaptcha'
                 ];
             }
 
             return [
-                'id' => 'required|email'
+                'id' => 'required|email',
+                'g-recaptcha-response' => 'recaptcha'
             ];
         } elseif ($currentRouteName == 'auth.customer.login-confirm') {
             return [
-                'otp' => 'required|numeric'
+                'otp' => 'required|numeric',
+                'g-recaptcha-response' => 'recaptcha'
             ];
         }
 
@@ -50,16 +53,19 @@ class LoginRegisterRequest extends FormRequest
         if ($currentRouteName == 'auth.customer.login-register') {
             if (is_numeric(request()->all()['id'])) {
                 return [
-                    'id' => 'شماره تلفن'
+                    'id' => 'شماره تلفن',
+                    'g-recaptcha-response' => 'recaptcha'
                 ];
             }
 
             return [
-                'id' => 'پست الکترونیک'
+                'id' => 'پست الکترونیک',
+                'g-recaptcha-response' => 'recaptcha'
             ];
         } elseif ($currentRouteName == 'auth.customer.login-confirm') {
             return [
-                'otp' => 'کد تایید'
+                'otp' => 'کد تایید',
+                'g-recaptcha-response' => 'recaptcha'
             ];
         }
     }

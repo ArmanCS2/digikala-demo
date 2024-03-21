@@ -152,6 +152,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'recaptcha' => 'Hey!!! :attribute is wrong!',
+    ],
 
 ];

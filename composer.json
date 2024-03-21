@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "biscolab/laravel-recaptcha": "^6.0",
         "cviebrock/eloquent-sluggable": "^9.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -18,9 +19,11 @@
         "laravel/jetstream": "^2.9",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "^4.5",
         "livewire/livewire": "^2.5",
         "melipayamak/php": "1.0.0",
         "morilog/jalali": "^3.4",
+        "nagy/laravel-rating": "^1.0",
         "nwidart/laravel-modules": "9.*",
         "saeedpooyanfar/zarinpal": "^5.0"
     },

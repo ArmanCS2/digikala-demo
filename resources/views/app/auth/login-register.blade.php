@@ -1,5 +1,11 @@
 @extends('app.layouts.master-simple')
 
+@section('head-tag')
+    <title>login-register</title>
+    <meta name="csrf-token" content="{{csrf_token()}}">
+    {!! htmlScriptTagJsApi() !!}
+@endsection
+
 @section('content')
     <section class="vh-100 d-flex justify-content-center align-items-center pb-5">
         <form action="{{route('auth.customer.login-register')}}" method="post">
@@ -23,6 +29,13 @@
                 </section>
                 <section class="login-terms-and-conditions"><a href="#">شرایط و قوانین</a> را خوانده ام و پذیرفته ام
                 </section>
+                {!! htmlFormSnippet() !!}
+                @error('g-recaptcha-response')
+                <span class="text-danger">
+                                    <strong>خطا در اعتبارسنجی recapcha</strong>
+                                </span>
+                @enderror
+
             </section>
         </form>
 

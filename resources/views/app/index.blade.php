@@ -11,7 +11,8 @@
             <section class="col-md-8 pe-md-1 ">
                 <section id="slideshow" class="owl-carousel owl-theme">
                     @foreach($slideShows as $slideShow)
-                        <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href=""><img
+                        <section class="item"><a class="w-100 d-block h-auto text-decoration-none"
+                                                 href="{{$slideShow->url}}"><img
                                     class="w-100 rounded-2 d-block h-auto" src="{{asset($slideShow->image)}}"
                                     alt="{{$slideShow->title}}"></a></section>
                     @endforeach
@@ -30,7 +31,6 @@
     <!-- end slideshow -->
 
 
-
     <!-- start product lazy load -->
     <section class="mb-3">
         <section class="container-xxl">
@@ -44,7 +44,7 @@
                                     <span>پربازدیدترین کالاها</span>
                                 </h2>
                                 <section class="content-header-link">
-                                    <a href="#">مشاهده همه</a>
+                                    <a href="{{route('market.products',['sort'=>5])}}">مشاهده همه</a>
                                 </section>
                             </section>
                         </section>
@@ -142,15 +142,15 @@
     <!-- end product lazy load -->
 
 
-
     <!-- start ads section -->
     <section class="mb-3">
         <section class="container-xxl">
             <!-- two column-->
             <section class="row py-4">
                 @foreach($middleBanners as $middleBanner)
-                    <section class="col-12 col-md-6 mt-2 mt-md-0"><a class="w-100 d-block h-auto text-decoration-none"
-                                                                     href="{{$middleBanner->url}}"><img
+                    <section class="col-12 col-md-6 mt-2 mt-md-0"><a
+                            class="w-100 d-block h-auto text-decoration-none"
+                            href="{{$middleBanner->url}}"><img
                                 class="d-block rounded-2 w-100"
                                 src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}"></a>
                     </section>
@@ -175,7 +175,7 @@
                                     <span>پیشنهاد آمازون به شما</span>
                                 </h2>
                                 <section class="content-header-link">
-                                    <a href="#">مشاهده همه</a>
+                                    <a href="{{route('market.products')}}">مشاهده همه</a>
                                 </section>
                             </section>
                         </section>
@@ -279,7 +279,8 @@
         <section class="container-xxl">
             <!-- one column -->
             <section class="row py-4">
-                <section class="col"><a class="w-100 d-block h-auto text-decoration-none" href="{{$bottomBanner->url}}"><img
+                <section class="col"><a class="w-100 d-block h-auto text-decoration-none"
+                                        href="{{$bottomBanner->url}}"><img
                             class="d-block rounded-2 w-100" src="{{$bottomBanner->image}}"
                             alt="{{$bottomBanner->title}}"></a>
                 </section>
@@ -287,7 +288,6 @@
         </section>
     </section>
     <!-- end ads section -->
-
 
 
     <!-- start product lazy load -->
@@ -303,7 +303,7 @@
                                     <span>پر فروش ترین کالا ها</span>
                                 </h2>
                                 <section class="content-header-link">
-                                    <a href="#">مشاهده همه</a>
+                                    <a href="{{route('market.products',['sort'=>6])}}">مشاهده همه</a>
                                 </section>
                             </section>
                         </section>
@@ -449,7 +449,8 @@
             <!-- one column -->
             <section class="row py-4">
                 @foreach($ads as $ad)
-                    <section class="col"><a class="w-100 d-block h-auto text-decoration-none" href="{{$ad->url}}"><img
+                    <section class="col"><a class="w-100 d-block h-auto text-decoration-none"
+                                            href="https://armanafzali.ir"><img
                                 class="d-block rounded-2 w-100" src="{{$ad->image}}" alt="{{$ad->title}}"></a>
                     </section>
                 @endforeach
@@ -457,9 +458,6 @@
         </section>
     </section>
     <!-- end ads section -->
-
-
-
 
 
     <!-- start brand part-->
@@ -481,9 +479,10 @@
                             @foreach($brands as $brand)
                                 <section class="item">
                                     <section class="brand-item">
-                                        <a href="https://armanafzali.ir"><img class="rounded-2"
-                                                                              src="{{asset($brand->logo['indexArray'][$brand->logo['currentImage']])}}"
-                                                                              alt="{{$brand->persian_name}}"></a>
+                                        <a href="{{route('market.products',['brands'=>[$brand->id]])}}"><img
+                                                class="rounded-2"
+                                                src="{{asset($brand->logo['indexArray'][$brand->logo['currentImage']])}}"
+                                                alt="{{$brand->persian_name}}"></a>
                                     </section>
                                 </section>
                             @endforeach
@@ -494,8 +493,6 @@
         </section>
     </section>
     <!-- end brand part-->
-
-
 @endsection
 
 @section('scripts')

@@ -6,10 +6,11 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nagy\LaravelRating\Traits\Rateable;
 
 class Post extends Model
 {
-    use HasFactory,Sluggable;
+    use HasFactory,Sluggable,Rateable;
     public function sluggable(): array
     {
         return [
