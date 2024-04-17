@@ -2,6 +2,41 @@
 
 @section('head-tag')
     <title>{{$product->name}}</title>
+    <style>
+        /* Styling h1 and links
+    ––––––––––––––––––––––––––––––––– */
+        .starrating > input {
+            display: none;
+        }
+
+        /* Remove radio buttons */
+
+        .starrating > label:before {
+            content: "\f005";
+            /* Star */
+            margin: 2px;
+            font-size: 2em;
+            font-family: FontAwesome;
+            display: inline-block;
+        }
+
+        .starrating > label {
+            color: #222222;
+            /* Start color when not clicked */
+        }
+
+        .starrating > input:checked ~ label {
+            color: #ffca08;
+        }
+
+        /* Set yellow color when star checked */
+
+        .starrating > input:hover ~ label {
+            color: #ffca08;
+        }
+
+        /* Set yellow color when star hover */
+    </style>
 @endsection
 
 
@@ -378,6 +413,7 @@
                                                               href="#introduction">معرفی</a></span>
                                         <span class="me-2"><a class="text-decoration-none text-dark" href="#features">ویژگی ها</a></span>
                                         <span class="me-2"><a class="text-decoration-none text-dark" href="#comments">دیدگاه ها</a></span>
+                                        <span class="me-2"><a class="text-decoration-none text-dark" href="#rates">امتیاز ها</a></span>
                                     </h2>
                                     <section class="content-header-link">
                                         <!--<a href="#">مشاهده همه</a>-->
@@ -433,7 +469,59 @@
                                 </table>
                             </section>
 
-                            <!-- start vontent header -->
+                            <!-- start rating -->
+                            <section id="rates" class="content-header mt-2 mb-4">
+                                <section class="d-flex justify-content-between align-items-center">
+                                    <h2 class="content-header-title content-header-title-small">
+                                        امتیاز ها
+                                    </h2>
+                                    <section class="content-header-link">
+                                        <!--<a href="#">مشاهده همه</a>-->
+                                    </section>
+                                </section>
+                            </section>
+                            @auth
+
+                                <section class="product-rating mb-4">
+
+                                    <div class="container">
+                                        <form
+                                            class="starrating risingstar d-flex justify-content-end flex-row-reverse align-items-center"
+                                            action="{{route('market.product.rate',$product)}}" method="post">
+                                            @csrf
+                                            <div class="mx-3">
+                                                <button class="btn btn-info btn-sm">ثبت امتیاز</button>
+                                            </div>
+                                            <input type="radio" id="star5" name="rating" value="5"/>
+                                            <label for="star5" title="5 star"></label>
+                                            <input type="radio" id="star4" name="rating" value="4"/>
+                                            <label for="star4" title="4 star"></label>
+                                            <input type="radio" id="star3" name="rating" value="3"/>
+                                            <label for="star3" title="3 star"></label>
+                                            <input type="radio" id="star2" name="rating" value="2"/>
+                                            <label for="star2" title="2 star"></label>
+                                            <input type="radio" id="star1" name="rating" value="1"/>
+                                            <label for="star1" title="1 star"></label>
+
+                                        </form>
+                                        <p class="my-1">
+                                            میانگین امتیاز : {{ number_format($product->ratingsAvg(), 1, '/') ?? 0 }} از {{ $product->ratingsCount() ?? 0
+                                }} نفر
+                                        </p>
+
+
+                                    </div>
+
+                                </section>
+                            @endauth
+                            @guest
+                                <section class="comment-add-wrapper">
+                                    <p class="my-1">
+                                        میانگین امتیاز : {{ number_format($product->ratingsAvg(), 1, '/') ?? 0 }} از {{ $product->ratingsCount() ?? 0
+                                }} نفر
+                        @endguest
+
+                        <!-- start vontent header -->
                             <section id="comments" class="content-header mt-2 mb-4">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <h2 class="content-header-title content-header-title-small">

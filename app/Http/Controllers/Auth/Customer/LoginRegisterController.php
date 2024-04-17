@@ -8,6 +8,7 @@ use App\Http\Services\Message\Email\EmailService;
 use App\Http\Services\Message\MessageService;
 use App\Http\Services\Message\SMS\SmsService;
 use App\Models\Auth\Otp;
+use App\Models\Setting\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -19,7 +20,8 @@ class LoginRegisterController extends Controller
 {
     public function loginRegisterForm()
     {
-        return view('app.auth.login-register');
+        $setting=Setting::first();
+        return view('app.auth.login-register',compact('setting'));
     }
 
     public function loginRegister(LoginRegisterRequest $request)
@@ -102,7 +104,8 @@ class LoginRegisterController extends Controller
         if (empty($otp)) {
             return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => 'آدرس وارد شده معتبر نیست']);
         }
-        return view('app.auth.login-confirm', compact('token', 'otp'));
+        $setting=Setting::first();
+        return view('app.auth.login-confirm', compact('token', 'otp','setting'));
     }
 
     public function loginConfirm(LoginRegisterRequest $request, $token)

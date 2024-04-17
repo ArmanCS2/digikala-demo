@@ -58,43 +58,43 @@
                         <tr class="border-bottom">
                             <th>آدرس</th>
                             <td class="text-left font-weight-bolder">
-                                {{ $order->address->address ?? '-' }}
+                                {{ $order->address_object->address ?? '-' }}
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <th>شهر</th>
                             <td class="text-left font-weight-bolder">
-                                {{ $order->address->city->name ?? '-' }}
+                                {{ $order->address_object->city->name ?? '-' }}
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <th>کد پستی</th>
                             <td class="text-left font-weight-bolder">
-                                {{ $order->address->postal_code ?? '-' }}
+                                {{ $order->address_object->postal_code ?? '-' }}
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <th>پلاک</th>
                             <td class="text-left font-weight-bolder">
-                                {{ $order->address->no ?? '-' }}
+                                {{ $order->address_object->no ?? '-' }}
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <th>واحد</th>
                             <td class="text-left font-weight-bolder">
-                                {{ $order->address->unit ?? '-' }}
+                                {{ $order->address_object->unit ?? '-' }}
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <th>نام و نام خانوادگی گیرنده</th>
                             <td class="text-left font-weight-bolder">
-                                {{ $order->address->recipient_first_name . ' ' .$order->address->recipient_last_name ?? '-' }}
+                                {{ $order->address_object->recipient_first_name . ' ' .$order->address_object->recipient_last_name ?? '-' }}
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <th>موبایل</th>
                             <td class="text-left font-weight-bolder">
-                                {{ $order->address->mobile ?? '-' }}
+                                {{ $order->address_object->mobile ?? '-' }}
                             </td>
                         </tr>
                         <tr class="border-bottom">
@@ -155,7 +155,7 @@
                         <tr class="border-bottom">
                             <th>بانک</th>
                             <td class="text-left font-weight-bolder">
-                                {{ $order->payment->paymentable->gateway ?? '-' }}
+                                {{ $order->payment_object->paymentable->gateway ?? '-' }}
                             </td>
                         </tr>
                         <tr class="border-bottom">

@@ -22,7 +22,7 @@
             @csrf
             <section class="login-wrapper mb-5">
                 <section class="login-logo">
-                    <img src="{{asset('app-assets/images/logo/9.png')}}" alt="">
+                    <img src="{{asset($setting->logo)}}" alt="">
                 </section>
                 <section class="login-title mb-2">
                     <a href="{{ route('auth.customer.login-register-form') }}">

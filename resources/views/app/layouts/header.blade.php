@@ -9,8 +9,7 @@
 
                 <section class="d-flex justify-content-between align-items-center d-md-block">
                     <a class="text-decoration-none" href="{{route('home')}}"><img
-                            src="{{asset('app-assets/images/logo/9.png')}}" alt="logo"
-                            width="200px" height="60px"></a>
+                            src="{{asset($setting->logo)}}" alt="logo"></a>
                     <button class="btn btn-link text-dark d-md-none" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                         <i class="fa fa-bars me-1"></i>

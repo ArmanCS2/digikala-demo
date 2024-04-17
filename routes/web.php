@@ -55,6 +55,7 @@ Route::prefix('market')->group(function () {
         Route::get('/{product:slug}', [ProductController::class, 'product'])->name('market.product');
         Route::post('/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
         Route::get('/{product:slug}/is-favorite', [ProductController::class, 'isFavorite'])->name('market.product.is-favorite');
+        Route::post('/{product:slug}/rate', [ProductController::class, 'rate'])->name('market.product.rate');
     });
 
     Route::prefix('cart')->group(function () {

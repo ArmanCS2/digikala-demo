@@ -23,6 +23,13 @@ class ProductController extends Controller
         return view('app.market.product', compact('product', 'relatedProducts'));
     }
 
+    public function rate(Request $request,Product $product)
+    {
+        $user=Auth::user();
+        $user->rate($product,$request->rating);
+        return redirect()->back()->with('toast-success','امتیاز با موفقیت ثبت شد');
+    }
+
 
     public function storeComment(CommentRequest $request, Product $product)
     {

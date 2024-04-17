@@ -1,7 +1,7 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
-    <title>دیجی کالا</title>
+    <title>بوتیکالا</title>
 @endsection
 
 @section('content')

@@ -6,6 +6,7 @@ use App\Models\Content\Comment;
 use App\Models\Market\CartItem;
 use App\Models\Market\ProductCategory;
 use App\Models\Notification;
+use App\Models\Setting\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -40,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             } else {
                 $view->with('cartItems', []);
             }
-
+            $view->with('setting', Setting::first());
         });
     }
 }

@@ -64,7 +64,7 @@
                                 <td>{{$order->payment_type()}}</td>
                                 <td>{{$order->payment->paymentable->gateway ?? '-'}}</td>
                                 <td>{{$order->delivery_status()}}</td>
-                                <td>{{$order->delivery->name}}</td>
+                                <td>{{$order->delivery_object->name}}</td>
                                 <td>{{$order->order_status()}}</td>
                                 <td class="width-16-rem text-left">
                                     <div class="dropdown">
