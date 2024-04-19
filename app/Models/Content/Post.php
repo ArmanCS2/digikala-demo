@@ -32,6 +32,12 @@ class Post extends Model
     }
 
 
+    public function approvedComments()
+    {
+        return $this->comments()->where('approved', 1)->whereNull('parent_id')->get();
+    }
+
+
 
 
 }

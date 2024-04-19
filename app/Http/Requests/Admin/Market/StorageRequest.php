@@ -26,15 +26,15 @@ class StorageRequest extends FormRequest
         if ($this->isMethod('post')){
             return [
                 'product_count'=>'required|numeric',
-                'receiver'=>'required|string',
-                'deliverer'=>'required|string',
-                'description'=>'required|string',
+                'receiver'=>'nullable|string',
+                'deliverer'=>'nullable|string',
+                'description'=>'nullable|string',
             ];
         }
         return [
-            'marketable_number'=>'required|numeric',
-            'frozen_number'=>'required|numeric',
-            'sold_number'=>'required|numeric',
+            'marketable_number'=>'nullable|numeric',
+            'frozen_number'=>'nullable|numeric',
+            'sold_number'=>'nullable|numeric',
         ];
     }
 }

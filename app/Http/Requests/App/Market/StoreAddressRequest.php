@@ -29,12 +29,12 @@ class StoreAddressRequest extends FormRequest
             'city_id'=>'required|exists:province_cities,id',
             'postal_code'=>['required',new PostalCode()],
             'address'=>'required|string',
-            'no'=>'required|string',
-            'unit'=>'required|string',
+            'no'=>'nullable|string',
+            'unit'=>'nullable|string',
             'receiver'=>'nullable',
             'recipient_first_name'=>'nullable|string',
             'recipient_last_name'=>'nullable|string',
-            'mobile'=>'required_if:nullable|numeric|digits:11',
+            'mobile'=>'nullable|numeric|digits:11',
         ];
     }
 }

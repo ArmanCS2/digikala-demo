@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CartEmpty;
 use App\Http\Middleware\PermissionMiddleware;
+use App\Http\Middleware\ProductMarketable;
 use App\Http\Middleware\ProfileComplete;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -70,5 +71,6 @@ class Kernel extends HttpKernel
         'cart.empty' => CartEmpty::class,
         'role'=>RoleMiddleware::class,
         'permission'=>PermissionMiddleware::class,
+        'product-marketable'=>ProductMarketable::class
     ];
 }

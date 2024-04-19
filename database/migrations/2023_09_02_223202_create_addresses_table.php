@@ -20,8 +20,8 @@ class CreateAddressesTable extends Migration
             $table->foreignId('city_id')->constrained('province_cities')->onDelete('cascade')->onUpdate('cascade');
             $table->string('postal_code');
             $table->text('address');
-            $table->string('no');
-            $table->string('unit');
+            $table->string('no')->nullable();
+            $table->string('unit')->nullable();;
             $table->string('recipient_first_name');
             $table->string('recipient_last_name');
             $table->string('mobile');

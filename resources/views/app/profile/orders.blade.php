@@ -58,7 +58,7 @@
                     <section class="order-item-status"><i class="fa fa-clock"></i> وضعیت سفارش : {{$order->order_status()}}</section>
                     <section class="order-item-status"><i class="fa fa-cash-register"></i> نحوه پرداخت : {{$order->payment_type()}}</section>
                     <section class="order-item-status"><i class="fa fa-coins"></i> وضعیت پرداخت : {{$order->payment_status()}}</section>
-                    <section class="order-item-status"><i class="fa fa-motorcycle"></i> شیوه ارسال : {{$order->delivery_type->name}}</section>
+                    <section class="order-item-status"><i class="fa fa-motorcycle"></i> شیوه ارسال : {{$order->delivery_object->name}}</section>
                     <section class="order-item-status"><i class="fa fa-box"></i> وضعیت ارسال : {{$order->delivery_status()}}</section>
                     <section class="order-item-products">
                         @foreach($order->items as $item)

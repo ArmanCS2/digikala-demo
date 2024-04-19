@@ -56,7 +56,7 @@ class Order extends Model
 
     public function delivery_status()
     {
-        if ($this->delivery_status == 0) {
+        if ($this->delivery_status === '0') {
             return 'ارسال نشده';
         }
 
@@ -69,7 +69,11 @@ class Order extends Model
             return 'ارسال شده';
         }
 
-        return 'تحویل داده شده';
+        if ($this->delivery_status == 3) {
+            return 'تحویل داده شده';
+        }
+
+        return 'ارسال نشده';
     }
 
     public function delivery_type()
@@ -79,7 +83,7 @@ class Order extends Model
 
     public function payment_status()
     {
-        if ($this->payment_status == 0) {
+        if ($this->payment_status === '0') {
             return 'پرداخت نشده';
         }
 
@@ -92,11 +96,15 @@ class Order extends Model
             return 'لغو شده';
         }
 
-        return 'بازگرداننده شده';
+        if ($this->payment_status == 2) {
+            return 'بازگرداننده شده';
+        }
+
+        return 'پرداخت نشده';
     }
     public function payment_type()
     {
-        if ($this->payment_type == 0) {
+        if ($this->payment_type === '0') {
             return 'آنلاین';
         }
 
@@ -104,12 +112,16 @@ class Order extends Model
             return 'آفلاین';
         }
 
-        return 'نقدی';
+        if ($this->payment_status == 2) {
+            return 'نقدی';
+        }
+
+        return 'نامشخص';
     }
 
     public function order_status()
     {
-        if ($this->order_status == 0) {
+        if ($this->order_status === '0') {
             return 'بررسی نشده';
         }
         if ($this->order_status == 1) {
@@ -128,7 +140,11 @@ class Order extends Model
             return 'مرجوع شده';
         }
 
-        return 'باطل شده';
+        if ($this->order_status == 5) {
+            return 'باطل شده';
+        }
+
+        return 'بررسی نشده';
 
     }
 

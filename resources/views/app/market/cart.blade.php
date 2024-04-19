@@ -64,10 +64,10 @@
                                             <p><i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا موجود در انبار</span>
                                             </p>
                                             <section>
-                                                <section class="cart-product-number d-inline-block ">
+                                                <section class="cart-product-number d-inline-block d-none">
                                                     <button class="cart-number cart-number-down" type="button">-
                                                     </button>
-                                                    <input class="number"
+                                                    <input class="number d-none"
                                                            name="number[{{$cartItem->id}}]"
                                                            data-product-discount="{{$cartItem->productDiscount()}}"
                                                            data-product-price="{{$cartItem->productPrice()}}"

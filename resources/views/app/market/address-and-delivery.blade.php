@@ -56,7 +56,7 @@
                                                                 </span>
                                     @enderror
                                     @forelse($addresses as $address)
-                                        <input type="radio" form="store-address-delivery" name="address_id"
+                                        <input checked type="radio" form="store-address-delivery" name="address_id"
                                                value="{{$address->id}}" id="a-{{$address->id}}"/>
                                         <!--checked="checked"-->
                                         <label for="a-{{$address->id}}" class="address-wrapper mb-2 p-2">
@@ -178,7 +178,7 @@
                                                                 </section>
 
                                                                 <section class="col-3 mb-2">
-                                                                    <label for="no" class="form-label mb-1">پلاک</label>
+                                                                    <label for="no" class="form-label mb-1">پلاک (اختیاری)</label>
                                                                     <input name="no" type="text"
                                                                            class="form-control form-control-sm"
                                                                            id="no" placeholder="پلاک"
@@ -192,7 +192,7 @@
 
                                                                 <section class="col-3 mb-2">
                                                                     <label for="unit"
-                                                                           class="form-label mb-1">واحد</label>
+                                                                           class="form-label mb-1">واحد (اختیاری)</label>
                                                                     <input name="unit" type="text"
                                                                            class="form-control form-control-sm"
                                                                            id="unit" placeholder="واحد"
@@ -499,7 +499,7 @@
                                         </secrion>
                                     </section>
                                     @foreach($deliveries as $delivery)
-                                        <input type="radio" form="store-address-delivery" name="delivery_id"
+                                        <input checked type="radio" form="store-address-delivery" name="delivery_id"
                                                value="{{$delivery->id}}" id="d-{{$delivery->id}}"/>
                                         <label for="d-{{$delivery->id}}"
                                                class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">

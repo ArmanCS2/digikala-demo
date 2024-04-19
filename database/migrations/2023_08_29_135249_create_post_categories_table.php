@@ -18,7 +18,7 @@ class CreatePostCategoriesTable extends Migration
             $table->string('name');
             $table->text('tags');
             $table->text('description');
-            $table->text('image');
+            $table->text('image')->nullable();
             $table->string('slug')->unique()->nullable();
             $table->tinyInteger('status')->default(0);
             $table->foreignId('parent_id')->nullable()->constrained('post_categories')->onDelete('cascade')->onDelete('cascade');

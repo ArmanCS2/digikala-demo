@@ -29,7 +29,7 @@ class ProductCategoryRequest extends FormRequest
                 'name'=>'required|max:100|min:2|string',
                 'parent_id'=>'nullable',
                 'description'=>'required|max:500|min:5',
-                'image'=>'required|image|mimes:jpg,png,jpeg,gif',
+                'image'=>'nullable|image|mimes:jpg,png,jpeg,gif',
                 'tags'=>'required|string',
                 'status'=>'required|numeric|in:1,0',
                 'show_in_menu'=>'required|numeric|in:1,0',

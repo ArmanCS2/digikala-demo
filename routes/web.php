@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\User\AdminUserController;
+use App\Http\Controllers\App\Content\PostController;
 use App\Http\Controllers\App\HomeController;
 use App\Http\Controllers\App\Market\AddressController;
 use App\Http\Controllers\App\Market\CartController;
@@ -51,6 +52,7 @@ Route::prefix('profile')->group(function () {
 Route::prefix('market')->group(function () {
 
     Route::get('/products', [ProductController::class, 'products'])->name('market.products');
+    Route::get('/amazing-sales', [ProductController::class, 'amazingSales'])->name('market.amazing-sales');
     Route::prefix('product')->group(function () {
         Route::get('/{product:slug}', [ProductController::class, 'product'])->name('market.product');
         Route::post('/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
@@ -58,7 +60,7 @@ Route::prefix('market')->group(function () {
         Route::post('/{product:slug}/rate', [ProductController::class, 'rate'])->name('market.product.rate');
     });
 
-    Route::prefix('cart')->group(function () {
+    Route::middleware('product-marketable')->prefix('cart')->group(function () {
         Route::middleware('cart.empty')->get('/', [CartController::class, 'cart'])->name('market.cart');
         Route::put('update', [CartController::class, 'update'])->name('market.cart.update');
         Route::post('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
@@ -66,7 +68,7 @@ Route::prefix('market')->group(function () {
         Route::get('remove-product/{cartItem}', [CartController::class, 'removeProduct'])->name('market.cart.remove-product');
     });
 
-    Route::middleware(['profile.complete', 'cart.empty'])->group(function () {
+    Route::middleware(['profile.complete', 'cart.empty', 'product-marketable'])->group(function () {
         //address and delivery
         Route::get('address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('market.address-and-delivery');
         Route::post('add-address', [AddressController::class, 'addAddress'])->name('market.add-address');
@@ -81,6 +83,17 @@ Route::prefix('market')->group(function () {
         Route::post('payment-type', [PaymentController::class, 'paymentType'])->name('market.payment.type');
         Route::any('payment-callback/{order}/{amount}/{onlinePayment}', [PaymentController::class, 'paymentCallback'])->name('market.payment-callback');
     });
+
+});
+
+
+Route::prefix('content')->group(function () {
+    Route::get('posts', [PostController::class, 'posts'])->name('content.posts');
+    Route::prefix('post')->group(function () {
+        Route::get('/{post:slug}', [PostController::class, 'post'])->name('content.post');
+        Route::post('/{post:slug}/store-comment', [PostController::class, 'storeComment'])->name('content.post.store-comment');
+    });
+
 
 });
 
@@ -285,7 +298,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
 
         Route::prefix('banner')->group(function () {
-            Route::middleware('role:admin')->get('/', 'BannerController@index')->name('admin.content.banner.index');
+            Route::get('/', 'BannerController@index')->name('admin.content.banner.index');
             Route::get('/create', 'BannerController@create')->name('admin.content.banner.create');
             Route::post('/store', 'BannerController@store')->name('admin.content.banner.store');
             Route::get('/edit/{id}', 'BannerController@edit')->name('admin.content.banner.edit');
@@ -295,7 +308,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         });
 
         Route::prefix('category')->group(function () {
-            Route::middleware('permission:show-category')->get('/', 'CategoryController@index')->name('admin.content.category.index');
+            Route::get('/', 'CategoryController@index')->name('admin.content.category.index');
             Route::get('/create', 'CategoryController@create')->name('admin.content.category.create');
             Route::post('/store', 'CategoryController@store')->name('admin.content.category.store');
             Route::get('/edit/{id}', 'CategoryController@edit')->name('admin.content.category.edit');

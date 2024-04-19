@@ -37,29 +37,35 @@ class CartController extends Controller
 
     public function addProduct(CartRequest $request, Product $product)
     {
+        //dd($request->all());
         if (Auth::check()) {
-            $user = Auth::user();
-            $cartItems = CartItem::where('user_id', $user->id)->where('product_id', $product->id)->get();
-            foreach ($cartItems as $cartItem) {
-                if ($cartItem->color_id == $request->color && $cartItem->guarantee_id == $request->guarantee) {
-                    if ($cartItem->number != ($request->number ?? 1)) {
-                        $cartItem->update([
-                            'number' => $request->number ?? 1
-                        ]);
-                        return redirect()->back()->with('swal-success', 'تعداد محصول مورد نظر در سبد خرید با موفقیت ویرایش شد');
+            if ($product->marketable_number > 0) {
+                $user = Auth::user();
+                $cartItems = CartItem::where('user_id', $user->id)->where('product_id', $product->id)->get();
+                foreach ($cartItems as $cartItem) {
+                    if ($cartItem->product->id == $product->id) {
+                        /*if ($cartItem->number != ($request->number ?? 1)) {
+                            $cartItem->update([
+                                'number' => $request->number ?? 1
+                            ]);
+                            return redirect()->back()->with('swal-success', 'تعداد محصول مورد نظر در سبد خرید با موفقیت ویرایش شد');
+                        }*/
+                        return redirect()->back()->with('toast-info', 'محصول در سبد خرید موجود میباشد');
                     }
-                    return redirect()->back()->with('toast-info', 'محصول در سبد خرید موجود میباشد');
-
                 }
+                CartItem::create([
+                    'user_id' => $user->id,
+                    'product_id' => $product->id,
+                    'color_id' => $request->color ?? ($product->colors()->first()->id ?? null),
+                    'guarantee_id' => $request->guarantee ?? null,
+                    'number' => $request->number ?? 1
+                ]);
+                $product->frozen_number = $product->frozen_number + 1;
+                $product->save();
+                return redirect()->back()->with('swal-success', 'محصول با موفقیت به سبد خرید اضافه شد');
+            } else {
+                return redirect()->back()->with('toast-error', 'محصول ناموجود میباشد');
             }
-            CartItem::create([
-                'user_id' => $user->id,
-                'product_id' => $product->id,
-                'color_id' => $request->color ?? null,
-                'guarantee_id' => $request->guarantee ?? null,
-                'number' => $request->number ?? 1
-            ]);
-            return redirect()->back()->with('swal-success', 'محصول با موفقیت به سبد خرید اضافه شد');
         }
         return redirect()->back()->with('toast-info', 'برای اضافه کردن به سبد خرید باید وارد حساب کاربری خود شوید');
     }
@@ -67,6 +73,7 @@ class CartController extends Controller
     public function removeProduct(CartItem $cartItem)
     {
         if ($cartItem->user_id == Auth::user()->id) {
+            $cartItem->product->frozen_number = $cartItem->product->frozen_number > 0 ? $cartItem->product->frozen_number - 1 : 0;
             $cartItem->delete();
             return redirect()->back()->with('swal-success', 'محصول با موفقیت از سبد خرید حذف شد');
         }

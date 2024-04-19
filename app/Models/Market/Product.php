@@ -12,7 +12,7 @@ use Nagy\LaravelRating\Traits\Rateable;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Sluggable,Rateable;
+    use HasFactory, SoftDeletes, Sluggable, Rateable;
 
     public function sluggable(): array
     {
@@ -69,6 +69,11 @@ class Product extends Model
     public function activeAmazingSale()
     {
         return $this->amazingSales()->where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->where('status', 1)->first();
+    }
+
+    public function activeAmazingSaleObj()
+    {
+        return $this->amazingSales()->where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->where('status', 1);
     }
 
     public function images()

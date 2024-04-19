@@ -135,18 +135,24 @@ class PaymentController extends Controller
         ]);
         foreach ($cartItems as $cartItem) {
             OrderItem::create([
-                'order_id'=>$order->id,
-                'product_id'=>$cartItem->product_id,
-                'product'=>$cartItem->product,
-                'color_id'=>$cartItem->color_id,
-                'guarantee_id'=>$cartItem->guarantee_id,
-                'amazing_sale_id'=>$cartItem->product->activeAmazingSale()->id ?? null,
-                'amazing_sale_object'=>$cartItem->product->activeAmazingSale() ?? null,
-                'amazing_sale_discount_amount'=>$cartItem->productDiscount(),
-                'number'=>$cartItem->number,
-                'final_product_price'=>$cartItem->finalProductPrice(),
-                'final_total_price'=>$cartItem->totalProductPrice()
+                'order_id' => $order->id,
+                'product_id' => $cartItem->product_id,
+                'product' => $cartItem->product,
+                'color_id' => $cartItem->color_id,
+                'guarantee_id' => $cartItem->guarantee_id,
+                'amazing_sale_id' => $cartItem->product->activeAmazingSale()->id ?? null,
+                'amazing_sale_object' => $cartItem->product->activeAmazingSale() ?? null,
+                'amazing_sale_discount_amount' => $cartItem->productDiscount(),
+                'number' => $cartItem->number,
+                'final_product_price' => $cartItem->finalProductPrice(),
+                'final_total_price' => $cartItem->totalProductPrice()
             ]);
+            $cartItem->product->marketable_number = $cartItem->product->marketable_number > 0 ? $cartItem->product->marketable_number - 1 : 0;
+            $cartItem->product->sold_number = $cartItem->product->sold_number + 1;
+            $cartItem->product->frozen_number = $cartItem->product->frozen_number > 0 ? $cartItem->product->frozen_number - 1 : 0;
+            $cartItem->product->save();
+
+
             $cartItem->delete();
         }
         $order->update([
@@ -167,17 +173,17 @@ class PaymentController extends Controller
         if ($result['success']) {
             foreach ($cartItems as $cartItem) {
                 OrderItem::create([
-                    'order_id'=>$order->id,
-                    'product_id'=>$cartItem->product_id,
-                    'product'=>$cartItem->product,
-                    'color_id'=>$cartItem->color_id,
-                    'guarantee_id'=>$cartItem->guarantee_id,
-                    'amazing_sale_id'=>$cartItem->product->activeAmazingSale()->id ?? null,
-                    'amazing_sale_object'=>$cartItem->product->activeAmazingSale() ?? null,
-                    'amazing_sale_discount_amount'=>$cartItem->productDiscount(),
-                    'number'=>$cartItem->number,
-                    'final_product_price'=>$cartItem->finalProductPrice(),
-                    'final_total_price'=>$cartItem->totalProductPrice()
+                    'order_id' => $order->id,
+                    'product_id' => $cartItem->product_id,
+                    'product' => $cartItem->product,
+                    'color_id' => $cartItem->color_id,
+                    'guarantee_id' => $cartItem->guarantee_id,
+                    'amazing_sale_id' => $cartItem->product->activeAmazingSale()->id ?? null,
+                    'amazing_sale_object' => $cartItem->product->activeAmazingSale() ?? null,
+                    'amazing_sale_discount_amount' => $cartItem->productDiscount(),
+                    'number' => $cartItem->number,
+                    'final_product_price' => $cartItem->finalProductPrice(),
+                    'final_total_price' => $cartItem->totalProductPrice()
                 ]);
                 $cartItem->delete();
             }

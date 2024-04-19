@@ -158,7 +158,7 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">وزن</label>
+                                    <label for="">وزن (اختیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="weight"
                                            value="{{old('weight')}}">
                                 </div>
@@ -171,7 +171,7 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">طول</label>
+                                    <label for="">طول (اختیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="length"
                                            value="{{old('length')}}">
                                 </div>
@@ -184,7 +184,7 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">عرض</label>
+                                    <label for="">عرض (اختیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="width"
                                            value="{{old('width')}}">
                                 </div>
@@ -197,7 +197,7 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">ارتفاع</label>
+                                    <label for="">ارتفاع (اخیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="height"
                                            value="{{old('height')}}">
                                 </div>

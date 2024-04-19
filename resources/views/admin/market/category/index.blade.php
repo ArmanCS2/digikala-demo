@@ -43,7 +43,7 @@
                             <th>نام دسته بندی</th>
                             <th>دسته والد</th>
                             <th>توضیحات</th>
-                            <th>تصویر</th>
+{{--                            <th>تصویر</th>--}}
                             <th>اسلاگ</th>
                             <th>تگ ها</th>
                             <th>نمایش در منو</th>
@@ -57,10 +57,10 @@
                                 <th>{{{$key+1}}}</th>
                                 <td>{{$productCategory->name}}</td>
                                 <th>{{$productCategory->parent->name ?? 'اصلی'}}</th>
-                                <td>{{$productCategory->description}}</td>
-                                <td><img
-                                        src="{{asset($productCategory->image['indexArray'][$productCategory->image['currentImage']])}}"
-                                        width="50px" height="50px"></td>
+                                <td>{!! $productCategory->description !!}</td>
+{{--                                <td><img--}}
+{{--                                        src="{{!empty($productCategory->image) ? asset($productCategory->image['indexArray'][$productCategory->image['currentImage']]) : '-'}}"--}}
+{{--                                        width="50px" height="50px"></td>--}}
                                 <td>{{$productCategory->slug}}</td>
                                 <td>{{$productCategory->tags}}</td>
                                 <td>

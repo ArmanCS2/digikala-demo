@@ -12,7 +12,7 @@
 
                     <section class="footer-shop-features-item">
                         <img src="{{asset('app-assets/images/footer/2.png')}}" alt="">
-                        <section class="text-center">امکان پرداخت در محل</section>
+                        <section class="text-center">پرداخت به صورت آنی</section>
                     </section>
 
                     <section class="footer-shop-features-item">
@@ -27,79 +27,90 @@
 
                     <section class="footer-shop-features-item">
                         <img src="{{asset('app-assets/images/footer/5.png')}}" alt="">
-                        <section class="text-center">ضمانت اصل بودن کالا</section>
+                        <section class="text-center">ضمانت کیفیت کالا</section>
                     </section>
 
                 </section>
             </section>
         </section>
-        <section class="row">
+        <section class="row d-flex justify-content-between">
             <section class="col-md">
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">شرایط و قوانین</a>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2"
+                            href="{{route('market.products',['sort'=>6])}}">پر فروش ترین کالا
+                        ها</a>
                 </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">درباره ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">تماس با ما</a>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2"
+                            href="{{route('market.products',['sort'=>5])}}">پر بازدیدترین کالا
+                        ها</a>
                 </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">فرصت های شغلی</a>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2"
+                            href="{{route('market.products',['sort'=>1])}}">جدیدترین کالا ها</a>
                 </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">سوالات متداول</a>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2"
+                            href="{{route('market.products',['sort'=>2])}}">محبوب ترین کالا
+                        ها</a>
                 </section>
             </section>
 
             <section class="col-md">
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">شرایط و قوانین</a>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2"
+                            href="{{route('market.amazing-sales')}}">تخفیف ها و پیشنهاد ها</a>
                 </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">درباره ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">تماس با ما</a>
-                </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">فرصت های شغلی</a>
-                </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">سوالات متداول</a>
-                </section>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2"
+                            href="{{route('content.posts')}}">وبلاگ</a></section>
             </section>
+
 
             <section class="col-md">
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">شرایط و قوانین</a>
-                </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">درباره ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">تماس با ما</a>
-                </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">فرصت های شغلی</a>
-                </section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">سوالات متداول</a>
-                </section>
+                <a referrerpolicy='origin' target='_blank'
+                   href='https://trustseal.enamad.ir/?id=482888&Code=1vwjhU2YXqZ9jaX4hdufR9lXNjc4Rii9'><img
+                        referrerpolicy='origin'
+                        src='https://trustseal.enamad.ir/logo.aspx?id=482888&Code=1vwjhU2YXqZ9jaX4hdufR9lXNjc4Rii9'
+                        alt='' style='cursor:pointer' Code='1vwjhU2YXqZ9jaX4hdufR9lXNjc4Rii9'></a>
             </section>
 
-            <section class="col-md-5">
+
+            <section class="col-md">
                 <section>
                     <section class="text-dark fw-bold">با ما همراه باشید</section>
                     <section class="my-3">
-                        <a href="https://armanafzali.ir" class="text-muted text-decoration-none me-5"><i class="fab fa-instagram"></i></a>
-                        <a href="https://armanafzali.ir" class="text-muted text-decoration-none me-5"><i class="fab fa-telegram"></i></a>
-                        <a href="https://armanafzali.ir" class="text-muted text-decoration-none me-5"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://armanafzali.ir" class="text-muted text-decoration-none me-5"><i class="fab fa-twitter"></i></a>
-                        <a href="https://armanafzali.ir" class="text-muted text-decoration-none me-5"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://instagram.com/arman.is.me" class="text-muted text-decoration-none me-5"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/Butikala_ir" class="text-muted text-decoration-none me-5"><i
+                                class="fab fa-telegram"></i></a>
+                        <a href="https://armanafzali.ir" class="text-muted text-decoration-none me-5"><i
+                                class="fa fa-link"></i></a>
                     </section>
                 </section>
             </section>
+
         </section>
         <section class="row my-5">
             <section class="col">
-                <section class="fw-bold">درباره من</section>
+                <section class="fw-bold">درباره فروشگاه</section>
                 <section class="text-muted footer-intro">
-                    این وبسایت صرفا جهت نمونه کار پیاده سازی جهت سفارش پروژه های خود از این راه های ارتباطی زیر کمک بگیرید :
+                    فروشگاه بوتیکالا در سال 1403 فعالیت خود را در حوزه فروش پوشاک به صورت عمده و جزئی شروع و در حال حاضر
+                    در حال خدمت دهی به مشتریان میباشد.
                     <br>
-                    وبسایت : <a href="https://armanafzali.ir" class="text-dark">armanafzali.ir</a>
-                    ایمیل : <a href="mailto:armanafzali31@gmail.com" class="text-dark">armanafzali31@gmail.com</a>
-                    شماره تماس : <a href="tel:+989223618018" class="text-dark">09223618018</a>
+                    راه های ارتباطی :
+
+                    تلگرام : <a href="https://t.me/Butikala_ir" class="text-muted text-decoration-none me-5"><i
+                            class="fab fa-telegram"></i></a>
+
+                    اینستاگرام : <a href="https://instagram.com/arman.is.me"
+                                    class="text-muted text-decoration-none me-5"><i
+                            class="fab fa-instagram"></i></a>
+
+                    پشتیبانی : <a href="tel:+989396754815" class="text-dark">09396754815</a>
+
                 </section>
             </section>
         </section>
 
         <section class="row border-top pt-4">
             <section class="col">
-                <section class="text-muted footer-intro text-center">کلیه حقوق این وبسایت متعلق به <a href="https://armanafzali.ir" class="text-dark">armanafzali.ir</a> می
-                    باشد.
+                <section class="text-muted footer-intro text-center">
+                    کلیه حقوق وبسایت محفوظ است
                 </section>
             </section>
         </section>

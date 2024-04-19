@@ -18,10 +18,14 @@ class CartEmpty
      */
     public function handle(Request $request, Closure $next)
     {
+        if (!Auth::check()) {
+            return redirect()->back()->with('toast-info', 'ابتدا وارد حساب کاربری خود شوید');
+        }
         $user = Auth::user();
         if (empty(CartItem::where('user_id', $user->id)->count())) {
             return redirect()->route('home')->with('toast-info', 'سبد خرید خالی است');
         }
+
         return $next($request);
     }
 }

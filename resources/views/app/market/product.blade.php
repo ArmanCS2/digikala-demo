@@ -144,7 +144,7 @@
                                             </section>
                                         @endif
 
-                                        <p>
+                                        <p class="my-4">
                                             @if($product->marketable_number > 0)
                                                 <i class="fa fa-store-alt cart-product-selected-store me-1"></i>
                                                 <span>کالا موجود در انبار</span>
@@ -154,16 +154,20 @@
                                             @endif
                                         </p>
 
+
+                                        {!! $product->introduction !!}
+
                                         <section>
-                                            <section class="cart-product-number d-inline-block ">
-                                                <button class="cart-number cart-number-down" type="button">-
-                                                </button>
-                                                <input class="" type="number" name="number" id="number" min="1"
-                                                       max="5"
-                                                       step="1" value="1"
-                                                       readonly="readonly">
-                                                <button class="cart-number cart-number-up" type="button">+
-                                                </button>
+                                            <section class="cart-product-number d-none ">
+                                                {{--                                                <button class="cart-number cart-number-down" type="button">---}}
+                                                {{--                                                </button>--}}
+                                                {{--                                                <input class="" type="number" name="number" id="number" min="1"--}}
+                                                {{--                                                       max="5"--}}
+                                                {{--                                                       step="1" value="1"--}}
+                                                {{--                                                       readonly="readonly">--}}
+                                                {{--                                                <button class="cart-number cart-number-up" type="button">+--}}
+                                                {{--                                                </button>--}}
+                                                <input class="d-none" type="number" name="number" id="number" value="1">
                                             </section>
                                         </section>
                                         <p class="mb-3 mt-5">
@@ -453,6 +457,7 @@
                             </section>
                             <section class="product-features mb-4 table-responsive">
                                 <table class="table table-bordered border-white">
+
                                     @foreach($product->values as $value)
                                         <tr>
                                             <td>{{$value->attribute->name}}</td>
@@ -460,7 +465,7 @@
                                         </tr>
                                     @endforeach
 
-                                    @foreach($product->metas as $meta)
+                                    @foreach($product->metas ?? [] as $meta)
                                         <tr>
                                             <td>{{$meta->meta_key}}</td>
                                             <td>{{$meta->meta_value}}</td>
@@ -519,358 +524,363 @@
                                     <p class="my-1">
                                         میانگین امتیاز : {{ number_format($product->ratingsAvg(), 1, '/') ?? 0 }} از {{ $product->ratingsCount() ?? 0
                                 }} نفر
-                        @endguest
+                                    @endguest
 
-                        <!-- start vontent header -->
-                            <section id="comments" class="content-header mt-2 mb-4">
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <h2 class="content-header-title content-header-title-small">
-                                        دیدگاه ها
-                                    </h2>
-                                    <section class="content-header-link">
-                                        <!--<a href="#">مشاهده همه</a>-->
+                                    <!-- start vontent header -->
+                                    <section id="comments" class="content-header mt-2 mb-4">
+                                        <section class="d-flex justify-content-between align-items-center">
+                                            <h2 class="content-header-title content-header-title-small">
+                                                دیدگاه ها
+                                            </h2>
+                                            <section class="content-header-link">
+                                                <!--<a href="#">مشاهده همه</a>-->
+                                            </section>
+                                        </section>
                                     </section>
-                                </section>
-                            </section>
-                            <section class="product-comments mb-4">
-                                @guest
-                                    <section class="comment-add-wrapper">
-                                        <p>برای افزودن دیدگاه وارد حساب کاربری خود شوید</p>
-                                        <a href="{{route('auth.customer.login-register-form')}}"
-                                           class="btn btn-primary">ورود
-                                            یا ثبت نام</a>
-                                    </section>
-                                @endguest
-                                @auth
-                                    <section class="comment-add-wrapper">
-                                        <button class="comment-add-button" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#add-comment"><i class="fa fa-plus"></i> افزودن دیدگاه
-                                        </button>
-                                        <!-- start add comment Modal -->
-                                        <section class="modal fade" id="add-comment" tabindex="-1"
-                                                 aria-labelledby="add-comment-label" aria-hidden="true">
-                                            <section class="modal-dialog">
-                                                <section class="modal-content">
-                                                    <section class="modal-header">
-                                                        <h5 class="modal-title" id="add-comment-label"><i
-                                                                class="fa fa-plus"></i> افزودن دیدگاه</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </section>
-                                                    <section class="modal-body">
-                                                        <form class="row"
-                                                              action="{{route('market.product.store-comment',$product)}}"
-                                                              method="post">
-                                                            @csrf
-                                                            <section class="col-12 mb-2">
-                                                                <label for="comment" class="form-label mb-1">دیدگاه
-                                                                    شما</label>
-                                                                <textarea class="form-control form-control-sm"
-                                                                          id="comment"
-                                                                          placeholder="دیدگاه شما ..."
-                                                                          rows="4" name="body"></textarea>
-                                                                @error('body')
-                                                                <span class="text-danger">
+                                    <section class="product-comments mb-4">
+                                        @guest
+                                            <section class="comment-add-wrapper">
+                                                <p>برای افزودن دیدگاه وارد حساب کاربری خود شوید</p>
+                                                <a href="{{route('auth.customer.login-register-form')}}"
+                                                   class="btn btn-primary">ورود
+                                                    یا ثبت نام</a>
+                                            </section>
+                                        @endguest
+                                        @auth
+                                            <section class="comment-add-wrapper">
+                                                <button class="comment-add-button" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#add-comment"><i class="fa fa-plus"></i> افزودن
+                                                    دیدگاه
+                                                </button>
+                                                <!-- start add comment Modal -->
+                                                <section class="modal fade" id="add-comment" tabindex="-1"
+                                                         aria-labelledby="add-comment-label" aria-hidden="true">
+                                                    <section class="modal-dialog">
+                                                        <section class="modal-content">
+                                                            <section class="modal-header">
+                                                                <h5 class="modal-title" id="add-comment-label"><i
+                                                                        class="fa fa-plus"></i> افزودن دیدگاه</h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </section>
+                                                            <section class="modal-body">
+                                                                <form class="row"
+                                                                      action="{{route('market.product.store-comment',$product)}}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    <section class="col-12 mb-2">
+                                                                        <label for="comment" class="form-label mb-1">دیدگاه
+                                                                            شما</label>
+                                                                        <textarea class="form-control form-control-sm"
+                                                                                  id="comment"
+                                                                                  placeholder="دیدگاه شما ..."
+                                                                                  rows="4" name="body"></textarea>
+                                                                        @error('body')
+                                                                        <span class="text-danger">
                                                                     <strong>{{$message}}</strong>
                                                                 </span>
-                                                                @enderror
+                                                                        @enderror
+                                                                    </section>
+                                                                    <section class="modal-footer py-1">
+                                                                        <button type="submit"
+                                                                                class="btn btn-sm btn-primary">ثبت
+                                                                            دیدگاه
+                                                                        </button>
+                                                                        <button type="button"
+                                                                                class="btn btn-sm btn-danger"
+                                                                                data-bs-dismiss="modal">بستن
+                                                                        </button>
+                                                                    </section>
+                                                                </form>
                                                             </section>
-                                                            <section class="modal-footer py-1">
-                                                                <button type="submit" class="btn btn-sm btn-primary">ثبت
-                                                                    دیدگاه
-                                                                </button>
-                                                                <button type="button" class="btn btn-sm btn-danger"
-                                                                        data-bs-dismiss="modal">بستن
-                                                                </button>
-                                                            </section>
-                                                        </form>
-                                                    </section>
 
+                                                        </section>
+                                                    </section>
                                                 </section>
                                             </section>
-                                        </section>
-                                    </section>
-                                @endauth
+                                        @endauth
 
-                                @foreach($product->approvedComments() as $comment)
-                                    <section class="product-comment">
-                                        <section class="product-comment-header d-flex justify-content-start">
-                                            <section
-                                                class="product-comment-date">{{jalaliDate($comment->created_at)}}</section>
-                                            <section
-                                                class="product-comment-title">{{$comment->user->full_name ?? 'ناشناس'}}</section>
-                                        </section>
-                                        <section class="product-comment-body">
-                                            {{$comment->body}}
-                                        </section>
-                                        @if(!empty($comment->answer))
-                                            <section class="product-comment ms-5 border-bottom-0">
+                                        @foreach($product->approvedComments() as $comment)
+                                            <section class="product-comment">
                                                 <section class="product-comment-header d-flex justify-content-start">
                                                     <section
-                                                        class="product-comment-date">{{jalaliDate($comment->answer->created_at)}}</section>
-                                                    <section class="product-comment-title">ادمین</section>
+                                                        class="product-comment-date">{{jalaliDate($comment->created_at)}}</section>
+                                                    <section
+                                                        class="product-comment-title">{{$comment->user->full_name ?? 'ناشناس'}}</section>
                                                 </section>
                                                 <section class="product-comment-body">
-                                                    {{$comment->answer->body}}
+                                                    {{$comment->body}}
                                                 </section>
+                                                @if(!empty($comment->answer))
+                                                    <section class="product-comment ms-5 border-bottom-0">
+                                                        <section
+                                                            class="product-comment-header d-flex justify-content-start">
+                                                            <section
+                                                                class="product-comment-date">{{jalaliDate($comment->answer->created_at)}}</section>
+                                                            <section class="product-comment-title">ادمین</section>
+                                                        </section>
+                                                        <section class="product-comment-body">
+                                                            {{$comment->answer->body}}
+                                                        </section>
+                                                    </section>
+                                                @endif
                                             </section>
-                                        @endif
+                                        @endforeach
+
+
                                     </section>
-                                @endforeach
+                                </section>
 
-
-                            </section>
                         </section>
-
                     </section>
                 </section>
             </section>
         </section>
-    </section>
-    <!-- end description, features and comments -->
-@endsection
+        <!-- end description, features and comments -->
+        @endsection
 
-@section('scripts')
-    <script>
-        $(document).ready(function () {
-            bill();
-            //input color
-            $('input[name="color"]').change(function () {
-                bill();
-            })
-            //guarantee
-            $('select[name="guarantee"]').change(function () {
-                bill();
-            })
-            //number
-            $('.cart-number').click(function () {
-                bill();
-            })
-        })
+        @section('scripts')
+            <script>
+                $(document).ready(function () {
+                    bill();
+                    //input color
+                    $('input[name="color"]').change(function () {
+                        bill();
+                    })
+                    //guarantee
+                    $('select[name="guarantee"]').change(function () {
+                        bill();
+                    })
+                    //number
+                    $('.cart-number').click(function () {
+                        bill();
+                    })
+                })
 
-        function bill() {
-            if ($('input[name="color"]:checked').length != 0) {
-                var selected_color = $('input[name="color"]:checked');
-                $("#selected_color_name").html(selected_color.attr('data-color-name'));
-            }
-
-            //price computing
-            var selected_color_price = 0;
-            var selected_guarantee_price = 0;
-            var number = 1;
-            var product_discount_price = 0;
-            var product_discount_percentage = 0;
-            var product_original_price = parseFloat($('#product-price').attr('data-product-original-price'));
-
-            if ($('input[name="color"]:checked').length != 0) {
-                selected_color_price = parseFloat(selected_color.attr('data-color-price'));
-            }
-
-            if ($('#guarantee option:selected').length != 0) {
-                selected_guarantee_price = parseFloat($('#guarantee option:selected').attr('data-guarantee-price'));
-            }
-
-            var product_price = product_original_price + selected_color_price + selected_guarantee_price;
-
-            $('#product-price').html(toPersianNumber(product_price));
-
-
-            if ($('#product-discount-percentage').length != 0) {
-                product_discount_percentage = parseFloat($('#product-discount-percentage').attr('data-product-discount-percentage'));
-                product_discount_price = product_price * product_discount_percentage / 100;
-            }
-
-
-            if ($('#number').val() > 0) {
-                number = parseFloat($('#number').val());
-            }
-            var final_price = number * (product_price - product_discount_price);
-
-
-            $('#product-discount-percentage').html(toPersianNumber(product_discount_percentage));
-            $('#product-discount-price').html(toPersianNumber(product_discount_price));
-            $('#final-price').html(toPersianNumber(final_price));
-        }
-
-        function toPersianNumber(number) {
-            const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            // add comma
-            number = new Intl.NumberFormat().format(number);
-            //convert to persian
-            return number.toString().replace(/\d/g, x => farsiDigits[x]);
-        }
-    </script>
-
-    <script>
-        $('.add-to-favorite button').click(function () {
-            var url = $(this).attr('data-url');
-            var element = $(this);
-            $.ajax({
-                url: url,
-                success: function (result) {
-                    console.log(result)
-                    if (result.status == 1) {
-                        $(element).children().first().addClass('text-danger');
-                        $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
-                        $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
-                        successToast('محصول به علاقه مندی ها اضافه شد');
-                    } else if (result.status == 2) {
-                        $(element).children().first().removeClass('text-danger')
-                        $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
-                        $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
-                        successToast('محصول از علاقه مندی ها حذف شد');
-                    } else if (result.status == 3) {
-                        infoToast('برای افزودن به علاقه مندی وارد حساب کاربری خود شوید');
+                function bill() {
+                    if ($('input[name="color"]:checked').length != 0) {
+                        var selected_color = $('input[name="color"]:checked');
+                        $("#selected_color_name").html(selected_color.attr('data-color-name'));
                     }
-                }
-            })
 
+                    //price computing
+                    var selected_color_price = 0;
+                    var selected_guarantee_price = 0;
+                    var number = 1;
+                    var product_discount_price = 0;
+                    var product_discount_percentage = 0;
+                    var product_original_price = parseFloat($('#product-price').attr('data-product-original-price'));
 
-            function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="4000">\n' +
-                    '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
-                    '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
-                    '</section>\n' +
-                    '</section>';
-                $('.toast-wrapper').append(successToastTag);
-                $('.toast-wrapper').removeClass('d-none');
-                $('.toast').toast('show').delay(4000).queue(function () {
-                    $('.toast-wrapper').addClass('d-none');
-                    $(this).remove();
-                });
-            }
-
-            function infoToast(message) {
-                var successToastTag = '<section class="toast" data-delay="4000">\n' +
-                    '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
-                    '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
-                    '</section>\n' +
-                    '</section>';
-                $('.toast-wrapper').append(successToastTag);
-                $('.toast-wrapper').removeClass('d-none');
-                $('.toast').toast('show').delay(4000).queue(function () {
-                    $('.toast-wrapper').addClass('d-none');
-                    $(this).remove();
-                });
-            }
-
-            function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
-                    '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
-                    '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
-                    '</section>\n' +
-                    '</section>';
-                $('.toast-wrapper').append(errorToastTag);
-                $('.toast-wrapper').removeClass('d-none');
-                $('.toast').toast('show').delay(4000).queue(function () {
-                    $('.toast-wrapper').addClass('d-none');
-                    $(this).remove();
-                });
-            }
-        })
-    </script>
-
-
-    <script>
-        $('.product-add-to-favorite button').click(function () {
-            var url = $(this).attr('data-url');
-            var element = $(this);
-            $.ajax({
-                url: url,
-                success: function (result) {
-                    console.log(result)
-                    if (result.status == 1) {
-                        $(element).children().first().addClass('text-danger');
-                        $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
-                        $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
-                        successToast('محصول به علاقه مندی ها اضافه شد');
-                    } else if (result.status == 2) {
-                        $(element).children().first().removeClass('text-danger')
-                        $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
-                        $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
-                        successToast('محصول از علاقه مندی ها حذف شد');
-                    } else if (result.status == 3) {
-                        infoToast('برای افزودن به علاقه مندی وارد حساب کاربری خود شوید');
+                    if ($('input[name="color"]:checked').length != 0) {
+                        selected_color_price = parseFloat(selected_color.attr('data-color-price'));
                     }
+
+                    if ($('#guarantee option:selected').length != 0) {
+                        selected_guarantee_price = parseFloat($('#guarantee option:selected').attr('data-guarantee-price'));
+                    }
+
+                    var product_price = product_original_price + selected_color_price + selected_guarantee_price;
+
+                    $('#product-price').html(toPersianNumber(product_price));
+
+
+                    if ($('#product-discount-percentage').length != 0) {
+                        product_discount_percentage = parseFloat($('#product-discount-percentage').attr('data-product-discount-percentage'));
+                        product_discount_price = product_price * product_discount_percentage / 100;
+                    }
+
+
+                    if ($('#number').val() > 0) {
+                        number = parseFloat($('#number').val());
+                    }
+                    var final_price = number * (product_price - product_discount_price);
+
+
+                    $('#product-discount-percentage').html(toPersianNumber(product_discount_percentage));
+                    $('#product-discount-price').html(toPersianNumber(product_discount_price));
+                    $('#final-price').html(toPersianNumber(final_price));
                 }
-            })
 
-
-            function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="4000">\n' +
-                    '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
-                    '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
-                    '</section>\n' +
-                    '</section>';
-                $('.toast-wrapper').append(successToastTag);
-                $('.toast-wrapper').removeClass('d-none');
-                $('.toast').toast('show').delay(4000).queue(function () {
-                    $('.toast-wrapper').addClass('d-none');
-                    $(this).remove();
-                });
-            }
-
-            function infoToast(message) {
-                var successToastTag = '<section class="toast" data-delay="4000">\n' +
-                    '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
-                    '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
-                    '</section>\n' +
-                    '</section>';
-                $('.toast-wrapper').append(successToastTag);
-                $('.toast-wrapper').removeClass('d-none');
-                $('.toast').toast('show').delay(4000).queue(function () {
-                    $('.toast-wrapper').addClass('d-none');
-                    $(this).remove();
-                });
-            }
-
-            function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
-                    '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
-                    '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
-                    '</section>\n' +
-                    '</section>';
-                $('.toast-wrapper').append(errorToastTag);
-                $('.toast-wrapper').removeClass('d-none');
-                $('.toast').toast('show').delay(4000).queue(function () {
-                    $('.toast-wrapper').addClass('d-none');
-                    $(this).remove();
-                });
-            }
-        })
-    </script>
-
-    <script>
-        //start product introduction, features and comment
-        $(document).ready(function () {
-            var s = $("#introduction-features-comments");
-            var pos = s.position();
-            $(window).scroll(function () {
-                var windowpos = $(window).scrollTop();
-
-                if (windowpos >= pos.top) {
-                    s.addClass("stick");
-                } else {
-                    s.removeClass("stick");
+                function toPersianNumber(number) {
+                    const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                    // add comma
+                    number = new Intl.NumberFormat().format(number);
+                    //convert to persian
+                    return number.toString().replace(/\d/g, x => farsiDigits[x]);
                 }
-            });
-        });
-        //end product introduction, features and comment
-    </script>
+            </script>
+
+            <script>
+                $('.add-to-favorite button').click(function () {
+                    var url = $(this).attr('data-url');
+                    var element = $(this);
+                    $.ajax({
+                        url: url,
+                        success: function (result) {
+                            console.log(result)
+                            if (result.status == 1) {
+                                $(element).children().first().addClass('text-danger');
+                                $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
+                                $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
+                                successToast('محصول به علاقه مندی ها اضافه شد');
+                            } else if (result.status == 2) {
+                                $(element).children().first().removeClass('text-danger')
+                                $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
+                                $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
+                                successToast('محصول از علاقه مندی ها حذف شد');
+                            } else if (result.status == 3) {
+                                infoToast('برای افزودن به علاقه مندی وارد حساب کاربری خود شوید');
+                            }
+                        }
+                    })
+
+
+                    function successToast(message) {
+                        var successToastTag = '<section class="toast" data-delay="4000">\n' +
+                            '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
+                            '<strong class="ml-auto">' + message + '</strong>\n' +
+                            '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                            '</a>\n' +
+                            '</section>\n' +
+                            '</section>';
+                        $('.toast-wrapper').append(successToastTag);
+                        $('.toast-wrapper').removeClass('d-none');
+                        $('.toast').toast('show').delay(4000).queue(function () {
+                            $('.toast-wrapper').addClass('d-none');
+                            $(this).remove();
+                        });
+                    }
+
+                    function infoToast(message) {
+                        var successToastTag = '<section class="toast" data-delay="4000">\n' +
+                            '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
+                            '<strong class="ml-auto">' + message + '</strong>\n' +
+                            '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
+                            '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                            '</a>\n' +
+                            '</section>\n' +
+                            '</section>';
+                        $('.toast-wrapper').append(successToastTag);
+                        $('.toast-wrapper').removeClass('d-none');
+                        $('.toast').toast('show').delay(4000).queue(function () {
+                            $('.toast-wrapper').addClass('d-none');
+                            $(this).remove();
+                        });
+                    }
+
+                    function errorToast(message) {
+                        var errorToastTag = '<section class="toast" data-delay="4000">\n' +
+                            '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
+                            '<strong class="ml-auto">' + message + '</strong>\n' +
+                            '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                            '</a>\n' +
+                            '</section>\n' +
+                            '</section>';
+                        $('.toast-wrapper').append(errorToastTag);
+                        $('.toast-wrapper').removeClass('d-none');
+                        $('.toast').toast('show').delay(4000).queue(function () {
+                            $('.toast-wrapper').addClass('d-none');
+                            $(this).remove();
+                        });
+                    }
+                })
+            </script>
+
+
+            <script>
+                $('.product-add-to-favorite button').click(function () {
+                    var url = $(this).attr('data-url');
+                    var element = $(this);
+                    $.ajax({
+                        url: url,
+                        success: function (result) {
+                            console.log(result)
+                            if (result.status == 1) {
+                                $(element).children().first().addClass('text-danger');
+                                $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
+                                $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
+                                successToast('محصول به علاقه مندی ها اضافه شد');
+                            } else if (result.status == 2) {
+                                $(element).children().first().removeClass('text-danger')
+                                $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
+                                $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
+                                successToast('محصول از علاقه مندی ها حذف شد');
+                            } else if (result.status == 3) {
+                                infoToast('برای افزودن به علاقه مندی وارد حساب کاربری خود شوید');
+                            }
+                        }
+                    })
+
+
+                    function successToast(message) {
+                        var successToastTag = '<section class="toast" data-delay="4000">\n' +
+                            '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
+                            '<strong class="ml-auto">' + message + '</strong>\n' +
+                            '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                            '</a>\n' +
+                            '</section>\n' +
+                            '</section>';
+                        $('.toast-wrapper').append(successToastTag);
+                        $('.toast-wrapper').removeClass('d-none');
+                        $('.toast').toast('show').delay(4000).queue(function () {
+                            $('.toast-wrapper').addClass('d-none');
+                            $(this).remove();
+                        });
+                    }
+
+                    function infoToast(message) {
+                        var successToastTag = '<section class="toast" data-delay="4000">\n' +
+                            '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
+                            '<strong class="ml-auto">' + message + '</strong>\n' +
+                            '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
+                            '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                            '</a>\n' +
+                            '</section>\n' +
+                            '</section>';
+                        $('.toast-wrapper').append(successToastTag);
+                        $('.toast-wrapper').removeClass('d-none');
+                        $('.toast').toast('show').delay(4000).queue(function () {
+                            $('.toast-wrapper').addClass('d-none');
+                            $(this).remove();
+                        });
+                    }
+
+                    function errorToast(message) {
+                        var errorToastTag = '<section class="toast" data-delay="4000">\n' +
+                            '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
+                            '<strong class="ml-auto">' + message + '</strong>\n' +
+                            '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                            '</a>\n' +
+                            '</section>\n' +
+                            '</section>';
+                        $('.toast-wrapper').append(errorToastTag);
+                        $('.toast-wrapper').removeClass('d-none');
+                        $('.toast').toast('show').delay(4000).queue(function () {
+                            $('.toast-wrapper').addClass('d-none');
+                            $(this).remove();
+                        });
+                    }
+                })
+            </script>
+
+            <script>
+                //start product introduction, features and comment
+                $(document).ready(function () {
+                    var s = $("#introduction-features-comments");
+                    var pos = s.position();
+                    $(window).scroll(function () {
+                        var windowpos = $(window).scrollTop();
+
+                        if (windowpos >= pos.top) {
+                            s.addClass("stick");
+                        } else {
+                            s.removeClass("stick");
+                        }
+                    });
+                });
+                //end product introduction, features and comment
+            </script>
 
 
 @endsection

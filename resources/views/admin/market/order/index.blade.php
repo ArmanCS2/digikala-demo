@@ -74,6 +74,9 @@
                                             <i class="fa fa-tools"></i> عملیات
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a href="{{route('admin.market.order.show-detail',[$order->id])}}"
+                                               class="dropdown-item text-right"><i class="fa fa-eye"></i> مشاهده
+                                                محصولات </a>
                                             <a href="{{route('admin.market.order.show-factor',[$order->id])}}"
                                                class="dropdown-item text-right"><i class="fa fa-images"></i> مشاهده
                                                 فاکتور </a>

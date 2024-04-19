@@ -43,7 +43,7 @@
                             <th>نام دسته بندی</th>
                             <th>دسته والد</th>
                             <th>توضیحات</th>
-                            <th>تصویر</th>
+{{--                            <th>تصویر</th>--}}
                             <th>اسلاگ</th>
                             <th>تگ ها</th>
                             <th>وضعیت</th>
@@ -56,10 +56,10 @@
                                 <th>{{{$key+1}}}</th>
                                 <td>{{$postCategory->name}}</td>
                                 <th>{{$postCategory->parent->name ?? 'اصلی'}}</th>
-                                <td>{{$postCategory->description}}</td>
-                                <td><img
-                                        src="{{asset($postCategory->image['indexArray'][$postCategory->image['currentImage']])}}"
-                                        width="50px" height="50px"></td>
+                                <td>{!! $postCategory->description !!}</td>
+{{--                                <td><img--}}
+{{--                                        src="{{!empty($postCategory->imag) ? asset($postCategory->image['indexArray'][$postCategory->image['currentImage']]) : '-'}}"--}}
+{{--                                        width="50px" height="50px"></td>--}}
                                 <td>{{$postCategory->slug}}</td>
                                 <td>{{$postCategory->tags}}</td>
                                 <td>
