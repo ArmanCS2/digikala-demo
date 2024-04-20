@@ -28,14 +28,13 @@ use Illuminate\Support\Facades\Route;
 | Home Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth','role:super-admin'])->group(function (){
-    Route::get('site/off', function () {
-        return Artisan::call('down',['--secret'=>'arman']);
-    });
 
-    Route::get('site/up', function () {
-        return Artisan::call('up');
-    });
+Route::get('site/off', function () {
+    return Artisan::call('down', ['--secret' => 'arman']);
+});
+
+Route::get('site/up', function () {
+    return Artisan::call('up');
 });
 
 
@@ -135,7 +134,7 @@ Route::prefix('auth')->namespace('App\Http\Controllers\Auth')->group(function ()
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth','role:admin'])->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
 
     Route::get('/', 'AdminDashboardController@index')->name('admin.home');
     Route::post('/notification/read-all', 'NotificationController@readAll')->name('admin.notification.read-all');

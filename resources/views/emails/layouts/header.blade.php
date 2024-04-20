@@ -6,7 +6,7 @@
     <section class="top-header">
         <section class="container-xxl ">
             <section class="d-flex justify-content-between align-items-center py-3">
-                <section class=""><a class="text-decoration-none" href="{{ route('home') }}"><img src="{{ asset('app-assets/images/logo/8.png') }}" alt="logo"></a></section>
+                <section class=""><a class="text-decoration-none" href="{{ route('home') }}"><img src="{{ asset(\App\Models\Setting\Setting::first()->icon) }}" alt="logo"></a></section>
 
             </section>
         </section>

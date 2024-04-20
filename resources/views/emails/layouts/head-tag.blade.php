@@ -5,4 +5,4 @@
 <link rel="stylesheet" href="{{ asset('app-assets/css/bootstrap/bootstrap-reboot.rtl.min.css') }}">
 <link rel="stylesheet" href="{{ asset('app-assets/css/bootstrap/bootstrap.rtl.min.css') }}">
 <link rel="stylesheet" href="{{ asset('app-assets/fontawesome/css/all.min.css') }}">
-<title>فروشگاه آمازون</title>
+<title>فروشگاه بوتیکالا</title>

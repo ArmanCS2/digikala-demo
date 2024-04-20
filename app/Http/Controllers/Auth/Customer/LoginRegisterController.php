@@ -67,11 +67,11 @@ class LoginRegisterController extends Controller
         if ($type == 0) {
             $smsService = new SmsService();
             $smsService->setTo($user->mobile);
-            $text = "فروشگاه دیجی کالا (دمو)
+            $text = "فروشگاه بوتیکالا
 
             کد تایید : $otpCode
 
-            وبسایت : armanafzali.ir";
+            وبسایت : www.butikala.ir";
             $smsService->setText($text);
 
             $messageService = new MessageService($smsService);
@@ -83,7 +83,7 @@ class LoginRegisterController extends Controller
                 'body' => "کد فعالسازی : $otpCode"
             ];
             $emailService->setDetails($details);
-            $emailService->setFrom('noreply@digikala.whi.ir', 'digikala');
+            $emailService->setFrom('noreply@butikala.ir', 'butikala');
             $emailService->setSubject('فعالسازی حساب کاربری');
             $emailService->setTo($inputs['id']);
 
