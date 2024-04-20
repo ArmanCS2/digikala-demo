@@ -10,14 +10,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $guarded=[];
-    protected $casts=[
-        'address_object'=>'object',
-        'delivery_object'=>'object',
-        'common_discount_object'=>'object',
-        'copan_object'=>'object',
-        'payment_object'=>'object'
-        ];
+
+    protected $guarded = [];
+    protected $casts = [
+        'address_object' => 'object',
+        'delivery_object' => 'object',
+        'common_discount_object' => 'object',
+        'copan_object' => 'object',
+        'payment_object' => 'object'
+    ];
 
     public function user()
     {
@@ -78,7 +79,7 @@ class Order extends Model
 
     public function delivery_type()
     {
-        return $this->belongsTo(Delivery::class,'delivery_id');
+        return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 
     public function payment_status()
@@ -96,23 +97,24 @@ class Order extends Model
             return 'لغو شده';
         }
 
-        if ($this->payment_status == 2) {
+        if ($this->payment_status == 3) {
             return 'بازگرداننده شده';
         }
 
         return 'پرداخت نشده';
     }
+
     public function payment_type()
     {
-        if ($this->payment_type === '0') {
+        if ($this->payment_type == 1) {
             return 'آنلاین';
         }
 
-        if ($this->payment_status == 1) {
+        if ($this->payment_status == 2) {
             return 'آفلاین';
         }
 
-        if ($this->payment_status == 2) {
+        if ($this->payment_status == 3) {
             return 'نقدی';
         }
 

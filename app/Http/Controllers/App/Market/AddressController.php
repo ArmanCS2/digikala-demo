@@ -21,6 +21,10 @@ class AddressController extends Controller
     public function addressAndDelivery()
     {
         $user = Auth::user();
+        $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
+        if (!empty($order)){
+            $order->delete();
+        }
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $addresses = $user->addresses;
         $provinces = ProvinceCity::where('parent', 0)->get();
@@ -136,7 +140,14 @@ class AddressController extends Controller
             }
             if ($totalProductPrices >= $commonDiscount->minimal_order_amount) {
                 $totalProductPrices = $totalProductPrices - $commonDiscountTotalProductPrices;
+            }else{
+                $commonDiscount=null;
+                $commonDiscountTotalProductPrices=0;
             }
+        }
+        $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
+        if (!empty($order)){
+            $order->delete();
         }
         Order::updateOrCreate([
             'user_id' => $user->id,

@@ -9,7 +9,7 @@ use Zarinpal\Zarinpal;
 
 class PaymentService
 {
-    private $merchantID = '123456789123456789123456789123456789';
+    private $merchantID = 'cd19d9bd-7675-434b-88d4-d54caed43714';
 
     public function zarinPal($order, $amount, $onlinePayment)
     {

@@ -39,8 +39,7 @@ class LoginRegisterRequest extends FormRequest
             ];
         } elseif ($currentRouteName == 'auth.customer.login-confirm') {
             return [
-                'otp' => 'required|numeric',
-                'g-recaptcha-response' => 'recaptcha'
+                'otp' => 'required|numeric'
             ];
         }
 

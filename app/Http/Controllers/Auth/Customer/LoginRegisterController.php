@@ -110,7 +110,7 @@ class LoginRegisterController extends Controller
 
     public function loginConfirm(LoginRegisterRequest $request, $token)
     {
-        $otp = Otp::where('token', $token)->where('used', 0)->where('created_at', '>=', Carbon::now()->subMinute(1)->toDateTimeString())->first();
+        $otp = Otp::where('token', $token)->where('used', 0)->where('created_at', '>=', Carbon::now()->subMinute(5)->toDateTimeString())->first();
 
         if (empty($otp)) {
             return redirect()->route('auth.customer.login-confirm-form', $token)->withErrors(['otp' => 'کد تایید معتبر نیست']);
@@ -152,11 +152,11 @@ class LoginRegisterController extends Controller
         if ($otp->type == 0) {
             $smsService = new SmsService();
             $smsService->setTo($user->mobile);
-            $text = "فروشگاه دیجی کالا (دمو)
+            $text = "فروشگاه بوتیکالا
 
             کد تایید : $otpCode
 
-            وبسایت : armanafzali.ir";
+            وبسایت : www.butikala.ir";
             $smsService->setText($text);
 
             $messageService = new MessageService($smsService);
@@ -168,7 +168,7 @@ class LoginRegisterController extends Controller
                 'body' => "کد فعالسازی : $otpCode"
             ];
             $emailService->setDetails($details);
-            $emailService->setFrom('noreply@digikala.whi.ir', 'digikala');
+            $emailService->setFrom('noreply@butikala.ir', 'butikala');
             $emailService->setSubject('فعالسازی حساب کاربری');
             $emailService->setTo($otp->login_id);
 

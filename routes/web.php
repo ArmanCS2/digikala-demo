@@ -8,6 +8,7 @@ use App\Http\Controllers\App\Market\CartController;
 use App\Http\Controllers\App\Market\PaymentController;
 use App\Http\Controllers\App\Market\ProductController;
 use App\Http\Controllers\App\ProfileController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,17 @@ use Illuminate\Support\Facades\Route;
 | Home Routes
 |--------------------------------------------------------------------------
 */
+Route::middleware(['auth','role:super-admin'])->group(function (){
+    Route::get('site/off', function () {
+        return Artisan::call('down',['--secret'=>'arman']);
+    });
+
+    Route::get('site/up', function () {
+        return Artisan::call('up');
+    });
+});
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/download/{file_path}', [HomeController::class, 'download'])->name('download');
 
@@ -86,7 +98,6 @@ Route::prefix('market')->group(function () {
 
 });
 
-
 Route::prefix('content')->group(function () {
     Route::get('posts', [PostController::class, 'posts'])->name('content.posts');
     Route::prefix('post')->group(function () {
@@ -104,7 +115,6 @@ Route::prefix('content')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-
 Route::prefix('auth')->namespace('App\Http\Controllers\Auth')->group(function () {
     Route::prefix('customer')->namespace('Customer')->group(function () {
         Route::get('login-register', 'LoginRegisterController@loginRegisterForm')->name('auth.customer.login-register-form');
@@ -119,14 +129,13 @@ Route::prefix('auth')->namespace('App\Http\Controllers\Auth')->group(function ()
     });
 });
 
-
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
+Route::middleware(['auth','role:admin'])->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
 
     Route::get('/', 'AdminDashboardController@index')->name('admin.home');
     Route::post('/notification/read-all', 'NotificationController@readAll')->name('admin.notification.read-all');
@@ -374,7 +383,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     });
 
 
-    Route::prefix('user')->namespace('User')->group(function () {
+    Route::middleware('role:super-admin')->prefix('user')->namespace('User')->group(function () {
 
         Route::prefix('admin-user')->group(function () {
             Route::get('/', 'AdminUserController@index')->name('admin.user.admin-user.index');
@@ -496,7 +505,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::get('/change-status/{id}', 'TicketController@changeStatus')->name('admin.ticket.change-status');
     });
 
-    Route::prefix('setting')->namespace('Setting')->group(function () {
+    Route::middleware('role:super-admin')->prefix('setting')->namespace('Setting')->group(function () {
         Route::get('/', 'SettingController@index')->name('admin.setting.index');
         Route::get('/edit/{id}', 'SettingController@edit')->name('admin.setting.edit');
         Route::put('/update/{id}', 'SettingController@update')->name('admin.setting.update');
@@ -505,8 +514,8 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
 //
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+/*Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-});
+});*/

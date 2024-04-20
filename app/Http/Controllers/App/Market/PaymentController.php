@@ -21,9 +21,6 @@ class PaymentController extends Controller
     {
         $user = Auth::user();
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
-        if (empty($order)) {
-            return redirect()->back()->with('toast-info', 'شما سفارشی برای ثبت ندارید');
-        }
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $productPrices = 0;
         $totalProductPrices = 0;
@@ -31,8 +28,6 @@ class PaymentController extends Controller
             $productPrices += $cartItem->productPrice();
             $totalProductPrices += $cartItem->totalProductPrice();
         }
-
-
         return view('app.market.payment', compact('order', 'cartItems', 'totalProductPrices', 'productPrices'));
     }
 
@@ -73,9 +68,11 @@ class PaymentController extends Controller
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
         $cartItems = CartItem::where('user_id', $user->id)->get();
 
+
+
         if ($request->payment_type == 1) {
             $targetModel = OnlinePayment::class;
-            $type = 0;
+            $type = 1;
             $amount = $order->order_final_amount + $order->delivery_amount;
             $paymentType = $targetModel::create([
                 'amount' => $amount,
@@ -104,7 +101,7 @@ class PaymentController extends Controller
 
         } elseif ($request->payment_type == 2) {
             $targetModel = OfflinePayment::class;
-            $type = 1;
+            $type = 2;
             $paymentType = $targetModel::create([
                 'amount' => $order->order_final_amount + $order->delivery_amount,
                 'user_id' => $user->id,
@@ -113,7 +110,7 @@ class PaymentController extends Controller
             ]);
         } elseif ($request->payment_type == 3) {
             $targetModel = CashPayment::class;
-            $type = 2;
+            $type = 3;
             $paymentType = $targetModel::create([
                 'amount' => $order->order_final_amount + $order->delivery_amount,
                 'user_id' => $user->id,
@@ -191,7 +188,7 @@ class PaymentController extends Controller
                 'payment_status' => 1,
                 'order_status' => 2
             ]);
-            return true;
+            return redirect()->route('home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
         }
         return redirect()->route('home')->with('swal-error', 'پرداخت سفارش با خطا مواجه شد');
     }
