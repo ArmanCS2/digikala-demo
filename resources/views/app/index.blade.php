@@ -432,8 +432,8 @@
                                 <section class="item border">
                                     <section class="brand-item mt-3">
                                         <a href="{{route('content.post',$post)}}"><img class="rounded-2"
-                                                                              src="{{asset($post->image['indexArray'][$post->image['currentImage']])}}"
-                                                                              alt=""></a>
+                                                                                       src="{{asset($post->image['indexArray'][$post->image['currentImage']])}}"
+                                                                                       alt="{{$post->title}}"></a>
                                     </section>
                                     <section class="brand-item my-3">
                                         <a class="text-dark" href="{{route('content.post',$post)}}">{{$post->title}}</a>

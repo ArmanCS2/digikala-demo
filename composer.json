@@ -25,7 +25,8 @@
         "morilog/jalali": "^3.4",
         "nagy/laravel-rating": "^1.0",
         "nwidart/laravel-modules": "9.*",
-        "saeedpooyanfar/zarinpal": "^5.0"
+        "saeedpooyanfar/zarinpal": "^5.0",
+        "spatie/laravel-sitemap": "^6.4"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0" ,

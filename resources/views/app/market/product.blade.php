@@ -71,11 +71,11 @@
                                     <section class="product-gallery-thumbs">
                                         <img class="product-gallery-thumb"
                                              src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
-                                             alt="{{$product->name . rand(1,999)}}"
+                                             alt="{{$product->name}}"
                                              data-input="{{asset($product->image['indexArray'][$product->image['currentImage']])}}">
                                         @foreach($product->images as $image)
                                             <img class="product-gallery-thumb" src="{{asset($image->image)}}"
-                                                 alt="{{$product->name . rand(1,999)}}"
+                                                 alt="{{$product->name}}"
                                                  data-input="{{asset($image->image)}}">
                                         @endforeach
                                     </section>

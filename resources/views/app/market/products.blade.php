@@ -58,8 +58,8 @@
                href="{{route('market.products',['search'=>request()->search,'sort'=>6,'min_price'=>request()->min_price,'max_price'=>request()->max_price,'brands'=>request()->brands,'category'=>request()->category])}}">پرفروش
                 ترین</a>
             @if(!empty(request()->all()))
-            <a class="btn btn-danger btn-sm px-1 py-0"
-               href="{{route('market.products')}}">حذف فیلتر ها</a>
+                <a class="btn btn-danger btn-sm px-1 py-0"
+                   href="{{route('market.products')}}">حذف فیلتر ها</a>
             @endif
         </section>
 

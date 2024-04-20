@@ -9,6 +9,7 @@ use App\Models\Market\Brand;
 use App\Models\Market\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Sitemap\SitemapGenerator;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,9 @@ class HomeController extends Controller
         $mostViewedProducts=Product::inRandomOrder()->take(10)->get();
         $offerProducts=Product::inRandomOrder()->take(10)->get();
         $bestSalesProducts=Product::inRandomOrder()->take(10)->get();
+        /*set_time_limit(300);
+        $path = public_path('sitemap.xml');
+        SitemapGenerator::create('https://butikala.ir')->writeToFile($path);*/
         return view('app.index',compact('slideShows','topBanners','middleBanners','bottomBanner','brands','mostViewedProducts','offerProducts','ads','bestSalesProducts','posts'));
     }
 

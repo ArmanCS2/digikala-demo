@@ -92,7 +92,7 @@
                                 </section>
                                 <section class="product-info">
                                     <p class="mb-3">
-                                       {!! $post->body !!}
+                                        {!! $post->body !!}
                                     </p>
                                 </section>
                             </section>

@@ -125,7 +125,7 @@ class LoginRegisterController extends Controller
                 $user->update(['email_verified_at' => now()]);
             }
             Auth::login($user);
-            return redirect()->route('home');
+            return redirect()->route('home')->with('swal-success','با موفقیت وارد حساب کاربری خود شدید');
         }
         return redirect()->route('auth.customer.login-confirm-form', $token)->withErrors(['otp' => 'کد تایید معتبر نیست']);
     }
