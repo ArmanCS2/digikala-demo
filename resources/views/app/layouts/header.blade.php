@@ -1,7 +1,5 @@
 <!-- start header -->
 <header class="header mb-4">
-
-
     <!-- start top-header logo, searchbox and cart -->
     <section class="top-header">
         <section class="container-xxl ">
@@ -287,6 +285,7 @@
             </section>
         </nav>
         <!-- end menu -->
+    </section>
 
 
 </header>

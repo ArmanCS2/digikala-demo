@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    <h1 class="d-none">بوتیکالا | فروشگاه آنلاین</h1>
     <!-- start slideshow -->
     <section class="container-xxl my-4">
         <section class="row">

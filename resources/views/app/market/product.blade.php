@@ -49,9 +49,9 @@
                     <!-- start vontent header -->
                     <section class="content-header">
                         <section class="d-flex justify-content-between align-items-center">
-                            <h2 class="content-header-title">
+                            <h1 class="content-header-title">
                                 <span>{{$product->name}}</span>
-                            </h2>
+                            </h1>
                             <section class="content-header-link">
                                 <!--<a href="#">مشاهده همه</a>-->
                             </section>
