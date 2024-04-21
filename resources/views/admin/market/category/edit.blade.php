@@ -179,10 +179,7 @@
 
 @section('scripts')
 
-    <script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
-    <script>
-        CKEDITOR.replace('description');
-    </script>
+    @include('admin.layouts.ckeditor')
     <script>
         $(document).ready(function () {
             var tags_input = $('#tags');

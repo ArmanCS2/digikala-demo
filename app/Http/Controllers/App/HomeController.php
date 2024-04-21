@@ -4,9 +4,11 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content\Banner;
+use App\Models\Content\Page;
 use App\Models\Content\Post;
 use App\Models\Market\Brand;
 use App\Models\Market\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Sitemap\SitemapGenerator;
@@ -36,5 +38,35 @@ class HomeController extends Controller
             return response()->download(public_path($file_path));
         }
         return redirect()->back()->with('toast-error', 'فایلی وجود ندارد');
+    }
+
+    public function ckeditorUpload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+            $path = str_replace('/', DIRECTORY_SEPARATOR, public_path('images/ckeditor-images'));
+            $fileName = $request->file('upload')->move($path, $fileName)->getFilename();
+
+            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+            $url = asset('images/ckeditor-images/' . $fileName);
+            $msg = 'Image uploaded successfully';
+            $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+
+            @header('Content-type: text/html; charset=utf-8');
+            echo $response;
+        }
+        return false;
+    }
+
+    public function page($title)
+    {
+        $page=Page::where('title',$title)->first();
+        if (empty($page)){
+            abort(404);
+        }
+        return view('app.page',compact('page'));
     }
 }

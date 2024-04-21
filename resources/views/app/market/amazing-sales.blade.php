@@ -64,7 +64,7 @@
         </section>
 
 
-        <section class="row my-4 d-flex justify-content-start">
+        <section class="row my-4 d-flex justify-content-center">
 
             <section class="row d-flex justify-content-center">
                 @forelse($products as $product)

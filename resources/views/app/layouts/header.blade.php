@@ -23,25 +23,25 @@
                             </form>
 
                         </section>
-                        <section class="search-result visually-hidden">
-                            <section class="search-result-title">برای دیدن نتایج کلید Enter را فشار دهید</section>
-                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i
-                                        class="fa fa-link"></i> دسته موبایل و وسایل جانبی</a></section>
+                        {{--                        <section class="search-result visually-hidden">--}}
+                        {{--                            <section class="search-result-title">برای دیدن نتایج کلید Enter را فشار دهید</section>--}}
+                        {{--                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
+                        {{--                                        class="fa fa-link"></i> دسته موبایل و وسایل جانبی</a></section>--}}
 
-                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل شیا"</span><span
-                                    class="search-result-type">در برندها</span></section>
-                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i
-                                        class="fa fa-link"></i> برند شیائومی</a></section>
-                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i
-                                        class="fa fa-link"></i> برند توشیبا</a></section>
-                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i
-                                        class="fa fa-link"></i> برند شیانگ پینگ</a></section>
+                        {{--                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل شیا"</span><span--}}
+                        {{--                                    class="search-result-type">در برندها</span></section>--}}
+                        {{--                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
+                        {{--                                        class="fa fa-link"></i> برند شیائومی</a></section>--}}
+                        {{--                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
+                        {{--                                        class="fa fa-link"></i> برند توشیبا</a></section>--}}
+                        {{--                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
+                        {{--                                        class="fa fa-link"></i> برند شیانگ پینگ</a></section>--}}
 
-                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل شیا"</span><span
-                                    class="search-result-type">در کالاها</span></section>
-                            <section class="search-result-item"><span class="search-no-result">موردی یافت نشد</span>
-                            </section>
-                        </section>
+                        {{--                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل شیا"</span><span--}}
+                        {{--                                    class="search-result-type">در کالاها</span></section>--}}
+                        {{--                            <section class="search-result-item"><span class="search-no-result">موردی یافت نشد</span>--}}
+                        {{--                            </section>--}}
+                        {{--                        </section>--}}
                     </section>
                 </section>
                 <section class="mt-3 mt-md-auto text-end mb-3">
@@ -197,24 +197,11 @@
                         </section>
                     </section>
                     <section class="border-start my-2 mx-1"></section>
-                    <section class="navbar-item"><a href="{{route('market.amazing-sales')}}">تخفیف ها و
-                            پیشنهادها</a>
-                    </section>
-                    <section class="border-start my-2"></section>
-                    <section class="navbar-item"><a href="{{route('content.posts')}}">وبلاگ</a>
-                    </section>
-                    <section class="border-start my-2"></section>
-                    <section class="navbar-item"><a href="{{route('market.products',['sort'=>6])}}">پر فروش ترین
-                            کالا
-                            ها</a></section>
-                    <section class="navbar-item"><a href="{{route('market.products',['sort'=>5])}}">پر بازدیدترین
-                            کالا
-                            ها</a></section>
-                    <section class="navbar-item"><a href="{{route('market.products',['sort'=>1])}}">جدیدترین کالا
-                            ها</a>
-                    </section>
-                    <section class="navbar-item"><a href="{{route('market.products',['sort'=>2])}}">محبوب ترین کالا
-                            ها</a></section>
+                    @foreach($menus as $menu)
+                        <section class="navbar-item"><a href="{{url($menu->url)}}">{{$menu->name}}</a>
+                        </section>
+                        <section class="border-start my-2"></section>
+                    @endforeach
                 </section>
 
 
@@ -230,22 +217,10 @@
                     </section>
                     <section class="offcanvas-body">
 
-                        <section class="navbar-item"><a href="{{route('market.amazing-sales')}}">تخفیف ها و
-                                پیشنهادها</a></section>
-                        <section class="navbar-item"><a href="{{route('content.posts')}}">وبلاگ</a>
-                        </section>
-                        <section class="navbar-item"><a href="{{route('market.products',['sort'=>6])}}">پر فروش ترین
-                                کالا ها</a></section>
-                        <section class="navbar-item"><a href="{{route('market.products',['sort'=>5])}}">پر
-                                بازدیدترین
-                                کالا ها</a></section>
-                        <section class="navbar-item"><a href="{{route('market.products',['sort'=>1])}}">جدیدترین
-                                کالا
-                                ها</a></section>
-                        <section class="navbar-item"><a href="{{route('market.products',['sort'=>2])}}">محبوب ترین
-                                کالا
-                                ها</a></section>
-
+                        @foreach($menus as $menu)
+                            <section class="navbar-item"><a href="{{url($menu->url)}}">{{$menu->name}}</a>
+                            </section>
+                        @endforeach
 
                         <hr class="border-bottom">
                         <section class="navbar-item"><a href="javascript:void(0)">دسته بندی</a></section>

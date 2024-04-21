@@ -115,12 +115,9 @@
 
 @section('scripts')
 
-    <script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
+    @include('admin.layouts.ckeditor')
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-date.min.js') }}"></script>
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.js') }}"></script>
-    <script>
-        CKEDITOR.replace('body');
-    </script>
 
     <script>
         $(document).ready(function () {

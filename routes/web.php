@@ -41,7 +41,8 @@ Route::get('site/up', function () {
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/download/{file_path}', [HomeController::class, 'download'])->name('download');
-
+Route::post('ckeditor-upload', [HomeController::class, 'ckeditorUpload'])->name('ckeditor.upload');
+Route::get('page/{title}',[HomeController::class,'page'])->name('page');
 Route::prefix('profile')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');

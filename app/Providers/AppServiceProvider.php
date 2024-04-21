@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Content\Comment;
+use App\Models\Content\Menu;
 use App\Models\Market\CartItem;
 use App\Models\Market\ProductCategory;
 use App\Models\Notification;
@@ -42,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('cartItems', []);
             }
             $view->with('setting', Setting::first());
+            $view->with('menus', Menu::where('status',1)->get());
         });
     }
 }

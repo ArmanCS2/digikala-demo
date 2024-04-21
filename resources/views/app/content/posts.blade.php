@@ -8,7 +8,7 @@
 @section('content')
     <section class="content-wrapper bg-white p-3 rounded-2 mb-2">
 
-        <section class="row my-4 d-flex justify-content-start">
+        <section class="row my-4 d-flex justify-content-center">
 
             <section class="row d-flex justify-content-center">
                 @forelse($posts as $post)
@@ -21,7 +21,7 @@
                                          alt="{{$post->name}}">
                                 </section>
                                 <section class="product-name">
-                                    <h2>{{$post->title}}</h2>
+                                    <h2 class="d-flex justify-content-center">{{$post->title}}</h2>
                                 </section>
                             </a>
                         </section>
