@@ -14,7 +14,8 @@
                 @forelse($posts as $post)
                     <section class="col-md-2 m-1">
                         <section class="product">
-                            <a class="product-link" href="{{route('content.post',$post)}}">
+                            <a class="product-link d-flex flex-column justify-content-center"
+                               href="{{route('content.post',$post)}}">
                                 <section class="product-image">
                                     <img class=""
                                          src="{{asset($post->image['indexArray'][$post->image['currentImage']])}}"
