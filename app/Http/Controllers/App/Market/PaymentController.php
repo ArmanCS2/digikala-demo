@@ -67,9 +67,6 @@ class PaymentController extends Controller
         $user = Auth::user();
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
         $cartItems = CartItem::where('user_id', $user->id)->get();
-
-
-
         if ($request->payment_type == 1) {
             $targetModel = OnlinePayment::class;
             $type = 1;
@@ -96,6 +93,9 @@ class PaymentController extends Controller
             ]);
             $result = $paymentService->zarinPal($order, $amount, $paymentType);
             if ($result === false) {
+                $paymentType->delete();
+                $payment->delete();
+                $order->delete();
                 return redirect()->back()->with('toast-error', 'درگاه پرداخت فعال نیست');
             }
 
@@ -182,6 +182,10 @@ class PaymentController extends Controller
                     'final_product_price' => $cartItem->finalProductPrice(),
                     'final_total_price' => $cartItem->totalProductPrice()
                 ]);
+                $cartItem->product->marketable_number = $cartItem->product->marketable_number > 0 ? $cartItem->product->marketable_number - 1 : 0;
+                $cartItem->product->sold_number = $cartItem->product->sold_number + 1;
+                $cartItem->product->frozen_number = $cartItem->product->frozen_number > 0 ? $cartItem->product->frozen_number - 1 : 0;
+                $cartItem->product->save();
                 $cartItem->delete();
             }
             $order->update([
@@ -190,6 +194,8 @@ class PaymentController extends Controller
             ]);
             return redirect()->route('home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
         }
+        $order->delete();
+        $onlinePayment->delete();
         return redirect()->route('home')->with('swal-error', 'پرداخت سفارش با خطا مواجه شد');
     }
 }

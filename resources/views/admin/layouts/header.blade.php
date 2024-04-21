@@ -10,14 +10,14 @@
     <section class="body-header" id="body-header">
         <section class="d-flex justify-content-between">
             <section>
-                    <span class="mr-5">
-                        <span id="search-area" class="search-area d-none">
-                            <i id="search-area-hide" class="fas fa-times pointer"></i>
-                            <input id="search-input" type="text" class="search-input">
-                            <i class="fas fa-search pointer"></i>
-                        </span>
-                    <i id="search-toggle" class="fas fa-search p-1 d-none d-md-inline pointer"></i>
-                    </span>
+{{--                    <span class="mr-5">--}}
+{{--                        <span id="search-area" class="search-area d-none">--}}
+{{--                            <i id="search-area-hide" class="fas fa-times pointer"></i>--}}
+{{--                            <input id="search-input" type="text" class="search-input">--}}
+{{--                            <i class="fas fa-search pointer"></i>--}}
+{{--                        </span>--}}
+{{--                    <i id="search-toggle" class="fas fa-search p-1 d-none d-md-inline pointer"></i>--}}
+{{--                    </span>--}}
 
                 <span id="full-screen" class="pointer p-1 d-none d-md-inline mr-5">
                         <i id="screen-compress" class="fas fa-compress d-none"></i>
@@ -111,16 +111,7 @@
                     </span>
                     <section id="header-profile" class="header-profile rounded">
                         <section class="list-group rounded">
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
-                                <i class="fas fa-cog"></i>تنظیمات
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
-                                <i class="fas fa-user"></i>کاربر
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
-                                <i class="far fa-envelope"></i>پیام ها
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
+                            <a href="{{route('auth.customer.logout')}}" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="fas fa-sign-out-alt"></i>خروج
                             </a>
                         </section>

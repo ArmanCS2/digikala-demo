@@ -19,7 +19,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers=User::where('user_type',0)->get();
+        $customers=User::where('user_type',0)->orderBy('created_at','DESC')->get();
         return view('admin.user.customer.index',compact('customers'));
     }
 

@@ -15,7 +15,7 @@ class OrderController extends Controller
      */
     public function all()
     {
-        $orders = Order::all();
+        $orders = Order::orderBy('created_at','DESC')->get();
         return view('admin.market.order.index', compact('orders'));
     }
 

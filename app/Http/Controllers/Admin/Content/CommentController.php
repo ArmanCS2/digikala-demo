@@ -21,7 +21,7 @@ class CommentController extends Controller
             $unSeenComment->seen=1;
             $unSeenComment->save();
         }
-        $comments=Comment::where('commentable_type','App\Models\Content\Post')->get();
+        $comments=Comment::where('commentable_type','App\Models\Content\Post')->orderBy('created_at','DESC')->get();
         return view('admin.content.comment.index',compact('comments'));
     }
 

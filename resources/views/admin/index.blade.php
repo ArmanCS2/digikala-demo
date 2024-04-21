@@ -7,161 +7,155 @@
     <section class="row">
 
         <section class="col-lg-3 col-md-6 col-12">
-            <a href="#" class="text-decoration-none d-block mb-4">
-                <section class="card bg-custom-yellow text-white">
-                    <section class="card-body">
-                        <section class="d-flex justify-content-between">
-                            <section class="info-box-body">
-                                <h5>30,200 تومان</h5>
-                                <p>سود خالص</p>
-                            </section>
-                            <section class="info-box-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </section>
-                        </section>
-                    </section>
-                    <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
-                    </section>
-                </section>
-            </a>
-        </section>
-        <section class="col-lg-3 col-md-6 col-12">
-            <a href="#" class="text-decoration-none d-block mb-4">
-                <section class="card bg-custom-green text-white">
-                    <section class="card-body">
-                        <section class="d-flex justify-content-between">
-                            <section class="info-box-body">
-                                <h5>30,200 تومان</h5>
-                                <p>سود خالص</p>
-                            </section>
-                            <section class="info-box-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </section>
-                        </section>
-                    </section>
-                    <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
-                    </section>
-                </section>
-            </a>
-        </section>
-        <section class="col-lg-3 col-md-6 col-12">
-            <a href="#" class="text-decoration-none d-block mb-4">
-                <section class="card bg-custom-pink text-white">
-                    <section class="card-body">
-                        <section class="d-flex justify-content-between">
-                            <section class="info-box-body">
-                                <h5>30,200 تومان</h5>
-                                <p>سود خالص</p>
-                            </section>
-                            <section class="info-box-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </section>
-                        </section>
-                    </section>
-                    <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
-                    </section>
-                </section>
-            </a>
-        </section>
-        <section class="col-lg-3 col-md-6 col-12">
-            <a href="#" class="text-decoration-none d-block mb-4">
-                <section class="card bg-custom-blue text-white">
-                    <section class="card-body">
-                        <section class="d-flex justify-content-between">
-                            <section class="info-box-body">
-                                <h5>30,200 تومان</h5>
-                                <p>سود خالص</p>
-                            </section>
-                            <section class="info-box-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </section>
-                        </section>
-                    </section>
-                    <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
-                    </section>
-                </section>
-            </a>
-        </section>
-        <section class="col-lg-3 col-md-6 col-12">
-            <a href="#" class="text-decoration-none d-block mb-4">
-                <section class="card bg-danger text-white">
-                    <section class="card-body">
-                        <section class="d-flex justify-content-between">
-                            <section class="info-box-body">
-                                <h5>30,200 تومان</h5>
-                                <p>سود خالص</p>
-                            </section>
-                            <section class="info-box-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </section>
-                        </section>
-                    </section>
-                    <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
-                    </section>
-                </section>
-            </a>
-        </section>
-        <section class="col-lg-3 col-md-6 col-12">
-            <a href="#" class="text-decoration-none d-block mb-4">
+            <a href="{{route('admin.market.payment.index')}}" class="text-decoration-none d-block mb-4">
                 <section class="card bg-success text-white">
                     <section class="card-body">
                         <section class="d-flex justify-content-between">
                             <section class="info-box-body">
-                                <h5>30,200 تومان</h5>
-                                <p>سود خالص</p>
+                                <h5>تعداد پرداختی ها : {{$payments->count()}}</h5>
                             </section>
                             <section class="info-box-icon">
-                                <i class="fas fa-chart-line"></i>
+                                <i class="fas fa-money-bill"></i>
                             </section>
                         </section>
                     </section>
                     <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{jalaliDate(now())}}
                     </section>
                 </section>
             </a>
         </section>
         <section class="col-lg-3 col-md-6 col-12">
-            <a href="#" class="text-decoration-none d-block mb-4">
+            <a href="{{route('admin.market.order.all')}}" class="text-decoration-none d-block mb-4">
+                <section class="card bg-custom-green text-white">
+                    <section class="card-body">
+                        <section class="d-flex justify-content-between">
+                            <section class="info-box-body">
+                                <h5>تعداد سفارشات : {{$orders->count()}}</h5>
+                            </section>
+                            <section class="info-box-icon">
+                                <i class="fas fa-list"></i>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="card-footer info-box-footer">
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{jalaliDate(now())}}
+                    </section>
+                </section>
+            </a>
+        </section>
+        <section class="col-lg-3 col-md-6 col-12">
+            <a href="{{route('admin.market.product.index')}}" class="text-decoration-none d-block mb-4">
+                <section class="card bg-custom-yellow text-white">
+                    <section class="card-body">
+                        <section class="d-flex justify-content-between">
+                            <section class="info-box-body">
+                                <h5>تعداد محصولات : {{$products->count()}}</h5>
+                            </section>
+                            <section class="info-box-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="card-footer info-box-footer">
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{jalaliDate(now())}}
+                    </section>
+                </section>
+            </a>
+        </section>
+        <section class="col-lg-3 col-md-6 col-12">
+            <a href="{{route('admin.user.customer.index')}}" class="text-decoration-none d-block mb-4">
                 <section class="card bg-warning text-white">
                     <section class="card-body">
                         <section class="d-flex justify-content-between">
                             <section class="info-box-body">
-                                <h5>30,200 تومان</h5>
-                                <p>سود خالص</p>
+                                <h5>تعداد مشتریان : {{$users->count()}}</h5>
                             </section>
                             <section class="info-box-icon">
-                                <i class="fas fa-chart-line"></i>
+                                <i class="fas fa-users"></i>
                             </section>
                         </section>
                     </section>
                     <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{jalaliDate(now())}}
                     </section>
                 </section>
             </a>
         </section>
         <section class="col-lg-3 col-md-6 col-12">
-            <a href="#" class="text-decoration-none d-block mb-4">
-                <section class="card bg-primary text-white">
+            <a href="{{route('admin.ticket.index')}}" class="text-decoration-none d-block mb-4">
+                <section class="card bg-custom-pink text-white">
                     <section class="card-body">
                         <section class="d-flex justify-content-between">
                             <section class="info-box-body">
-                                <h5>30,200 تومان</h5>
-                                <p>سود خالص</p>
+                                <h5>تعداد تیکت ها : {{$tickets->count()}}</h5>
                             </section>
                             <section class="info-box-icon">
-                                <i class="fas fa-chart-line"></i>
+                                <i class="fas fa-ticket-alt"></i>
                             </section>
                         </section>
                     </section>
                     <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{jalaliDate(now())}}
+                    </section>
+                </section>
+            </a>
+        </section>
+        <section class="col-lg-3 col-md-6 col-12">
+            <a href="{{route('admin.market.comment.index')}}" class="text-decoration-none d-block mb-4">
+                <section class="card bg-custom-blue text-white">
+                    <section class="card-body">
+                        <section class="d-flex justify-content-between">
+                            <section class="info-box-body">
+                                <h5>تعداد نظرات : {{$comments->count()}}</h5>
+                            </section>
+                            <section class="info-box-icon">
+                                <i class="fas fa-comment"></i>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="card-footer info-box-footer">
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{jalaliDate(now())}}
+                    </section>
+                </section>
+            </a>
+        </section>
+        <section class="col-lg-3 col-md-6 col-12">
+            <a href="{{route('admin.content.post.index')}}" class="text-decoration-none d-block mb-4">
+                <section class="card bg-danger text-white">
+                    <section class="card-body">
+                        <section class="d-flex justify-content-between">
+                            <section class="info-box-body">
+                                <h5>تعداد پست ها : {{$posts->count()}}</h5>
+                            </section>
+                            <section class="info-box-icon">
+                                <i class="fas fa-paper-plane"></i>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="card-footer info-box-footer">
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{jalaliDate(now())}}
+                    </section>
+                </section>
+            </a>
+        </section>
+        <section class="col-lg-3 col-md-6 col-12">
+            <a href="{{route('admin.market.storage.index')}}" class="text-decoration-none d-block mb-4">
+                <section class="card bg-primary text-white">
+                    <section class="card-body">
+                        <section class="d-flex justify-content-between">
+                            <section class="info-box-body">
+                                <h5>تعداد محصولات قابل فروش : {{$marketableProducts->count()}}</h5>
+                                <h5>تعداد محصولات در سبد خرید : {{$frozenProducts->count()}}</h5>
+                                <h5>تعداد محصولات فروخته شده : {{$soldProducts->count()}}</h5>
+                            </section>
+                            <section class="info-box-icon">
+                                <i class="fas fa-shopping-basket"></i>
+                            </section>
+                        </section>
+                    </section>
+                    <section class="card-footer info-box-footer">
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{jalaliDate(now())}}
                     </section>
                 </section>
             </a>
@@ -174,45 +168,15 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        بخش کاربران
+                        پیشخوان بوتیکالا
                     </h5>
                     <p>
-                        در این بخش اطلاعاتی در مورد کاربران به شما داده می شود
+                        در این صفحه فروشگاه اینترنتی بوتیکالا مدیریت میشود
                     </p>
                 </section>
                 <section class="body-content">
                     <p>
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                        تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-                        کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا
-                        با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو
-                        در زبان فارسی ایجاد کرد. در این صورت
-                        می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد
-                        وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی
-                        اساسا مورد استفاده قرار گیرد.
-                    </p>
-                    <p>
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                        تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-                        کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا
-                        با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو
-                        در زبان فارسی ایجاد کرد. در این صورت
-                        می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد
-                        وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی
-                        اساسا مورد استفاده قرار گیرد.
-                    </p>
-                    <p>
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                        تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-                        کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا
-                        با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو
-                        در زبان فارسی ایجاد کرد. در این صورت
-                        می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد
-                        وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی
-                        اساسا مورد استفاده قرار گیرد.
+                        فروشگاه بوتیکالا در سال 1403 فعالیت خود را در حوزه فروش پوشاک به صورت عمده و جزئی شروع و در حال حاضر در حال خدمت دهی به مشتریان میباشد.
                     </p>
                 </section>
             </section>

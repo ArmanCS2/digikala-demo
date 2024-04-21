@@ -15,7 +15,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments=Payment::all();
+        $payments=Payment::orderBy('created_at','DESC')->get();
         return view('admin.market.payment.index',compact('payments'));
     }
 
@@ -26,7 +26,7 @@ class PaymentController extends Controller
      */
     public function online()
     {
-        $payments=Payment::where('paymentable_type','App\Models\Market\OnlinePayment')->get();
+        $payments=Payment::where('paymentable_type','App\Models\Market\OnlinePayment')->orderBy('created_at','DESC')->get();
         return view('admin.market.payment.index',compact('payments'));
     }
 
@@ -38,7 +38,7 @@ class PaymentController extends Controller
      */
     public function offline()
     {
-        $payments=Payment::where('paymentable_type','App\Models\Market\OfflinePayment')->get();
+        $payments=Payment::where('paymentable_type','App\Models\Market\OfflinePayment')->orderBy('created_at','DESC')->get();
         return view('admin.market.payment.index',compact('payments'));
     }
 
@@ -50,7 +50,7 @@ class PaymentController extends Controller
      */
     public function cash()
     {
-        $payments=Payment::where('paymentable_type','App\Models\Market\CashPayment')->get();
+        $payments=Payment::where('paymentable_type','App\Models\Market\CashPayment')->orderBy('created_at','DESC')->get();
         return view('admin.market.payment.index',compact('payments'));
     }
 
