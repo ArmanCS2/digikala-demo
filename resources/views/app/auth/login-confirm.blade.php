@@ -1,7 +1,7 @@
 @extends('app.layouts.master-simple')
 
 @section('head-tag')
-
+    <title>کد تایید</title>
     <style>
         #resend-otp{
             font-size: 1rem;

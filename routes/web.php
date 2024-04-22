@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('site/off', function () {
+Route::middleware(['auth','role:super-admin'])->get('site/off', function () {
     return Artisan::call('down', ['--secret' => 'arman']);
 });
 

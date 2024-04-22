@@ -74,6 +74,7 @@ class CartController extends Controller
     {
         if ($cartItem->user_id == Auth::user()->id) {
             $cartItem->product->frozen_number = $cartItem->product->frozen_number > 0 ? $cartItem->product->frozen_number - 1 : 0;
+            $cartItem->product->save();
             $cartItem->delete();
             return redirect()->back()->with('swal-success', 'محصول با موفقیت از سبد خرید حذف شد');
         }

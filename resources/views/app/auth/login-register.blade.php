@@ -1,7 +1,7 @@
 @extends('app.layouts.master-simple')
 
 @section('head-tag')
-    <title>login-register</title>
+    <title>ورود - عضویت</title>
     <meta name="csrf-token" content="{{csrf_token()}}">
     {!! htmlScriptTagJsApi() !!}
 @endsection
