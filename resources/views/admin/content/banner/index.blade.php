@@ -81,11 +81,15 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$banners])
                 </section>
 
             </section>
         </section>
+
     </section>
+
+
 
 @endsection
 

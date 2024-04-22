@@ -17,7 +17,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $banners=Banner::all();
+        $banners=Banner::orderBy('created_at','ASC')->paginate(20);
         $positions=Banner::$positions;
         return view('admin.content.banner.index', compact('banners','positions'));
     }

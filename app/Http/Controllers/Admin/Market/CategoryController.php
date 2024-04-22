@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $productCategories=ProductCategory::all();
+        $productCategories=ProductCategory::orderBy('order')->paginate(20);
         return view('admin.market.category.index',compact('productCategories'));
     }
 

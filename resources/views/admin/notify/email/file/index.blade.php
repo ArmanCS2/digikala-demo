@@ -46,7 +46,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($email->files as $key => $file)
+                        @foreach($files as $key => $file)
                             <tr>
                                 <th>{{$key+1}}</th>
                                 <td>{{\Illuminate\Support\Str::limit($file->file_path,10)}}</td>
@@ -78,6 +78,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$files])
                 </section>
 
             </section>

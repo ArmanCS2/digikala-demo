@@ -16,7 +16,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::all();
+        $pages = Page::orderBy('created_at','DESC')->paginate(20);
         return view('admin.content.page.index', compact('pages'));
     }
 

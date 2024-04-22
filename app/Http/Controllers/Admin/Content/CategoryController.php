@@ -29,7 +29,7 @@ class CategoryController extends Controller
         /*if(Auth::user()->cannot('show-category')){
             return redirect()->back()->with('toast-error','دسترسی غیرمجاز');
         }*/
-        $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
+        $postCategories = PostCategory::orderBy('created_at', 'desc')->paginate(20);
         return view('admin.content.category.index', compact('postCategories'));
     }
 

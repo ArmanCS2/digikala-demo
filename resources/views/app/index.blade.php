@@ -1,11 +1,13 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
+    <meta name="description" content="{{\App\Models\Setting\Setting::first()->description}}">
+    <meta name="keywords" content="{{\App\Models\Setting\Setting::first()->keywords}}">
     <title>بوتیکالا</title>
 @endsection
 
 @section('content')
-    <h1 class="d-none">بوتیکالا | فروشگاه آنلاین</h1>
+    <h1 class="d-none">بوتیکالا | فروشگاه آنلاین تیشرت</h1>
     <!-- start slideshow -->
     <section class="container-xxl my-4">
         <section class="row">

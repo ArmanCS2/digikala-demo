@@ -1,6 +1,8 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
+    <meta name="description" content="{{$product->name}}">
+    <meta name="keywords" content="{{$product->tags}}">
     <title>{{$product->name}}</title>
     <style>
         /* Styling h1 and links
@@ -44,6 +46,16 @@
     <!-- start cart -->
     <section class="mb-4">
         <section class="container-xxl">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
+                                                                href="{{route('home')}}">صفحه اصلی</a></li>
+                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
+                                                                href="{{route('market.products')}}">کالا ها</a></li>
+                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark">کالا</a></li>
+                    <li class="breadcrumb-item font-size-12 active d-none" aria-current="page">{{$product->name}}</li>
+                </ol>
+            </nav>
             <section class="row">
                 <section class="col">
                     <!-- start vontent header -->
@@ -112,7 +124,8 @@
                                                     <section class="mx-2">
                                                         <label for="{{'color_' . $color->id}}"
                                                                style="background-color: {{$color->color}};"
-                                                               class="product-info-colors mx-0" data-bs-toggle="tooltip"
+                                                               class="product-info-colors mx-0 border"
+                                                               data-bs-toggle="tooltip"
                                                                data-bs-placement="bottom"
                                                                title="{{$color->name}}"></label>
                                                         <input class="mx-0" type="radio" name="color"
@@ -153,9 +166,6 @@
                                                 <span>کالا ناموجود است</span>
                                             @endif
                                         </p>
-
-
-                                        {!! $product->introduction !!}
 
                                         <section>
                                             <section class="cart-product-number d-none ">
@@ -441,7 +451,9 @@
                                 </section>
                             </section>
                             <section class="product-introduction mb-4">
-                                {!! $product->introduction !!}
+                                <section id="desc">
+                                    {!! $product->introduction !!}
+                                </section>
                             </section>
 
                             <!-- start vontent header -->
@@ -510,7 +522,8 @@
 
                                         </form>
                                         <p class="my-1">
-                                            میانگین امتیاز : {{ number_format($product->ratingsAvg(), 1, '/') ?? 0 }} از {{ $product->ratingsCount() ?? 0
+                                            میانگین امتیاز
+                                            : {{ number_format($product->ratingsAvg(), 1, '/') ?? 0 }} از {{ $product->ratingsCount() ?? 0
                                 }} نفر
                                         </p>
 
@@ -548,8 +561,10 @@
                                         @endguest
                                         @auth
                                             <section class="comment-add-wrapper">
-                                                <button class="comment-add-button" type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#add-comment"><i class="fa fa-plus"></i> افزودن
+                                                <button class="comment-add-button" type="button"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#add-comment"><i class="fa fa-plus"></i>
+                                                    افزودن
                                                     دیدگاه
                                                 </button>
                                                 <!-- start add comment Modal -->
@@ -570,12 +585,14 @@
                                                                       method="post">
                                                                     @csrf
                                                                     <section class="col-12 mb-2">
-                                                                        <label for="comment" class="form-label mb-1">دیدگاه
+                                                                        <label for="comment"
+                                                                               class="form-label mb-1">دیدگاه
                                                                             شما</label>
-                                                                        <textarea class="form-control form-control-sm"
-                                                                                  id="comment"
-                                                                                  placeholder="دیدگاه شما ..."
-                                                                                  rows="4" name="body"></textarea>
+                                                                        <textarea
+                                                                            class="form-control form-control-sm"
+                                                                            id="comment"
+                                                                            placeholder="دیدگاه شما ..."
+                                                                            rows="4" name="body"></textarea>
                                                                         @error('body')
                                                                         <span class="text-danger">
                                                                     <strong>{{$message}}</strong>
@@ -603,7 +620,8 @@
 
                                         @foreach($product->approvedComments() as $comment)
                                             <section class="product-comment">
-                                                <section class="product-comment-header d-flex justify-content-start">
+                                                <section
+                                                    class="product-comment-header d-flex justify-content-start">
                                                     <section
                                                         class="product-comment-date">{{jalaliDate($comment->created_at)}}</section>
                                                     <section

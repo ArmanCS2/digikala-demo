@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at','DESC')->get();
+        $posts = Post::orderBy('created_at', 'DESC')->paginate(20);
         return view('admin.content.post.index', compact('posts'));
     }
 
@@ -76,9 +76,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post=Post::find($id);
+        $post = Post::find($id);
         $postCategories = PostCategory::all();
-        return view('admin.content.post.edit',compact('post','postCategories'));
+        return view('admin.content.post.edit', compact('post', 'postCategories'));
     }
 
     /**
@@ -91,9 +91,9 @@ class PostController extends Controller
     public function update(Request $request, $id, ImageService $imageService)
     {
         $inputs = $request->all();
-        $post=Post::find($id);
+        $post = Post::find($id);
         if ($request->hasFile('image')) {
-            if (!empty($post->image)){
+            if (!empty($post->image)) {
                 $imageService->deleteIndex($post->image);
             }
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'posts');
@@ -102,13 +102,13 @@ class PostController extends Controller
                 return redirect()->route('admin.content.post.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
             $inputs['image'] = $result;
-        }else{
+        } else {
 
-            if (isset($inputs['currentImage']) && !empty($post->image)){
+            if (isset($inputs['currentImage']) && !empty($post->image)) {
 
-                $image=$post->image;
-                $image['currentImage']=$inputs['currentImage'];
-                $inputs['image']=$image;
+                $image = $post->image;
+                $image['currentImage'] = $inputs['currentImage'];
+                $inputs['image'] = $image;
             }
         }
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
@@ -124,7 +124,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post=Post::find($id);
+        $post = Post::find($id);
         $post->delete();
         return redirect()->route('admin.content.post.index')->with('swal-success', 'پست با موفقیت حذف شد');
     }

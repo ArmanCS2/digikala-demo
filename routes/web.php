@@ -61,7 +61,6 @@ Route::prefix('profile')->group(function () {
         Route::post('/store', [\App\Http\Controllers\App\TicketController::class, 'store'])->name('profile.ticket.store');
     });
 });
-
 Route::prefix('market')->group(function () {
 
     Route::get('/products', [ProductController::class, 'products'])->name('market.products');
@@ -98,7 +97,6 @@ Route::prefix('market')->group(function () {
     });
 
 });
-
 Route::prefix('content')->group(function () {
     Route::get('posts', [PostController::class, 'posts'])->name('content.posts');
     Route::prefix('post')->group(function () {
@@ -357,6 +355,27 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->namespace('App\Http\
             Route::put('/update/{id}', 'MenuController@update')->name('admin.content.menu.update');
             Route::delete('/destroy/{id}', 'MenuController@destroy')->name('admin.content.menu.destroy');
             Route::get('/ajax/change-status/{id}', 'MenuController@ajaxChangeStatus')->name('admin.content.menu.ajax.change-status');
+        });
+
+        Route::prefix('footer')->group(function () {
+            Route::get('/', 'FooterController@index')->name('admin.content.footer.index');
+            Route::get('/create', 'FooterController@create')->name('admin.content.footer.create');
+            Route::post('/store', 'FooterController@store')->name('admin.content.footer.store');
+            Route::get('/edit/{footer}', 'FooterController@edit')->name('admin.content.footer.edit');
+            Route::put('/update/{footer}', 'FooterController@update')->name('admin.content.footer.update');
+            Route::delete('/destroy/{footer}', 'FooterController@destroy')->name('admin.content.footer.destroy');
+            Route::get('/ajax/change-status/{footer}', 'FooterController@ajaxChangeStatus')->name('admin.content.footer.ajax.change-status');
+        });
+
+
+        Route::prefix('sub-footer')->group(function () {
+            Route::get('/{footer}', 'SubFooterController@index')->name('admin.content.sub-footer.index');
+            Route::get('/create/{footer}', 'SubFooterController@create')->name('admin.content.sub-footer.create');
+            Route::post('/store/{footer}', 'SubFooterController@store')->name('admin.content.sub-footer.store');
+            Route::get('/edit/{subFooter}', 'SubFooterController@edit')->name('admin.content.sub-footer.edit');
+            Route::put('/update/{subFooter}', 'SubFooterController@update')->name('admin.content.sub-footer.update');
+            Route::delete('/destroy/{subFooter}', 'SubFooterController@destroy')->name('admin.content.sub-footer.destroy');
+            Route::get('/ajax/change-status/{subFooter}', 'SubFooterController@ajaxChangeStatus')->name('admin.content.sub-footer.ajax.change-status');
         });
 
 

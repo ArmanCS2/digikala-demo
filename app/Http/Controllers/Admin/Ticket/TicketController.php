@@ -17,7 +17,7 @@ class TicketController extends Controller
      */
     public function newTicket()
     {
-        $tickets = Ticket::where('seen', 0)->whereNull('ticket_id')->orderBy('created_at','DESC')->get();
+        $tickets = Ticket::where('seen', 0)->whereNull('ticket_id')->orderBy('created_at','DESC')->paginate(20);
         foreach ($tickets as $ticket) {
             $ticket->seen = 1;
             $ticket->save();
@@ -32,7 +32,7 @@ class TicketController extends Controller
      */
     public function openTicket()
     {
-        $tickets = Ticket::where('status', 0)->whereNull('ticket_id')->orderBy('created_at','DESC')->get();
+        $tickets = Ticket::where('status', 0)->whereNull('ticket_id')->orderBy('created_at','DESC')->paginate(20);
         return view('admin.ticket.index', compact('tickets'));
     }
 
@@ -43,7 +43,7 @@ class TicketController extends Controller
      */
     public function closeTicket()
     {
-        $tickets = Ticket::where('status', 1)->whereNull('ticket_id')->orderBy('created_at','DESC')->get();
+        $tickets = Ticket::where('status', 1)->whereNull('ticket_id')->orderBy('created_at','DESC')->paginate(20);
         return view('admin.ticket.index', compact('tickets'));
     }
 
@@ -54,7 +54,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::whereNull('ticket_id')->orderBy('created_at','DESC')->get();
+        $tickets = Ticket::whereNull('ticket_id')->orderBy('created_at','DESC')->paginate(20);
         return view('admin.ticket.index', compact('tickets'));
     }
 

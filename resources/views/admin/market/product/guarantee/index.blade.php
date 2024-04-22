@@ -45,7 +45,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($product->guarantees as $key => $guarantee)
+                        @foreach($guarantees as $key => $guarantee)
                             <tr>
                                 <th>{{$key+1}}</th>
                                 <td>{{$guarantee->name}}</td>
@@ -76,6 +76,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$guarantees])
                 </section>
 
             </section>

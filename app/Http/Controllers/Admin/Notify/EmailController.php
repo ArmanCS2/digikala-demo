@@ -15,7 +15,7 @@ class EmailController extends Controller
      */
     public function index()
     {
-        $emails=Email::all();
+        $emails=Email::orderBy('created_at','DESC')->paginate(20);
         return view('admin.notify.email.index',compact('emails'));
     }
 

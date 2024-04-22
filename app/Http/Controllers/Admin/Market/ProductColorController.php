@@ -18,7 +18,8 @@ class ProductColorController extends Controller
     public function index($id)
     {
         $product=Product::find($id);
-        return view('admin.market.product.color.index',compact('product'));
+        $colors=$product->colors()->orderBy('created_at', 'DESC')->paginate(20);
+        return view('admin.market.product.color.index',compact('product','colors'));
     }
 
     /**

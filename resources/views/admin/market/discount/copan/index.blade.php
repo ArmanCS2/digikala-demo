@@ -83,6 +83,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$copans])
                 </section>
 
             </section>

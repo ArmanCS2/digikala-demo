@@ -79,6 +79,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$comments])
                 </section>
 
             </section>

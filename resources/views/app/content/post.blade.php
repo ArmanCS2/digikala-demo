@@ -1,6 +1,8 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
+    <meta name="description" content="{{$post->title}}">
+    <meta name="keywords" content="{{$post->tags}}">
     <title>{{$post->title}}</title>
     <style>
         /* Styling h1 and links
@@ -44,6 +46,16 @@
     <!-- start cart -->
     <section class="mb-4">
         <section class="container-xxl">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
+                                                                href="{{route('home')}}">صفحه اصلی</a></li>
+                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
+                                                                href="{{route('content.posts')}}">وبلاگ</a></li>
+                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark">پست</a></li>
+                    <li class="breadcrumb-item font-size-12 active d-none" aria-current="page">{{$post->title}}</li>
+                </ol>
+            </nav>
             <section class="row">
                 <section class="col">
                     <!-- start vontent header -->
@@ -92,7 +104,9 @@
                                 </section>
                                 <section class="product-info">
                                     <p class="mb-3">
+                                    <section id="desc">
                                         {!! $post->body !!}
+                                    </section>
                                     </p>
                                 </section>
                             </section>

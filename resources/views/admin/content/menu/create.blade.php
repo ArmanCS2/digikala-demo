@@ -49,6 +49,19 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
+                                    <label for="">ترتیب منو</label>
+                                    <input type="text" class="form-control form-control-sm" name="order"
+                                           value="{{old('order')}}">
+                                </div>
+                                @error('order')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
                                     <label for="">منو والد</label>
                                     <select name="parent_id" id="" class="form-control form-control-sm">
                                         <option value="">دسته را انتخاب کنید</option>

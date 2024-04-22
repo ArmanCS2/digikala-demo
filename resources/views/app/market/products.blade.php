@@ -1,11 +1,20 @@
 @extends('app.layouts.master-two-col2')
 
 @section('head-tag')
+    <meta name="description" content="بوتیکالا محصولات پوشاک تیشرت">
+    <meta name="keywords" content="بوتیکالا محصولات پوشاک تیشرت">
     <title>محصولات</title>
 @endsection
 
 
 @section('content')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark" href="{{route('home')}}">صفحه
+                    اصلی</a></li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page">کالا ها</li>
+        </ol>
+    </nav>
     <section class="content-wrapper bg-white p-3 rounded-2 mb-2">
         <section class="filters mb-3">
             @if(!empty(request()->search))

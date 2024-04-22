@@ -15,7 +15,7 @@ class SMSController extends Controller
      */
     public function index()
     {
-        $smses=SMS::all();
+        $smses=SMS::orderBy('created_at','DESC')->paginate(20);
         return view('admin.notify.sms.index',compact('smses'));
     }
 

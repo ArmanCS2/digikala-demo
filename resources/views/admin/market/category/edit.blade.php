@@ -51,6 +51,19 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
+                                    <label for="">ترتیب</label>
+                                    <input type="text" class="form-control form-control-sm" name="order"
+                                           value="{{old('order',$category->order)}}">
+                                </div>
+                                @error('order')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
                                     <label for="">تگ ها</label>
                                     <input type="hidden" class="form-control form-control-sm" name="tags" id="tags"
                                            value="{{old('tags',$category->tags)}}">
@@ -115,6 +128,7 @@
                                 @enderror
 
                             </section>
+                            @if(!empty($category->image))
                             <section class="col-12 col-md-6 my-1">
                                 <section class="row">
                                     @php
@@ -137,6 +151,7 @@
                                     @endforeach
                                 </section>
                             </section>
+                            @endif
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">نمایش در منو</label>

@@ -69,6 +69,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$attributes])
                 </section>
 
             </section>

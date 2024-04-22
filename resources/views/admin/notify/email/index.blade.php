@@ -77,6 +77,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$emails])
                 </section>
 
             </section>

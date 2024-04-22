@@ -19,7 +19,7 @@ class PostCategory extends Model
         ];
     }
 
-    protected $fillable =['name','tags','description','image','slug','status','parent_id'];
+    protected $fillable =['name','tags','description','image','slug','status','parent_id','order'];
     protected $casts=['image'=>'array'];
 
     public function parent(){

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Content\Comment;
+use App\Models\Content\Footer;
 use App\Models\Content\Menu;
 use App\Models\Market\CartItem;
 use App\Models\Market\ProductCategory;
@@ -36,14 +37,19 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer('app.layouts.header', function ($view) {
-            $view->with('productCategories', ProductCategory::whereNull('parent_id')->where('status', 1)->where('show_in_menu', 1)->get());
+            $view->with('productCategories', ProductCategory::whereNull('parent_id')->where('status', 1)->where('show_in_menu', 1)->orderBy('order')->get());
             if (Auth::check()) {
-                $view->with('cartItems', CartItem::where('user_id', Auth::user()->id)->get());
+                $view->with('cartItems', CartItem::where('user_id', Auth::user()->id)->orderBy('created_at')->get());
             } else {
                 $view->with('cartItems', []);
             }
             $view->with('setting', Setting::first());
-            $view->with('menus', Menu::where('status',1)->get());
+            $view->with('menus', Menu::where('status', 1)->orderBy('order')->get());
+        });
+
+        view()->composer('app.layouts.footer', function ($view) {
+            $view->with('setting', Setting::first());
+            $view->with('footers', Footer::orderBy('order')->get());
         });
     }
 }

@@ -37,6 +37,7 @@
                         <tr>
                             <th>#</th>
                             <th>نام منو</th>
+                            <th>ترتیب منو</th>
                             <th>منوی والد</th>
                             <th>لینک منو</th>
                             <th>وضعیت</th>
@@ -48,6 +49,7 @@
                             <tr>
                                 <th>{{$key + 1}}</th>
                                 <td>{{$menu->name}}</td>
+                                <td>{{$menu->order}}</td>
                                 <td>{{$menu->parent->name ?? 'اصلی'}}</td>
                                 <td>{{$menu->url}}</td>
                                 <td>
@@ -75,6 +77,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$menus])
                 </section>
 
             </section>

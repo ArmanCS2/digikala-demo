@@ -1,12 +1,20 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
+    <meta name="description" content="وبلاگ پوشاک بوتیکالا">
+    <meta name="keywords" content="بوتیکالا تیشرت وبلاگ پوشاک">
     <title>وبلاگ</title>
 @endsection
 
 
 @section('content')
     <section class="content-wrapper bg-white p-3 rounded-2 mb-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark" href="{{route('home')}}">صفحه اصلی</a></li>
+                <li class="breadcrumb-item font-size-12 active" aria-current="page">وبلاگ</li>
+            </ol>
+        </nav>
 
         <section class="row my-4 d-flex justify-content-center">
 

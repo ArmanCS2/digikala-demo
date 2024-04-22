@@ -21,8 +21,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::orderBy('created_at','DESC')->get();
-        return view('admin.market.product.index',compact('products'));
+        $products = Product::orderBy('created_at', 'DESC')->paginate(20);
+        return view('admin.market.product.index', compact('products'));
     }
 
     /**
@@ -32,18 +32,18 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories=ProductCategory::all();
-        $brands=Brand::all();
-        return view('admin.market.product.create',compact('categories','brands'));
+        $categories = ProductCategory::all();
+        $brands = Brand::all();
+        return view('admin.market.product.create', compact('categories', 'brands'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request,ImageService $imageService)
+    public function store(ProductRequest $request, ImageService $imageService)
     {
 
         $inputs = $request->all();
@@ -56,8 +56,8 @@ class ProductController extends Controller
             $inputs['image'] = $result;
         }
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
-        DB::transaction(function ()use ($request,$inputs){
-            $product=Product::create($inputs);
+        DB::transaction(function () use ($request, $inputs) {
+            $product = Product::create($inputs);
             if (!empty($request->meta_key[0]) && !empty($request->meta_value[0])) {
                 $metas = array_combine($request->meta_key, $request->meta_value);
                 foreach ($metas as $key => $value) {
@@ -76,7 +76,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -87,30 +87,30 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $product=Product::find($id);
-        $categories=ProductCategory::all();
-        $brands=Brand::all();
-        return view('admin.market.product.edit',compact('product','categories','brands'));
+        $product = Product::find($id);
+        $categories = ProductCategory::all();
+        $brands = Brand::all();
+        return view('admin.market.product.edit', compact('product', 'categories', 'brands'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, $id,ImageService $imageService)
+    public function update(ProductRequest $request, $id, ImageService $imageService)
     {
         $inputs = $request->all();
-        $product=Product::find($id);
+        $product = Product::find($id);
         if ($request->hasFile('image')) {
-            if (!empty($product->image)){
+            if (!empty($product->image)) {
                 $imageService->deleteIndex($product->image);
             }
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'products');
@@ -119,22 +119,22 @@ class ProductController extends Controller
                 return redirect()->route('admin.content.post.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
             $inputs['image'] = $result;
-        }else{
+        } else {
 
-            if (isset($inputs['currentImage']) && !empty($product->image)){
+            if (isset($inputs['currentImage']) && !empty($product->image)) {
 
-                $image=$product->image;
-                $image['currentImage']=$inputs['currentImage'];
-                $inputs['image']=$image;
+                $image = $product->image;
+                $image['currentImage'] = $inputs['currentImage'];
+                $inputs['image'] = $image;
             }
         }
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         $product->update($inputs);
-        $metas=$product->metas;
-        foreach ($metas as $key => $meta){
+        $metas = $product->metas;
+        foreach ($metas as $key => $meta) {
             $meta->update([
-                'meta_key'=>$request->meta_key[$key],
-                'meta_value'=>$request->meta_value[$key],
+                'meta_key' => $request->meta_key[$key],
+                'meta_value' => $request->meta_value[$key],
             ]);
         }
         return redirect()->route('admin.market.product.index')->with('swal-success', 'محصول با موفقیت ویرایش شد');
@@ -143,12 +143,12 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $product=Product::find($id);
+        $product = Product::find($id);
         $product->delete();
         return redirect()->route('admin.market.product.index')->with('swal-success', 'محصول با موفقیت حذف شد');
     }

@@ -65,6 +65,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$tickets])
                 </section>
 
             </section>

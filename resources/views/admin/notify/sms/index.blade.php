@@ -75,6 +75,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$smses])
                 </section>
 
             </section>

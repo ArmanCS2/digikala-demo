@@ -49,6 +49,19 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
+                                    <label for="">ترتیب</label>
+                                    <input type="text" class="form-control form-control-sm" name="order"
+                                           value="{{old('order')}}">
+                                </div>
+                                @error('order')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
                                     <label for="">تگ ها</label>
                                     <input type="hidden" class="form-control form-control-sm" name="tags" id="tags" value="{{old('tags')}}">
                                     <select class="select2 form-control form-control-sm" id="select_tags" multiple>

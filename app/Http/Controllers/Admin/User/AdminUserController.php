@@ -20,7 +20,7 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $admins=User::where('user_type',1)->get();
+        $admins=User::where('user_type',1)->orderBy('created_at','DESC')->paginate(20);
         return view('admin.user.admin-user.index',compact('admins'));
     }
 

@@ -115,6 +115,7 @@
                                 @enderror
 
                             </section>
+                            @if(!empty($category->image))
                             <section class="col-12 col-md-6 my-1">
                                 <section class="row">
                                     @php
@@ -137,6 +138,7 @@
                                     @endforeach
                                 </section>
                             </section>
+                            @endif
                             <section class="col-12  my-1">
                                 <div class="form-group">
                                     <label for="">توضیحات</label>

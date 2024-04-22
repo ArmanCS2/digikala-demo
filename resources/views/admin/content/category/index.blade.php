@@ -95,6 +95,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$postCategories])
                 </section>
 
             </section>

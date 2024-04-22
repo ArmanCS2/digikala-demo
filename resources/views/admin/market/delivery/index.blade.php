@@ -76,6 +76,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$deliveries])
                 </section>
 
             </section>

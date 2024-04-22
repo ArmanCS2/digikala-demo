@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = TicketCategory::all();
+        $categories = TicketCategory::orderBy('created_at','DESC')->paginate(20);
         return view('admin.ticket.category.index', compact('categories'));
     }
 

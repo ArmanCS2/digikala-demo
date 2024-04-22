@@ -45,7 +45,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($product->colors as $key => $color)
+                        @foreach($colors as $key => $color)
                             <tr>
                                 <th>{{$key+1}}</th>
                                 <td>{{$color->name}}</td>
@@ -69,6 +69,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$colors])
                 </section>
 
             </section>

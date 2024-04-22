@@ -43,7 +43,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($product->images as $key => $image)
+                        @foreach($images as $key => $image)
                             <tr>
                                 <th>{{$key+1}}</th>
                                 <td><img src="{{asset($image->image)}}" width="100"></td>
@@ -63,6 +63,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$images])
                 </section>
 
             </section>

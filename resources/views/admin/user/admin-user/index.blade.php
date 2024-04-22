@@ -93,8 +93,10 @@
                                     </label>
                                 </td>
                                 <td class="width-44-rem text-left">
-                                    <a href="{{route('admin.user.admin-user.roles',[$admin->id])}}" class="btn btn-info btn-sm"><i class="fa fa-list-ul"></i> نقش ها</a>
-                                    <a href="{{route('admin.user.admin-user.permissions',[$admin->id])}}" class="btn btn-warning btn-sm"><i class="fa fa-list-ul"></i> دسترسی ها</a>
+                                    <a href="{{route('admin.user.admin-user.roles',[$admin->id])}}"
+                                       class="btn btn-info btn-sm"><i class="fa fa-list-ul"></i> نقش ها</a>
+                                    <a href="{{route('admin.user.admin-user.permissions',[$admin->id])}}"
+                                       class="btn btn-warning btn-sm"><i class="fa fa-list-ul"></i> دسترسی ها</a>
                                     <a href="{{route('admin.user.admin-user.edit',[$admin->id])}}"
                                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                                     <form action="{{route('admin.user.admin-user.destroy',[$admin->id])}}" method="post"
@@ -111,6 +113,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$admins])
                 </section>
 
             </section>

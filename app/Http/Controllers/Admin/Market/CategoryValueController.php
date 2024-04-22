@@ -17,7 +17,8 @@ class CategoryValueController extends Controller
     public function index($id)
     {
         $attribute = CategoryAttribute::find($id);
-        return view('admin.market.category.attribute.value.index', compact('attribute'));
+        $values=$attribute->values()->orderBy('created_at','DESC')->paginate(20);
+        return view('admin.market.category.attribute.value.index', compact('attribute','values'));
     }
 
     /**

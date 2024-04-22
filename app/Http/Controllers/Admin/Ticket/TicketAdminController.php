@@ -16,7 +16,7 @@ class TicketAdminController extends Controller
      */
     public function index()
     {
-        $admins=User::where('user_type',1)->get();
+        $admins=User::where('user_type',1)->orderBy('created_at','ASC')->paginate(20);
         return view('admin.ticket.admin.index',compact('admins'));
     }
 

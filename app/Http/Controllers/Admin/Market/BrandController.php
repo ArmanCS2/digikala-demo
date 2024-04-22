@@ -17,7 +17,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands=Brand::all();
+        $brands=Brand::orderBy('created_at','DESC')->paginate(20);
         return view('admin.market.brand.index',compact('brands'));
     }
 

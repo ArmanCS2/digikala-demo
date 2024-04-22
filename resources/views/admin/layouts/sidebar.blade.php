@@ -96,6 +96,11 @@
                 <i class="fas fa-bars"></i>
                 <span>منو</span>
             </a>
+
+            <a href="{{route('admin.content.footer.index')}}" class="sidebar-link">
+                <i class="fas fa-bars"></i>
+                <span>فوتر</span>
+            </a>
             <a href="{{route('admin.content.faq.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>سوالات متداول</span>

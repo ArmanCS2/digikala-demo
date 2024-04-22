@@ -22,7 +22,7 @@ class DiscountController extends Controller
      */
     public function copanIndex()
     {
-        $copans=Copan::all();
+        $copans=Copan::orderBy('created_at','DESC')->paginate(20);
         return view('admin.market.discount.copan.index',compact('copans'));
     }
 
@@ -124,7 +124,7 @@ class DiscountController extends Controller
      */
     public function commonDiscountIndex()
     {
-        $commonDiscounts = CommonDiscount::all();
+        $commonDiscounts = CommonDiscount::orderBy('created_at','DESC')->paginate(20);
         return view('admin.market.discount.common-discount.index', compact('commonDiscounts'));
     }
 
@@ -218,7 +218,7 @@ class DiscountController extends Controller
      */
     public function amazingSaleIndex()
     {
-        $amazingSales=AmazingSale::all();
+        $amazingSales=AmazingSale::orderBy('created_at','DESC')->paginate(20);
         return view('admin.market.discount.amazing-sale.index',compact('amazingSales'));
     }
 

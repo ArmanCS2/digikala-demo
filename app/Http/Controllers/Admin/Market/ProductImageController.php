@@ -19,7 +19,8 @@ class ProductImageController extends Controller
     public function index($id)
     {
         $product = Product::find($id);
-        return view('admin.market.product.image.index', compact('product'));
+        $images=$product->images()->orderBy('created_at','DESC')->paginate(20);
+        return view('admin.market.product.image.index', compact('product','images'));
     }
 
     /**

@@ -17,7 +17,7 @@ class StorageController extends Controller
      */
     public function index()
     {
-        $products=Product::all();
+        $products=Product::orderBy('created_at','DESC')->paginate(20);
         return view('admin.market.storage.index',compact('products'));
     }
 

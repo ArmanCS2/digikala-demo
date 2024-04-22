@@ -16,7 +16,7 @@ class PriorityController extends Controller
      */
     public function index()
     {
-        $priorities = TicketPriority::all();
+        $priorities = TicketPriority::orderBy('created_at','DESC')->paginate(20);
         return view('admin.ticket.priority.index', compact('priorities'));
     }
 

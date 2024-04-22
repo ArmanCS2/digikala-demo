@@ -48,7 +48,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($attribute->values as $key => $value)
+                        @foreach($values as $key => $value)
                             <tr>
                                 <th>{{$key + 1}}</th>
                                 <td>{{json_decode($value->value)->value}}</td>
@@ -73,6 +73,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$values])
                 </section>
 
             </section>

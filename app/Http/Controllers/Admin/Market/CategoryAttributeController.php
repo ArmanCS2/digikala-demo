@@ -17,7 +17,7 @@ class CategoryAttributeController extends Controller
      */
     public function index()
     {
-        $attributes=CategoryAttribute::all();
+        $attributes=CategoryAttribute::orderBy('created_at','DESC')->paginate(20);
         return view('admin.market.category.attribute.index',compact('attributes'));
     }
 

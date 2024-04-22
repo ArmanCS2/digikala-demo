@@ -18,7 +18,8 @@ class EmailFileController extends Controller
      */
     public function index(Email $email)
     {
-        return view('admin.notify.email.file.index',compact('email'));
+        $files=$email->files()->orderBy('created_at','DESC')->paginate(20);
+        return view('admin.notify.email.file.index',compact('email','files'));
     }
 
     /**

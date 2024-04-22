@@ -19,7 +19,7 @@ class ProductCategory extends Model
         ];
     }
 
-    protected $fillable =['name','tags','description','image','slug','status','parent_id','show_in_menu'];
+    protected $fillable =['name','tags','description','image','slug','status','parent_id','show_in_menu','order'];
     protected $casts=['image'=>'array'];
 
     public function products(){

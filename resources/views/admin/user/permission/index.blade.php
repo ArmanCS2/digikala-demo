@@ -85,6 +85,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$permissions])
                 </section>
 
             </section>

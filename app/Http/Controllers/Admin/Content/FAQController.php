@@ -16,7 +16,7 @@ class FAQController extends Controller
      */
     public function index()
     {
-        $faqs=FAQ::all();
+        $faqs=FAQ::orderBy('created_at','DESC')->paginate(20);
         return view('admin.content.faq.index',compact('faqs'));
 
     }

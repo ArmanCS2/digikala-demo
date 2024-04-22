@@ -88,6 +88,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$roles])
                 </section>
 
             </section>

@@ -6,7 +6,7 @@
 <link rel="icon" href="{{asset(\App\Models\Setting\Setting::first()->icon)}}">
 <link rel="shortcut icon" href="{{asset(\App\Models\Setting\Setting::first()->icon)}}">
 <link rel="stylesheet" href="{{asset('admin-assets/css/bootstrap/bootstrap.min.css')}}">
-<link rel="stylesheet" href="{{asset('admin-assets/fontawesome/css/all.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin-assets/fontawesome/css/all.css')}}">
 <link rel="stylesheet" href="{{asset('admin-assets/css/animate.min.css')}}">
 <link rel="stylesheet" href="{{asset('admin-assets/css/grid.css')}}">
 <link rel="stylesheet" href="{{asset('admin-assets/select2/css/select2.min.css')}}">

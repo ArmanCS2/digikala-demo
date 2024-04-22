@@ -42,11 +42,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($order->items as $item)
+                        @foreach ($items as $item)
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
-                                <td><a href="{{route('market.product',$item->product()->first())}}">{{ $item->product->name ?? '-' }}</a></td>
-                                <td><a href="{{route('market.product',$item->product()->first())}}"><img src="{{asset($item->product->image->indexArray->medium)}}"
+                                <td>
+                                    <a href="{{route('market.product',$item->product()->first())}}">{{ $item->product->name ?? '-' }}</a>
+                                </td>
+                                <td><a href="{{route('market.product',$item->product()->first())}}"><img
+                                            src="{{asset($item->product->image->indexArray->medium)}}"
                                             width="100px"></a></td>
                                 <td>{{ $item->amazingSale->percentage ?? '-' }} %</td>
                                 <td>{{ number_format($item->amazing_sale_discount_amount) ?? '-' }} تومان</td>
@@ -70,6 +73,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$items])
                 </section>
 
 

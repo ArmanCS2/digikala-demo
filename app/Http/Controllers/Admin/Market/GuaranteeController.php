@@ -18,7 +18,8 @@ class GuaranteeController extends Controller
     public function index($id)
     {
         $product=Product::find($id);
-        return view('admin.market.product.guarantee.index',compact('product'));
+        $guarantees=$product->guarantees()->orderBy('created_at','DESC')->paginate(20);
+        return view('admin.market.product.guarantee.index',compact('product','guarantees'));
     }
 
     /**

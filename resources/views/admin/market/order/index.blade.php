@@ -96,6 +96,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('admin.layouts.pagination',['data'=>$orders])
                 </section>
 
             </section>
