@@ -675,9 +675,9 @@ body {
     display: flex;
     justify-content: center;
     justify-items: center;
-    max-height: 170px;
+    /*max-height: 170px;*/
     overflow: hidden;
-    margin-bottom: 1rem;
+    /*margin-bottom: 1rem;*/
     padding: 0rem;
 }
 
@@ -710,6 +710,7 @@ body {
     /*text-align: center;*/
     padding: 0rem;
     margin-bottom: 1rem;
+    margin-top: 1rem;
     line-height: 1.5rem;
     height: 3rem;
     overflow: hidden;
