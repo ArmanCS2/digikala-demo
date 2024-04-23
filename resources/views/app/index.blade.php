@@ -103,7 +103,7 @@
                                                              alt="{{$product->name}}">
                                                     </section>
                                                     <section class="product-name">
-                                                        <h3>{{\Illuminate\Support\Str::limit($product->name,30)}}</h3>
+                                                        <h3>{{$product->name}}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         @if(!empty($product->activeAmazingSale() ?? []))
@@ -239,7 +239,7 @@
                                                              alt="{{$product->name}}">
                                                     </section>
                                                     <section class="product-name">
-                                                        <h3>{{\Illuminate\Support\Str::limit($product->name,30)}}</h3>
+                                                        <h3>{{$product->name}}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         @if(!empty($product->activeAmazingSale() ?? []))

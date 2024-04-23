@@ -370,7 +370,7 @@
                                                              alt="{{$relatedProduct->name}}">
                                                     </section>
                                                     <section class="product-name">
-                                                        <h3>{{\Illuminate\Support\Str::limit($relatedProduct->name,30)}}</h3>
+                                                        <h3>{{$relatedProduct->name}}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         @if(!empty($relatedProduct->activeAmazingSale()))
