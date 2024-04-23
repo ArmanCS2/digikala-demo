@@ -29,13 +29,13 @@ class LoginRegisterRequest extends FormRequest
             if (is_numeric(request()->all()['id'])) {
                 return [
                     'id' => 'required|digits:11',
-                    'g-recaptcha-response' => 'recaptcha'
+                    //'g-recaptcha-response' => 'recaptcha'
                 ];
             }
 
             return [
                 'id' => 'required|email',
-                'g-recaptcha-response' => 'recaptcha'
+                //'g-recaptcha-response' => 'recaptcha'
             ];
         } elseif ($currentRouteName == 'auth.customer.login-confirm') {
             return [
@@ -53,18 +53,18 @@ class LoginRegisterRequest extends FormRequest
             if (is_numeric(request()->all()['id'])) {
                 return [
                     'id' => 'شماره تلفن',
-                    'g-recaptcha-response' => 'recaptcha'
+                    //'g-recaptcha-response' => 'recaptcha'
                 ];
             }
 
             return [
                 'id' => 'پست الکترونیک',
-                'g-recaptcha-response' => 'recaptcha'
+                //'g-recaptcha-response' => 'recaptcha'
             ];
         } elseif ($currentRouteName == 'auth.customer.login-confirm') {
             return [
                 'otp' => 'کد تایید',
-                'g-recaptcha-response' => 'recaptcha'
+                //'g-recaptcha-response' => 'recaptcha'
             ];
         }
     }
