@@ -19,15 +19,15 @@ return [
 
     'index-image-sizes'=>[
         'large'=>[
-            'width'=>800,
+            'width'=>600,
             'height'=>600
         ],
         'medium'=>[
-            'width'=>350,
-            'height'=>350
+            'width'=>400,
+            'height'=>400
         ],
         'small'=>[
-            'width'=>400,
+            'width'=>300,
             'height'=>300
         ],
     ],

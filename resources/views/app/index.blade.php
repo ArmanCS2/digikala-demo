@@ -24,7 +24,7 @@
                 @foreach($topBanners as $topBanner)
                     <section class="mb-2"><a class="d-block"><img class="w-100 rounded-2"
                                                                   src="{{asset($topBanner->image)}}"
-                                                                  alt="{{$topBanner->title}}" width="400px"
+                                                                  alt="{{$topBanner->title}}" width="339.2px"
                                                                   height="212px"></a>
                     </section>
                 @endforeach
@@ -154,7 +154,7 @@
                     <section class="col-12 col-md-6 mt-2 mt-md-0"><a
                             class="w-100 d-block h-auto text-decoration-none"><img
                                 class="d-block rounded-2 w-100"
-                                src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}" width="820px"
+                                src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}" width="480px"
                                 height="300px"></a>
                     </section>
                 @endforeach
