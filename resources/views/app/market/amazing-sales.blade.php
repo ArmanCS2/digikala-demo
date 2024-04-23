@@ -10,7 +10,8 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark" href="{{route('home')}}">صفحه اصلی</a></li>
+            <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark" href="{{route('home')}}">صفحه
+                    اصلی</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page">تخفیف ها و پیشنهاد ها</li>
         </ol>
     </nav>
