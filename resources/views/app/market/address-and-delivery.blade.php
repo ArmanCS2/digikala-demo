@@ -368,7 +368,7 @@
                                                             </section>
 
                                                             <section class="col-3 mb-2">
-                                                                <label for="no" class="form-label mb-1">پلاک</label>
+                                                                <label for="no" class="form-label mb-1">پلاک (اختیاری)</label>
                                                                 <input name="no" type="text"
                                                                        class="form-control form-control-sm"
                                                                        id="no" placeholder="پلاک" value="{{old('no')}}">
@@ -380,7 +380,7 @@
                                                             </section>
 
                                                             <section class="col-3 mb-2">
-                                                                <label for="unit" class="form-label mb-1">واحد</label>
+                                                                <label for="unit" class="form-label mb-1">واحد (اختیاری)</label>
                                                                 <input name="unit" type="text"
                                                                        class="form-control form-control-sm"
                                                                        id="unit" placeholder="واحد"
@@ -528,43 +528,8 @@
                         </section>
                         <section class="col-md-3">
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
-                                @php
-                                    $finalProductPrices = 0;
-                                    $finalProductDiscounts = 0;
-                                    $totalProductPrices = 0;
-                                @endphp
 
-                                @foreach($cartItems as $cartItem)
-                                    @php
-                                        $finalProductPrices += $cartItem->finalProductPrice();
-                                        $finalProductDiscounts += $cartItem->finalProductDiscount();
-                                        $totalProductPrices += $cartItem->totalProductPrice();
-                                    @endphp
-                                @endforeach
-
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">قیمت کالاها ({{ priceFormat($cartItems->count()) }})</p>
-                                    <p class="text-muted"><span
-                                            id="final-product-prices">{{ priceFormat($finalProductPrices) }}</span>
-                                        تومان
-                                    </p>
-                                </section>
-
-                                @if($finalProductDiscounts != 0)
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">تخفیف کالاها</p>
-                                        <p class="text-danger fw-bolder"><span
-                                                id="final-product-discounts">{{ priceFormat($finalProductDiscounts) }}</span>
-                                            تومان</p>
-                                    </section>
-                                @endif
-                                <section class="border-bottom mb-3"></section>
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">جمع سبد خرید</p>
-                                    <p class="fw-bolder"><span
-                                            id="total-product-prices">{{ priceFormat($totalProductPrices) }}</span>
-                                        تومان</p>
-                                </section>
+                                @include('app.layouts.prices')
 
 
                                 <p class="my-3">

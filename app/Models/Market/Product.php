@@ -23,7 +23,7 @@ class Product extends Model
         ];
     }
 
-    protected $fillable = ['name', 'introduction', 'slug', 'image', 'slug', 'weight', 'length', 'width', 'height', 'price', 'tags', 'status', 'marketable', 'sold_number', 'frozen_number', 'marketable_number', 'brand_id', 'category_id', 'published_at'];
+    protected $fillable = ['name', 'introduction', 'slug', 'image', 'slug', 'weight', 'length', 'width', 'height', 'price', 'tags', 'status', 'marketable', 'sold_number', 'frozen_number', 'marketable_number', 'brand_id', 'category_id', 'published_at', 'size', 'material', 'feature_1', 'feature_2', 'feature_3', 'feature_4', 'feature_5'];
     protected $casts = ['image' => 'array'];
 
     public function category()
@@ -68,7 +68,11 @@ class Product extends Model
 
     public function activeAmazingSale()
     {
-        return $this->amazingSales()->where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->where('status', 1)->first();
+        $commonDiscount = CommonDiscount::where('start_date', '<=', now())->where('end_date', '>=', now())->where('status', 1)->orderBy('created_at', 'desc')->first();
+        if (empty($commonDiscount)) {
+            return $this->amazingSales()->where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->where('status', 1)->first();
+        }
+        return null;
     }
 
     public function activeAmazingSaleObj()
@@ -94,5 +98,10 @@ class Product extends Model
     public function user()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function compares()
+    {
+        return $this->belongsToMany(Compare::class);
     }
 }

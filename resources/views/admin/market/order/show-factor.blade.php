@@ -35,7 +35,7 @@
                         <tbody>
 
                         <tr class="table-active">
-                            <th> شماره سفارش : {{ $order->id }}</th>
+                            <th> شماره سفارش : {{'BK-' .  $order->id }}</th>
                             <td class="width-8-rem text-left">
                                 <a href="" class="btn btn-dark btn-sm text-white" id="print">
                                     <i class="fa fa-print"></i>
@@ -55,18 +55,27 @@
                                 {{ $order->user->full_name ?? '-' }}
                             </td>
                         </tr>
+
+                        <tr class="border-bottom">
+                            <th>استان</th>
+                            <td class="text-left font-weight-bolder">
+                                {{ \App\Models\Market\ProvinceCity::find($order->address_object->province_id)->title ?? '-' }}
+                            </td>
+                        </tr>
+
+                        <tr class="border-bottom">
+                            <th>شهر</th>
+                            <td class="text-left font-weight-bolder">
+                                {{ \App\Models\Market\ProvinceCity::find($order->address_object->city_id)->title ?? '-' }}
+                            </td>
+                        </tr>
                         <tr class="border-bottom">
                             <th>آدرس</th>
                             <td class="text-left font-weight-bolder">
                                 {{ $order->address_object->address ?? '-' }}
                             </td>
                         </tr>
-                        <tr class="border-bottom">
-                            <th>شهر</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ $order->address_object->city->name ?? '-' }}
-                            </td>
-                        </tr>
+
                         <tr class="border-bottom">
                             <th>کد پستی</th>
                             <td class="text-left font-weight-bolder">
@@ -110,46 +119,40 @@
                             </td>
                         </tr>
                         <tr class="border-bottom">
+                            <th>مجموع قیمت ها</th>
+                            <td class="text-left font-weight-bolder">
+                                {{ number_format($order->final_price) ?? 0 }} تومان
+                            </td>
+                        </tr>
+                        <tr class="border-bottom">
+                            <th>مجموع تخفیف ها</th>
+                            <td class="text-left font-weight-bolder">
+                                {{ number_format($order->final_discount) ?? 0 }} تومان
+                            </td>
+                        </tr>
+                        <tr class="border-bottom">
+                            <th>تخفیف کلی سایت</th>
+                            <td class="text-left font-weight-bolder">
+                                {{ number_format($order->common_discount_amount) ??0}}
+                                تومان
+                            </td>
+                        </tr>
+                        <tr class="border-bottom">
+                            <th>مبلغ کد تخفیف</th>
+                            <td class="text-left font-weight-bolder">
+                                {{ number_format($order->copan_discount_amount) ?? 0}} تومان
+                            </td>
+                        </tr>
+                        <tr class="border-bottom">
                             <th>مبلغ ارسال</th>
                             <td class="text-left font-weight-bolder">
-                                {{ number_format($order->delivery_amount) ?? '-' }} تومان
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th>وضعیت ارسال</th>
-                            <td class="text-left font-weight-bolder">
-                                {{$order->delivery_status()}}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th>تاریخ ارسال</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ jalaliDate($order->delivery_time) }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th>مجموع مبلغ سفارش (بدون تخفیف)</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ number_format($order->order_final_amount) ?? '-' }} تومان
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th>مجموع تمامی مبلغ تخفیفات</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ number_format($order->order_discount_amount) ?? '-' }} تومان
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th>مبلغ تخفیف همه محصولات</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ number_format($order->order_total_products_discount_amount) ?? '-' }} تومان
+                                {{ number_format($order->delivery_amount) ?? 0 }} تومان
                             </td>
                         </tr>
                         <tr class="border-bottom">
                             <th>مبلغ نهایی</th>
                             <td class="text-left font-weight-bolder">
-                                {{ number_format($order->order_final_amount -  $order->order_discount_amount) ?? '-' }}
-                                تومان
+                                {{ number_format($order->total_price) ?? 0}} تومان
                             </td>
                         </tr>
                         <tr class="border-bottom">
@@ -158,35 +161,25 @@
                                 {{ $order->payment_object->paymentable->gateway ?? '-' }}
                             </td>
                         </tr>
-                        <tr class="border-bottom">
-                            <th>کوپن استفاده شده</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ $order->copan->code ?? '-' }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th>تخفیف کد تخفیف</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ number_format($order->order_copan_discount_amount) ?? '-' }} تومان
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th>تخفیف عمومی استفاده شده</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ $order->commonDiscount->title ?? '-' }}
-                            </td>
-                        </tr>
 
-                        <tr class="border-bottom">
-                            <th>مبلغ تخفیف عمومی</th>
-                            <td class="text-left font-weight-bolder">
-                                {{ number_format($order->order_common_discount_amount) ?? '-' }} تومان
-                            </td>
-                        </tr>
                         <tr class="border-bottom">
                             <th>وضعیت سفارش</th>
                             <td class="text-left font-weight-bolder">
                                 {{$order->order_status()}}
+                            </td>
+                        </tr>
+
+                        <tr class="border-bottom">
+                            <th>کد رهگیری سفارش</th>
+                            <td class="text-left font-weight-bolder">
+                                {{$order->tracking_code ?? '-'}}
+                            </td>
+                        </tr>
+
+                        <tr class="border-bottom">
+                            <th>وضعیت ارسال</th>
+                            <td class="text-left font-weight-bolder">
+                                {{$order->delivery_status()}}
                             </td>
                         </tr>
 

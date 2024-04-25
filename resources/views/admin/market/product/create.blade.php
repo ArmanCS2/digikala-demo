@@ -158,6 +158,93 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
+                                    <label for="">سایز (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="size"
+                                           value="{{old('size')}}">
+                                </div>
+                                @error('size')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">جنس (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="material"
+                                           value="{{old('material')}}">
+                                </div>
+                                @error('material')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 1 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_1"
+                                           value="{{old('feature_1')}}">
+                                </div>
+                                @error('feature_1')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 2 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_2"
+                                           value="{{old('feature_2')}}">
+                                </div>
+                                @error('feature_2')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 3 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_3"
+                                           value="{{old('feature_3')}}">
+                                </div>
+                                @error('feature_3')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 4 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_4"
+                                           value="{{old('feature_4')}}">
+                                </div>
+                                @error('feature_4')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 5 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_5"
+                                           value="{{old('feature_5')}}">
+                                </div>
+                                @error('feature_5')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
                                     <label for="">وزن (اختیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="weight"
                                            value="{{old('weight')}}">

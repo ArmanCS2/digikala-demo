@@ -1,8 +1,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="بوتیکالا">
-<link rel="icon" href="{{asset(\App\Models\Setting\Setting::first()->icon)}}">
-<link rel="shortcut icon" href="{{asset(\App\Models\Setting\Setting::first()->icon)}}">
+<link rel="icon" href="{{asset(str_replace('\\','/',\App\Models\Setting\Setting::first()->icon))}}">
+<link rel="shortcut icon" href="{{asset(str_replace('\\','/',\App\Models\Setting\Setting::first()->icon))}}">
 <link rel="alternate" href="https://www.butikala.ir" hreflang="fa-ir">
 <link rel="canonical" href="{{url()->current()}}">
 <!-- Bootstrap CSS -->

@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth','role:super-admin'])->get('site/off', function () {
+Route::middleware(['auth', 'role:super-admin'])->get('site/off', function () {
     return Artisan::call('down', ['--secret' => 'arman']);
 });
 
@@ -42,8 +42,8 @@ Route::get('site/up', function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/download/{file_path}', [HomeController::class, 'download'])->name('download');
 Route::post('ckeditor-upload', [HomeController::class, 'ckeditorUpload'])->name('ckeditor.upload');
-Route::get('page/{title}',[HomeController::class,'page'])->name('page');
-Route::prefix('profile')->group(function () {
+Route::get('page/{title}', [HomeController::class, 'page'])->name('page');
+Route::middleware('auth')->prefix('profile')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/complete', [ProfileController::class, 'complete'])->name('profile.complete');
@@ -51,6 +51,7 @@ Route::prefix('profile')->group(function () {
     Route::get('/orders', [ProfileController::class, 'orders'])->name('profile.orders');
     Route::get('/addresses', [ProfileController::class, 'addresses'])->name('profile.addresses');
     Route::get('/favorites', [ProfileController::class, 'favorites'])->name('profile.favorites');
+    Route::get('/compares', [ProfileController::class, 'compares'])->name('profile.compares');
     Route::get('/delete-from-favorites/{product}', [ProfileController::class, 'deleteFromFavorites'])->name('profile.delete-from-favorites');
     Route::prefix('ticket')->group(function () {
         Route::get('/', [\App\Http\Controllers\App\TicketController::class, 'index'])->name('profile.ticket.index');
@@ -62,13 +63,14 @@ Route::prefix('profile')->group(function () {
     });
 });
 Route::prefix('market')->group(function () {
-
     Route::get('/products', [ProductController::class, 'products'])->name('market.products');
     Route::get('/amazing-sales', [ProductController::class, 'amazingSales'])->name('market.amazing-sales');
     Route::prefix('product')->group(function () {
         Route::get('/{product:slug}', [ProductController::class, 'product'])->name('market.product');
         Route::post('/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
         Route::get('/{product:slug}/is-favorite', [ProductController::class, 'isFavorite'])->name('market.product.is-favorite');
+        Route::get('/{product:slug}/add-to-compare', [ProductController::class, 'addToCompare'])->name('market.product.add-to-compare');
+        Route::get('/{product:slug}/remove-from-compare', [ProductController::class, 'removeFromCompare'])->name('market.product.remove-from-compare');
         Route::post('/{product:slug}/rate', [ProductController::class, 'rate'])->name('market.product.rate');
     });
 
@@ -118,12 +120,9 @@ Route::prefix('auth')->namespace('App\Http\Controllers\Auth')->group(function ()
     Route::prefix('customer')->namespace('Customer')->group(function () {
         Route::get('login-register', 'LoginRegisterController@loginRegisterForm')->name('auth.customer.login-register-form');
         Route::middleware('throttle:login-register-limiter')->post('login-register', 'LoginRegisterController@loginRegister')->name('auth.customer.login-register');
-
         Route::get('login-confirm/{token}', 'LoginRegisterController@loginConfirmForm')->name('auth.customer.login-confirm-form');
         Route::middleware('throttle:login-confirm-limiter')->post('login-confirm/{token}', 'LoginRegisterController@loginConfirm')->name('auth.customer.login-confirm');
-
         Route::middleware('throttle:login-resend-otp-limiter')->get('login-resend-otp/{token}', 'LoginRegisterController@loginResendOtp')->name('auth.customer.login-resend-otp');
-
         Route::get('logout', 'LoginRegisterController@logout')->name('auth.customer.logout');
     });
 });
@@ -236,6 +235,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->namespace('App\Http\
 
         Route::prefix('order')->group(function () {
             Route::get('/', 'OrderController@all')->name('admin.market.order.all');
+            Route::get('/edit/{order}', 'OrderController@edit')->name('admin.market.order.edit');
+            Route::put('/update/{order}', 'OrderController@update')->name('admin.market.order.update');
             Route::get('/new-order', 'OrderController@newOrder')->name('admin.market.order.new-order');
             Route::get('/sending', 'OrderController@sending')->name('admin.market.order.sending');
             Route::get('/unpaid', 'OrderController@unpaid')->name('admin.market.order.unpaid');

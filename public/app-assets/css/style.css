@@ -718,6 +718,7 @@ body {
 
 .product-name * {
     font-size: 0.8rem;
+    font-weight: bold;
     text-decoration: none;
     line-height: 1.5rem;
 }
@@ -729,7 +730,8 @@ body {
 
 .product-price {
     padding: 0rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: bold;
     text-align: left;
 }
 
@@ -740,7 +742,7 @@ body {
 }
 
 .product-discount-amount {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: bold;
     color: #FFFFFF;
     background-color: #ff253a;
@@ -751,7 +753,7 @@ body {
 
 .product-old-price {
     text-decoration: line-through;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: #888888;
     padding: 0.2rem;
 }

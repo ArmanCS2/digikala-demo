@@ -15,8 +15,22 @@ class OrderController extends Controller
      */
     public function all()
     {
-        $orders = Order::orderBy('created_at','DESC')->paginate(20);
+        $orders = Order::orderBy('created_at', 'DESC')->paginate(20);
         return view('admin.market.order.index', compact('orders'));
+    }
+
+    public function edit(Order $order)
+    {
+        return view('admin.market.order.edit', compact('order'));
+    }
+
+
+    public function update(Request $request, Order $order)
+    {
+        $order->update([
+            'tracking_code' => $request->tracking_code ?? null
+        ]);
+        return redirect()->route('admin.market.order.all')->with('swal-success', 'سفارش با موفقیت ویرایش شد');
     }
 
     /**
@@ -26,7 +40,7 @@ class OrderController extends Controller
      */
     public function newOrder()
     {
-        $orders = Order::where('order_status', 0)->orderBy('created_at','DESC')->paginate(20);
+        $orders = Order::where('order_status', 0)->orderBy('created_at', 'DESC')->paginate(20);
         foreach ($orders as $order) {
             $order->order_status = 1;
             $order->save();
@@ -42,7 +56,7 @@ class OrderController extends Controller
      */
     public function sending()
     {
-        $orders = Order::where('delivery_status', 1)->orderBy('created_at','DESC')->paginate(20);
+        $orders = Order::where('delivery_status', 1)->orderBy('created_at', 'DESC')->paginate(20);
         return view('admin.market.order.index', compact('orders'));
     }
 
@@ -54,7 +68,7 @@ class OrderController extends Controller
      */
     public function canceled()
     {
-        $orders = Order::where('order_status', 4)->orderBy('created_at','DESC')->paginate(20);
+        $orders = Order::where('order_status', 4)->orderBy('created_at', 'DESC')->paginate(20);
         return view('admin.market.order.index', compact('orders'));
     }
 
@@ -66,7 +80,7 @@ class OrderController extends Controller
      */
     public function unpaid()
     {
-        $orders = Order::where('payment_status', 0)->orderBy('created_at','DESC')->paginate(20);
+        $orders = Order::where('payment_status', 0)->orderBy('created_at', 'DESC')->paginate(20);
         return view('admin.market.order.index', compact('orders'));
     }
 
@@ -78,7 +92,7 @@ class OrderController extends Controller
      */
     public function returned()
     {
-        $orders = Order::where('order_status', 5)->orderBy('created_at','DESC')->paginate(20);
+        $orders = Order::where('order_status', 5)->orderBy('created_at', 'DESC')->paginate(20);
         return view('admin.market.order.index', compact('orders'));
     }
 
@@ -91,15 +105,15 @@ class OrderController extends Controller
      */
     public function showFactor($id)
     {
-        $order=Order::find($id);
-        return view('admin.market.order.show-factor',compact('order'));
+        $order = Order::find($id);
+        return view('admin.market.order.show-factor', compact('order'));
     }
 
     public function showDetail($id)
     {
-        $order=Order::find($id);
-        $items=$order->items()->orderBy('created_at','DESC')->paginate(20);
-        return view('admin.market.order.show-detail',compact('order','items'));
+        $order = Order::find($id);
+        $items = $order->items()->orderBy('created_at', 'DESC')->paginate(20);
+        return view('admin.market.order.show-detail', compact('order', 'items'));
     }
 
     /**

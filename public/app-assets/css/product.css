@@ -17,7 +17,7 @@
 
 }
 
-.product-gallery-thumb{
+.product-gallery-thumb {
     width: 4rem;
     height: 4rem;
     cursor: pointer;
@@ -56,12 +56,12 @@
 
 }
 
-.product-features table{
+.product-features table {
     font-size: 0.8rem;
     background-color: #ffffdf;
 }
 
-.product-features table tr td:first-of-type{
+.product-features table tr td:first-of-type {
     font-weight: bold;
     width: 15rem;
 }
@@ -77,7 +77,6 @@
     background-color: #FFFFFF;
     width: Calc(100% - 3rem);
 }
-
 
 
 /*start comment*/
@@ -133,17 +132,17 @@
     border: 1px dashed #cdcdcd;
     color: #333333;
     background-color: #efefef;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     transition: 0.4s;
 }
 
-.comment-add-wrapper .modal{
+.comment-add-wrapper .modal {
     z-index: 999999;
 }
 
 .comment-add-wrapper .modal-title {
     font-size: 0.9rem;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     color: #000000;
 }
 

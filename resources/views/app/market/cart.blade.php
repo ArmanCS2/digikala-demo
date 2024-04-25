@@ -30,17 +30,7 @@
                                   class="content-wrapper bg-white p-3 rounded-2">
                                 @csrf
                                 @method('put')
-                                @php
-                                    $finalProductPrices=0;
-                                    $finalProductDiscounts=0;
-                                    $totalProductPrices=0;
-                                @endphp
                                 @foreach($cartItems as $cartItem)
-                                    @php
-                                        $finalProductPrices += $cartItem->finalProductPrice();
-                                        $finalProductDiscounts += $cartItem->finalProductDiscount();
-                                        $totalProductPrices += $cartItem->totalProductPrice();
-                                    @endphp
                                     <section class="cart-item d-md-flex py-3">
                                         <section class="cart-img align-self-start flex-shrink-1"><a
                                                 href="{{route('market.product',[$cartItem->product])}}"><img
@@ -52,7 +42,7 @@
                                                 <p>{{$cartItem->product->name}}</p></a>
                                             @if(!empty($cartItem->color_id))
                                                 <p><span style="background-color: {{$cartItem->color->color}};"
-                                                         class="cart-product-selected-color me-1"></span>
+                                                         class="cart-product-selected-color me-1 border"></span>
                                                     <span>{{$cartItem->color->name}}</span>
                                                 </p>
                                             @endif
@@ -76,12 +66,12 @@
                                                            readonly="readonly">
                                                     <button class="cart-number cart-number-up" type="button">+</button>
                                                 </section>
-                                                <a class="text-decoration-none ms-4 cart-delete"
+                                                <a class="text-decoration-none cart-delete"
                                                    href="{{route('market.cart.remove-product',[$cartItem])}}"><i
                                                         class="fa fa-trash-alt"></i> حذف از سبد</a>
                                             </section>
                                         </section>
-                                        <section class="align-self-end flex-shrink-1">
+                                        <section class="align-self-center flex-shrink-1">
                                             @if(!empty($cartItem->product->activeAmazingSale()))
                                                 <section class="cart-item-discount text-danger text-nowrap mb-1">تخفیف
                                                     {{priceFormat($cartItem->productDiscount())}} تومان
@@ -99,24 +89,7 @@
                         </section>
                         <section class="col-md-3">
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">قیمت کالاها ({{priceFormat($cartItems->count()) }})</p>
-                                    <p class="text-muted"
-                                       id="final-product-prices">{{priceFormat($finalProductPrices)}}</p>
-                                </section>
-                                @if($finalProductDiscounts != 0)
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">تخفیف کالاها</p>
-                                        <p class="text-danger fw-bolder"
-                                           id="final-product-discounts">{{priceFormat($finalProductDiscounts)}}</p>
-                                    </section>
-                                @endif
-                                <section class="border-bottom mb-3"></section>
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">جمع سبد خرید</p>
-                                    <p class="fw-bolder"
-                                       id="total-product-prices">{{priceFormat($totalProductPrices)}}</p>
-                                </section>
+                                @include('app.layouts.prices')
 
                                 <p class="my-3">
                                     <i class="fa fa-info-circle me-1"></i>کاربر گرامی خرید شما هنوز نهایی نشده است. برای
@@ -218,7 +191,7 @@
                                                         <h3>{{$relatedProduct->name}}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
-                                                        @if(!empty($relatedProduct->activeAmazingSale()))
+                                                        @if(!empty($relatedProduct->activeAmazingSale() ?? []))
                                                             <section class="product-discount">
                                                                 <span
                                                                     class="product-old-price">{{priceFormat($relatedProduct->price)}}</span>
@@ -227,6 +200,17 @@
                                                             </section>
                                                             <section
                                                                 class="product-price">{{priceFormat($relatedProduct->price - ($relatedProduct->price * $relatedProduct->activeAmazingSale()->percentage / 100))}}
+                                                                تومان
+                                                            </section>
+                                                        @elseif(!empty($commonDiscount))
+                                                            <section class="product-discount">
+                                                                <span
+                                                                    class="product-old-price">{{priceFormat($relatedProduct->price)}}</span>
+                                                                <span
+                                                                    class="product-discount-amount"> % {{convertEnglishToPersian($commonDiscount->percentage)}}</span>
+                                                            </section>
+                                                            <section
+                                                                class="product-price">{{priceFormat($relatedProduct->price - ($relatedProduct->price * $commonDiscount->percentage / 100))}}
                                                                 تومان
                                                             </section>
                                                         @else

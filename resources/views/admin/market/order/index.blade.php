@@ -36,9 +36,11 @@
                         <tr>
                             <th>#</th>
                             <th>کد سفارش</th>
-                            <th>مجموع مبلغ سفارش (بدون تخفیف)</th>
-                            <th>مجموع تمامی مبالغ تخفیف</th>
-                            <th>مبلغ تخفیف همه ی محصولات</th>
+                            <th>مجموع قیمت ها</th>
+                            <th>مجموع تخفیف ها</th>
+                            <th>تخفیف کلی سایت</th>
+                            <th>مبلغ کد تخفیف</th>
+                            <th>مبلغ ارسال</th>
                             <th>مبلغ نهایی</th>
                             <th>وضعیت پرداخت</th>
                             <th>شیوه پرداخت</th>
@@ -53,11 +55,17 @@
                         @foreach($orders as $key => $order)
                             <tr>
                                 <th>{{$key + 1}}</th>
-                                <td>{{$order->id}}</td>
-                                <td>{{number_format($order->order_final_amount)}} تومان</td>
-                                <td>{{number_format($order->order_discount_amount)}} تومان</td>
-                                <td>{{number_format($order->order_total_products_discount_amount)}} تومان</td>
-                                <td>{{number_format($order->order_final_amount - $order->order_discount_amount )}}
+                                <td>{{'BK-' . $order->id}}</td>
+                                <td>{{number_format($order->final_price)}} تومان</td>
+                                <td>{{number_format($order->final_discount)}} تومان</td>
+                                <td>{{number_format($order->common_discount_amount)}} تومان</td>
+                                <td>{{number_format($order->copan_discount_amount )}}
+                                    تومان
+                                </td>
+                                <td>{{number_format($order->delivery_amount )}}
+                                    تومان
+                                </td>
+                                <td>{{number_format($order->total_price )}}
                                     تومان
                                 </td>
                                 <td>{{$order->payment_status()}}</td>
@@ -74,6 +82,8 @@
                                             <i class="fa fa-tools"></i> عملیات
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a href="{{route('admin.market.order.edit',$order)}}"
+                                               class="dropdown-item text-right"><i class="fa fa-edit"></i>ویرایش سفارش</a>
                                             <a href="{{route('admin.market.order.show-detail',[$order->id])}}"
                                                class="dropdown-item text-right"><i class="fa fa-eye"></i> مشاهده
                                                 محصولات </a>

@@ -75,6 +75,13 @@ class ProfileController extends Controller
         return view('app.profile.favorites', compact('products'));
     }
 
+    public function compares()
+    {
+        $user = Auth::user();
+        $products=$user->compare->products;
+        return view('app.profile.compares',compact('products'));
+    }
+
 
     public function deleteFromFavorites(Product $product)
     {
@@ -86,10 +93,10 @@ class ProfileController extends Controller
 
     public function addresses()
     {
-        $user=Auth::user();
-        $addresses=$user->addresses;
+        $user = Auth::user();
+        $addresses = $user->addresses;
         $provinces = ProvinceCity::where('parent', 0)->get();
-        return view('app.profile.addresses',compact('addresses','provinces'));
+        return view('app.profile.addresses', compact('addresses', 'provinces'));
     }
 
 

@@ -3,11 +3,11 @@
 @section('head-tag')
     <title>کد تایید</title>
     <style>
-        #resend-otp{
+        #resend-otp {
             font-size: 1rem;
         }
 
-        #timer{
+        #timer {
             font-size: 0.75rem;
         }
     </style>
@@ -22,7 +22,7 @@
             @csrf
             <section class="login-wrapper mb-5">
                 <section class="login-logo">
-                    <img src="{{asset($setting->logo)}}" alt="">
+                    <a href="{{route('home')}}"><img src="{{asset($setting->logo)}}" alt=""></a>
                 </section>
                 <section class="login-title mb-2">
                     <a href="{{ route('auth.customer.login-register-form') }}">
@@ -50,10 +50,13 @@
                                 </span>
                     @enderror
                 </section>
-                <section class="login-btn d-grid g-2"><button class="btn btn-danger">تایید</button></section>
+                <section class="login-btn d-grid g-2">
+                    <button class="btn btn-danger">تایید</button>
+                </section>
 
                 <section id="resend-otp" class="d-none text-center">
-                    <a href="{{route('auth.customer.login-resend-otp',$token)}}" class="text-decoration-none text-primary">دریافت مجدد کد تایید</a>
+                    <a href="{{route('auth.customer.login-resend-otp',$token)}}"
+                       class="text-decoration-none text-primary">دریافت مجدد کد تایید</a>
                 </section>
                 <section id="timer" class="text-center text-danger"></section>
 
@@ -77,7 +80,7 @@
         var timer = $('#timer');
         var resendOtp = $('#resend-otp');
 
-        var x = setInterval(function(){
+        var x = setInterval(function () {
 
             var now = new Date().getTime();
 
@@ -86,23 +89,18 @@
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if(minutes == 0){
+            if (minutes == 0) {
                 timer.html('ارسال مجدد کد تایید تا ' + seconds + ' ثانیه دیگر')
-            }
-            else{
+            } else {
                 timer.html('ارسال مجدد کد تایید تا ' + minutes + ' دقیقه و ' + seconds + ' ثانیه دیگر');
             }
-            if(distance < 0)
-            {
+            if (distance < 0) {
                 clearInterval(x);
                 timer.addClass('d-none');
                 resendOtp.removeClass('d-none');
             }
 
         }, 1000)
-
-
-
 
 
     </script>

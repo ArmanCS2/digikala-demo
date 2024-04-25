@@ -15,13 +15,13 @@
                 <section class="mt-3 mt-md-auto search-wrapper mb-4">
                     <section class="search-box">
                         <section class="search-textbox">
-                            <span><i class="fa fa-search"></i></span>
-                            <form action="{{route('market.products')}}" method="get">
+                            <span class="pointer mx-2" onclick="document.getElementById('search-form').submit()"><i
+                                    class="fa fa-search"></i></span>
+                            <form id="search-form" action="{{route('market.products')}}" method="get">
                                 <input id="search" type="text" size="500" name="search" placeholder="جستجو ..."
                                        value="{{!empty(request()->search) ? request()->search : '' }}"
                                        autocomplete="off">
                             </form>
-
                         </section>
                         {{--                        <section class="search-result visually-hidden">--}}
                         {{--                            <section class="search-result-title">برای دیدن نتایج کلید Enter را فشار دهید</section>--}}
@@ -64,6 +64,8 @@
                                 </section>
                                 <section><a class="dropdown-item" href="{{route('profile.favorites')}}"><i
                                             class="fa fa-heart"></i> لیست علاقه مندی </a></section>
+                                <section><a class="dropdown-item" href="{{route('profile.compares')}}"><i
+                                            class="fa fa-balance-scale"></i> لیست مقایسه </a></section>
                                 <section><a class="dropdown-item" href="{{route('profile.ticket.index')}}"><i
                                             class="fa fa-ticket"></i> تیکت ها </a></section>
                                 <section>

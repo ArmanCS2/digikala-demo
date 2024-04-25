@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\App\Market\CommentRequest;
 use App\Models\Content\Comment;
 use App\Models\Market\Brand;
+use App\Models\Market\Compare;
 use App\Models\Market\Product;
 use App\Models\Market\ProductCategory;
 use App\Models\Market\ProductUser;
@@ -25,9 +26,44 @@ class ProductController extends Controller
 
     public function rate(Request $request, Product $product)
     {
-        $user = Auth::user();
-        $user->rate($product, $request->rating);
-        return redirect()->back()->with('toast-success', 'امتیاز با موفقیت ثبت شد');
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->boughtProducts($product->id)->count() > 0) {
+                $user->rate($product, $request->rating);
+                return redirect()->back()->with('toast-success', 'امتیاز با موفقیت ثبت شد');
+            }
+            return redirect()->back()->with('toast-info', 'فقط برای کالا های خریداری شده میتوانید امتیاز ثبت کنید');
+        }
+        return redirect()->back()->with('toast-info', 'برای ثبت امتیاز وارد حساب کاربری خود شوید');
+    }
+
+    public function addToCompare(Product $product)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $compare = $user->compare;
+            if (empty($compare)) {
+                $compare = Compare::create([
+                    'user_id' => $user->id
+                ]);
+            }
+            $product->compares()->sync($compare);
+            return redirect()->back()->with('toast-success', ' کالا با موفقیت به لیست مقایسه اضافه شد برای مقایسه ی کالا ها به بخش پروفایل کاربری > لیست مقایسه ها مراجعه کنید.');
+        }
+        return redirect()->back()->with('toast-info', 'برای مقایسه کالاها وارد حساب کاربری خود شوید');
+    }
+
+    public function removeFromCompare(Product $product)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $compare = $user->compare;
+            if ($product->compares->contains($compare)) {
+                $product->compares()->detach($compare);
+            }
+            return redirect()->back()->with('toast-success', 'کالا با موفقیت از لیست مقایسه حذف شد');
+        }
+        return redirect()->back()->with('toast-info', 'برای مقایسه کالاها وارد حساب کاربری خود شوید');
     }
 
 

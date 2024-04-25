@@ -5,8 +5,8 @@
 <meta name="description" content="{{\App\Models\Setting\Setting::first()->description}}">
 <meta name="keywords" content="{{\App\Models\Setting\Setting::first()->keywords}}">
 
-<link rel="icon" href="{{asset(\App\Models\Setting\Setting::first()->icon)}}">
-<link rel="shortcut icon" href="{{asset(\App\Models\Setting\Setting::first()->icon)}}">
+<link rel="icon" href="{{asset(str_replace('\\','/',\App\Models\Setting\Setting::first()->icon))}}">
+<link rel="shortcut icon" href="{{asset(asset(str_replace('\\','/',\App\Models\Setting\Setting::first()->icon)))}}">
 
 <link rel="stylesheet" href="{{ asset('app-assets/css/bootstrap/bootstrap-reboot.rtl.min.css') }}">
 <link rel="stylesheet" href="{{ asset('app-assets/css/bootstrap/bootstrap.rtl.min.css') }}">

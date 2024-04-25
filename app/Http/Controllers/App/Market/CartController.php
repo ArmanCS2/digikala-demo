@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Market;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\App\Market\CartRequest;
 use App\Models\Market\CartItem;
+use App\Models\Market\Order;
 use App\Models\Market\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +15,26 @@ class CartController extends Controller
     public function cart()
     {
         if (Auth::check()) {
-            $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+            $user=Auth::user();
+            $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
+            if (!empty($order)){
+                $order->delete();
+            }
+            $cartItems = CartItem::where('user_id', $user->id)->get();
+            $productPrices = 0;
+            $productDiscounts = 0;
+            $finalProductPrices=0;
+            $finalProductDiscounts = 0;
+            $totalProductPrices = 0;
+            foreach ($cartItems as $cartItem) {
+                $productPrices += $cartItem->productPrice();
+                $productDiscounts += $cartItem->productDiscount();
+                $finalProductPrices += $cartItem->finalProductPrice();
+                $finalProductDiscounts += $cartItem->finalProductDiscount();
+                $totalProductPrices += $cartItem->totalProductPrice();
+            }
             $relatedProducts = Product::inRandomOrder()->take(10)->get();
-            return view('app.market.cart', compact('cartItems', 'relatedProducts'));
+            return view('app.market.cart', compact('cartItems', 'relatedProducts','productPrices','productDiscounts','finalProductPrices','finalProductDiscounts','totalProductPrices'));
         }
 
         return redirect()->back()->with('toast-info', 'برای مشاهده سبد خرید باید وارد حساب کاربری خود شوید');

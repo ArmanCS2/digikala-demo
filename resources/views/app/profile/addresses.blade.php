@@ -143,7 +143,7 @@
                                     </section>
 
                                     <section class="col-3 mb-2">
-                                        <label for="no" class="form-label mb-1">پلاک</label>
+                                        <label for="no" class="form-label mb-1">پلاک (اختیاری)</label>
                                         <input name="no" type="text"
                                                class="form-control form-control-sm"
                                                id="no" placeholder="پلاک"
@@ -157,7 +157,7 @@
 
                                     <section class="col-3 mb-2">
                                         <label for="unit"
-                                               class="form-label mb-1">واحد</label>
+                                               class="form-label mb-1">واحد (اختیاری)</label>
                                         <input name="unit" type="text"
                                                class="form-control form-control-sm"
                                                id="unit" placeholder="واحد"
@@ -336,7 +336,7 @@
                                 </section>
 
                                 <section class="col-3 mb-2">
-                                    <label for="no" class="form-label mb-1">پلاک</label>
+                                    <label for="no" class="form-label mb-1">پلاک (اختیاری)</label>
                                     <input name="no" type="text"
                                            class="form-control form-control-sm"
                                            id="no" placeholder="پلاک" value="{{old('no')}}">
@@ -348,7 +348,7 @@
                                 </section>
 
                                 <section class="col-3 mb-2">
-                                    <label for="unit" class="form-label mb-1">واحد</label>
+                                    <label for="unit" class="form-label mb-1">واحد (اختیاری)</label>
                                     <input name="unit" type="text"
                                            class="form-control form-control-sm"
                                            id="unit" placeholder="واحد"

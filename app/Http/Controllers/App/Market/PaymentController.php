@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\Payment\PaymentService;
 use App\Models\Market\CartItem;
 use App\Models\Market\CashPayment;
+use App\Models\Market\CommonDiscount;
 use App\Models\Market\Copan;
 use App\Models\Market\OfflinePayment;
 use App\Models\Market\OnlinePayment;
@@ -20,15 +21,54 @@ class PaymentController extends Controller
     public function payment()
     {
         $user = Auth::user();
-        $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $productPrices = 0;
+        $productDiscounts = 0;
+        $finalProductPrices = 0;
+        $finalProductDiscounts = 0;
         $totalProductPrices = 0;
         foreach ($cartItems as $cartItem) {
             $productPrices += $cartItem->productPrice();
+            $productDiscounts += $cartItem->productDiscount();
+            $finalProductPrices += $cartItem->finalProductPrice();
+            $finalProductDiscounts += $cartItem->finalProductDiscount();
             $totalProductPrices += $cartItem->totalProductPrice();
         }
-        return view('app.market.payment', compact('order', 'cartItems', 'totalProductPrices', 'productPrices'));
+        $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
+        $commonDiscount = CommonDiscount::where('start_date', '<=', now())->where('end_date', '>=', now())->where('status', 1)->orderBy('created_at', 'desc')->first();
+        $order->update([
+            'final_price' => $finalProductPrices,
+            'final_discount' => $finalProductDiscounts,
+            'total_price' => $finalProductPrices - $finalProductDiscounts + $order->delivery_amount
+        ]);
+
+        if (!empty($commonDiscount)) {
+            $commonDiscountAmount = $totalProductPrices * ($commonDiscount->percentage / 100);
+            if ($commonDiscountAmount > $commonDiscount->discount_ceiling) {
+                $commonDiscountAmount = $commonDiscount->discount_ceiling;
+            }
+            if ($totalProductPrices < $commonDiscount->minimal_order_amount) {
+                $commonDiscount = null;
+                $commonDiscountAmount = 0;
+            }
+            $order->update([
+                'common_discount_id' => $commonDiscount->id ?? null,
+                'common_discount_object' => $commonDiscount ?? null,
+                'common_discount_amount' => $commonDiscountAmount ?? 0,
+                'total_price' => $finalProductPrices - $finalProductDiscounts - ($commonDiscountAmount ?? 0) + $order->delivery_amount
+            ]);
+        }
+
+        if (!empty($order->copan_id)) {
+            $order->update([
+                'common_discount_id' => null,
+                'common_discount_object' => null,
+                'common_discount_amount' => 0,
+                'total_price' => $order->final_price - $order->copan_discount_amount + $order->delivery_amount,
+            ]);
+        }
+
+        return view('app.market.payment', compact('order', 'cartItems', 'productPrices', 'productDiscounts', 'finalProductPrices', 'finalProductDiscounts', 'totalProductPrices'));
     }
 
     public function copanDiscount(Request $request)
@@ -42,19 +82,33 @@ class PaymentController extends Controller
             $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
             if (!empty($order)) {
                 if ($copan->amount_type == 0) {
-                    $copanDiscountAmount = $order->order_final_amount * ($copan->amount / 100);
+                    $copanDiscountAmount = $order->final_price * ($copan->amount / 100);
                 } else {
                     $copanDiscountAmount = $copan->amount;
                 }
                 if ($copanDiscountAmount > $copan->discount_ceiling) {
                     $copanDiscountAmount = $copan->discount_ceiling;
                 }
-                $order->order_final_amount = $order->order_final_amount - $copanDiscountAmount;
-                $order->copan_id = $copan->id;
-                $order->copan_object = $copan;
-                $order->order_copan_discount_amount = $copanDiscountAmount;
-                $order->order_total_products_discount_amount += $copanDiscountAmount;
-                $order->save();
+
+                if (empty($order->common_discount_id)) {
+                    $order->update([
+                        'copan_id' => $copan->id,
+                        'copan_object' => $copan,
+                        'copan_discount_amount' => $copanDiscountAmount,
+                        'total_price' => $order->final_price - $copanDiscountAmount + $order->delivery_amount,
+                    ]);
+                } else {
+                    $order->update([
+                        'copan_id' => $copan->id,
+                        'copan_object' => $copan,
+                        'copan_discount_amount' => $copanDiscountAmount,
+                        'common_discount_id' => null,
+                        'common_discount_object' => null,
+                        'common_discount_amount' => 0,
+                        'total_price' => $order->final_price - $copanDiscountAmount + $order->delivery_amount,
+                    ]);
+                }
+
                 return redirect()->back()->with('toast-success', 'کد تخفیف با موفقیت اعمال شد');
             }
             return redirect()->back()->with('toast-info', 'شما سفارشی برای ثبت ندارید');
@@ -65,12 +119,14 @@ class PaymentController extends Controller
     public function paymentType(Request $request, PaymentService $paymentService)
     {
         $user = Auth::user();
+
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
         $cartItems = CartItem::where('user_id', $user->id)->get();
+        $amount = $order->total_price;
+
         if ($request->payment_type == 1) {
             $targetModel = OnlinePayment::class;
             $type = 1;
-            $amount = $order->order_final_amount + $order->delivery_amount;
             $paymentType = $targetModel::create([
                 'amount' => $amount,
                 'user_id' => $user->id,
@@ -79,7 +135,7 @@ class PaymentController extends Controller
                 'status' => 1
             ]);
             $payment = Payment::create([
-                'amount' => $order->order_final_amount + $order->delivery_amount,
+                'amount' => $amount,
                 'user_id' => $user->id,
                 'status' => 1,
                 'type' => $type,
@@ -95,15 +151,14 @@ class PaymentController extends Controller
             if ($result === false) {
                 $paymentType->delete();
                 $payment->delete();
-                $order->delete();
-                return redirect()->back()->with('toast-error', 'درگاه پرداخت فعال نیست');
+                return redirect()->route('home')->with('toast-error', 'درگاه پرداخت فعال نیست');
             }
 
         } elseif ($request->payment_type == 2) {
             $targetModel = OfflinePayment::class;
             $type = 2;
             $paymentType = $targetModel::create([
-                'amount' => $order->order_final_amount + $order->delivery_amount,
+                'amount' => $amount,
                 'user_id' => $user->id,
                 'pay_date' => now(),
                 'status' => 1
@@ -112,7 +167,7 @@ class PaymentController extends Controller
             $targetModel = CashPayment::class;
             $type = 3;
             $paymentType = $targetModel::create([
-                'amount' => $order->order_final_amount + $order->delivery_amount,
+                'amount' => $amount,
                 'user_id' => $user->id,
                 'pay_date' => now(),
                 'cash_receiver' => $order->address->recipient_first_name . ' ' . $order->address->recipient_last_name,
@@ -123,7 +178,7 @@ class PaymentController extends Controller
         }
 
         $payment = Payment::create([
-            'amount' => $order->order_final_amount + $order->delivery_amount,
+            'amount' => $amount,
             'user_id' => $user->id,
             'status' => 1,
             'type' => $type,

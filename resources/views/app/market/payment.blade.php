@@ -105,31 +105,31 @@
 
                                         <section class="mb-2"></section>
 
-                                        {{--                                        <input type="radio" name="payment_type" value="2" id="d2"/>--}}
-                                        {{--                                        <label for="d2" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">--}}
-                                        {{--                                            <section class="mb-2">--}}
-                                        {{--                                                <i class="fa fa-id-card-alt mx-1"></i>--}}
-                                        {{--                                                پرداخت آفلاین--}}
-                                        {{--                                            </section>--}}
-                                        {{--                                            <section class="mb-2">--}}
-                                        {{--                                                <i class="fa fa-calendar-alt mx-1"></i>--}}
-                                        {{--                                                حداکثر در 2 روز کاری بررسی می شود--}}
-                                        {{--                                            </section>--}}
-                                        {{--                                        </label>--}}
+                                        <input type="radio" name="payment_type" value="2" id="d2"/>
+                                        <label for="d2" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
+                                            <section class="mb-2">
+                                                <i class="fa fa-id-card-alt mx-1"></i>
+                                                پرداخت آفلاین
+                                            </section>
+                                            <section class="mb-2">
+                                                <i class="fa fa-calendar-alt mx-1"></i>
+                                                حداکثر در 2 روز کاری بررسی می شود
+                                            </section>
+                                        </label>
 
-                                        {{--                                        <section class="mb-2"></section>--}}
+                                        <section class="mb-2"></section>
 
-                                        {{--                                        <input type="radio" name="payment_type" value="3" id="cash_payment"/>--}}
-                                        {{--                                        <label for="cash_payment" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">--}}
-                                        {{--                                            <section class="mb-2">--}}
-                                        {{--                                                <i class="fa fa-money-check mx-1"></i>--}}
-                                        {{--                                                پرداخت در محل--}}
-                                        {{--                                            </section>--}}
-                                        {{--                                            <section class="mb-2">--}}
-                                        {{--                                                <i class="fa fa-calendar-alt mx-1"></i>--}}
-                                        {{--                                                پرداخت به پیک هنگام دریافت کالا--}}
-                                        {{--                                            </section>--}}
-                                        {{--                                        </label>--}}
+                                        <input type="radio" name="payment_type" value="3" id="cash_payment"/>
+                                        <label for="cash_payment" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
+                                            <section class="mb-2">
+                                                <i class="fa fa-money-check mx-1"></i>
+                                                پرداخت در محل
+                                            </section>
+                                            <section class="mb-2">
+                                                <i class="fa fa-calendar-alt mx-1"></i>
+                                                پرداخت به پیک هنگام دریافت کالا
+                                            </section>
+                                        </label>
 
                                     </form>
 
@@ -141,53 +141,12 @@
                         </section>
                         <section class="col-md-3">
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">قیمت کالاها ({{priceFormat($cartItems->count())}})</p>
-                                    <p class="text-muted">{{priceFormat($productPrices)}} تومان</p>
-                                </section>
-                                @if($order->order_discount_amount !=0)
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">تخفیف کالاها</p>
-                                        <p class="text-danger fw-bolder">{{priceFormat($order->order_discount_amount ?? 0)}}
-                                            تومان</p>
-                                    </section>
-                                @endif
 
-                                <section class="border-bottom mb-3"></section>
-
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">جمع سبد خرید</p>
-                                    <p class="fw-bolder">{{priceFormat($totalProductPrices)}} تومان</p>
-                                </section>
-
-                                @if(!empty($order->commonDiscount))
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">تخفیف عمومی اعمال شده</p>
-                                        <p class="text-danger">{{priceFormat($order->order_common_discount_amount)}}
-                                            تومان</p>
-                                    </section>
-                                    <section>
-                                        <p class="text-muted small">حداکثر
-                                            سقف {{priceFormat($order->common_discount_object->discount_ceiling ?? 0)}}
-                                            تومان</p>
-                                    </section>
-                                @endif
-
-                                @if(!empty($order->copan))
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">کد تخفیف اعمال شده</p>
-                                        <p class="text-danger">{{priceFormat($order->order_copan_discount_amount)}}
-                                            تومان</p>
-                                    </section>
-                                    <section>
-                                        <p class="text-muted small">حداکثر
-                                            سقف {{priceFormat($order->copan_object->discount_ceiling ?? 0)}} تومان</p>
-                                    </section>
-                                @endif
+                                @include('app.layouts.prices',['order'=>$order])
 
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">هزینه ارسال</p>
-                                    <p class="text-warning">{{priceFormat($order->delivery->amount ?? 0)}} تومان</p>
+                                    <p class="text-warning">{{priceFormat($order->delivery_object->amount ?? 0)}} تومان</p>
                                 </section>
 
                                 <p class="my-3">
@@ -199,7 +158,7 @@
 
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">مبلغ قابل پرداخت</p>
-                                    <p class="fw-bold">{{priceFormat($order->order_final_amount + ($order->delivery_amount ??0 ))}}
+                                    <p class="fw-bold">{{priceFormat($order->total_price)}}
                                         تومان</p>
                                 </section>
 

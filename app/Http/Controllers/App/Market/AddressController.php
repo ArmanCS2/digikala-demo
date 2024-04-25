@@ -22,14 +22,26 @@ class AddressController extends Controller
     {
         $user = Auth::user();
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
-        if (!empty($order)){
+        if (!empty($order)) {
             $order->delete();
         }
         $cartItems = CartItem::where('user_id', $user->id)->get();
+        $productPrices = 0;
+        $productDiscounts = 0;
+        $finalProductPrices = 0;
+        $finalProductDiscounts = 0;
+        $totalProductPrices = 0;
+        foreach ($cartItems as $cartItem) {
+            $productPrices += $cartItem->productPrice();
+            $productDiscounts += $cartItem->productDiscount();
+            $finalProductPrices += $cartItem->finalProductPrice();
+            $finalProductDiscounts += $cartItem->finalProductDiscount();
+            $totalProductPrices += $cartItem->totalProductPrice();
+        }
         $addresses = $user->addresses;
         $provinces = ProvinceCity::where('parent', 0)->get();
         $deliveries = Delivery::where('status', 1)->get();
-        return view('app.market.address-and-delivery', compact('cartItems', 'addresses', 'provinces', 'deliveries'));
+        return view('app.market.address-and-delivery', compact('cartItems', 'addresses', 'provinces', 'deliveries', 'productPrices', 'productDiscounts', 'finalProductPrices', 'finalProductDiscounts', 'totalProductPrices'));
     }
 
     public function addAddress(StoreAddressRequest $request)
@@ -62,7 +74,7 @@ class AddressController extends Controller
                 'mobile' => $user->mobile,
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()->with('swal-success', 'آدرس با موفقیت ایجاد شد');
     }
 
     public function editAddress(UpdateAddressRequest $request, Address $address)
@@ -93,13 +105,13 @@ class AddressController extends Controller
                 'mobile' => $user->mobile,
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()->with('swal-success', 'آدرس با موفقیت ویرایش شد');
     }
 
     public function deleteAddress(Address $address)
     {
         $address->delete();
-        return redirect()->back()->with('swal-success','آدرس با موفقیت حذف شد');
+        return redirect()->back()->with('swal-success', 'آدرس با موفقیت حذف شد');
     }
 
     public function getCities(ProvinceCity $province)
@@ -121,37 +133,20 @@ class AddressController extends Controller
     public function storeAddressDelivery(StoreAddressDeliveryRequest $request)
     {
         $user = Auth::user();
-        $cartItems = CartItem::where('user_id', $user->id)->get();
-        $productPrices = 0;
-        $productDiscounts = 0;
-        $finalProductDiscounts = 0;
-        $totalProductPrices = 0;
-        foreach ($cartItems as $cartItem) {
-            $productPrices += $cartItem->productPrice();
-            $productDiscounts += $cartItem->productDiscount();
-            $finalProductDiscounts += $cartItem->finalProductDiscount();
-            $totalProductPrices += $cartItem->totalProductPrice();
-        }
-        $commonDiscount = CommonDiscount::where('start_date', '<=', now())->where('end_date', '>=', now())->where('status', 1)->orderBy('created_at', 'desc')->first();
-        if (!empty($commonDiscount)) {
-            $commonDiscountTotalProductPrices = $totalProductPrices * ($commonDiscount->percentage / 100);
-            if ($commonDiscountTotalProductPrices > $commonDiscount->discount_ceiling) {
-                $commonDiscountTotalProductPrices = $commonDiscount->discount_ceiling;
-            }
-            if ($totalProductPrices >= $commonDiscount->minimal_order_amount) {
-                $totalProductPrices = $totalProductPrices - $commonDiscountTotalProductPrices;
-            }else{
-                $commonDiscount=null;
-                $commonDiscountTotalProductPrices=0;
-            }
-        }
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
-        if (!empty($order)){
+        if (!empty($order)) {
             $order->delete();
         }
-        Order::updateOrCreate([
+
+
+
+        $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
+        if (!empty($order)) {
+            $order->delete();
+        }
+        Order::updateOrcreate([
             'user_id' => $user->id,
-            'order_status' => 0
+            'order_status' => 0,
         ],
             [
                 'address_id' => $request->address_id,
@@ -159,13 +154,6 @@ class AddressController extends Controller
                 'delivery_id' => $request->delivery_id,
                 'delivery_object' => Delivery::find($request->delivery_id),
                 'delivery_amount' => Delivery::find($request->delivery_id)->amount,
-                'order_final_amount' => $totalProductPrices,
-                'order_discount_amount' => $finalProductDiscounts,
-                'common_discount_id' => $commonDiscount->id ?? null,
-                'common_discount_object' => $commonDiscount ?? null,
-                'order_common_discount_amount' => $commonDiscountTotalProductPrices ?? 0,
-                'order_total_products_discount_amount' =>$finalProductDiscounts + ($commonDiscountTotalProductPrices ?? 0),
-
             ]);
         return redirect()->route('market.payment');
     }

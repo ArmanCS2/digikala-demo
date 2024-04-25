@@ -57,7 +57,7 @@ class Order extends Model
 
     public function delivery_status()
     {
-        if ($this->delivery_status === '0') {
+        if ($this->delivery_status == 0) {
             return 'ارسال نشده';
         }
 
@@ -84,7 +84,7 @@ class Order extends Model
 
     public function payment_status()
     {
-        if ($this->payment_status === '0') {
+        if ($this->payment_status == 0) {
             return 'پرداخت نشده';
         }
 
@@ -110,11 +110,11 @@ class Order extends Model
             return 'آنلاین';
         }
 
-        if ($this->payment_status == 2) {
+        if ($this->payment_type == 2) {
             return 'آفلاین';
         }
 
-        if ($this->payment_status == 3) {
+        if ($this->payment_type == 3) {
             return 'نقدی';
         }
 

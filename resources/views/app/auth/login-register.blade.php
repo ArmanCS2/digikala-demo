@@ -12,7 +12,7 @@
             @csrf
             <section class="login-wrapper mb-5">
                 <section class="login-logo">
-                    <img src="{{asset($setting->logo)}}" alt="">
+                    <a href="{{route('home')}}"><img src="{{asset($setting->logo)}}" alt=""></a>
                 </section>
                 <section class="login-title">ورود / ثبت نام</section>
                 <section class="login-info">شماره موبایل یا پست الکترونیک خود را وارد کنید</section>
@@ -27,16 +27,16 @@
                 <section class="login-btn d-grid g-2 my-1">
                     <button class="btn btn-danger">ورود</button>
                 </section>
-{{--                <section class="login-terms-and-conditions my-1"><a href="#">شرایط و قوانین</a> را خوانده ام و پذیرفته ام--}}
-{{--                </section>--}}
-{{--                <section class="my-2">--}}
-{{--                    {!! htmlFormSnippet() !!}--}}
-{{--                    @error('g-recaptcha-response')--}}
-{{--                    <span class="text-danger">--}}
-{{--                                    <strong>خطا در اعتبارسنجی recapcha</strong>--}}
-{{--                                </span>--}}
-{{--                    @enderror--}}
-{{--                </section>--}}
+                {{--                <section class="login-terms-and-conditions my-1"><a href="#">شرایط و قوانین</a> را خوانده ام و پذیرفته ام--}}
+                {{--                </section>--}}
+                {{--                <section class="my-2">--}}
+                {{--                    {!! htmlFormSnippet() !!}--}}
+                {{--                    @error('g-recaptcha-response')--}}
+                {{--                    <span class="text-danger">--}}
+                {{--                                    <strong>خطا در اعتبارسنجی recapcha</strong>--}}
+                {{--                                </span>--}}
+                {{--                    @enderror--}}
+                {{--                </section>--}}
 
 
             </section>

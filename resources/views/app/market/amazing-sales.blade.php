@@ -137,6 +137,17 @@
                                             class="product-price">{{priceFormat($product->price - ($product->price * $product->activeAmazingSale()->percentage / 100))}}
                                             تومان
                                         </section>
+                                    @elseif(!empty($commonDiscount))
+                                        <section class="product-discount">
+                                                                <span
+                                                                    class="product-old-price">{{priceFormat($product->price)}}</span>
+                                            <span
+                                                class="product-discount-amount"> % {{convertEnglishToPersian($commonDiscount->percentage)}}</span>
+                                        </section>
+                                        <section
+                                            class="product-price">{{priceFormat($product->price - ($product->price * $commonDiscount->percentage / 100))}}
+                                            تومان
+                                        </section>
                                     @else
                                         <section
                                             class="product-price">{{priceFormat($product->price)}}

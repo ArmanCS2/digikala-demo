@@ -31,7 +31,8 @@
                 </section>
 
                 <section>
-                    <form action="{{route('admin.market.product.update',[$product->id])}}" method="post" id="form" enctype="multipart/form-data">
+                    <form action="{{route('admin.market.product.update',[$product->id])}}" method="post" id="form"
+                          enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <section class="row">
@@ -105,8 +106,11 @@
                                 <div class="form-group">
                                     <label for="">وضعیت</label>
                                     <select name="status" id="" class="form-control form-control-sm">
-                                        <option value="0" @if(old('status',$product->status)==0) selected @endif>غیر فعال</option>
-                                        <option value="1" @if(old('status',$product->status)==1) selected @endif>فعال</option>
+                                        <option value="0" @if(old('status',$product->status)==0) selected @endif>غیر
+                                            فعال
+                                        </option>
+                                        <option value="1" @if(old('status',$product->status)==1) selected @endif>فعال
+                                        </option>
                                     </select>
                                 </div>
                                 @error('status')
@@ -120,8 +124,12 @@
                                 <div class="form-group">
                                     <label for="">قابل فروش بودن</label>
                                     <select name="marketable" id="" class="form-control form-control-sm">
-                                        <option value="0" @if(old('marketable',$product->marketable)==0) selected @endif>غیر فعال</option>
-                                        <option value="1" @if(old('marketable',$product->marketable)==1) selected @endif>فعال</option>
+                                        <option value="0"
+                                                @if(old('marketable',$product->marketable)==0) selected @endif>غیر فعال
+                                        </option>
+                                        <option value="1"
+                                                @if(old('marketable',$product->marketable)==1) selected @endif>فعال
+                                        </option>
                                     </select>
                                 </div>
                                 @error('marketable')
@@ -148,7 +156,97 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">وزن</label>
+                                    <label for="">سایز (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="size"
+                                           value="{{old('size',$product->size)}}">
+                                </div>
+                                @error('size')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">جنس (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="material"
+                                           value="{{old('material',$product->material)}}">
+                                </div>
+                                @error('material')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 1 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_1"
+                                           value="{{old('feature_1',$product->feature_1)}}">
+                                </div>
+                                @error('feature_1')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 2 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_2"
+                                           value="{{old('feature_2',$product->feature_2)}}">
+                                </div>
+                                @error('feature_2')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 3 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_3"
+                                           value="{{old('feature_3',$product->feature_3)}}">
+                                </div>
+                                @error('feature_3')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 4 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_4"
+                                           value="{{old('feature_4',$product->feature_4)}}">
+                                </div>
+                                @error('feature_4')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ویژگی 5 (اختیاری)</label>
+                                    <input type="text" class="form-control form-control-sm" name="feature_5"
+                                           value="{{old('feature_5',$product->feature_5)}}">
+                                </div>
+                                @error('feature_5')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">وزن (اختیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="weight"
                                            value="{{old('weight',$product->weight)}}">
                                 </div>
@@ -161,7 +259,7 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">طول</label>
+                                    <label for="">طول (اختیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="length"
                                            value="{{old('length',$product->length)}}">
                                 </div>
@@ -174,7 +272,7 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">عرض</label>
+                                    <label for="">عرض (اختیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="width"
                                            value="{{old('width',$product->width)}}">
                                 </div>
@@ -187,7 +285,7 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">ارتفاع</label>
+                                    <label for="">ارتفاع (اختیاری)</label>
                                     <input type="text" class="form-control form-control-sm" name="height"
                                            value="{{old('height',$product->height)}}">
                                 </div>
@@ -259,22 +357,24 @@
 
                             <section class="col-12 border-top border-bottom py-3 mb-3">
                                 @foreach($product->metas as $meta)
-                                <section class="row">
-                                    <section class="col-6 col-md-3">
-                                        <div class="form-group">
-                                            <input type="text" name="meta_key[]" class="form-control form-control-sm"
-                                                   value="{{$meta->meta_key}}">
-                                        </div>
-                                    </section>
+                                    <section class="row">
+                                        <section class="col-6 col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" name="meta_key[]"
+                                                       class="form-control form-control-sm"
+                                                       value="{{$meta->meta_key}}">
+                                            </div>
+                                        </section>
 
-                                    <section class="col-6 col-md-3">
-                                        <div class="form-group">
-                                            <input type="text" name="meta_value[]" class="form-control form-control-sm"
-                                                   value="{{$meta->meta_value}}">
-                                        </div>
-                                    </section>
+                                        <section class="col-6 col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" name="meta_value[]"
+                                                       class="form-control form-control-sm"
+                                                       value="{{$meta->meta_value}}">
+                                            </div>
+                                        </section>
 
-                                </section>
+                                    </section>
                                 @endforeach
 
 
