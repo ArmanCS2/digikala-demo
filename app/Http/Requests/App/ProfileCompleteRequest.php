@@ -25,11 +25,11 @@ class ProfileCompleteRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'=>'string',
-            'last_name'=>'string',
-            'mobile'=>'numeric|digits:11|unique:users,mobile',
-            'email'=>'string|email|unique:users,email',
-            'national_code'=>['numeric','digits:10','unique:users,national_code',new NationalCode()],
+            'first_name'=>'nullable|string',
+            'last_name'=>'nullable|string',
+            'mobile'=>'nullable|numeric|digits:11|unique:users,mobile',
+            'email'=>'nullable|string|email|unique:users,email',
+            'national_code'=>['nullable','numeric','digits:10','unique:users,national_code',new NationalCode()],
         ];
     }
 }
