@@ -103,33 +103,33 @@
                                             </section>
                                         </label>
 
-                                        <section class="mb-2"></section>
+{{--                                        <section class="mb-2"></section>--}}
 
-                                        <input type="radio" name="payment_type" value="2" id="d2"/>
-                                        <label for="d2" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
-                                            <section class="mb-2">
-                                                <i class="fa fa-id-card-alt mx-1"></i>
-                                                پرداخت آفلاین
-                                            </section>
-                                            <section class="mb-2">
-                                                <i class="fa fa-calendar-alt mx-1"></i>
-                                                حداکثر در 2 روز کاری بررسی می شود
-                                            </section>
-                                        </label>
+{{--                                        <input type="radio" name="payment_type" value="2" id="d2"/>--}}
+{{--                                        <label for="d2" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">--}}
+{{--                                            <section class="mb-2">--}}
+{{--                                                <i class="fa fa-id-card-alt mx-1"></i>--}}
+{{--                                                پرداخت آفلاین--}}
+{{--                                            </section>--}}
+{{--                                            <section class="mb-2">--}}
+{{--                                                <i class="fa fa-calendar-alt mx-1"></i>--}}
+{{--                                                حداکثر در 2 روز کاری بررسی می شود--}}
+{{--                                            </section>--}}
+{{--                                        </label>--}}
 
-                                        <section class="mb-2"></section>
+{{--                                        <section class="mb-2"></section>--}}
 
-                                        <input type="radio" name="payment_type" value="3" id="cash_payment"/>
-                                        <label for="cash_payment" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
-                                            <section class="mb-2">
-                                                <i class="fa fa-money-check mx-1"></i>
-                                                پرداخت در محل
-                                            </section>
-                                            <section class="mb-2">
-                                                <i class="fa fa-calendar-alt mx-1"></i>
-                                                پرداخت به پیک هنگام دریافت کالا
-                                            </section>
-                                        </label>
+{{--                                        <input type="radio" name="payment_type" value="3" id="cash_payment"/>--}}
+{{--                                        <label for="cash_payment" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">--}}
+{{--                                            <section class="mb-2">--}}
+{{--                                                <i class="fa fa-money-check mx-1"></i>--}}
+{{--                                                پرداخت در محل--}}
+{{--                                            </section>--}}
+{{--                                            <section class="mb-2">--}}
+{{--                                                <i class="fa fa-calendar-alt mx-1"></i>--}}
+{{--                                                پرداخت به پیک هنگام دریافت کالا--}}
+{{--                                            </section>--}}
+{{--                                        </label>--}}
 
                                     </form>
 
