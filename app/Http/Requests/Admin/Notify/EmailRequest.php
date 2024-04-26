@@ -24,10 +24,10 @@ class EmailRequest extends FormRequest
     public function rules()
     {
         return [
-            'subject'=>'required|max:100|min:2',
-            'body'=>'required|max:2000|min:5',
-            'status'=>'required|numeric|in:1,0',
-            'published_at'=>'required|numeric'
+            'subject' => 'required|min:2',
+            'body' => 'required|min:5',
+            'status' => 'required|numeric|in:1,0',
+            'published_at' => 'required|numeric'
         ];
     }
 }

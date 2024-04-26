@@ -20,7 +20,9 @@ class ProductController extends Controller
     {
         $product->view += 1;
         $product->save();
-        $relatedProducts = Product::inRandomOrder()->take(10)->get();
+        $relatedProducts = Product::with('category')->whereHas('category', function ($query) use ($product) {
+            $query->where('id', $product->category->id);
+        })->take(10)->get()->except($product->id);
         return view('app.market.product', compact('product', 'relatedProducts'));
     }
 

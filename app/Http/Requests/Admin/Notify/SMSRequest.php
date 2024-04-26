@@ -24,10 +24,10 @@ class SMSRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|max:100|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-            'body'=>'required|max:1000|min:5',
-            'status'=>'required|numeric|in:1,0',
-            'published_at'=>'required|numeric'
+            'title' => 'required|max:100|min:2',
+            'body' => 'required|max:500|min:5',
+            'status' => 'required|numeric|in:1,0',
+            'published_at' => 'required|numeric'
         ];
     }
 }

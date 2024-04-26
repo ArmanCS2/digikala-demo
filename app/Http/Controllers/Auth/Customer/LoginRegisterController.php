@@ -20,8 +20,8 @@ class LoginRegisterController extends Controller
 {
     public function loginRegisterForm()
     {
-        $setting=Setting::first();
-        return view('app.auth.login-register',compact('setting'));
+        $setting = Setting::first();
+        return view('app.auth.login-register', compact('setting'));
     }
 
     public function loginRegister(LoginRegisterRequest $request)
@@ -91,6 +91,7 @@ class LoginRegisterController extends Controller
         }
 
         $result = $messageService->send();
+
         if (!$result) {
             return redirect()->back()->withErrors(['id' => 'خطا در ارسال کد تایید']);
         }
@@ -104,8 +105,8 @@ class LoginRegisterController extends Controller
         if (empty($otp)) {
             return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => 'آدرس وارد شده معتبر نیست']);
         }
-        $setting=Setting::first();
-        return view('app.auth.login-confirm', compact('token', 'otp','setting'));
+        $setting = Setting::first();
+        return view('app.auth.login-confirm', compact('token', 'otp', 'setting'));
     }
 
     public function loginConfirm(LoginRegisterRequest $request, $token)
@@ -120,12 +121,12 @@ class LoginRegisterController extends Controller
             $otp->update(['used' => 1]);
             $user = $otp->user;
             if ($otp->type == 0 && empty($user->mobile_verified_at)) {
-                $user->update(['mobile_verified_at' => now()]);
+                $user->update(['mobile_verified_at' => now(), 'status' => 1]);
             } elseif ($otp->type == 1 && empty($user->email_verified_at)) {
-                $user->update(['email_verified_at' => now()]);
+                $user->update(['email_verified_at' => now(), 'status' => 1]);
             }
             Auth::login($user);
-            return redirect()->route('home')->with('swal-success','با موفقیت وارد حساب کاربری خود شدید');
+            return redirect()->route('home')->with('swal-success', 'با موفقیت وارد حساب کاربری خود شدید');
         }
         return redirect()->route('auth.customer.login-confirm-form', $token)->withErrors(['otp' => 'کد تایید معتبر نیست']);
     }
@@ -133,17 +134,17 @@ class LoginRegisterController extends Controller
     public function loginResendOtp($token)
     {
         $otp = Otp::where('token', $token)->where('created_at', '<=', Carbon::now()->subMinute(1)->toDateTimeString())->first();
-        if (empty($otp)){
+        if (empty($otp)) {
             return redirect()->route('auth.customer.login-confirm-form', $token)->withErrors(['otp' => 'خطا در ارسال کد تایید']);
         }
-        $user=$otp->user;
+        $user = $otp->user;
         $otpCode = rand(111111, 999999);
         $otpToken = Str::random(60);
         $otpInputs = [
             'token' => $otpToken,
             'user_id' => $user->id,
             'otp_code' => $otpCode,
-            'login_id' =>$otp->login_id,
+            'login_id' => $otp->login_id,
             'type' => $otp->type
         ];
 

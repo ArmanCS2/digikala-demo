@@ -59,6 +59,8 @@
                                     </label>
                                 </td>
                                 <td class="width-16-rem text-left">
+                                    <a href="{{route('admin.notify.sms.send',$sms)}}"
+                                       class="btn btn-info btn-sm">ارسال</a>
                                     <a href="{{route('admin.notify.sms.edit',[$sms->id])}}"
                                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                                     <form class="d-inline" action="{{route('admin.notify.sms.destroy',[$sms->id])}}"

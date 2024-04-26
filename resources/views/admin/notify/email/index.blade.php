@@ -37,7 +37,6 @@
                         <tr>
                             <th>#</th>
                             <th>عنوان ایمیل</th>
-                            <th>متن ایمیل</th>
                             <th>تاریخ ارسال</th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
@@ -48,7 +47,6 @@
                             <tr>
                                 <th>{{$key+1}}</th>
                                 <td>{{$email->subject}}</td>
-                                <td>{{$email->body}}</td>
                                 <td>{{jalaliDate($email->published_at,'H:i:s Y-m-d')}}</td>
                                 <td>
                                     <label>
@@ -58,7 +56,9 @@
                                                @if($email->status==1) checked @endif>
                                     </label>
                                 </td>
-                                <td class="width-22-rem text-left">
+                                <td class="width-28-rem text-left">
+                                    <a href="{{route('admin.notify.email.send',$email)}}"
+                                       class="btn btn-info btn-sm">ارسال</a>
                                     <a href="{{route('admin.notify.email-file.index',[$email->id])}}"
                                        class="btn btn-warning btn-sm"><i class="fa fa-file"></i> فایل های ضمیمه شده</a>
                                     <a href="{{route('admin.notify.email.edit',[$email->id])}}"

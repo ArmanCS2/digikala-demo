@@ -153,7 +153,8 @@
                 });
             }
         }
-
+    </script>
+    <script>
         function changeActivation(id) {
             var element = $('#change_activation_' + id);
             var url = element.attr('data-url');

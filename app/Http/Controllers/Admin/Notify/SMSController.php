@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Notify\SMSRequest;
+use App\Http\Services\Message\MessageService;
+use App\Http\Services\Message\SMS\SmsService;
 use App\Models\Notify\SMS;
+use App\Models\User;
 
 class SMSController extends Controller
 {
@@ -15,8 +18,8 @@ class SMSController extends Controller
      */
     public function index()
     {
-        $smses=SMS::orderBy('created_at','DESC')->paginate(20);
-        return view('admin.notify.sms.index',compact('smses'));
+        $smses = SMS::orderBy('created_at', 'DESC')->paginate(20);
+        return view('admin.notify.sms.index', compact('smses'));
     }
 
     /**
@@ -32,12 +35,12 @@ class SMSController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(SMSRequest $request)
     {
-        $inputs=$request->all();
+        $inputs = $request->all();
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         SMS::create($inputs);
         return redirect()->route('admin.notify.sms.index')->with('swal-success', 'پیامک جدید با موفقیت ساخته شد');
@@ -46,7 +49,7 @@ class SMSController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,26 +60,26 @@ class SMSController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $sms=SMS::find($id);
-        return view('admin.notify.sms.edit',compact('sms'));
+        $sms = SMS::find($id);
+        return view('admin.notify.sms.edit', compact('sms'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(SMSRequest $request, $id)
     {
-        $sms=SMS::find($id);
-        $inputs=$request->all();
+        $sms = SMS::find($id);
+        $inputs = $request->all();
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         $sms->update($inputs);
         return redirect()->route('admin.notify.sms.index')->with('swal-success', 'پیامک با موفقیت ویرایش شد');
@@ -85,19 +88,19 @@ class SMSController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $sms=SMS::find($id);
+        $sms = SMS::find($id);
         $sms->delete();
         return redirect()->route('admin.notify.sms.index')->with('swal-success', 'پیامک با موفقیت حذف شد');
     }
 
     public function ajaxChangeStatus($id)
     {
-        $sms =SMS::find($id);
+        $sms = SMS::find($id);
         $sms->status == 1 ? $sms->status = 0 : $sms->status = 1;
         $result = $sms->save();
         if ($result) {
@@ -107,5 +110,33 @@ class SMSController extends Controller
             return response()->json(['status' => true, 'checked' => true]);
         }
         return response()->json(['status' => true]);
+    }
+
+    public function send(SMS $sms, SmsService $smsService)
+    {
+
+        $text = "فروشگاه بوتیکالا
+
+        $sms->title
+
+        $sms->body
+
+            وبسایت : www.butikala.ir";
+
+        $smsService->setText($text);
+
+        $users = User::whereNotNull('mobile')->get();
+        foreach ($users as $user) {
+            try {
+                $smsService->setTo($user->mobile);
+                $messageService = new MessageService($smsService);
+                dd($messageService->send());
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
+
+
+        return redirect()->back()->with('swal-success', 'ایمیل با موفقیت ارسال شد');
     }
 }

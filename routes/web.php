@@ -458,6 +458,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->namespace('App\Http\
         Route::prefix('email')->group(function () {
             Route::get('/', 'EmailController@index')->name('admin.notify.email.index');
             Route::get('/create', 'EmailController@create')->name('admin.notify.email.create');
+            Route::get('/send/{email}', 'EmailController@send')->name('admin.notify.email.send');
             Route::post('/store', 'EmailController@store')->name('admin.notify.email.store');
             Route::get('/edit/{id}', 'EmailController@edit')->name('admin.notify.email.edit');
             Route::put('/update/{id}', 'EmailController@update')->name('admin.notify.email.update');
@@ -480,6 +481,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->namespace('App\Http\
             Route::get('/', 'SMSController@index')->name('admin.notify.sms.index');
             Route::get('/create', 'SMSController@create')->name('admin.notify.sms.create');
             Route::post('/store', 'SMSController@store')->name('admin.notify.sms.store');
+            Route::get('/send/{sms}', 'SMSController@send')->name('admin.notify.sms.send');
             Route::get('/edit/{id}', 'SMSController@edit')->name('admin.notify.sms.edit');
             Route::put('/update/{id}', 'SMSController@update')->name('admin.notify.sms.update');
             Route::delete('/destroy/{id}', 'SMSController@destroy')->name('admin.notify.sms.destroy');
