@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1 class="d-none">بوتیکالا | فروشگاه آنلاین تیشرت</h1>
+    <h1 class="d-none">بوتیکالا | فروشگاه آنلاین تیشرت پوشاک و انواع اکسسوری</h1>
     <!-- start slideshow -->
     <section class="container-xxl my-4">
         <section class="row">

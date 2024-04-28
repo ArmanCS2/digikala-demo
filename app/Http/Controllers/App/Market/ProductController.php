@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\App\Market\CommentRequest;
 use App\Models\Content\Comment;
 use App\Models\Market\Brand;
+use App\Models\Market\CommonDiscount;
 use App\Models\Market\Compare;
 use App\Models\Market\Product;
 use App\Models\Market\ProductCategory;
@@ -159,7 +160,7 @@ class ProductController extends Controller
                 $query->where('product_category_id', $request->category);
             });
         }
-        $products = $query->paginate(15);
+        $products = $query->paginate(12);
         $products->appends($request->query());
 
         $brands = Brand::where('status', 1)->get();
@@ -199,7 +200,13 @@ class ProductController extends Controller
                 $direction = 'ASC';
                 break;
         }
-        $query = Product::with('categories')->whereHas('activeAmazingSaleObj');
+        $commonDiscount = CommonDiscount::where('start_date', '<=', now())->where('end_date', '>=', now())->where('status', 1)->orderBy('created_at', 'desc')->first();
+        if (!empty($commonDiscount)) {
+            $query = Product::with('categories');
+        } else {
+            $query = Product::with('categories')->whereHas('activeAmazingSaleObj');
+        }
+
         if (!empty($request->search)) {
             $query = $query->where('name', 'LIKE', "%$request->search%")->orderBy($column, $direction);
         } else {
@@ -219,7 +226,7 @@ class ProductController extends Controller
                 $query->where('product_category_id', $request->category);
             });
         }
-        $products = $query->paginate(15);
+        $products = $query->paginate(12);
         $products->appends($request->query());
 
         $brands = Brand::where('status', 1)->get();
