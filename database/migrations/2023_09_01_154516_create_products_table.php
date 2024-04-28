@@ -30,8 +30,17 @@ class CreateProductsTable extends Migration
             $table->bigInteger('sold_number')->default(0);
             $table->bigInteger('frozen_number')->default(0);
             $table->bigInteger('marketable_number')->default(0);
+            $table->bigInteger('view')->default(0);
+            $table->tinyInteger('rate')->default(0);
+            $table->text('material')->nullable();
+            $table->text('size')->nullable();
+            $table->text('feature_1')->nullable();
+            $table->text('feature_2')->nullable();
+            $table->text('feature_3')->nullable();
+            $table->text('feature_4')->nullable();
+            $table->text('feature_5')->nullable();
             $table->foreignId('brand_id')->nullable()->constrained('brands')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('category_id')->nullable()->constrained('product_categories')->onUpdate('cascade')->onDelete('cascade');
+            //$table->foreignId('category_id')->nullable()->constrained('product_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamp('published_at');
             $table->timestamps();
             $table->softDeletes();

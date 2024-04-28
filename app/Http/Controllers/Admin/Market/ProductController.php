@@ -58,6 +58,9 @@ class ProductController extends Controller
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         DB::transaction(function () use ($request, $inputs) {
             $product = Product::create($inputs);
+            if (!empty($request->categories)) {
+                $product->categories()->sync($request->categories);
+            }
             if (!empty($request->meta_key[0]) && !empty($request->meta_value[0])) {
                 $metas = array_combine($request->meta_key, $request->meta_value);
                 foreach ($metas as $key => $value) {
@@ -130,6 +133,9 @@ class ProductController extends Controller
         }
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         $product->update($inputs);
+        if (!empty($request->categories)) {
+            $product->categories()->sync($request->categories);
+        }
         $metas = $product->metas;
         foreach ($metas as $key => $meta) {
             $meta->update([

@@ -242,6 +242,25 @@
                                         <p class="fw-bolder"><span id="final-price"></span>
                                             <span class="small">تومان</span></p>
                                     </section>
+                                @elseif(!empty($commonDiscount))
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted">درصد تخفیف</p>
+                                        <p class="text-danger fw-bolder">
+                                            <span>{{convertEnglishToPersian($commonDiscount->percentage)}}</span>
+                                            <span class="small"> % </span></p>
+                                        <p class="text-muted">تخفیف کالا</p>
+                                        <p class="text-danger fw-bolder">
+                                            <span>{{priceFormat($product->price * $commonDiscount->percentage / 100)}}</span>
+                                            <span class="small">تومان</span></p>
+                                    </section>
+                                    <section class="border-bottom mb-3"></section>
+
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted">قیمت نهایی</p>
+                                        <p class="fw-bolder">
+                                            <span>{{priceFormat($product->price - ($product->price * $commonDiscount->percentage / 100))}}</span>
+                                            <span class="small">تومان</span></p>
+                                    </section>
                                 @else
                                     <section class="border-bottom mb-3"></section>
 
@@ -261,7 +280,7 @@
                                     </section>
                                 @else
                                     <section class="">
-                                        <button id="next-level" class="btn btn-dark d-block disabled">کالا
+                                        <button id="next-level" class="btn btn-dark d-block disabled w-100">کالا
                                             ناموجود
                                             است
                                         </button>

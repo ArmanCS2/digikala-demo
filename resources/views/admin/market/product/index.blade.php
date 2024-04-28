@@ -54,7 +54,12 @@
                                 <td><img src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
                                          width="100px"></td>
                                 <td>{{number_format($product->price)}} تومان</td>
-                                <td>{{$product->category->name ?? 'فاقد دسته بندی'}}</td>
+                                <td>
+                                    @foreach($product->categories as $category)
+                                        <span>{{$category->name}}</span>
+                                        <br>
+                                    @endforeach
+                                </td>
                                 <td>{{$product->brand->original_name ?? 'فاقد برند'}}</td>
                                 <td>
                                     <label>

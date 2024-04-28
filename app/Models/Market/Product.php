@@ -23,12 +23,12 @@ class Product extends Model
         ];
     }
 
-    protected $fillable = ['name', 'introduction', 'slug', 'image', 'slug', 'weight', 'length', 'width', 'height', 'price', 'tags', 'status', 'marketable', 'sold_number', 'frozen_number', 'marketable_number', 'brand_id', 'category_id', 'published_at', 'size', 'material', 'feature_1', 'feature_2', 'feature_3', 'feature_4', 'feature_5'];
+    protected $fillable = ['name', 'introduction', 'slug', 'image', 'slug', 'weight', 'length', 'width', 'height', 'price', 'tags', 'status', 'marketable', 'sold_number', 'frozen_number', 'marketable_number', 'brand_id', 'published_at', 'size', 'material', 'feature_1', 'feature_2', 'feature_3', 'feature_4', 'feature_5'];
     protected $casts = ['image' => 'array'];
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(ProductCategory::class, 'category_id');
+     return $this->belongsToMany(ProductCategory::class);
     }
 
     public function comments()

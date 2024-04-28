@@ -183,10 +183,10 @@
                                                 class="sublist-item-sublist-wrapper d-flex justify-content-around align-items-center">
                                                 @foreach($category->children as $subCategory)
                                                     <section class="sublist-column col">
-                                                        <a href="#"
+                                                        <a href="{{route('market.products',['category'=>$subCategory->id])}}"
                                                            class="sub-category">{{$subCategory->name}}</a>
                                                         @foreach($subCategory->children as $subSubCategory)
-                                                            <a href="#"
+                                                            <a href="{{route('market.products',['category'=>$subSubCategory->id])}}"
                                                                class="sub-sub-category">{{$subSubCategory->name}}</a>
                                                         @endforeach
                                                     </section>
@@ -237,12 +237,13 @@
                                         @foreach($category->children as $subCategory)
                                             <section class="sidebar-nav-sub-item">
                                         <span class="sidebar-nav-sub-item-title"><a
-                                                href="#">{{$subCategory->name}}</a><i
+                                                href="{{route('market.products',['category'=>$subCategory->id])}}">{{$subCategory->name}}</a><i
                                                 class="fa fa-angle-left"></i></span>
                                                 <section class="sidebar-nav-sub-sub-wrapper">
                                                     @foreach($subCategory->children as $subSubCategory)
                                                         <section class="sidebar-nav-sub-sub-item"><a
-                                                                href="#">{{$subSubCategory->name}}</a></section>
+                                                                href="{{route('market.products',['category'=>$subSubCategory->id])}}">{{$subSubCategory->name}}</a>
+                                                        </section>
                                                     @endforeach
                                                 </section>
                                             </section>

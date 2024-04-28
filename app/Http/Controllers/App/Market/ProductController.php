@@ -20,9 +20,8 @@ class ProductController extends Controller
     {
         $product->view += 1;
         $product->save();
-        $relatedProducts = Product::with('category')->whereHas('category', function ($query) use ($product) {
-            $query->where('id', $product->category->id);
-        })->take(10)->get()->except($product->id);
+        $category = $product->categories()->whereNull('parent_id')->where('status', 1)->inRandomOrder()->first();
+        $relatedProducts = $category->products()->take(10)->get()->except($product->id);
         return view('app.market.product', compact('product', 'relatedProducts'));
     }
 
@@ -142,9 +141,9 @@ class ProductController extends Controller
                 break;
         }
         if (!empty($request->search)) {
-            $query = Product::where('name', 'LIKE', "%$request->search%")->orderBy($column, $direction);
+            $query = Product::with('categories')->where('name', 'LIKE', "%$request->search%")->orderBy($column, $direction);
         } else {
-            $query = Product::orderBy($column, $direction);
+            $query = Product::with('categories')->orderBy($column, $direction);
         }
         if (!empty($request->min_price)) {
             $query->where('price', '>=', $request->min_price);
@@ -156,13 +155,15 @@ class ProductController extends Controller
             $query->whereIn('brand_id', $request->brands);
         }
         if (!empty($request->category)) {
-            $query->where('category_id', $request->category);
+            $query->whereHas('categories', function ($query) use ($request) {
+                $query->where('product_category_id', $request->category);
+            });
         }
         $products = $query->paginate(15);
         $products->appends($request->query());
 
         $brands = Brand::where('status', 1)->get();
-        $categories = ProductCategory::whereNull('parent_id')->where('status', 1)->get();
+        $categories = ProductCategory::whereNull('parent_id')->where('status', 1)->where('show_in_menu', 1)->get();
         return view('app.market.products', compact('products', 'brands', 'categories'));
     }
 
@@ -198,7 +199,7 @@ class ProductController extends Controller
                 $direction = 'ASC';
                 break;
         }
-        $query = Product::whereHas('activeAmazingSaleObj');
+        $query = Product::with('categories')->whereHas('activeAmazingSaleObj');
         if (!empty($request->search)) {
             $query = $query->where('name', 'LIKE', "%$request->search%")->orderBy($column, $direction);
         } else {
@@ -214,7 +215,9 @@ class ProductController extends Controller
             $query->whereIn('brand_id', $request->brands);
         }
         if (!empty($request->category)) {
-            $query->where('category_id', $request->category);
+            $query->whereHas('categories', function ($query) use ($request) {
+                $query->where('product_category_id', $request->category);
+            });
         }
         $products = $query->paginate(15);
         $products->appends($request->query());

@@ -130,13 +130,13 @@ class SMSController extends Controller
             try {
                 $smsService->setTo($user->mobile);
                 $messageService = new MessageService($smsService);
-                dd($messageService->send());
+                $messageService->send();
             } catch (\Exception $e) {
                 continue;
             }
         }
 
 
-        return redirect()->back()->with('swal-success', 'ایمیل با موفقیت ارسال شد');
+        return redirect()->back()->with('swal-success', 'پیام با موفقیت ارسال شد');
     }
 }

@@ -68,16 +68,28 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">دسته کالا</label>
-                                    <select name="category_id" id="" class="form-control form-control-sm">
-                                        <option value="">دسته را انتخاب کنید</option>
-                                        @foreach($categories as $category)
-                                            <option value="{{$category->id}}"
-                                                    @if(old('category_id',$product->category_id)==$category->id) selected @endif>{{$category->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="" class="border-bottom">دسته کالا</label>
+                                    <section class="table-responsive" style="max-height: 130px">
+                                        @forelse($categories as $category)
+                                            <section>
+                                                <input type="checkbox"
+                                                       @if(in_array($product->id,$category->products()->get()->pluck('id')->toArray())) checked
+                                                       @endif name="categories[]" value="{{$category->id}}"
+                                                       id="{{$category->id}}">
+                                                <label for="{{$category->id}}">
+                                                    <span>{{$category->name}}</span>
+                                                </label>
+                                            </section>
+                                        @empty
+                                            <section>
+                                                <label>
+                                                    <span>فاقد دسته بندی</span>
+                                                </label>
+                                            </section>
+                                        @endforelse
+                                    </section>
                                 </div>
-                                @error('category_id')
+                                @error('categories.*')
                                 <span class="text-danger">
                                     <strong>{{$message}}</strong>
                                 </span>

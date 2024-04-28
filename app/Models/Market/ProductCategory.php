@@ -23,7 +23,7 @@ class ProductCategory extends Model
     protected $casts=['image'=>'array'];
 
     public function products(){
-        return $this->hasMany(Product::class,'category_id');
+        return $this->belongsToMany(Product::class);
     }
 
     public function children(){

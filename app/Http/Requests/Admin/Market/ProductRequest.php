@@ -26,7 +26,7 @@ class ProductRequest extends FormRequest
         if($this->isMethod('post')){
             return [
                 'name'=>'required|max:100|min:2',
-                'category_id'=>'nullable|exists:product_categories,id',
+                'categories.*'=>'nullable|exists:product_categories,id',
                 'brand_id'=>'nullable|exists:brands,id',
                 'introduction'=>'required|min:5',
                 'image'=>'required|image|mimes:jpg,png,jpeg,gif',
@@ -46,7 +46,7 @@ class ProductRequest extends FormRequest
         }
         return [
             'name'=>'required|max:100|min:2',
-            'category_id'=>'nullable|exists:product_categories,id',
+            'categories.*'=>'nullable|exists:product_categories,id',
             'brand_id'=>'nullable|exists:brands,id',
             'introduction'=>'required|min:5',
             'image'=>'image|mimes:jpg,png,jpeg,gif',
