@@ -78,10 +78,10 @@
                 </section>
             </section>
         @empty
-            <section class="order-item">
-                <section class="d-flex justify-content-between">
-                    <p>سفارشی یافت نشد</p>
-                </section>
+            <section class="cart-item d-flex py-3">
+                <p>
+                    سفارشی یافت نشد
+                </p>
             </section>
         @endforelse
 

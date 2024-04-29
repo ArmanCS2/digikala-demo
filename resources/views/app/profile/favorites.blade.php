@@ -58,7 +58,6 @@
                 محصولی یافت نشد
             </p>
         </section>
-
     @endforelse
 
 @endsection

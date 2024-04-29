@@ -28,9 +28,9 @@
                     @foreach($products as $product)
                         <td>
                             <section class="d-flex justify-content-center">
-                            <a href="{{route('market.product',$product)}}"><img
-                                    src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
-                                    alt="{{$product->name}}" width="200px" height="200px"></a>
+                                <a href="{{route('market.product',$product)}}"><img
+                                        src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
+                                        alt="{{$product->name}}" width="200px" height="200px"></a>
                             </section>
 
                         </td>
@@ -117,17 +117,23 @@
                 <tr>
                     <td>عملیات</td>
                     @foreach($products as $product)
-                        <td><section class="d-flex justify-content-center my-2">
+                        <td>
+                            <section class="d-flex justify-content-center my-2">
                                 <a href="{{route('market.product.remove-from-compare',$product)}}"
                                    class="btn btn-danger btn-sm">حذف</a>
-                            </section></td>
+                            </section>
+                        </td>
                     @endforeach
                 </tr>
                 </tbody>
             </table>
         </section>
     @else
-        <h2>محصولی برای مقایسه یافت نشد</h2>
+        <section class="cart-item d-flex py-3">
+            <p>
+                محصولی یافت نشد
+            </p>
+        </section>
     @endif
 
 @endsection

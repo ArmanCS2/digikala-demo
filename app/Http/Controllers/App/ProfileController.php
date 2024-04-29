@@ -78,7 +78,7 @@ class ProfileController extends Controller
     public function compares()
     {
         $user = Auth::user();
-        $products=$user->compare->products;
+        $products=$user->compare->products ?? collect();
         return view('app.profile.compares',compact('products'));
     }
 
