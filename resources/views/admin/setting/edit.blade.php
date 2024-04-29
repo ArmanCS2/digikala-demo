@@ -287,6 +287,26 @@
                                 @enderror
                             </section>
 
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">وضعیت</label>
+                                    <select name="payment_status" id="" class="form-control form-control-sm">
+                                        <option value="0"
+                                                @if(old('status',$setting->payment_status)==0) selected @endif>غیر فعال
+                                        </option>
+                                        <option value="1"
+                                                @if(old('status',$setting->payment_status)==1) selected @endif>فعال
+                                        </option>
+                                    </select>
+                                </div>
+                                @error('payment_status')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
                             <section class="col-12 my-1">
                                 <div class="form-group">
                                     <label for="">توضیحات سایت</label>

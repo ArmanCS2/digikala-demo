@@ -74,10 +74,8 @@
 
 
         <section class="row my-4 d-flex justify-content-center">
-
-
             @forelse($products as $product)
-                <section class="col-md-3">
+                <section class="col-md-3 my-1">
                     <section class="product">
                         <section class="product-add-to-cart"><a
                                 href="{{route('market.cart.add-product',[$product])}}"
@@ -167,13 +165,9 @@
             @empty
                 <p>محصولی یافت نشد</p>
             @endforelse
-
-
             <section class="my-4 d-flex justify-content-center border-0">
                 {{$products->links('pagination::custom')}}
             </section>
-
-
         </section>
 
 

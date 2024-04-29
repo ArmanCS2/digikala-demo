@@ -106,9 +106,6 @@
                                         $totalProductPrices=0;
                                     @endphp
                                     @foreach($cartItems as $cartItem)
-                                        @php
-                                            $totalProductPrices+=$cartItem->totalProductPrice();
-                                        @endphp
                                         <section
                                             class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
                                             <a href="{{route('market.product',[$cartItem->product])}}"><img
@@ -128,11 +125,7 @@
                                     @endforeach
                                 </section>
                                 <section
-                                    class="header-cart-dropdown-footer border-top d-flex justify-content-between align-items-center p-2">
-                                    <section class="">
-                                        <section>مبلغ قابل پرداخت</section>
-                                        <section> {{priceFormat($totalProductPrices)}} تومان</section>
-                                    </section>
+                                    class="header-cart-dropdown-footer border-top d-flex justify-content-center align-items-center p-2">
                                     <section class=""><a class="btn btn-danger btn-sm d-block"
                                                          href="{{route('market.cart')}}">ثبت
                                             سفارش</a></section>

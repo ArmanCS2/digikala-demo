@@ -70,7 +70,7 @@
                                         <input type="checkbox" id="change_visibility_{{$productCategory->id}}"
                                                onchange="changeVisibility({{$productCategory->id}})"
                                                data-url="{{route('admin.market.category.ajax.change-visibility',[$productCategory->id])}}"
-                                               @if($productCategory->status==1) checked @endif>
+                                               @if($productCategory->show_in_menu==1) checked @endif>
                                     </label>
                                 </td>
                                 <td>

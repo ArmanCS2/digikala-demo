@@ -13,6 +13,7 @@ use App\Models\Market\OnlinePayment;
 use App\Models\Market\Order;
 use App\Models\Market\OrderItem;
 use App\Models\Market\Payment;
+use App\Models\Setting\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -123,6 +124,10 @@ class PaymentController extends Controller
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $amount = $order->total_price;
+        $setting = Setting::first();
+        if ($setting->payment_status == 0) {
+            return redirect()->back()->with('toast-error', 'درگاه پرداخت فعال نیست');
+        }
 
         if ($request->payment_type == 1) {
             $targetModel = OnlinePayment::class;
