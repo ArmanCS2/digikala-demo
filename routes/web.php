@@ -30,12 +30,22 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'role:super-admin'])->get('site/off', function () {
-    return Artisan::call('down', ['--secret' => 'arman']);
+
+Route::middleware(['auth', 'role:super-admin'])->prefix('site')->group(function () {
+    Route::get('off', function () {
+        Artisan::call('down', ['--secret' => 'arman']);
+        return redirect()->back();
+    });
+    Route::get('clear', function () {
+        Artisan::call('cache:clear');
+        Artisan::call('optimize:clear');
+        return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
+    });
 });
 
 Route::get('site/up', function () {
-    return Artisan::call('up');
+    Artisan::call('up');
+    return redirect()->back();
 });
 
 
