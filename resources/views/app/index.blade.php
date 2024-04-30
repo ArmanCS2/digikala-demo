@@ -24,7 +24,8 @@
                 @foreach($topBanners as $topBanner)
                     <section class="mb-2"><span class="d-block"><img class="w-100 rounded-2"
                                                                      src="{{asset($topBanner->image)}}"
-                                                                     alt="{{$topBanner->title}}" width="339.2px"
+                                                                     alt="{{$topBanner->title}}"
+                                                                     width="339.2px"
                                                                      height="212px"></span>
                     </section>
                 @endforeach
