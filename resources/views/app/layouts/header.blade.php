@@ -218,7 +218,9 @@
                         @endforeach
 
                         <hr class="border-bottom">
-                        <section class="navbar-item"><a href="javascript:void(0)">دسته بندی</a></section>
+                        <section class="navbar-item">
+                            <span>دسته بندی ها</span>
+                        </section>
                         <!-- start sidebar nav-->
                         <section class="sidebar-nav mt-2 px-3">
                             @foreach($productCategories as $category)

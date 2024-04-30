@@ -14,18 +14,18 @@
             <section class="col-md-8 pe-md-1 ">
                 <section id="slideshow" class="owl-carousel owl-theme">
                     @foreach($slideShows as $slideShow)
-                        <section class="item"><a class="w-100 d-block h-auto text-decoration-none"><img
+                        <section class="item"><span class="w-100 d-block h-auto text-decoration-none"><img
                                     class="w-100 rounded-2 d-block h-auto" src="{{asset($slideShow->image)}}"
-                                    alt="{{$slideShow->title}}"></a></section>
+                                    alt="{{$slideShow->title}}"></span></section>
                     @endforeach
                 </section>
             </section>
             <section class="col-md-4 ps-md-1 mt-2 mt-md-0">
                 @foreach($topBanners as $topBanner)
-                    <section class="mb-2"><a class="d-block"><img class="w-100 rounded-2"
-                                                                  src="{{asset($topBanner->image)}}"
-                                                                  alt="{{$topBanner->title}}" width="339.2px"
-                                                                  height="212px"></a>
+                    <section class="mb-2"><span class="d-block"><img class="w-100 rounded-2"
+                                                                     src="{{asset($topBanner->image)}}"
+                                                                     alt="{{$topBanner->title}}" width="339.2px"
+                                                                     height="212px"></span>
                     </section>
                 @endforeach
             </section>
@@ -162,11 +162,11 @@
             <!-- two column-->
             <section class="row py-4">
                 @foreach($middleBanners as $middleBanner)
-                    <section class="col-12 col-md-6 mt-2 mt-md-0"><a
+                    <section class="col-12 col-md-6 mt-2 mt-md-0"><span
                             class="w-100 d-block h-auto text-decoration-none"><img
                                 class="d-block rounded-2 w-100"
                                 src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}" width="480px"
-                                height="300px"></a>
+                                height="300px"></span>
                     </section>
                 @endforeach
             </section>
@@ -309,9 +309,9 @@
         <section class="container-xxl">
             <!-- one column -->
             <section class="row py-4">
-                <section class="col"><a class="w-100 d-block h-auto text-decoration-none"><img
+                <section class="col"><span class="w-100 d-block h-auto text-decoration-none"><img
                             class="d-block rounded-2 w-100" src="{{$bottomBanner->image}}"
-                            alt="{{$bottomBanner->title}}"></a>
+                            alt="{{$bottomBanner->title}}"></span>
                 </section>
             </section>
         </section>
@@ -439,9 +439,6 @@
         </section>
     </section>
     <!-- end product lazy load -->
-
-
-
 
 
     <!-- start brand part-->
