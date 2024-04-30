@@ -52,7 +52,8 @@
                                                                 href="{{route('home')}}">صفحه اصلی</a></li>
                     <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
                                                                 href="{{route('market.products')}}">کالا ها</a></li>
-                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark">کالا</a></li>
+                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
+                                                                href="{{url()->current()}}">کالا</a></li>
                     <li class="breadcrumb-item font-size-12 active d-none" aria-current="page">{{$product->name}}</li>
                 </ol>
             </nav>

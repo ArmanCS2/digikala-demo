@@ -11,8 +11,12 @@
     <section class="content-wrapper bg-white p-3 rounded-2 mb-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark" href="{{route('home')}}">صفحه اصلی</a></li>
-                <li class="breadcrumb-item font-size-12 active" aria-current="page">وبلاگ</li>
+                <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
+                                                            href="{{route('home')}}">صفحه اصلی</a></li>
+                <li class="breadcrumb-item font-size-12 active" aria-current="page"><a
+                        class="text-decoration-none text-dark"
+                        href="{{url()->current()}}">وبلاگ</a>
+                </li>
             </ol>
         </nav>
 
