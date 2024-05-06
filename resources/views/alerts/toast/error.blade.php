@@ -1,8 +1,8 @@
-@if(session('toast-error'))
+@if(\Illuminate\Support\Facades\Session::has('toast-error'))
     <section class="toast-wrapper flex-row-reverse">
         <section class="toast">
             <section class="toast-body py-3 d-flex bg-danger text-white">
-                <strong class="ml-auto">{{session('toast-error')}}</strong>
+                <strong class="ml-auto">{{\Illuminate\Support\Facades\Session::get('toast-error')}}</strong>
                 <a class="mr-2 close" data-dismiss="toast" aria-label="Close">
                 </a>
 
@@ -17,4 +17,7 @@
             });
         })
     </script>
+    @php
+        \Illuminate\Support\Facades\Session::forget('toast-error');
+    @endphp
 @endif
