@@ -17,7 +17,7 @@
             content: "\f005";
             /* Star */
             margin: 2px;
-            font-size: 2em;
+            font-size: 1em;
             font-family: FontAwesome;
             display: inline-block;
         }
@@ -159,6 +159,17 @@
                                         @endif
 
                                         <section class="my-4">
+                                            <i class="fa fa-tshirt"></i>
+                                            <span class="fw-bold">جنس : {{$product->material ?? '-'}}</span>
+                                        </section>
+
+                                        <section class="my-4">
+                                            <i class="fa fa-text-height"></i>
+                                            <span class="fw-bold">سایز : {{$product->size ?? '-'}}</span>
+                                        </section>
+
+
+                                        <section class="my-4">
                                             @if($product->marketable_number > 0)
                                                 <i class="fa fa-store-alt cart-product-selected-store me-1"></i>
                                                 <span>کالا موجود در انبار</span>
@@ -194,22 +205,7 @@
                                                 <input class="d-none" type="number" name="number" id="number" value="1">
                                             </section>
                                         </section>
-                                        <p class="mb-3 mt-5">
-                                            <i class="fa fa-info-circle me-1"></i>کاربر گرامی خرید شما هنوز
-                                            نهایی نشده
-                                            است.
-                                            برای ثبت سفارش و تکمیل خرید باید ابتدا آدرس خود را انتخاب کنید و سپس
-                                            نحوه
-                                            ارسال
-                                            را انتخاب کنید. نحوه ارسال انتخابی شما محاسبه و به این مبلغ اضافه
-                                            شده خواهد
-                                            شد.
-                                            و در نهایت پرداخت این سفارش صورت میگیرد. پس از ثبت سفارش کالا بر
-                                            اساس نحوه
-                                            ارسال
-                                            که شما انتخاب کرده اید کالا برای شما در مدت زمان مذکور ارسال می
-                                            گردد.
-                                        </p>
+
                                     </form>
                                 </section>
                             </section>

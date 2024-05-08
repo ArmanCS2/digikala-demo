@@ -48,75 +48,76 @@ Route::get('site/up', function () {
     return redirect()->back();
 });
 
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/download/{file_path}', [HomeController::class, 'download'])->name('download');
-Route::post('ckeditor-upload', [HomeController::class, 'ckeditorUpload'])->name('ckeditor.upload');
-Route::get('page/{title}', [HomeController::class, 'page'])->name('page');
-Route::middleware('auth')->prefix('profile')->group(function () {
-    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
-    Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/complete', [ProfileController::class, 'complete'])->name('profile.complete');
-    Route::put('/update-complete', [ProfileController::class, 'updateComplete'])->name('profile.update.complete');
-    Route::get('/orders', [ProfileController::class, 'orders'])->name('profile.orders');
-    Route::get('/addresses', [ProfileController::class, 'addresses'])->name('profile.addresses');
-    Route::get('/favorites', [ProfileController::class, 'favorites'])->name('profile.favorites');
-    Route::get('/compares', [ProfileController::class, 'compares'])->name('profile.compares');
-    Route::get('/delete-from-favorites/{product}', [ProfileController::class, 'deleteFromFavorites'])->name('profile.delete-from-favorites');
-    Route::prefix('ticket')->group(function () {
-        Route::get('/', [\App\Http\Controllers\App\TicketController::class, 'index'])->name('profile.ticket.index');
-        Route::get('/show/{id}', [\App\Http\Controllers\App\TicketController::class, 'show'])->name('profile.ticket.show');
-        Route::get('/change-status/{id}', [\App\Http\Controllers\App\TicketController::class, 'changeStatus'])->name('profile.ticket.change-status');
-        Route::post('/answer/{id}', [\App\Http\Controllers\App\TicketController::class, 'answer'])->name('profile.ticket.answer');
-        Route::get('/create', [\App\Http\Controllers\App\TicketController::class, 'create'])->name('profile.ticket.create');
-        Route::post('/store', [\App\Http\Controllers\App\TicketController::class, 'store'])->name('profile.ticket.store');
+Route::middleware(['cache'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/download/{file_path}', [HomeController::class, 'download'])->name('download');
+    Route::post('ckeditor-upload', [HomeController::class, 'ckeditorUpload'])->name('ckeditor.upload');
+    Route::get('page/{title}', [HomeController::class, 'page'])->name('page');
+    Route::middleware('auth')->prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+        Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/complete', [ProfileController::class, 'complete'])->name('profile.complete');
+        Route::put('/update-complete', [ProfileController::class, 'updateComplete'])->name('profile.update.complete');
+        Route::get('/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+        Route::get('/addresses', [ProfileController::class, 'addresses'])->name('profile.addresses');
+        Route::get('/favorites', [ProfileController::class, 'favorites'])->name('profile.favorites');
+        Route::get('/compares', [ProfileController::class, 'compares'])->name('profile.compares');
+        Route::get('/delete-from-favorites/{product}', [ProfileController::class, 'deleteFromFavorites'])->name('profile.delete-from-favorites');
+        Route::prefix('ticket')->group(function () {
+            Route::get('/', [\App\Http\Controllers\App\TicketController::class, 'index'])->name('profile.ticket.index');
+            Route::get('/show/{id}', [\App\Http\Controllers\App\TicketController::class, 'show'])->name('profile.ticket.show');
+            Route::get('/change-status/{id}', [\App\Http\Controllers\App\TicketController::class, 'changeStatus'])->name('profile.ticket.change-status');
+            Route::post('/answer/{id}', [\App\Http\Controllers\App\TicketController::class, 'answer'])->name('profile.ticket.answer');
+            Route::get('/create', [\App\Http\Controllers\App\TicketController::class, 'create'])->name('profile.ticket.create');
+            Route::post('/store', [\App\Http\Controllers\App\TicketController::class, 'store'])->name('profile.ticket.store');
+        });
     });
-});
-Route::prefix('market')->group(function () {
-    Route::get('/products', [ProductController::class, 'products'])->name('market.products');
-    Route::get('/amazing-sales', [ProductController::class, 'amazingSales'])->name('market.amazing-sales');
-    Route::prefix('product')->group(function () {
-        Route::get('/{product:slug}', [ProductController::class, 'product'])->name('market.product');
-        Route::post('/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
-        Route::get('/{product:slug}/is-favorite', [ProductController::class, 'isFavorite'])->name('market.product.is-favorite');
-        Route::get('/{product:slug}/add-to-compare', [ProductController::class, 'addToCompare'])->name('market.product.add-to-compare');
-        Route::get('/{product:slug}/remove-from-compare', [ProductController::class, 'removeFromCompare'])->name('market.product.remove-from-compare');
-        Route::post('/{product:slug}/rate', [ProductController::class, 'rate'])->name('market.product.rate');
+    Route::prefix('market')->group(function () {
+        Route::get('/products', [ProductController::class, 'products'])->name('market.products');
+        Route::get('/amazing-sales', [ProductController::class, 'amazingSales'])->name('market.amazing-sales');
+        Route::prefix('product')->group(function () {
+            Route::get('/{product:slug}', [ProductController::class, 'product'])->name('market.product');
+            Route::post('/{product:slug}/store-comment', [ProductController::class, 'storeComment'])->name('market.product.store-comment');
+            Route::get('/{product:slug}/is-favorite', [ProductController::class, 'isFavorite'])->name('market.product.is-favorite');
+            Route::get('/{product:slug}/add-to-compare', [ProductController::class, 'addToCompare'])->name('market.product.add-to-compare');
+            Route::get('/{product:slug}/remove-from-compare', [ProductController::class, 'removeFromCompare'])->name('market.product.remove-from-compare');
+            Route::post('/{product:slug}/rate', [ProductController::class, 'rate'])->name('market.product.rate');
+        });
+
+        Route::middleware('product-marketable')->prefix('cart')->group(function () {
+            Route::middleware('cart.empty')->get('/', [CartController::class, 'cart'])->name('market.cart');
+            Route::put('update', [CartController::class, 'update'])->name('market.cart.update');
+            Route::post('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
+            Route::get('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
+            Route::get('remove-product/{cartItem}', [CartController::class, 'removeProduct'])->name('market.cart.remove-product');
+        });
+
+        Route::middleware(['profile.complete', 'cart.empty', 'product-marketable'])->group(function () {
+            //address and delivery
+            Route::get('address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('market.address-and-delivery');
+            Route::post('add-address', [AddressController::class, 'addAddress'])->name('market.add-address');
+            Route::post('store-address-delivery', [AddressController::class, 'storeAddressDelivery'])->name('market.store-address-delivery');
+            Route::put('edit-address/{address}', [AddressController::class, 'editAddress'])->name('market.edit-address');
+            Route::get('delete-address/{address}', [AddressController::class, 'deleteAddress'])->name('market.delete-address');
+            Route::get('get-cities/{province}', [AddressController::class, 'getCities'])->name('market.get-cities');
+
+            //payment
+            Route::get('payment', [PaymentController::class, 'payment'])->name('market.payment');
+            Route::post('payment-copan-discount', [PaymentController::class, 'copanDiscount'])->name('market.payment.copan-discount');
+            Route::post('payment-type', [PaymentController::class, 'paymentType'])->name('market.payment.type');
+            Route::any('payment-callback/{order}/{amount}/{onlinePayment}', [PaymentController::class, 'paymentCallback'])->name('market.payment-callback');
+        });
+
     });
+    Route::prefix('content')->group(function () {
+        Route::get('posts', [PostController::class, 'posts'])->name('content.posts');
+        Route::prefix('post')->group(function () {
+            Route::get('/{post:slug}', [PostController::class, 'post'])->name('content.post');
+            Route::post('/{post:slug}/store-comment', [PostController::class, 'storeComment'])->name('content.post.store-comment');
+        });
 
-    Route::middleware('product-marketable')->prefix('cart')->group(function () {
-        Route::middleware('cart.empty')->get('/', [CartController::class, 'cart'])->name('market.cart');
-        Route::put('update', [CartController::class, 'update'])->name('market.cart.update');
-        Route::post('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
-        Route::get('add-product/{product:slug}', [CartController::class, 'addProduct'])->name('market.cart.add-product');
-        Route::get('remove-product/{cartItem}', [CartController::class, 'removeProduct'])->name('market.cart.remove-product');
+
     });
-
-    Route::middleware(['profile.complete', 'cart.empty', 'product-marketable'])->group(function () {
-        //address and delivery
-        Route::get('address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('market.address-and-delivery');
-        Route::post('add-address', [AddressController::class, 'addAddress'])->name('market.add-address');
-        Route::post('store-address-delivery', [AddressController::class, 'storeAddressDelivery'])->name('market.store-address-delivery');
-        Route::put('edit-address/{address}', [AddressController::class, 'editAddress'])->name('market.edit-address');
-        Route::get('delete-address/{address}', [AddressController::class, 'deleteAddress'])->name('market.delete-address');
-        Route::get('get-cities/{province}', [AddressController::class, 'getCities'])->name('market.get-cities');
-
-        //payment
-        Route::get('payment', [PaymentController::class, 'payment'])->name('market.payment');
-        Route::post('payment-copan-discount', [PaymentController::class, 'copanDiscount'])->name('market.payment.copan-discount');
-        Route::post('payment-type', [PaymentController::class, 'paymentType'])->name('market.payment.type');
-        Route::any('payment-callback/{order}/{amount}/{onlinePayment}', [PaymentController::class, 'paymentCallback'])->name('market.payment-callback');
-    });
-
-});
-Route::prefix('content')->group(function () {
-    Route::get('posts', [PostController::class, 'posts'])->name('content.posts');
-    Route::prefix('post')->group(function () {
-        Route::get('/{post:slug}', [PostController::class, 'post'])->name('content.post');
-        Route::post('/{post:slug}/store-comment', [PostController::class, 'storeComment'])->name('content.post.store-comment');
-    });
-
-
 });
 
 
@@ -126,7 +127,7 @@ Route::prefix('content')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('auth')->namespace('App\Http\Controllers\Auth')->group(function () {
+Route::middleware(['cache'])->prefix('auth')->namespace('App\Http\Controllers\Auth')->group(function () {
     Route::prefix('customer')->namespace('Customer')->group(function () {
         Route::get('login-register', 'LoginRegisterController@loginRegisterForm')->name('auth.customer.login-register-form');
         Route::middleware('throttle:login-register-limiter')->post('login-register', 'LoginRegisterController@loginRegister')->name('auth.customer.login-register');

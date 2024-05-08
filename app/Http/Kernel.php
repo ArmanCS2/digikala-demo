@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CacheMiddleware;
 use App\Http\Middleware\CartEmpty;
 use App\Http\Middleware\PermissionMiddleware;
 use App\Http\Middleware\ProductMarketable;
@@ -69,8 +70,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'profile.complete' => ProfileComplete::class,
         'cart.empty' => CartEmpty::class,
-        'role'=>RoleMiddleware::class,
-        'permission'=>PermissionMiddleware::class,
-        'product-marketable'=>ProductMarketable::class
+        'role' => RoleMiddleware::class,
+        'permission' => PermissionMiddleware::class,
+        'product-marketable' => ProductMarketable::class,
+        'cache' => CacheMiddleware::class
     ];
 }
