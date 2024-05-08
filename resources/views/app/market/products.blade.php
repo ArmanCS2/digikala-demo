@@ -1,8 +1,8 @@
 @extends('app.layouts.master-two-col2')
 
 @section('head-tag')
-    <meta name="description" content="بوتیکالا محصولات پوشاک تیشرت">
-    <meta name="keywords" content="بوتیکالا محصولات پوشاک تیشرت">
+    <meta name="description" content="{{$setting->description}}">
+    <meta name="keywords" content="{{$setting->keywords}}">
     <title>محصولات</title>
 @endsection
 

@@ -1,8 +1,8 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
-    <meta name="description" content="وبلاگ پوشاک بوتیکالا">
-    <meta name="keywords" content="بوتیکالا تیشرت وبلاگ پوشاک">
+    <meta name="description" content="{{$setting->description}}">
+    <meta name="keywords" content="{{$setting->keywords}}">
     <title>وبلاگ</title>
 @endsection
 

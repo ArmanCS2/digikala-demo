@@ -1,13 +1,13 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
-    <meta name="description" content="{{\App\Models\Setting\Setting::first()->description}}">
-    <meta name="keywords" content="{{\App\Models\Setting\Setting::first()->keywords}}">
+    <meta name="description" content="{{$setting->description}}">
+    <meta name="keywords" content="{{$setting->keywords}}">
     <title>بوتیکالا</title>
 @endsection
 
 @section('content')
-    <h1 class="d-none">بوتیکالا | فروشگاه آنلاین تیشرت پوشاک و انواع اکسسوری</h1>
+    <h1 class="d-none">بوتیکالا | فروشگاه آنلاین تیشرت ساده پوشاک و انواع اکسسوری</h1>
     <!-- start slideshow -->
     <section class="container-xxl my-4">
         <section class="row">
@@ -22,11 +22,9 @@
             </section>
             <section class="col-md-4 ps-md-1 mt-2 mt-md-0">
                 @foreach($topBanners as $topBanner)
-                    <section class="mb-2"><span class="d-block"><img class="w-100 rounded-2"
+                    <section class="mb-2"><span class="d-block"><img class="w-100 rounded-2 ratio ratio-16x9"
                                                                      src="{{asset($topBanner->image)}}"
-                                                                     alt="{{$topBanner->title}}"
-                                                                     width="339.2px"
-                                                                     height="212px"></span>
+                                                                     alt="{{$topBanner->title}}"></span>
                     </section>
                 @endforeach
             </section>
@@ -157,24 +155,22 @@
     <!-- end product lazy load -->
 
 
-    <!-- start ads section -->
-    <section class="mb-3">
-        <section class="container-xxl">
-            <!-- two column-->
-            <section class="row py-4">
-                @foreach($middleBanners as $middleBanner)
-                    <section class="col-12 col-md-6 mt-2 mt-md-0"><span
-                            class="w-100 d-block h-auto text-decoration-none"><img
-                                class="d-block rounded-2 w-100"
-                                src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}" width="480px"
-                                height="300px"></span>
-                    </section>
-                @endforeach
-            </section>
+{{--    <!-- start ads section -->--}}
+{{--    <section class="mb-3">--}}
+{{--        <section class="container-xxl">--}}
+{{--            <!-- two column-->--}}
+{{--            <section class="row py-4">--}}
+{{--                @foreach($middleBanners as $middleBanner)--}}
+{{--                    <section class="col-12 col-md-6 mt-2 mt-md-0"><img--}}
+{{--                            class="d-block rounded-2 w-100"--}}
+{{--                            src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}">--}}
+{{--                    </section>--}}
+{{--                @endforeach--}}
+{{--            </section>--}}
 
-        </section>
-    </section>
-    <!-- end ads section -->
+{{--        </section>--}}
+{{--    </section>--}}
+{{--    <!-- end ads section -->--}}
 
 
     <!-- start product lazy load -->
