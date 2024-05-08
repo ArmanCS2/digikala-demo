@@ -230,7 +230,7 @@ class ProductController extends Controller
         $products->appends($request->query());
 
         $brands = Brand::where('status', 1)->get();
-        $categories = ProductCategory::whereNull('parent_id')->where('status', 1)->get();
+        $categories = ProductCategory::whereNull('parent_id')->where('status', 1)->where('show_in_menu', 1)->get();
         return view('app.market.amazing-sales', compact('products', 'brands', 'categories'));
     }
 
