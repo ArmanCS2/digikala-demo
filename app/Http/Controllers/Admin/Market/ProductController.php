@@ -143,6 +143,9 @@ class ProductController extends Controller
                 'meta_value' => $request->meta_value[$key],
             ]);
         }
+        $product->update([
+            'slug' => null
+        ]);
         return redirect()->route('admin.market.product.index')->with('swal-success', 'محصول با موفقیت ویرایش شد');
     }
 

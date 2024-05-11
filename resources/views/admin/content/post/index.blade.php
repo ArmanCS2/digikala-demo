@@ -49,7 +49,7 @@
                         @foreach($posts as $key => $post)
                             <tr>
                                 <th>{{$key+1}}</th>
-                                <td>{{$post->title}}</td>
+                                <td><a href="{{route('content.post',$post)}}">{{$post->title}}</a></td>
                                 <td>{{$post->category->name}}</td>
                                 <td>{{$post->slug}}</td>
                                 <td><img src="{{asset($post->image['indexArray'][$post->image['currentImage']])}}"

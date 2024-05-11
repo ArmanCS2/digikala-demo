@@ -22,7 +22,7 @@ class ProductController extends Controller
         $product->view += 1;
         $product->save();
         $category = $product->categories()->whereNull('parent_id')->where('status', 1)->inRandomOrder()->first();
-        $relatedProducts = $category->products()->take(10)->get()->except($product->id);
+        $relatedProducts = $category->products()->inRandomOrder()->take(10)->get()->except($product->id);
         return view('app.market.product', compact('product', 'relatedProducts'));
     }
 
@@ -160,7 +160,7 @@ class ProductController extends Controller
                 $query->where('product_category_id', $request->category);
             });
         }
-        $products = $query->paginate(12);
+        $products = $query->paginate(16);
         $products->appends($request->query());
 
         $brands = Brand::where('status', 1)->get();
@@ -226,7 +226,7 @@ class ProductController extends Controller
                 $query->where('product_category_id', $request->category);
             });
         }
-        $products = $query->paginate(12);
+        $products = $query->paginate(16);
         $products->appends($request->query());
 
         $brands = Brand::where('status', 1)->get();

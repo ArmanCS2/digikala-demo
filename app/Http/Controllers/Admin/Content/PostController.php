@@ -113,6 +113,9 @@ class PostController extends Controller
         }
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)substr($inputs['published_at'], 0, 10));
         $post->update($inputs);
+        $post->update([
+            'slug' => null
+        ]);
         return redirect()->route('admin.content.post.index')->with('swal-success', 'پست با موفقیت ویرایش شد');
     }
 

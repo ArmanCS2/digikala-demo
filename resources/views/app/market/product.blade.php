@@ -168,6 +168,21 @@
                                             <span class="fw-bold">سایز : {{$product->size ?? '-'}}</span>
                                         </section>
 
+                                        <section class="my-4">
+                                            <i class="fa fa-tag"></i>
+                                            <span
+                                                class="fw-bold">برند : {{$product->brand->persian_name ?? 'فاقد برند'}}</span>
+                                        </section>
+
+                                        <section class="my-4">
+                                            <i class="fa fa-list-alt"></i>
+                                            <span class="fw-bold">دسته بندی : </span>
+                                            @forelse($product->categories as $category)
+                                                <span class="fw-bold">{{$category->name}}, </span>
+                                            @empty
+                                                <span class="fw-bold">فاقد دسته بندی</span>
+                                            @endforelse
+                                        </section>
 
                                         <section class="my-4">
                                             @if($product->marketable_number > 0)
@@ -177,6 +192,11 @@
                                                 <i class="fa fa-store-alt cart-product-selected-store me-1"></i>
                                                 <span>کالا ناموجود است</span>
                                             @endif
+                                        </section>
+
+                                        <section class="my-4">
+                                            <i class="fa fa-tags"></i>
+                                            <span>برچسب ها : {{$product->tags ?? '-'}}</span>
                                         </section>
 
                                         <section class="my-4">
@@ -283,6 +303,12 @@
                                         </button>
                                     </section>
                                 @endif
+                                <section class="mt-3">
+                                    <p class="mb-3">
+                                        <i class="fa fa-info-circle me-1"></i>
+                                        کاربر گرامی در هنگام سفارش کالا به جزئیات کالا نظیر سایز و رنگ دقت کنید!
+                                    </p>
+                                </section>
                                 @auth
                                     @if($product->user->contains(auth()->user()->id))
                                         <section class="add-to-favorite mt-3">
@@ -317,6 +343,7 @@
                                                 class="fa fa-heart"></i></button>
                                     </section>
                                 @endguest
+
                             </section>
                         </section>
 
@@ -467,8 +494,8 @@
                                         <span class="me-2"><a class="text-decoration-none text-dark"
                                                               href="#introduction">معرفی</a></span>
                                         <span class="me-2"><a class="text-decoration-none text-dark" href="#features">ویژگی ها</a></span>
-                                        <span class="me-2"><a class="text-decoration-none text-dark" href="#comments">دیدگاه ها</a></span>
                                         <span class="me-2"><a class="text-decoration-none text-dark" href="#rates">امتیاز ها</a></span>
+                                        <span class="me-2"><a class="text-decoration-none text-dark" href="#comments">دیدگاه ها</a></span>
                                     </h2>
                                     <section class="content-header-link">
                                         <!--<a href="#">مشاهده همه</a>-->

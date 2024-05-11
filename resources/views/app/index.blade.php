@@ -155,22 +155,22 @@
     <!-- end product lazy load -->
 
 
-{{--    <!-- start ads section -->--}}
-{{--    <section class="mb-3">--}}
-{{--        <section class="container-xxl">--}}
-{{--            <!-- two column-->--}}
-{{--            <section class="row py-4">--}}
-{{--                @foreach($middleBanners as $middleBanner)--}}
-{{--                    <section class="col-12 col-md-6 mt-2 mt-md-0"><img--}}
-{{--                            class="d-block rounded-2 w-100"--}}
-{{--                            src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}">--}}
-{{--                    </section>--}}
-{{--                @endforeach--}}
-{{--            </section>--}}
+    {{--    <!-- start ads section -->--}}
+    {{--    <section class="mb-3">--}}
+    {{--        <section class="container-xxl">--}}
+    {{--            <!-- two column-->--}}
+    {{--            <section class="row py-4">--}}
+    {{--                @foreach($middleBanners as $middleBanner)--}}
+    {{--                    <section class="col-12 col-md-6 mt-2 mt-md-0"><img--}}
+    {{--                            class="d-block rounded-2 w-100"--}}
+    {{--                            src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}">--}}
+    {{--                    </section>--}}
+    {{--                @endforeach--}}
+    {{--            </section>--}}
 
-{{--        </section>--}}
-{{--    </section>--}}
-{{--    <!-- end ads section -->--}}
+    {{--        </section>--}}
+    {{--    </section>--}}
+    {{--    <!-- end ads section -->--}}
 
 
     <!-- start product lazy load -->
@@ -384,7 +384,7 @@
                                                              alt="{{$product->name}}">
                                                     </section>
                                                     <section class="product-name">
-                                                        <h3>{{\Illuminate\Support\Str::limit($product->name,30)}}</h3>
+                                                        <h3>{{$product->name}}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         @if(!empty($product->activeAmazingSale() ?? []))

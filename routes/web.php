@@ -144,7 +144,7 @@ Route::middleware(['cache'])->prefix('auth')->namespace('App\Http\Controllers\Au
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
+Route::middleware(['auth', 'role:admin', 'cache'])->prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
 
     Route::get('/', 'AdminDashboardController@index')->name('admin.home');
     Route::post('/notification/read-all', 'NotificationController@readAll')->name('admin.notification.read-all');

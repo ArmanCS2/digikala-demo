@@ -81,6 +81,10 @@
                                             src="{{asset($post->image['indexArray'][$post->image['currentImage']])}}"
                                             alt="{{$post->title}}">
                                     </section>
+                                    <section class="my-4">
+                                        <i class="fa fa-tags"></i>
+                                        <span>برچسب ها : {{$post->tags ?? '-'}}</span>
+                                    </section>
                                 </section>
                             </section>
                         </section>

@@ -50,7 +50,7 @@
                         @foreach($products as $product)
                             <tr>
                                 <th>{{$loop->iteration}}</th>
-                                <td>{{$product->name}}</td>
+                                <td><a href="{{route('market.product',$product)}}">{{$product->name}}</a></td>
                                 <td><img src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
                                          width="100px"></td>
                                 <td>{{number_format($product->price)}} تومان</td>
