@@ -60,6 +60,12 @@
                 </section>
                 <section id="timer" class="text-center text-danger"></section>
 
+                <section class="text-center">
+                    <a href="{{route('auth.customer.login-register-form')}}"
+                       class="text-decoration-none text-primary small">در صورت عدم دریافت اس ام اس با ایمیل وارد
+                        شوید</a>
+                </section>
+
             </section>
         </form>
     </section>
