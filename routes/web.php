@@ -41,6 +41,13 @@ Route::middleware(['auth', 'role:super-admin'])->prefix('site')->group(function 
         Artisan::call('optimize:clear');
         return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
     });
+
+    Route::get('seed', function () {
+        Artisan::call('db:seed');
+        return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
+    });
+
+
 });
 
 Route::get('site/up', function () {
