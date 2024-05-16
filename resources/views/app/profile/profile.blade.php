@@ -22,7 +22,8 @@
     <section class="d-flex justify-content-end my-4">
         <button class="btn btn-link btn-sm text-info text-decoration-none mx-1" type="button" data-bs-toggle="modal"
                 data-bs-target="#edit-profile"><i class="fa fa-edit px-1"></i>ویرایش
-            حساب</button>
+            حساب
+        </button>
     </section>
 
 
@@ -54,7 +55,7 @@
 
         <section class="col-6 my-2 py-2">
             <section class="field-title">وضعیت</section>
-            <section class="field-value overflow-auto">{{$user->status == 1 ? 'فعال' : 'غیر فعال'}}</section>
+            <section class="field-value overflow-auto">{{$user->is_active == 1 ? 'فعال' : 'غیر فعال'}}</section>
         </section>
 
         <section class="address-add-wrapper">

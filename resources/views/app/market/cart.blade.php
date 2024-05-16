@@ -328,7 +328,6 @@
                 var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
                     '</a>\n' +
                     '</section>\n' +
@@ -405,7 +404,6 @@
                 var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
                     '</a>\n' +
                     '</section>\n' +

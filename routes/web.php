@@ -8,6 +8,12 @@ use App\Http\Controllers\App\Market\CartController;
 use App\Http\Controllers\App\Market\PaymentController;
 use App\Http\Controllers\App\Market\ProductController;
 use App\Http\Controllers\App\ProfileController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -143,6 +149,21 @@ Route::middleware(['cache'])->prefix('auth')->namespace('App\Http\Controllers\Au
         Route::middleware('throttle:login-resend-otp-limiter')->get('login-resend-otp/{token}', 'LoginRegisterController@loginResendOtp')->name('auth.customer.login-resend-otp');
         Route::get('logout', 'LoginRegisterController@logout')->name('auth.customer.logout');
     });
+    Route::get('register', [RegisterController::class, 'view'])->name('auth.register.form');
+    Route::post('register', [RegisterController::class, 'register'])->name('auth.register');
+    Route::get('activation/token/{token}', [RegisterController::class, 'activation'])->name('auth.activation.token');
+
+    Route::get('login', [LoginController::class, 'view'])->name('auth.login.form');
+    Route::post('login', [LoginController::class, 'login'])->name('auth.login');
+
+    Route::get('forgot', [ForgotController::class, 'view'])->name('auth.forgot.form');
+    Route::post('forgot', [ForgotController::class, 'forgot'])->name('auth.forgot');
+
+    Route::get('reset-password/{token}', [ResetPasswordController::class, 'view'])->name('auth.reset-password.form');
+    Route::post('reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->name('auth.reset-password');
+
+
+    Route::get('logout', [LogoutController::class, 'logout'])->name('auth.logout');
 });
 
 /*

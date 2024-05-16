@@ -39,21 +39,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'mobile',
-        'user_type',
-        'profile_photo_path',
-        'activation',
-        'national_code',
-        'activation_date',
-        'status',
-        'email',
-        'password',
-        'email_verified_at',
-        'mobile_verified_at',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -122,7 +108,7 @@ class User extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(Order::class)->orderBy('created_at','desc');
+        return $this->hasMany(Order::class)->orderBy('created_at', 'desc');
     }
 
     public function products()
@@ -132,12 +118,12 @@ class User extends Authenticatable
 
     public function orderItems()
     {
-        return $this->hasManyThrough(OrderItem::class,Order::class);
+        return $this->hasManyThrough(OrderItem::class, Order::class);
     }
 
     public function boughtProducts($product_id)
     {
-        return $this->orderItems()->where('product_id',$product_id)->get();
+        return $this->orderItems()->where('product_id', $product_id)->get();
     }
 
     public function compare()

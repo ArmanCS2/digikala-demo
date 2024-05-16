@@ -29,26 +29,28 @@
                         <i class="fa fa-arrow-right"></i>
                     </a>
                 </section>
-                <section class="login-title">
-                    کد تایید را وارد نمایید
-                </section>
+                <section class="my-2">
+                    <section class="login-title">
+                        کد تایید را وارد نمایید
+                    </section>
 
-                @if($otp->type == 0)
-                    <section class="login-info">
-                        کد تایید برای شماره موبایل {{ $otp->login_id }} ارسال گردید
-                    </section>
-                @else
-                    <section class="login-info">
-                        کد تایید برای ایمیل {{ $otp->login_id }} ارسال گردید
-                    </section>
-                @endif
-                <section class="login-input-text">
-                    <input type="text" name="otp" value="">
-                    @error('otp')
-                    <span class="text-danger">
+                    @if($otp->type == 0)
+                        <section class="login-info">
+                            کد تایید برای شماره موبایل {{ $otp->login_id }} ارسال گردید
+                        </section>
+                    @else
+                        <section class="login-info">
+                            کد تایید برای ایمیل {{ $otp->login_id }} ارسال گردید
+                        </section>
+                    @endif
+                    <section class="login-input-text">
+                        <input type="text" name="otp" value="">
+                        @error('otp')
+                        <span class="text-danger">
                                     <strong>{{$message}}</strong>
                                 </span>
-                    @enderror
+                        @enderror
+                    </section>
                 </section>
                 <section class="login-btn d-grid g-2">
                     <button class="btn btn-danger">تایید</button>

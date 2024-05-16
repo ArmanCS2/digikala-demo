@@ -71,7 +71,7 @@
                                 <section>
                                     <hr class="dropdown-divider">
                                 </section>
-                                <section><a class="dropdown-item" href="{{route('auth.customer.logout')}}"><i
+                                <section><a class="dropdown-item" href="{{route('auth.logout')}}"><i
                                             class="fa fa-sign-out-alt"></i> خروج </a>
                                 </section>
 
@@ -80,7 +80,7 @@
                     @endauth
 
                     @guest
-                        <a href="{{ route('auth.customer.login-register-form') }}"
+                        <a href="{{ route('auth.login.form') }}"
                            class="btn btn-link text-decoration-none text-dark profile-button">
                             <i class="fa fa-user-lock"></i>
                         </a>
@@ -138,7 +138,7 @@
                                             خود شوید
                                             <a
                                                 class=" text-dark fw-bold mx-4"
-                                                href="{{ route('auth.customer.login-register-form') }}">
+                                                href="{{ route('auth.login.form') }}">
                                                 ورود </a></p>
                                     </section>
                                 </section>

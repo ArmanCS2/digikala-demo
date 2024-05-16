@@ -168,7 +168,7 @@
                                 @guest
                                     <section class="comment-add-wrapper">
                                         <p>برای افزودن دیدگاه وارد حساب کاربری خود شوید</p>
-                                        <a href="{{route('auth.customer.login-register-form')}}"
+                                        <a href="{{route('auth.login.form')}}"
                                            class="btn btn-primary">ورود
                                             یا ثبت نام</a>
                                     </section>
@@ -455,7 +455,6 @@
                 var successToastTag = '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a href="{{route('auth.customer.login-register-form')}}" class="text-white">ورود</a>\n' +
                     '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
                     '</a>\n' +
                     '</section>\n' +
