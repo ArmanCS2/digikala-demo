@@ -53,6 +53,10 @@ Route::middleware(['auth', 'role:super-admin'])->prefix('site')->group(function 
         return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
     });
 
+    Route::get('migrate', function () {
+        Artisan::call('migrate');
+        return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
+    });
 
 });
 

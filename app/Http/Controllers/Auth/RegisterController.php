@@ -69,10 +69,12 @@ class RegisterController extends Controller
                 $user->is_active = 1;
                 $user->status = 1;
                 $user->activation = 1;
+                $user->activation_date = now();
+                $user->email_verified_at = now();
                 $user->save();
             }
             return redirect()->route('auth.login.form')->with('swal-success', 'حساب کاربری با موفقیت فعال شد');
         }
-        return redirect()->route('home')->with('toast-error', 'لینک نامعتبر');
+        return redirect()->route('home')->with('toast-error', 'لینک نامعتبر میباشد');
     }
 }
