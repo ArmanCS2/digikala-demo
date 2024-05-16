@@ -22,13 +22,21 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
+        $user = User::where('email', $request->email)->where('is_active', 1)->first();
+        if (!empty($user)) {
+            return redirect()->back()->withErrors([
+                'email' => 'ایمیل قبلا انتخاب شده است'
+            ]);
+        }
         $result = DB::transaction(function () use ($request) {
             $token = Str::random(32);
-            $user = User::create([
+            $user = User::updateOrCreate([
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'verify_token' => $token,
-            ]);
+            ],
+                [
+                    'password' => Hash::make($request->password),
+                    'verify_token' => $token,
+                ]);
             $emailService = new EmailService();
             $details = [
                 'title' => 'ایمیل فعالسازی حساب کاربری',
