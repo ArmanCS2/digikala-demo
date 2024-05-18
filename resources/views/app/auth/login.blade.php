@@ -47,14 +47,17 @@
 
 
                 <section class="text-center my-1">
+                    <a href="{{route('auth.register.form')}}"
+                       class="text-primary small">حساب کاربری ندارید ؟ ثبت نام</a>
+                </section>
+
+
+                <section class="text-center my-1">
                     <a href="{{route('auth.forgot.form')}}"
                        class="text-primary small">رمز عبور خود را فراموش کرده ام</a>
                 </section>
 
-                <section class="text-center my-1">
-                    <a href="{{route('auth.register.form')}}"
-                       class="text-primary small">حساب کاربری ندارید ؟ ثبت نام</a>
-                </section>
+
                 {{--                <section class="login-terms-and-conditions my-1"><a href="#">شرایط و قوانین</a> را خوانده ام و پذیرفته ام--}}
                 {{--                </section>--}}
                 {{--                <section class="my-2">--}}

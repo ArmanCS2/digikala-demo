@@ -19,6 +19,9 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
+        if ($user->is_active == 0) {
+            return redirect()->back()->with('swal-error', ' حساب کاربری فعال نشده برای فعالسازی ایمیل خود را بررسی کنید یا در صورت عدم دریافت ایمیل مجددا ثبت نام کنید');
+        }
         if (!empty($user)) {
             if (Hash::check($request->password, $user->password)) {
                 Auth::login($user);

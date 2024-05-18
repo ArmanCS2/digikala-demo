@@ -39,8 +39,11 @@
                             <th>نام کالا</th>
                             <th>تصویر کالا</th>
                             <th>قیمت</th>
+                            <th>رنگ ها</th>
+                            <th>بازدید</th>
                             <th>دسته</th>
                             <th>برند</th>
+                            <th>تعداد قابل فروش</th>
                             <th>قابل فروش</th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
@@ -55,12 +58,20 @@
                                          width="100px"></td>
                                 <td>{{number_format($product->price)}} تومان</td>
                                 <td>
+                                    @foreach($product->colors as $color)
+                                        <a class="btn" style="background-color: {{$color->color}}"></a>
+                                        <br>
+                                    @endforeach
+                                </td>
+                                <td>{{number_format($product->view)}}</td>
+                                <td>
                                     @foreach($product->categories as $category)
                                         <span>{{$category->name}}</span>
                                         <br>
                                     @endforeach
                                 </td>
                                 <td>{{$product->brand->original_name ?? 'فاقد برند'}}</td>
+                                <td>{{number_format($product->marketable_number)}}</td>
                                 <td>
                                     <label>
                                         <input type="checkbox" id="change_marketable_{{$product->id}}"
