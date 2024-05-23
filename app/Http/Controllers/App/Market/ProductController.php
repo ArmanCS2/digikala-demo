@@ -142,7 +142,7 @@ class ProductController extends Controller
                 break;
         }
         if (!empty($request->search)) {
-            $query = Product::with('categories')->where('name', 'LIKE', "%$request->search%")->orderBy($column, $direction)->where('marketable_number', '>', 0)->where('status', 1);
+            $query = Product::with('categories')->where('name', 'LIKE', "%$request->search%")->orderBy($column, $direction)->where('status', 1);
         } else {
             $query = Product::with('categories')->orderBy($column, $direction)->where('marketable_number', '>', 0)->where('status', 1);
         }

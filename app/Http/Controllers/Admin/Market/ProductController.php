@@ -51,7 +51,7 @@ class ProductController extends Controller
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'products');
             $result = $imageService->createIndexAndSave($request->file('image'));
             if (!$result) {
-                return redirect()->route('admin.market.product.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+                return redirect()->back()->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
             $inputs['image'] = $result;
         }
@@ -119,7 +119,7 @@ class ProductController extends Controller
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'products');
             $result = $imageService->createIndexAndSave($request->file('image'));
             if (!$result) {
-                return redirect()->route('admin.content.post.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+                return redirect()->back()->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
             $inputs['image'] = $result;
         } else {

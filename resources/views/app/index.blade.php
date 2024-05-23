@@ -33,7 +33,58 @@
         </section>
     </section>
     <!-- end slideshow -->
+    <!-- start product lazy load -->
+    @if($albums->count()>0)
+        <section class="mb-3">
+            <section class="container-xxl">
+                <section class="row">
+                    <section class="col">
+                        <section class="content-wrapper bg-white p-3 rounded-2">
+                            <!-- start vontent header -->
+                            <section class="content-header">
+                                <section class="d-flex justify-content-between align-items-center">
+                                    <h2 class="content-header-title">
+                                        <span>آلبوم تصاویر</span>
+                                    </h2>
+                                    {{--                                <section class="content-header-link">--}}
+                                    {{--                                    <a href="#">مشاهده همه</a>--}}
+                                    {{--                                </section>--}}
+                                </section>
+                            </section>
+                            <!-- start vontent header -->
+                            <section class="lazyload-wrapper">
+                                <section class="lazyload light-owl-nav owl-carousel owl-theme">
 
+                                    @foreach($albums as $album)
+                                        <section class="item">
+                                            <section class="lazyload-item-wrapper">
+                                                <section class="product">
+                                                    <a class="product-link" href="{{url($album->link)}}">
+                                                        <section class="product-image">
+                                                            @if($album->type==0)
+                                                                <img
+                                                                    src="{{asset($album->image)}}"
+                                                                    alt="{{$album->name}}">
+                                                            @else
+                                                                <video
+                                                                    class="d-flex align-items-center justify-content-center"
+                                                                    src="{{asset($album->video)}}" controls></video>
+                                                            @endif
+                                                        </section>
+                                                    </a>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    @endforeach
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    @endif
+    <!-- end product lazy load -->
 
     <!-- start product lazy load -->
     <section class="mb-3">

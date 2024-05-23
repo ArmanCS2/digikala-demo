@@ -53,8 +53,11 @@ class ImageService extends ImageToolsService
 
             $this->provider();
 
-            $result = Image::make($image->getRealPath())->fit($imageSize['width'], $imageSize['height'])->save(public_path($this->getImageAddress()), null, $this->getImageFormat());
-
+            if (empty($imageSize['width'] && empty($imageSize['height']))) {
+                $result = Image::make($image->getRealPath())->save(public_path($this->getImageAddress()), null, $this->getImageFormat());
+            } else {
+                $result = Image::make($image->getRealPath())->fit($imageSize['width'], $imageSize['height'])->save(public_path($this->getImageAddress()), null, $this->getImageFormat());
+            }
             if ($result) {
                 $indexArray[$sizeAlias] = $this->getImageAddress();
             } else {

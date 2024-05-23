@@ -73,6 +73,10 @@
                 <span>روش های ارسال</span>
             </a>
 
+            <a href="{{route('admin.market.album.index')}}" class="sidebar-link">
+                <i class="fas fa-bars"></i>
+                <span>آلبوم ها</span>
+            </a>
 
 
             <section class="sidebar-part-title">بخش محتوا</section>
@@ -111,7 +115,6 @@
             </a>
 
 
-
             <section class="sidebar-part-title">بخش کاربران</section>
             <a href="{{route('admin.user.admin-user.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
@@ -129,7 +132,6 @@
                 <i class="fas fa-bars"></i>
                 <span>دسترسی ها</span>
             </a>
-
 
 
             <section class="sidebar-part-title">تیکت ها</section>
@@ -163,7 +165,6 @@
             </a>
 
 
-
             <section class="sidebar-part-title">اطلاع رسانی</section>
             <a href="{{route('admin.notify.email.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
@@ -173,7 +174,6 @@
                 <i class="fas fa-bars"></i>
                 <span>اعلامیه پیامکی</span>
             </a>
-
 
 
             <section class="sidebar-part-title">تنظیمات</section>

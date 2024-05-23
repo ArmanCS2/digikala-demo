@@ -8,7 +8,6 @@ use App\Http\Controllers\App\Market\CartController;
 use App\Http\Controllers\App\Market\PaymentController;
 use App\Http\Controllers\App\Market\ProductController;
 use App\Http\Controllers\App\ProfileController;
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -55,6 +54,11 @@ Route::middleware(['auth', 'role:super-admin'])->prefix('site')->group(function 
 
     Route::get('migrate', function () {
         Artisan::call('migrate');
+        return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
+    });
+
+    Route::get('migrate-rollback', function () {
+        Artisan::call('migrate:rollback');
         return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
     });
 
@@ -220,6 +224,17 @@ Route::middleware(['auth', 'role:admin', 'cache'])->prefix('admin')->namespace('
             Route::put('/update/{id}', 'BrandController@update')->name('admin.market.brand.update');
             Route::delete('/destroy/{id}', 'BrandController@destroy')->name('admin.market.brand.destroy');
             Route::get('/ajax/change-status/{id}', 'BrandController@ajaxChangeStatus')->name('admin.market.brand.ajax.change-status');
+        });
+
+
+        Route::prefix('album')->group(function () {
+            Route::get('/', 'AlbumController@index')->name('admin.market.album.index');
+            Route::get('/create', 'AlbumController@create')->name('admin.market.album.create');
+            Route::post('/store', 'AlbumController@store')->name('admin.market.album.store');
+            Route::get('/edit/{id}', 'AlbumController@edit')->name('admin.market.album.edit');
+            Route::put('/update/{id}', 'AlbumController@update')->name('admin.market.album.update');
+            Route::delete('/destroy/{id}', 'AlbumController@destroy')->name('admin.market.album.destroy');
+            Route::get('/ajax/change-status/{id}', 'AlbumController@ajaxChangeStatus')->name('admin.market.album.ajax.change-status');
         });
 
         Route::prefix('comment')->group(function () {
