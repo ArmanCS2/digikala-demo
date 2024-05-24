@@ -30,9 +30,9 @@ class HomeController extends Controller
         $offerProducts = Product::inRandomOrder()->where('marketable_number', '>', 0)->where('status', 1)->take(15)->get();
         $bestSalesProducts = Product::orderBy('marketable_number', 'DESC')->where('marketable_number', '>', 0)->where('status', 1)->take(15)->get();
         $newProducts = Product::orderBy('created_at', 'DESC')->where('marketable_number', '>', 0)->where('status', 1)->take(15)->get();
-        set_time_limit(300);
+        /*set_time_limit(300);
         $path = public_path('sitemap.xml');
-        SitemapGenerator::create('https://www.butikala.ir')->writeToFile($path);
+        SitemapGenerator::create('https://www.butikala.ir')->writeToFile($path);*/
         return view('app.index', compact('slideShows', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostViewedProducts', 'offerProducts', 'ads', 'bestSalesProducts', 'posts', 'newProducts', 'albums'));
     }
 
