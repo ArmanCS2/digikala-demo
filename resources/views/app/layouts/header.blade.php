@@ -197,6 +197,21 @@
                         </section>
                         <section class="border-start my-2"></section>
                     @endforeach
+                    <section class="navbar-item mx-1">
+                        <a href="{{$setting->instagram}}"
+                           class="text-muted text-decoration-none" target="_blank" ><i
+                                class="fab fa-instagram"></i></a>
+                    </section>
+                    <section class="navbar-item mx-1">
+                        <a href="{{$setting->telegram}}"
+                           class="text-muted text-decoration-none" target="_blank" ><i
+                                class="fab fa-telegram"></i></a>
+                    </section>
+                    <section class="navbar-item mx-1">
+                        <a href="{{$setting->link_1}}"
+                           class="text-muted text-decoration-none" target="_blank" ><i
+                                class="fa fa-play"></i></a>
+                    </section>
                 </section>
 
 
