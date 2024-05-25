@@ -26,10 +26,10 @@ class HomeController extends Controller
         $bottomBanner = Banner::where('position', 3)->where('status', 1)->first();
         $ads = Banner::where('position', 4)->where('status', 1)->get();
         $brands = Brand::where('status', 1)->get();
-        $mostViewedProducts = Product::orderBy('view', 'DESC')->where('marketable_number', '>', 0)->where('status', 1)->take(15)->get();
-        $offerProducts = Product::inRandomOrder()->where('marketable_number', '>', 0)->where('status', 1)->take(15)->get();
-        $bestSalesProducts = Product::orderBy('marketable_number', 'DESC')->where('marketable_number', '>', 0)->where('status', 1)->take(15)->get();
-        $newProducts = Product::orderBy('created_at', 'DESC')->where('marketable_number', '>', 0)->where('status', 1)->take(15)->get();
+        $mostViewedProducts = Product::orderBy('view', 'DESC')->where('status', 1)->take(15)->get();
+        $offerProducts = Product::inRandomOrder()->where('status', 1)->take(15)->get();
+        $bestSalesProducts = Product::orderBy('marketable_number', 'DESC')->where('status', 1)->take(15)->get();
+        $newProducts = Product::orderBy('created_at', 'DESC')->where('status', 1)->take(15)->get();
         /*set_time_limit(300);
         $path = public_path('sitemap.xml');
         SitemapGenerator::create('https://www.butikala.ir')->writeToFile($path);*/

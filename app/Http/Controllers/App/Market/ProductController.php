@@ -144,7 +144,7 @@ class ProductController extends Controller
         if (!empty($request->search)) {
             $query = Product::with('categories')->where('name', 'LIKE', "%$request->search%")->orderBy($column, $direction)->where('status', 1);
         } else {
-            $query = Product::with('categories')->orderBy($column, $direction)->where('marketable_number', '>', 0)->where('status', 1);
+            $query = Product::with('categories')->orderBy($column, $direction)->where('status', 1);
         }
         if (!empty($request->min_price)) {
             $query->where('price', '>=', $request->min_price);
@@ -202,9 +202,9 @@ class ProductController extends Controller
         }
         $commonDiscount = CommonDiscount::where('start_date', '<=', now())->where('end_date', '>=', now())->where('status', 1)->orderBy('created_at', 'desc')->first();
         if (!empty($commonDiscount)) {
-            $query = Product::with('categories')->where('marketable_number', '>', 0)->where('status', 1);
+            $query = Product::with('categories')->where('status', 1);
         } else {
-            $query = Product::with('categories')->whereHas('activeAmazingSaleObj')->where('marketable_number', '>', 0)->where('status', 1);
+            $query = Product::with('categories')->whereHas('activeAmazingSaleObj')->where('status', 1);
         }
 
         if (!empty($request->search)) {

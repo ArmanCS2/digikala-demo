@@ -1,6 +1,10 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
+    <meta property="og:title" content="وبلاگ بوتیکالا"/>
+    <meta property="og:description" content="{{$setting->description}}"/>
+    <meta property="og:url" content="{{url()->current()}}"/>
+    <meta property="og:image" content="{{asset(str_replace('\\','/',$setting->logo))}}">
     <meta name="description" content="{{$setting->description}}">
     <meta name="keywords" content="{{$setting->keywords}}">
     <title>وبلاگ</title>

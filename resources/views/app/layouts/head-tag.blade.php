@@ -10,6 +10,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="بوتیکالا">
+<meta property="og:locale" content="fa_IR" />
+<meta property="og:site_name" content="{{$setting->title}}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@butikala_ir" />
 <link rel="icon" href="{{asset(str_replace('\\','/',$setting->icon))}}">
 <link rel="shortcut icon" href="{{asset(str_replace('\\','/',$setting->icon))}}">
 <link rel="alternate" href="https://www.butikala.ir" hreflang="fa-ir">

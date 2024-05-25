@@ -1,6 +1,29 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
+    <meta name="product_id" content="{{$product->id}}">
+    <meta name="product_name" content="{{$product->name}}">
+    <meta property="og:title" content="{{$product->name}}"/>
+    <meta property="og:description" content="{{$product->name}}"/>
+    <meta property="og:url" content="{{url()->current()}}"/>
+    <meta property="og:image"
+          content="{{asset(str_replace('\\','/',$product->image['indexArray'][$product->image['currentImage']]))}}">
+    @if($commonDiscount)
+        <meta name="product_price"
+              content="{{$product->price - ($product->price * $commonDiscount->percentage / 100)}}">
+        <meta name="product_old_price" content="{{$product->price}}">
+    @elseif(!empty($product->activeAmazingSale()))
+        <meta name="product_price"
+              content="{{$product->price - ($product->price * $product->activeAmazingSale()->percentage / 100)}}">
+        <meta name="product_old_price" content="{{$product->price}}">
+    @else
+        <meta name="product_price" content="{{$product->price}}">
+    @endif
+    @if($product->status && $product->marketable_number > 0 )
+        <meta name="availability" content="instock">
+    @else
+        <meta name="availability" content="outofstock">
+    @endif
     <meta name="description" content="{{$product->name}}">
     <meta name="keywords" content="{{$product->tags}}">
     <title>{{$product->name}}</title>

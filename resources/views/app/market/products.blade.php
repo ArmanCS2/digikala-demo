@@ -1,6 +1,10 @@
 @extends('app.layouts.master-two-col2')
 
 @section('head-tag')
+    <meta property="og:title" content="محصولات بوتیکالا"/>
+    <meta property="og:description" content="{{$setting->description}}"/>
+    <meta property="og:url" content="{{url()->current()}}"/>
+    <meta property="og:image" content="{{asset(str_replace('\\','/',$setting->logo))}}">
     <meta name="description" content="{{$setting->description}}">
     <meta name="keywords" content="{{$setting->keywords}}">
     <title>محصولات</title>

@@ -1,6 +1,11 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
+    <meta property="og:title" content="{{$post->title}}"/>
+    <meta property="og:description" content="{{$post->title}}"/>
+    <meta property="og:url" content="{{url()->current()}}"/>
+    <meta property="og:image"
+          content="{{asset(str_replace('\\','/',$post->image['indexArray'][$post->image['currentImage']]))}}">
     <meta name="description" content="{{$post->title}}">
     <meta name="keywords" content="{{$post->tags}}">
     <title>{{$post->title}}</title>
