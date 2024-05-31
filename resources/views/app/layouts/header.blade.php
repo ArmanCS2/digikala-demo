@@ -197,26 +197,28 @@
                         </section>
                         <section class="border-start my-2"></section>
                     @endforeach
-                    <section class="navbar-item mx-1">
-                        <a href="{{$setting->instagram}}"
-                           class="text-muted text-decoration-none" target="_blank"><i
-                                class="fab fa-instagram"></i></a>
-                    </section>
-                    <section class="navbar-item mx-1">
-                        <a href="{{$setting->telegram}}"
-                           class="text-muted text-decoration-none" target="_blank"><i
-                                class="fab fa-telegram"></i></a>
-                    </section>
-                    <section class="navbar-item mx-1">
-                        <a href="{{$setting->link_1}}"
-                           class="text-muted text-decoration-none" target="_blank"><i
-                                class="fa fa-play"></i></a>
-                    </section>
-                    <section class="navbar-item mx-1">
-                        <a href="{{$setting->link_2}}"
-                           class="text-muted text-decoration-none" target="_blank"><i
-                                class="fa fa-x"></i></a>
-                    </section>
+                        <section class="d-flex align-items-center">
+                            <section class="navbar-item mx-1">
+                                <a href="{{$setting->instagram}}"
+                                   class="text-muted text-decoration-none" target="_blank"><i
+                                        class="fab fa-instagram"></i></a>
+                            </section>
+                            <section class="navbar-item mx-1">
+                                <a href="{{$setting->telegram}}"
+                                   class="text-muted text-decoration-none" target="_blank"><i
+                                        class="fab fa-telegram"></i></a>
+                            </section>
+                            <section class="navbar-item mx-1">
+                                <a href="{{$setting->link_1}}"
+                                   class="text-muted text-decoration-none" target="_blank"><i
+                                        class="fa fa-play"></i></a>
+                            </section>
+                            <section class="navbar-item mx-1">
+                                <a href="{{$setting->link_2}}"
+                                   class="text-muted text-decoration-none" target="_blank"><i
+                                        class="fa fa-x"></i></a>
+                            </section>
+                        </section>
                 </section>
 
 
@@ -236,7 +238,28 @@
                             <section class="navbar-item"><a href="{{url($menu->url)}}">{{$menu->name}}</a>
                             </section>
                         @endforeach
-
+                        <section class="d-flex">
+                            <section class="navbar-item">
+                                <a href="{{$setting->instagram}}"
+                                   class="text-muted text-decoration-none" target="_blank"><i
+                                        class="fab fa-instagram"></i></a>
+                            </section>
+                            <section class="navbar-item">
+                                <a href="{{$setting->telegram}}"
+                                   class="text-muted text-decoration-none" target="_blank"><i
+                                        class="fab fa-telegram"></i></a>
+                            </section>
+                            <section class="navbar-item">
+                                <a href="{{$setting->link_1}}"
+                                   class="text-muted text-decoration-none" target="_blank"><i
+                                        class="fa fa-play"></i></a>
+                            </section>
+                            <section class="navbar-item">
+                                <a href="{{$setting->link_2}}"
+                                   class="text-muted text-decoration-none" target="_blank"><i
+                                        class="fa fa-x"></i></a>
+                            </section>
+                        </section>
                         <hr class="border-bottom">
                         <section class="navbar-item">
                             <span>دسته بندی ها</span>

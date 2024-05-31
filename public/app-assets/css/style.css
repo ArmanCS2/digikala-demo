@@ -689,6 +689,25 @@ body {
     height: auto;
 }
 
+.album-image {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    /*max-height: 170px;*/
+    overflow: hidden;
+    /*margin-bottom: 1rem;*/
+    padding: 0rem;
+}
+
+.album-image img {
+    object-fit: contain;
+    display: block;
+    width: 100%;
+/ / max-width: 240 px;
+    border-radius: 0.25rem;
+    height: 260px;
+}
+
 
 .product-colors {
     position: absolute;
@@ -714,7 +733,7 @@ body {
     margin-top: 1rem;
     line-height: 1.5rem;
     height: 3rem;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .product-name * {

@@ -64,7 +64,7 @@
                                             <section class="lazyload-item-wrapper">
                                                 <section class="product">
                                                     <a class="product-link" href="{{url($album->link)}}">
-                                                        <section class="product-image">
+                                                        <section class="album-image">
                                                             @if($album->type==0)
                                                                 <img
                                                                     src="{{asset($album->image)}}"
@@ -212,7 +212,27 @@
     <!-- end product lazy load -->
 
 
-    {{--    <!-- start ads section -->--}}
+    <!-- start ads section -->
+    @if($topAds->count() >0)
+        <section class="mb-3 bg-gray">
+            <section class="container-xxl">
+                <!-- one column -->
+                <section class="row py-4 d-flex justify-content-center">
+                    @foreach($topAds as $ad)
+                        <section class="col-2"><a href="{{url($ad->url)}}">
+                                <img
+                                    class="d-block rounded-2 w-100" src="{{$ad->image}}" alt="{{$ad->title}}">
+                            </a>
+                        </section>
+                    @endforeach
+                </section>
+            </section>
+        </section>
+    @endif
+    <!-- end ads section -->
+
+
+    <!-- start ads section -->
     {{--    <section class="mb-3">--}}
     {{--        <section class="container-xxl">--}}
     {{--            <!-- two column-->--}}
@@ -227,7 +247,7 @@
 
     {{--        </section>--}}
     {{--    </section>--}}
-    {{--    <!-- end ads section -->--}}
+    <!-- end ads section -->
 
 
     <!-- start product lazy load -->
@@ -622,6 +642,22 @@
     </section>
     <!-- end product lazy load -->
 
+    <!-- start ads section -->
+    <section class="mb-3 bg-gray">
+        <section class="container-xxl">
+            <!-- one column -->
+            <section class="row py-4 d-flex justify-content-center">
+                @foreach($ads as $ad)
+                    <section class="col-2"><a href="{{url($ad->url)}}">
+                            <img
+                                class="d-block rounded-2 w-100" src="{{$ad->image}}" alt="{{$ad->title}}">
+                        </a>
+                    </section>
+                @endforeach
+            </section>
+        </section>
+    </section>
+    <!-- end ads section -->
 
     <!-- start brand part-->
     <section class="brand-part mb-4 py-4">
@@ -661,23 +697,6 @@
         </section>
     </section>
     <!-- end brand part-->
-
-    <!-- start ads section -->
-    {{--    <section class="mb-3">--}}
-    {{--        <section class="container-xxl">--}}
-    {{--            <!-- one column -->--}}
-    {{--            <section class="row py-4">--}}
-    {{--                @foreach($ads as $ad)--}}
-    {{--                    <section class="col"><a class="w-100 d-block h-auto text-decoration-none"--}}
-    {{--                                            href="https://armanafzali.ir"><img--}}
-    {{--                                class="d-block rounded-2 w-100" src="{{$ad->image}}" alt="{{$ad->title}}"></a>--}}
-    {{--                    </section>--}}
-    {{--                @endforeach--}}
-    {{--            </section>--}}
-    {{--        </section>--}}
-    {{--    </section>--}}
-    <!-- end ads section -->
-
 
     <!-- start brand part-->
     <section class="brand-part mb-4 py-4">

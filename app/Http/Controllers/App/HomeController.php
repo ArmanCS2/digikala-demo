@@ -24,16 +24,17 @@ class HomeController extends Controller
         $topBanners = Banner::where('position', 1)->where('status', 1)->take(2)->get();
         $middleBanners = Banner::where('position', 2)->where('status', 1)->take(2)->get();
         $bottomBanner = Banner::where('position', 3)->where('status', 1)->first();
+        $topAds = Banner::where('position', 5)->where('status', 1)->get();
         $ads = Banner::where('position', 4)->where('status', 1)->get();
         $brands = Brand::where('status', 1)->get();
         $mostViewedProducts = Product::orderBy('view', 'DESC')->where('status', 1)->take(15)->get();
-        $offerProducts = Product::inRandomOrder()->where('status', 1)->take(15)->get();
         $bestSalesProducts = Product::orderBy('marketable_number', 'DESC')->where('status', 1)->take(15)->get();
+        $offerProducts = Product::inRandomOrder()->where('status', 1)->where('marketable_number', '>', 0)->take(15)->get();
         $newProducts = Product::orderBy('created_at', 'DESC')->where('status', 1)->take(15)->get();
         /*set_time_limit(300);
         $path = public_path('sitemap.xml');
         SitemapGenerator::create('https://www.butikala.ir')->writeToFile($path);*/
-        return view('app.index', compact('slideShows', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostViewedProducts', 'offerProducts', 'ads', 'bestSalesProducts', 'posts', 'newProducts', 'albums'));
+        return view('app.index', compact('slideShows', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostViewedProducts', 'offerProducts', 'ads', 'bestSalesProducts', 'posts', 'newProducts', 'albums','topAds'));
     }
 
     public function download($file_path)
