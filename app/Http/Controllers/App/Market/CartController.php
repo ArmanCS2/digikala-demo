@@ -15,15 +15,15 @@ class CartController extends Controller
     public function cart()
     {
         if (Auth::check()) {
-            $user=Auth::user();
+            $user = Auth::user();
             $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
-            if (!empty($order)){
+            if (!empty($order)) {
                 $order->delete();
             }
             $cartItems = CartItem::where('user_id', $user->id)->get();
             $productPrices = 0;
             $productDiscounts = 0;
-            $finalProductPrices=0;
+            $finalProductPrices = 0;
             $finalProductDiscounts = 0;
             $totalProductPrices = 0;
             foreach ($cartItems as $cartItem) {
@@ -34,7 +34,7 @@ class CartController extends Controller
                 $totalProductPrices += $cartItem->totalProductPrice();
             }
             $relatedProducts = Product::inRandomOrder()->take(10)->get();
-            return view('app.market.cart', compact('cartItems', 'relatedProducts','productPrices','productDiscounts','finalProductPrices','finalProductDiscounts','totalProductPrices'));
+            return view('app.market.cart', compact('cartItems', 'relatedProducts', 'productPrices', 'productDiscounts', 'finalProductPrices', 'finalProductDiscounts', 'totalProductPrices'));
         }
 
         return redirect()->back()->with('toast-info', 'برای مشاهده سبد خرید باید وارد حساب کاربری خود شوید');
@@ -61,7 +61,7 @@ class CartController extends Controller
                 $user = Auth::user();
                 $cartItems = CartItem::where('user_id', $user->id)->where('product_id', $product->id)->get();
                 foreach ($cartItems as $cartItem) {
-                    if ($cartItem->product->id == $product->id) {
+                    if ($cartItem->product->id == $product->id && ($cartItem->color_id ?? null) == $request->color) {
                         /*if ($cartItem->number != ($request->number ?? 1)) {
                             $cartItem->update([
                                 'number' => $request->number ?? 1

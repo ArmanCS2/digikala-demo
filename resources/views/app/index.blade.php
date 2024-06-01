@@ -232,23 +232,6 @@
     <!-- end ads section -->
 
 
-    <!-- start ads section -->
-    {{--    <section class="mb-3">--}}
-    {{--        <section class="container-xxl">--}}
-    {{--            <!-- two column-->--}}
-    {{--            <section class="row py-4">--}}
-    {{--                @foreach($middleBanners as $middleBanner)--}}
-    {{--                    <section class="col-12 col-md-6 mt-2 mt-md-0"><img--}}
-    {{--                            class="d-block rounded-2 w-100"--}}
-    {{--                            src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}">--}}
-    {{--                    </section>--}}
-    {{--                @endforeach--}}
-    {{--            </section>--}}
-
-    {{--        </section>--}}
-    {{--    </section>--}}
-    <!-- end ads section -->
-
 
     <!-- start product lazy load -->
     <section class="mb-3">
@@ -514,6 +497,23 @@
     </section>
     <!-- end product lazy load -->
 
+    <!-- start ads section -->
+    <section class="mb-3 bg-gray">
+        <section class="container-xxl">
+            <!-- one column -->
+            <section class="row py-4 d-flex justify-content-center">
+                @foreach($ads as $ad)
+                    <section class="col-2"><a href="{{url($ad->url)}}">
+                            <img
+                                class="d-block rounded-2 w-100" src="{{$ad->image}}" alt="{{$ad->title}}">
+                        </a>
+                    </section>
+                @endforeach
+            </section>
+        </section>
+    </section>
+    <!-- end ads section -->
+
 
     <!-- start product lazy load -->
     <section class="mb-3">
@@ -643,18 +643,18 @@
     <!-- end product lazy load -->
 
     <!-- start ads section -->
-    <section class="mb-3 bg-gray">
+    <section class="mb-3">
         <section class="container-xxl">
-            <!-- one column -->
-            <section class="row py-4 d-flex justify-content-center">
-                @foreach($ads as $ad)
-                    <section class="col-2"><a href="{{url($ad->url)}}">
-                            <img
-                                class="d-block rounded-2 w-100" src="{{$ad->image}}" alt="{{$ad->title}}">
-                        </a>
+            <!-- two column-->
+            <section class="row py-4">
+                @foreach($middleBanners as $middleBanner)
+                    <section class="col-12 col-md-6 mt-2 mt-md-0"><a href="{{$middleBanner->url}}"><img
+                                class="d-block rounded-2 w-100"
+                                src="{{asset($middleBanner->image)}}" alt="{{$middleBanner->title}}"></a>
                     </section>
                 @endforeach
             </section>
+
         </section>
     </section>
     <!-- end ads section -->
