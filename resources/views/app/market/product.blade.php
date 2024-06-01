@@ -18,6 +18,7 @@
         <meta name="product_old_price" content="{{$product->price}}">
     @else
         <meta name="product_price" content="{{$product->price}}">
+        <meta name="product_old_price" content="{{$product->price}}">
     @endif
     @if($product->status && $product->marketable_number > 0 )
         <meta name="availability" content="instock">
@@ -453,31 +454,31 @@
                                                         <h3>{{$relatedProduct->name}}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
-                                                        @if(!empty($product->activeAmazingSale() ?? []))
+                                                        @if(!empty($relatedProduct->activeAmazingSale() ?? []))
                                                             <section class="product-discount">
                                                                 <span
-                                                                    class="product-old-price">{{priceFormat($product->price)}}</span>
+                                                                    class="product-old-price">{{priceFormat($relatedProduct->price)}}</span>
                                                                 <span
-                                                                    class="product-discount-amount"> % {{convertEnglishToPersian($product->activeAmazingSale()->percentage)}}</span>
+                                                                    class="product-discount-amount"> % {{convertEnglishToPersian($relatedProduct->activeAmazingSale()->percentage)}}</span>
                                                             </section>
                                                             <section
-                                                                class="product-price">{{priceFormat($product->price - ($product->price * $product->activeAmazingSale()->percentage / 100))}}
+                                                                class="product-price">{{priceFormat($relatedProduct->price - ($relatedProduct->price * $relatedProduct->activeAmazingSale()->percentage / 100))}}
                                                                 تومان
                                                             </section>
                                                         @elseif(!empty($commonDiscount))
                                                             <section class="product-discount">
                                                                 <span
-                                                                    class="product-old-price">{{priceFormat($product->price)}}</span>
+                                                                    class="product-old-price">{{priceFormat($relatedProduct->price)}}</span>
                                                                 <span
                                                                     class="product-discount-amount"> % {{convertEnglishToPersian($commonDiscount->percentage)}}</span>
                                                             </section>
                                                             <section
-                                                                class="product-price">{{priceFormat($product->price - ($product->price * $commonDiscount->percentage / 100))}}
+                                                                class="product-price">{{priceFormat($relatedProduct->price - ($relatedProduct->price * $commonDiscount->percentage / 100))}}
                                                                 تومان
                                                             </section>
                                                         @else
                                                             <section
-                                                                class="product-price">{{priceFormat($product->price)}}
+                                                                class="product-price">{{priceFormat($relatedProduct->price)}}
                                                                 تومان
                                                             </section>
                                                         @endif
