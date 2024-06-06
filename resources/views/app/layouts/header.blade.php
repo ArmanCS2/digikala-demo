@@ -80,7 +80,7 @@
                     @endauth
 
                     @guest
-                        <a href="{{ route('auth.login.form') }}"
+                        <a href="{{ route('auth.customer.login-register-form') }}"
                            class="btn btn-link text-decoration-none text-dark profile-button">
                             <i class="fa fa-user-lock"></i>
                         </a>
@@ -138,7 +138,7 @@
                                             خود شوید
                                             <a
                                                 class=" text-dark fw-bold mx-4"
-                                                href="{{ route('auth.login.form') }}">
+                                                href="{{ route('auth.customer.login-register-form') }}">
                                                 ورود </a></p>
                                     </section>
                                 </section>
@@ -197,28 +197,28 @@
                         </section>
                         <section class="border-start my-2"></section>
                     @endforeach
-                        <section class="d-flex align-items-center">
-                            <section class="navbar-item mx-1">
-                                <a href="{{$setting->instagram}}"
-                                   class="text-muted text-decoration-none" target="_blank"><i
-                                        class="fab fa-instagram"></i></a>
-                            </section>
-                            <section class="navbar-item mx-1">
-                                <a href="{{$setting->telegram}}"
-                                   class="text-muted text-decoration-none" target="_blank"><i
-                                        class="fab fa-telegram"></i></a>
-                            </section>
-                            <section class="navbar-item mx-1">
-                                <a href="{{$setting->link_1}}"
-                                   class="text-muted text-decoration-none" target="_blank"><i
-                                        class="fa fa-play"></i></a>
-                            </section>
-                            <section class="navbar-item mx-1">
-                                <a href="{{$setting->link_2}}"
-                                   class="text-muted text-decoration-none" target="_blank"><i
-                                        class="fa fa-x"></i></a>
-                            </section>
+                    <section class="d-flex align-items-center">
+                        <section class="navbar-item mx-1">
+                            <a href="{{$setting->instagram}}"
+                               class="text-muted text-decoration-none" target="_blank"><i
+                                    class="fab fa-instagram"></i></a>
                         </section>
+                        <section class="navbar-item mx-1">
+                            <a href="{{$setting->telegram}}"
+                               class="text-muted text-decoration-none" target="_blank"><i
+                                    class="fab fa-telegram"></i></a>
+                        </section>
+                        <section class="navbar-item mx-1">
+                            <a href="{{$setting->link_1}}"
+                               class="text-muted text-decoration-none" target="_blank"><i
+                                    class="fa fa-play"></i></a>
+                        </section>
+                        <section class="navbar-item mx-1">
+                            <a href="{{$setting->link_2}}"
+                               class="text-muted text-decoration-none" target="_blank"><i
+                                    class="fa fa-x"></i></a>
+                        </section>
+                    </section>
                 </section>
 
 

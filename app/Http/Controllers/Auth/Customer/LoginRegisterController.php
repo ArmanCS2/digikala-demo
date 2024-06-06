@@ -121,9 +121,9 @@ class LoginRegisterController extends Controller
             $otp->update(['used' => 1]);
             $user = $otp->user;
             if ($otp->type == 0 && empty($user->mobile_verified_at)) {
-                $user->update(['mobile_verified_at' => now(), 'status' => 1]);
+                $user->update(['mobile_verified_at' => now(), 'status' => 1, 'activation' => 1, 'is_active' => 1]);
             } elseif ($otp->type == 1 && empty($user->email_verified_at)) {
-                $user->update(['email_verified_at' => now(), 'status' => 1]);
+                $user->update(['email_verified_at' => now(), 'status' => 1, 'activation' => 1, 'is_active' => 1]);
             }
             Auth::login($user);
             return redirect()->route('home')->with('swal-success', 'با موفقیت وارد حساب کاربری خود شدید');

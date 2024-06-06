@@ -30,7 +30,7 @@
 
 
                 <section class="login-btn d-grid g-2 my-1">
-                    <button class="btn btn-danger">ثبت</button>
+                    <button class="btn btn-primary">ثبت</button>
                 </section>
 
 

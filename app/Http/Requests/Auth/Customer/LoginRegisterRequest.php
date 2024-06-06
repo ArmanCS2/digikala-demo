@@ -58,7 +58,7 @@ class LoginRegisterRequest extends FormRequest
             }
 
             return [
-                'id' => 'پست الکترونیک',
+                'id' => 'ورود یا ثبت نام',
                 //'g-recaptcha-response' => 'recaptcha'
             ];
         } elseif ($currentRouteName == 'auth.customer.login-confirm') {

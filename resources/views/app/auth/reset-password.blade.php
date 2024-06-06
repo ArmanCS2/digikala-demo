@@ -42,7 +42,7 @@
 
 
                 <section class="login-btn d-grid g-2 my-1">
-                    <button class="btn btn-danger">تغییر رمز عبور</button>
+                    <button class="btn btn-primary">تغییر رمز عبور</button>
                 </section>
 
 

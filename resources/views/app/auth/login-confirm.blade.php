@@ -53,7 +53,7 @@
                     </section>
                 </section>
                 <section class="login-btn d-grid g-2">
-                    <button class="btn btn-danger">تایید</button>
+                    <button class="btn btn-primary">تایید</button>
                 </section>
 
                 <section id="resend-otp" class="d-none text-center">

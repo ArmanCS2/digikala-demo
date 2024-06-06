@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>کاربران ادمین</title>
+    <title>کاربران</title>
 @endsection
 
 @section('content')

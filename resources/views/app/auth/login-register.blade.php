@@ -18,7 +18,7 @@
                 <section class="my-2">
                     <section class="login-info">شماره موبایل یا پست الکترونیک خود را وارد کنید</section>
                     <section class="login-input-text">
-                        <input type="text" name="id">
+                        <input type="text" name="id" placeholder="09123456789">
                     </section>
                     @error('id')
                     <span class="text-danger">
@@ -27,7 +27,7 @@
                     @enderror
                 </section>
                 <section class="login-btn d-grid g-2 my-1">
-                    <button class="btn btn-danger">ورود</button>
+                    <button class="btn btn-primary">ثبت</button>
                 </section>
                 {{--                <section class="login-terms-and-conditions my-1"><a href="#">شرایط و قوانین</a> را خوانده ام و پذیرفته ام--}}
                 {{--                </section>--}}

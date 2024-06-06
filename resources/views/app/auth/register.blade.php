@@ -54,7 +54,7 @@
 
 
                 <section class="login-btn d-grid g-2 my-1">
-                    <button class="btn btn-danger">ثبت نام</button>
+                    <button class="btn btn-primary">ثبت نام</button>
                 </section>
 
 

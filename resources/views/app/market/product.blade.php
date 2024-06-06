@@ -638,7 +638,7 @@
                                 @guest
                                     <section class="comment-add-wrapper">
                                         <p>برای افزودن دیدگاه وارد حساب کاربری خود شوید</p>
-                                        <a href="{{route('auth.login.form')}}"
+                                        <a href="{{route('auth.customer.login-register-form')}}"
                                            class="btn btn-primary">ورود
                                             یا ثبت نام</a>
                                     </section>

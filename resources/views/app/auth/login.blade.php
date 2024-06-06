@@ -42,7 +42,7 @@
 
 
                 <section class="login-btn d-grid g-2 my-1">
-                    <button class="btn btn-danger">ورود</button>
+                    <button class="btn btn-primary">ورود</button>
                 </section>
 
 

@@ -178,7 +178,8 @@
                                                                 </section>
 
                                                                 <section class="col-3 mb-2">
-                                                                    <label for="no" class="form-label mb-1">پلاک (اختیاری)</label>
+                                                                    <label for="no" class="form-label mb-1">پلاک
+                                                                        (اختیاری)</label>
                                                                     <input name="no" type="text"
                                                                            class="form-control form-control-sm"
                                                                            id="no" placeholder="پلاک"
@@ -192,7 +193,8 @@
 
                                                                 <section class="col-3 mb-2">
                                                                     <label for="unit"
-                                                                           class="form-label mb-1">واحد (اختیاری)</label>
+                                                                           class="form-label mb-1">واحد
+                                                                        (اختیاری)</label>
                                                                     <input name="unit" type="text"
                                                                            class="form-control form-control-sm"
                                                                            id="unit" placeholder="واحد"
@@ -368,7 +370,8 @@
                                                             </section>
 
                                                             <section class="col-3 mb-2">
-                                                                <label for="no" class="form-label mb-1">پلاک (اختیاری)</label>
+                                                                <label for="no" class="form-label mb-1">پلاک
+                                                                    (اختیاری)</label>
                                                                 <input name="no" type="text"
                                                                        class="form-control form-control-sm"
                                                                        id="no" placeholder="پلاک" value="{{old('no')}}">
@@ -380,7 +383,8 @@
                                                             </section>
 
                                                             <section class="col-3 mb-2">
-                                                                <label for="unit" class="form-label mb-1">واحد (اختیاری)</label>
+                                                                <label for="unit" class="form-label mb-1">واحد
+                                                                    (اختیاری)</label>
                                                                 <input name="unit" type="text"
                                                                        class="form-control form-control-sm"
                                                                        id="unit" placeholder="واحد"
@@ -498,8 +502,9 @@
                                             بگیرید.
                                         </secrion>
                                     </section>
-                                    @foreach($deliveries as $delivery)
-                                        <input checked type="radio" form="store-address-delivery" name="delivery_id"
+                                    @foreach($deliveries as $key => $delivery)
+                                        <input @if($key==0) checked @endif type="radio" form="store-address-delivery"
+                                               name="delivery_id"
                                                value="{{$delivery->id}}" id="d-{{$delivery->id}}"/>
                                         <label for="d-{{$delivery->id}}"
                                                class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
@@ -511,7 +516,6 @@
                                                 <i class="fa fa-calendar-alt mx-1"></i>
                                                 مدت زمان ارسال
                                                 : {{convertEnglishToPersian($delivery->delivery_time)}} {{$delivery->delivery_time_unit}}
-                                                کاری
                                             </section>
                                             <section class="mb-2">
                                                 <i class="fa fa-money-bill-alt mx-1"></i>
