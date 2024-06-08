@@ -50,9 +50,9 @@
                                     <h2 class="content-header-title">
                                         <span>آلبوم تصاویر</span>
                                     </h2>
-                                    {{--                                <section class="content-header-link">--}}
-                                    {{--                                    <a href="#">مشاهده همه</a>--}}
-                                    {{--                                </section>--}}
+                                    <section class="content-header-link">
+                                        <a href="{{route('market.albums')}}">مشاهده همه</a>
+                                    </section>
                                 </section>
                             </section>
                             <!-- start vontent header -->
@@ -90,6 +90,51 @@
     @endif
     <!-- end product lazy load -->
 
+    <!-- start videos -->
+    @if($videos->count() > 0)
+        <section class="mb-3">
+            <section class="container-xxl">
+                <section class="row">
+                    <section class="col">
+                        <section class="content-wrapper bg-white p-3 rounded-2">
+                            <!-- start vontent header -->
+                            <section class="content-header">
+                                <section class="d-flex justify-content-between align-items-center">
+                                    <h2 class="content-header-title">
+                                        <span>ویدیو محصولات</span>
+                                    </h2>
+                                    <section class="content-header-link">
+                                        <a href="{{route('content.videos')}}">مشاهده همه</a>
+                                    </section>
+                                </section>
+                            </section>
+                            <!-- start vontent header -->
+                            <section class="lazyload-wrapper">
+                                <section class="lazyload light-owl-nav owl-carousel owl-theme">
+
+                                    @foreach($videos as $video)
+                                        <section class="item">
+                                            <section class="lazyload-item-wrapper">
+                                                <section>
+                                                    {!! $video->link !!}
+                                                    <section class="video-name">
+                                                        <h3><a class="text-dark"
+                                                               href="{{url($video->url)}}">{{$video->title}}</a></h3>
+                                                    </section>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    @endforeach
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    @endif
+    <!-- end videos -->
+
     <!-- start product lazy load -->
     <section class="mb-3">
         <section class="container-xxl">
@@ -103,7 +148,8 @@
                                     <span>پربازدیدترین کالاها</span>
                                 </h2>
                                 <section class="content-header-link">
-                                    <a href="{{route('market.products',['sort'=>5])}}">مشاهده همه</a>
+                                    <a class="product-link" href="{{route('market.products',['sort'=>5])}}">مشاهده
+                                        همه</a>
                                 </section>
                             </section>
                         </section>
@@ -717,10 +763,13 @@
                             @foreach($brands as $brand)
                                 <section class="item">
                                     <section class="brand-item">
-                                        <a href="{{route('market.products',['brands'=>[$brand->id]])}}"><img
-                                                class="rounded-2"
-                                                src="{{asset($brand->logo['indexArray'][$brand->logo['currentImage']])}}"
-                                                alt="{{$brand->persian_name}}"></a>
+                                        {{--                                        <a href="{{route('market.products',['brands'=>[$brand->id]])}}"><img--}}
+                                        {{--                                                class="rounded-2"--}}
+                                        {{--                                                src="{{asset($brand->logo['indexArray'][$brand->logo['currentImage']])}}"--}}
+                                        {{--                                                alt="{{$brand->persian_name}}"></a>--}}
+                                        <img class="rounded-2"
+                                             src="{{asset($brand->logo['indexArray'][$brand->logo['currentImage']])}}"
+                                             alt="{{$brand->persian_name}}">
                                     </section>
                                 </section>
                             @endforeach

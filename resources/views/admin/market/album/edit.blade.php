@@ -62,6 +62,18 @@
                                 @enderror
                             </section>
 
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">ترتیب</label>
+                                    <input type="text" class="form-control form-control-sm" name="ordering"
+                                           value="{{old('ordering',$album->ordering)}}">
+                                </div>
+                                @error('ordering')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
@@ -88,8 +100,11 @@
                                 <div class="form-group">
                                     <label for="">وضعیت</label>
                                     <select name="status" id="" class="form-control form-control-sm">
-                                        <option value="0" @if(old('status',$album->status)==0) selected @endif>غیر فعال</option>
-                                        <option value="1" @if(old('status',$album->status)==1) selected @endif>فعال</option>
+                                        <option value="0" @if(old('status',$album->status)==0) selected @endif>غیر
+                                            فعال
+                                        </option>
+                                        <option value="1" @if(old('status',$album->status)==1) selected @endif>فعال
+                                        </option>
                                     </select>
                                 </div>
                                 @error('status')

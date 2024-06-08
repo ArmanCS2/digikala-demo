@@ -26,6 +26,7 @@ class UpdateAlbumRequest extends FormRequest
         return [
             'name' => 'required|string',
             'link' => 'required|string',
+            'ordering' => 'required|numeric',
             'image' => 'nullable|image',
             'video' => 'nullable|file|mimes:mp4,mpeg,mpkg,gif,odp',
             'type' => 'required|numeric',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Content\Banner;
 use App\Models\Content\Page;
 use App\Models\Content\Post;
+use App\Models\Content\Video;
 use App\Models\Market\Album;
 use App\Models\Market\Brand;
 use App\Models\Market\Product;
@@ -18,8 +19,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $albums = Album::where('status', 1)->get();
-        $posts = Post::where('status', 1)->get();
+        $videos = Video::where('status', 1)->orderBy('ordering')->take(15)->get();
+        $albums = Album::where('status', 1)->orderBy('ordering')->take(15)->get();
+        $posts = Post::where('status', 1)->take(15)->get();
         $slideShows = Banner::where('position', 0)->where('status', 1)->get();
         $topBanners = Banner::where('position', 1)->where('status', 1)->take(2)->get();
         $middleBanners = Banner::where('position', 2)->where('status', 1)->take(2)->get();
@@ -34,7 +36,7 @@ class HomeController extends Controller
         /*set_time_limit(300);
         $path = public_path('sitemap.xml');
         SitemapGenerator::create('https://www.butikala.ir')->writeToFile($path);*/
-        return view('app.index', compact('slideShows', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostViewedProducts', 'offerProducts', 'ads', 'bestSalesProducts', 'posts', 'newProducts', 'albums','topAds'));
+        return view('app.index', compact('slideShows', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostViewedProducts', 'offerProducts', 'ads', 'bestSalesProducts', 'posts', 'newProducts', 'albums', 'topAds', 'videos'));
     }
 
     public function download($file_path)

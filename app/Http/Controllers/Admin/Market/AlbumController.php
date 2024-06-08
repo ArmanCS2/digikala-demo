@@ -21,7 +21,7 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        $albums = Album::paginate(20);
+        $albums = Album::orderBy('ordering')->paginate(20);
         return view('admin.market.album.index', compact('albums'));
     }
 
@@ -63,6 +63,7 @@ class AlbumController extends Controller
             'name' => $request->name,
             'type' => $request->type,
             'status' => $request->status,
+            'ordering' => $request->ordering,
             'link' => $request->link,
             'image' => $image ?? null,
             'video' => $video ?? null
@@ -130,9 +131,10 @@ class AlbumController extends Controller
             'name' => $request->name ?? $album->name,
             'type' => $request->type ?? $album->type,
             'status' => $request->status ?? $album->status,
+            'ordering' => $request->ordering ?? $album->ordering,
             'link' => $request->link ?? $album->link,
-            'image' => $image  ?? $album->image,
-            'video' => $video  ?? $album->video
+            'image' => $image ?? $album->image,
+            'video' => $video ?? $album->video
         ]);
         return redirect()->route('admin.market.album.index')->with('swal-success', 'آلبوم با موفقیت ویرایش شد');
     }

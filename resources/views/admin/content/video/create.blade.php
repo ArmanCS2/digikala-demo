@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>آلبوم ها</title>
+    <title>ویدیو</title>
 @endsection
 
 @section('content')
@@ -9,9 +9,9 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"><a href="#">بخش فروش</a></li>
-            <li class="breadcrumb-item font-size-12"><a href="#">آلبوم ها</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد آلبوم</li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش محتوا</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">ویدیو ها</a></li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد ویدیو جدید</li>
         </ol>
     </nav>
 
@@ -21,32 +21,33 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد آلبوم
+                        ایجاد ویدیو جدید
                     </h5>
                 </section>
 
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.album.index') }}" class="btn btn-info btn-sm">بازگشت</a>
+                    <a href="{{ route('admin.content.video.index') }}" class="btn btn-info btn-sm">بازگشت</a>
                 </section>
 
                 <section>
-                    <form action="{{route('admin.market.album.store')}}" method="post" id="form"
-                          enctype="multipart/form-data">
+                    <form action="{{route('admin.content.video.store')}}" method="post"
+                          enctype="multipart/form-data" id="form">
                         @csrf
                         <section class="row">
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">نام</label>
-                                    <input type="text" class="form-control form-control-sm" name="name"
-                                           value="{{old('name')}}">
+                                    <label for="">عنوان ویدیو</label>
+                                    <input type="text" class="form-control form-control-sm" name="title"
+                                           value="{{old('title')}}">
                                 </div>
-                                @error('name')
+                                @error('title')
                                 <span class="text-danger">
                                     <strong>{{$message}}</strong>
                                 </span>
                                 @enderror
                             </section>
+
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
@@ -55,6 +56,19 @@
                                            value="{{old('link')}}">
                                 </div>
                                 @error('link')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">url</label>
+                                    <input type="text" class="form-control form-control-sm" name="url"
+                                           value="{{old('url')}}">
+                                </div>
+                                @error('url')
                                 <span class="text-danger">
                                     <strong>{{$message}}</strong>
                                 </span>
@@ -76,27 +90,6 @@
 
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
-                                    <label for="">نوع</label>
-                                    <select name="type" id="" class="form-control form-control-sm">
-
-                                        <option value="0"
-                                                @if(old('type')==0) selected @endif>تصویر
-                                        </option>
-                                        <option value="1"
-                                                @if(old('type')==1) selected @endif>ویدیو
-                                        </option>
-
-                                    </select>
-                                </div>
-                                @error('type')
-                                <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                @enderror
-                            </section>
-
-                            <section class="col-12 col-md-6 my-1">
-                                <div class="form-group">
                                     <label for="">وضعیت</label>
                                     <select name="status" id="" class="form-control form-control-sm">
                                         <option value="0" @if(old('status')==0) selected @endif>غیر فعال</option>
@@ -110,33 +103,7 @@
                                 @enderror
                             </section>
 
-
-                            <section class="col-12 col-md-6 my-1">
-                                <div class="form-group">
-                                    <label for="">تصویر</label>
-                                    <input type="file" class="form-control form-control-sm" name="image">
-                                </div>
-                                @error('image')
-                                <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                @enderror
-                            </section>
-
-
-                            <section class="col-12 col-md-6 my-1">
-                                <div class="form-group">
-                                    <label for="">ویدیو</label>
-                                    <input type="file" class="form-control form-control-sm" name="video">
-                                </div>
-                                @error('video')
-                                <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                @enderror
-                            </section>
-
-                            <section class="col-12">
+                            <section class="col-12  my-1">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                             </section>
                         </section>
@@ -146,19 +113,5 @@
             </section>
         </section>
     </section>
-
-@endsection
-
-@section('scripts')
-
-
-    <script>
-        $(function () {
-            $('#btn-copy').on('click', function () {
-                var ele = $(this).parent().prev().clone(true);
-                $(this).before(ele);
-            })
-        })
-    </script>
 
 @endsection

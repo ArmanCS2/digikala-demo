@@ -12,18 +12,18 @@ class PostController extends Controller
 {
     public function post(Post $post)
     {
-        return view('app.content.post',compact('post'));
+        return view('app.content.post', compact('post'));
     }
 
     public function posts()
     {
-        $posts=Post::paginate(15);
-        return view('app.content.posts',compact('posts'));
+        $posts = Post::where('status', 1)->paginate(15);
+        return view('app.content.posts', compact('posts'));
     }
 
     public function storeComment(CommentRequest $request, Post $post)
     {
-        if (Auth::check()){
+        if (Auth::check()) {
             Comment::create([
                 'body' => $request->body,
                 'author_id' => Auth::user()->id,

@@ -80,6 +80,12 @@
 
 
             <section class="sidebar-part-title">بخش محتوا</section>
+
+            <a href="{{route('admin.content.video.index')}}" class="sidebar-link">
+                <i class="fas fa-bars"></i>
+                <span>ویدیو ها</span>
+            </a>
+
             <a href="{{route('admin.content.banner.index')}}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>بنر ها</span>

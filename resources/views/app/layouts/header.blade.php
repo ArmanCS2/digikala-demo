@@ -198,25 +198,35 @@
                         <section class="border-start my-2"></section>
                     @endforeach
                     <section class="d-flex align-items-center">
-                        <section class="navbar-item mx-1">
+                        <section class="navbar-item">
                             <a href="{{$setting->instagram}}"
                                class="text-muted text-decoration-none" target="_blank"><i
                                     class="fab fa-instagram"></i></a>
                         </section>
-                        <section class="navbar-item mx-1">
+                        <section class="navbar-item">
                             <a href="{{$setting->telegram}}"
                                class="text-muted text-decoration-none" target="_blank"><i
                                     class="fab fa-telegram"></i></a>
                         </section>
-                        <section class="navbar-item mx-1">
+                        <section class="navbar-item">
                             <a href="{{$setting->link_1}}"
                                class="text-muted text-decoration-none" target="_blank"><i
-                                    class="fa fa-play"></i></a>
+                                    class="fab fa-youtube"></i></a>
                         </section>
-                        <section class="navbar-item mx-1">
+                        <section class="navbar-item">
                             <a href="{{$setting->link_2}}"
                                class="text-muted text-decoration-none" target="_blank"><i
-                                    class="fa fa-x"></i></a>
+                                    class="fab fa-twitter"></i></a>
+                        </section>
+                        <section class="navbar-item">
+                            <a href="{{$setting->link_3}}"
+                               class="text-muted text-decoration-none" target="_blank"><i
+                                    class="fab fa-youtube-square"></i></a>
+                        </section>
+                        <section class="navbar-item">
+                            <a href="{{$setting->link_4}}"
+                               class="text-muted text-decoration-none" target="_blank"><i
+                                    class="fab fa-linkedin"></i></a>
                         </section>
                     </section>
                 </section>

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Market;
+namespace App\Http\Requests\Admin\Content;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAlbumRequest extends FormRequest
+class VideoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,11 @@ class StoreAlbumRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'title' => 'required|string',
             'link' => 'required|string',
+            'url' => 'required|string',
             'ordering' => 'required|numeric',
-            'image' => 'nullable|image',
-            'video' => 'nullable|file|mimes:mp4,mpeg,mpkg,gif,odp',
-            'type' => 'required|numeric',
-            'status' => 'required|numeric|in:0,1'
+            'status' => 'required|numeric',
         ];
     }
 }

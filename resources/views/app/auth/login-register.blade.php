@@ -18,7 +18,7 @@
                 <section class="my-2">
                     <section class="login-info">شماره موبایل یا پست الکترونیک خود را وارد کنید</section>
                     <section class="login-input-text">
-                        <input type="text" name="id" placeholder="09123456789">
+                        <input type="text" name="id" placeholder="09xxxxxxxxx">
                     </section>
                     @error('id')
                     <span class="text-danger">

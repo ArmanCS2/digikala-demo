@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>آلبوم ها</title>
+    <title>ویدیو ها</title>
 @endsection
 
 @section('content')
@@ -9,69 +9,62 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"><a href="#">بخش فروش</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page"> آلبوم ها</li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش محتوا</a></li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page"> ویدیو ها</li>
         </ol>
     </nav>
-
 
     <section class="row">
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        آلبوم ها
+                        ویدیو ها
                     </h5>
                 </section>
+                @include('alerts.alert-section.success')
+                @include('alerts.alert-section.error')
+                @include('alerts.alert-section.info')
+                @include('alerts.alert-section.warning')
 
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.album.create') }}" class="btn btn-info btn-sm">ایجاد آلبوم</a>
+                    <a href="{{ route('admin.content.video.create') }}" class="btn btn-info btn-sm">ایجاد ویدیو جدید</a>
                     <div class="max-width-16-rem">
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                     </div>
                 </section>
 
                 <section class="table-responsive">
-                    <table class="table table-striped table-hover" style="height: 140px">
+                    <table class="table table-striped table-hover">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>نام</th>
-                            <th>تصویر</th>
-                            <th>ویدیو</th>
+                            <th>عنوان</th>
+                            <th>url</th>
                             <th>ترتیب</th>
-                            <th>نوع</th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($albums as $album)
+                        @foreach($videos as $key => $video)
                             <tr>
-                                <th>{{$loop->iteration}}</th>
-                                <td>{{$album->name}}</td>
-                                <td><img
-                                        src="{{!empty($album->image) ? asset($album->image): ''}}"
-                                        width="100px" alt="فاقد تصویر"></td>
-                                <td>
-                                    <video src="{{!empty($album->video) ? asset($album->video): '-'}}"
-                                           width="100px" controls></video>
-                                </td>
-                                <td>{{$album->ordering}}</td>
-                                <td>{{$album->albumType()}}</td>
-
+                                <th>{{{$key+1}}}</th>
+                                <td>{{$video->title}}</td>
+                                <td>{{$video->url}}</td>
+                                <th>{{$video->ordering}}</th>
                                 <td>
                                     <label>
-                                        <input type="checkbox" id="change_status_{{$album->id}}"
-                                               onchange="changeStatus({{$album->id}})"
-                                               data-url="{{route('admin.market.album.ajax.change-status',[$album->id])}}"
-                                               @if($album->status==1) checked @endif>
+                                        <input type="checkbox" id="change_status_{{$video->id}}"
+                                               onchange="changeStatus({{$video->id}})"
+                                               data-url="{{route('admin.content.video.ajax.change-status',[$video->id])}}"
+                                               @if($video->status==1) checked @endif>
                                     </label>
                                 </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.album.edit',[$album->id]) }}"
+                                    <a href="{{ route('admin.content.video.edit',[$video->id]) }}"
                                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                    <form action="{{ route('admin.market.album.destroy',[$album->id]) }}"
+                                    <form action="{{ route('admin.content.video.destroy',[$video->id]) }}"
                                           method="post" class="d-inline">
                                         @csrf
                                         @method('DELETE')
@@ -79,17 +72,21 @@
                                                 class="fa fa-trash-alt"></i> حذف
                                         </button>
                                     </form>
+
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
-                    @include('admin.layouts.pagination',['data'=>$albums])
+                    @include('admin.layouts.pagination',['data'=>$videos])
                 </section>
 
             </section>
         </section>
+
     </section>
+
+
 
 @endsection
 
@@ -107,10 +104,10 @@
                     if (response.status) {
                         if (response.checked) {
                             element.prop('checked', true);
-                            successToast('آلبوم با موفقیت فعال شد');
+                            successToast('ویدیو با موفقیت فعال شد');
                         } else {
                             element.prop('checked', false);
-                            successToast('آلبوم با موفقیت غیر فعال شد');
+                            successToast('ویدیو با موفقیت غیر فعال شد');
                         }
                     } else {
                         element.prop('checked', elementValue);

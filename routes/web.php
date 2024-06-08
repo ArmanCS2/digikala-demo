@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\User\AdminUserController;
 use App\Http\Controllers\App\Content\PostController;
+use App\Http\Controllers\App\Content\VideoController;
 use App\Http\Controllers\App\HomeController;
 use App\Http\Controllers\App\Market\AddressController;
+use App\Http\Controllers\App\Market\AlbumController;
 use App\Http\Controllers\App\Market\CartController;
 use App\Http\Controllers\App\Market\PaymentController;
 use App\Http\Controllers\App\Market\ProductController;
@@ -94,6 +96,7 @@ Route::middleware(['cache'])->group(function () {
         });
     });
     Route::prefix('market')->group(function () {
+        Route::get('albums', [AlbumController::class, 'albums'])->name('market.albums');
         Route::get('/products', [ProductController::class, 'products'])->name('market.products');
         Route::get('/amazing-sales', [ProductController::class, 'amazingSales'])->name('market.amazing-sales');
         Route::prefix('product')->group(function () {
@@ -131,6 +134,7 @@ Route::middleware(['cache'])->group(function () {
 
     });
     Route::prefix('content')->group(function () {
+        Route::get('videos', [VideoController::class, 'videos'])->name('content.videos');
         Route::get('posts', [PostController::class, 'posts'])->name('content.posts');
         Route::prefix('post')->group(function () {
             Route::get('/{post:slug}', [PostController::class, 'post'])->name('content.post');
@@ -362,6 +366,16 @@ Route::middleware(['auth', 'role:admin', 'cache'])->prefix('admin')->namespace('
 
 
     Route::prefix('content')->namespace('Content')->group(function () {
+
+        Route::prefix('video')->group(function () {
+            Route::get('/', 'VideoController@index')->name('admin.content.video.index');
+            Route::get('/create', 'VideoController@create')->name('admin.content.video.create');
+            Route::post('/store', 'VideoController@store')->name('admin.content.video.store');
+            Route::get('/edit/{id}', 'VideoController@edit')->name('admin.content.video.edit');
+            Route::put('/update/{id}', 'VideoController@update')->name('admin.content.video.update');
+            Route::delete('/destroy/{id}', 'VideoController@destroy')->name('admin.content.video.destroy');
+            Route::get('/ajax/change-status/{id}', 'VideoController@ajaxChangeStatus')->name('admin.content.video.ajax.change-status');
+        });
 
 
         Route::prefix('banner')->group(function () {

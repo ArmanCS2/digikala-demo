@@ -56,19 +56,25 @@
                     <section class="text-dark fw-bold">با ما همراه باشید</section>
                     <section class="my-3">
                         <a href="{{$setting->instagram}}"
-                           class="text-muted text-decoration-none me-5" target="_blank"><i
+                           class="text-muted text-decoration-none mx-2" target="_blank"><i
                                 class="fab fa-instagram"></i></a>
                         <a href="{{$setting->telegram}}"
-                           class="text-muted text-decoration-none me-5" target="_blank"><i
+                           class="text-muted text-decoration-none mx-2" target="_blank"><i
                                 class="fab fa-telegram"></i></a>
                         <a href="{{$setting->link_1}}"
-                           class="text-muted text-decoration-none me-5" target="_blank"><i
-                                class="fa fa-play"></i></a>
+                           class="text-muted text-decoration-none mx-2" target="_blank"><i
+                                class="fab fa-youtube"></i></a>
                         <a href="{{$setting->link_2}}"
-                           class="text-muted text-decoration-none me-5" target="_blank"><i
-                                class="fa fa-x"></i></a>
+                           class="text-muted text-decoration-none mx-2" target="_blank"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="{{$setting->link_3}}"
+                           class="text-muted text-decoration-none mx-2" target="_blank"><i
+                                class="fab fa-square-youtube"></i></a>
+                        <a href="{{$setting->link_4}}"
+                           class="text-muted text-decoration-none mx-2" target="_blank"><i
+                                class="fab fa-linkedin"></i></a>
                         <a href="{{$setting->my_site}}"
-                           class="text-muted text-decoration-none me-5" target="_blank"><i
+                           class="text-muted text-decoration-none mx-2" target="_blank"><i
                                 class="fa fa-link"></i></a>
                     </section>
                 </section>
