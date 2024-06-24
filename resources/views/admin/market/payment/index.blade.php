@@ -48,8 +48,8 @@
                         @foreach($payments as $key => $payment)
                             <tr>
                                 <th>{{$key + 1}}</th>
-                                <td>{{$payment->paymentable->transaction_id ?? 'پرداخت در محل'}}</td>
-                                <td>{{$payment->paymentable->gateway ?? 'پرداخت در محل'}}</td>
+                                <td>{{$payment->paymentable->transaction_id ?? $payment->id}}</td>
+                                <td>{{$payment->paymentable->gateway ?? '-'}}</td>
                                 <td>{{number_format($payment->amount)}} تومان</td>
                                 <td>{{$payment->user->full_name}}</td>
                                 <td>{{$payment->status()}}</td>

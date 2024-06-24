@@ -15,11 +15,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        /*$products = Product::all();
+        $products = Product::all();
         foreach ($products as $product) {
-            $product->update([
-                'price' => 198000
-            ]);
-        }*/
+            if ($product->size == 'XLarge') {
+                $product->update([
+                    'width' => 44,
+                    'height' => 66,
+                ]);
+            }
+            if ($product->size == 'XXLarge') {
+                $product->update([
+                    'width' => 48,
+                    'height' => 72,
+                ]);
+            }
+
+        }
     }
 }

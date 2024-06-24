@@ -118,6 +118,19 @@
                                 {{$order->payment_status()}}
                             </td>
                         </tr>
+                        <tr class="border-bottom font-weight-bolder">
+                            <th>کالا ها</th>
+                            <td class="text-left font-weight-bolder">
+                            </td>
+                        </tr>
+                        @foreach($order->items as $item)
+                            <tr class="border-bottom font-weight-bolder">
+                                <th>{{$item->product->name}}</th>
+                                <td class="text-left">
+                                    {{number_format($item->product->price)}} تومان
+                                </td>
+                            </tr>
+                        @endforeach
                         <tr class="border-bottom">
                             <th>مجموع قیمت ها</th>
                             <td class="text-left font-weight-bolder">
@@ -182,6 +195,7 @@
                                 {{$order->delivery_status()}}
                             </td>
                         </tr>
+
 
                         </tbody>
                     </table>

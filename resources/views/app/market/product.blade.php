@@ -182,21 +182,42 @@
                                             </section>
                                         @endif
 
-                                        <section class="my-4">
-                                            <i class="fa fa-tshirt"></i>
-                                            <span class="fw-bold">جنس : {{$product->material ?? '-'}}</span>
-                                        </section>
+                                        @if(!empty($product->material))
+                                            <section class="my-4">
+                                                <i class="fa fa-tshirt"></i>
+                                                <span class="fw-bold">جنس : {{$product->material ?? '-'}}</span>
+                                            </section>
+                                        @endif
 
-                                        <section class="my-4">
-                                            <i class="fa fa-text-height"></i>
-                                            <span class="fw-bold">سایز : {{$product->size ?? '-'}}</span>
-                                        </section>
+                                        @if(!empty($product->size))
+                                            <section class="my-4">
+                                                <i class="fa fa-text-height"></i>
+                                                <span class="fw-bold">سایز : {{$product->size ?? '-'}}</span>
+                                            </section>
+                                        @endif
 
-                                        <section class="my-4">
-                                            <i class="fa fa-tag"></i>
-                                            <span
-                                                class="fw-bold">برند : {{$product->brand->persian_name ?? 'فاقد برند'}}</span>
-                                        </section>
+                                        @if(!empty($product->width))
+                                            <section class="my-4">
+                                                <i class="fa fa-text-width"></i>
+                                                <span class="fw-bold">عرض : {{$product->width ?? '-'}} سانتی متر </span>
+                                            </section>
+                                        @endif
+
+                                        @if(!empty($product->height))
+                                            <section class="my-4">
+                                                <i class="fa fa-text-height"></i>
+                                                <span
+                                                    class="fw-bold">ارتفاع : {{$product->height ?? '-'}} سانتی متر </span>
+                                            </section>
+                                        @endif
+
+                                        @if(!empty($product->brand->persian_name))
+                                            <section class="my-4">
+                                                <i class="fa fa-tag"></i>
+                                                <span
+                                                    class="fw-bold">برند : {{$product->brand->persian_name ?? 'فاقد برند'}}</span>
+                                            </section>
+                                        @endif
 
                                         <section class="my-4">
                                             <i class="fa fa-list-alt"></i>

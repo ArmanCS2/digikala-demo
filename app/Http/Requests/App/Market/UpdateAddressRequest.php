@@ -25,16 +25,16 @@ class UpdateAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            'province_id'=>'nullable|exists:province_cities,id',
-            'city_id'=>'nullable|exists:province_cities,id',
-            'postal_code'=>['required',new PostalCode()],
-            'address'=>'required|string',
-            'no'=>'nullable|string',
-            'unit'=>'nullable|string',
-            'receiver'=>'nullable',
-            'recipient_first_name'=>'nullable|string',
-            'recipient_last_name'=>'nullable|string',
-            'mobile'=>'nullable|numeric|digits:11',
+            'province_id' => 'nullable|exists:province_cities,id',
+            'city_id' => 'nullable|exists:province_cities,id',
+            'postal_code' => ['required', 'numeric'],
+            'address' => 'required|string',
+            'no' => 'nullable|string',
+            'unit' => 'nullable|string',
+            'receiver' => 'nullable',
+            'recipient_first_name' => 'nullable|string',
+            'recipient_last_name' => 'nullable|string',
+            'mobile' => 'nullable|numeric|digits:11',
         ];
     }
 }

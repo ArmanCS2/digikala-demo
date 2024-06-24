@@ -39,6 +39,7 @@
                             <th>نام کاربری</th>
                             <th>ایمیل</th>
                             <th>شماره موبایل</th>
+                            <th>کد ملی</th>
                             <th>وضعیت کاربر</th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
@@ -48,9 +49,10 @@
                         @foreach($customers as $key => $customer)
                             <tr>
                                 <th>{{$key + 1}}</th>
-                                <td>{{$customer->full_name}}</td>
-                                <td>{{$customer->email}}</td>
-                                <td>{{$customer->mobile}}</td>
+                                <td>{{$customer->full_name ?? '-'}}</td>
+                                <td>{{$customer->email ?? '-'}}</td>
+                                <td>{{$customer->mobile ?? '-'}}</td>
+                                <td>{{$customer->national_code ?? '-'}}</td>
                                 <td>
                                     <label>
                                         <input type="checkbox" id="change_activation_{{$customer->id}}"

@@ -28,7 +28,7 @@ class UpdateProfileRequest extends FormRequest
             'first_name'=>'nullable|string|max:100',
             'last_name'=>'nullable|string|max:100',
             'email'=>'nullable|email|unique:users,email',
-            'national_code'=>['nullable','unique:users,national_code',new NationalCode()]
+            'national_code'=>['nullable','numeric', 'digits:10','unique:users,national_code',new NationalCode()]
         ];
     }
 }

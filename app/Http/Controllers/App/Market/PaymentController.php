@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\App\Market;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\Message\MessageService;
+use App\Http\Services\Message\SMS\SmsService;
 use App\Http\Services\Payment\PaymentService;
 use App\Models\Market\CartItem;
 use App\Models\Market\CashPayment;
@@ -218,6 +220,16 @@ class PaymentController extends Controller
             'payment_type' => $type,
             'order_status' => 2
         ]);
+        $smsService = new SmsService();
+        $smsService->setTo($user->mobile);
+        $text = "فروشگاه بوتیکالا
+            مشتری گرامی سفارش شما با موفقیت ثبت شد.
+            کد سفارش : BK-$order->id
+            با تشکر از خرید شما
+            وبسایت : www.butikala.ir";
+        $smsService->setText($text);
+        $messageService = new MessageService($smsService);
+        $messageService->send();
         return redirect()->route('home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
     }
 
@@ -252,6 +264,16 @@ class PaymentController extends Controller
                 'payment_status' => 1,
                 'order_status' => 2
             ]);
+            $smsService = new SmsService();
+            $smsService->setTo($user->mobile);
+            $text = "فروشگاه بوتیکالا
+            مشتری گرامی سفارش شما با موفقیت ثبت شد.
+            کد سفارش : BK-$order->id
+            با تشکر از خرید شما
+            وبسایت : www.butikala.ir";
+            $smsService->setText($text);
+            $messageService = new MessageService($smsService);
+            $messageService->send();
             return redirect()->route('home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
         }
         $order->delete();

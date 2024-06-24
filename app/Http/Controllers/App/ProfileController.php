@@ -9,6 +9,7 @@ use App\Models\Market\CartItem;
 use App\Models\Market\Product;
 use App\Models\Market\ProductUser;
 use App\Models\Market\ProvinceCity;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,6 +43,23 @@ class ProfileController extends Controller
     public function updateComplete(ProfileCompleteRequest $request)
     {
         $user = Auth::user();
+        if (!empty($request->mobile)) {
+            $duplicateUser = User::where('mobile', $request->mobile)->where('activation', 0)->first();
+            if (!empty($duplicateUser)) {
+                $duplicateUser->update([
+                    'mobile' => null
+                ]);
+            }
+
+        }
+        if (!empty($request->email)) {
+            $duplicateUser = User::where('email', $request->email)->where('activation', 0)->first();
+            if (!empty($duplicateUser)) {
+                $duplicateUser->update([
+                    'email' => null
+                ]);
+            }
+        }
         $nationalCode = trim($request->national_code, ' .');
         $nationalCode = convertArabicToEnglish($nationalCode);
         $nationalCode = convertPersianToEnglish($nationalCode);
@@ -78,8 +96,8 @@ class ProfileController extends Controller
     public function compares()
     {
         $user = Auth::user();
-        $products=$user->compare->products ?? collect();
-        return view('app.profile.compares',compact('products'));
+        $products = $user->compare->products ?? collect();
+        return view('app.profile.compares', compact('products'));
     }
 
 

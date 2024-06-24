@@ -40,6 +40,7 @@
                             <th>نام کاربری</th>
                             <th>ایمیل</th>
                             <th>شماره موبایل</th>
+                            <th>کد ملی</th>
                             <th>نقش ها</th>
                             <th>دسترسی ها</th>
                             <th>وضعیت کاربر</th>
@@ -51,9 +52,10 @@
                         @foreach($admins as $key => $admin)
                             <tr>
                                 <th>{{$key + 1}}</th>
-                                <td>{{$admin->full_name}}</td>
-                                <td>{{$admin->email}}</td>
-                                <td>{{$admin->mobile}}</td>
+                                <td>{{$admin->full_name ?? '-'}}</td>
+                                <td>{{$admin->email ?? '-'}}</td>
+                                <td>{{$admin->mobile ?? '-'}}</td>
+                                <td>{{$admin->national_code ?? '-'}}</td>
                                 <td>
                                     @forelse($admin->roles as $role)
                                         <div>

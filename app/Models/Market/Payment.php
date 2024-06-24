@@ -25,15 +25,19 @@ class Payment extends Model
 
     public function type()
     {
-        if ($this->type == 0) {
+        if ($this->type == 1) {
             return 'آنلاین';
         }
 
-        if ($this->type == 1) {
+        if ($this->type == 2) {
             return 'آفلاین';
         }
 
-        return 'نقدی';
+        if ($this->type == 3) {
+            return 'نقدی';
+        }
+
+        return 'نامشخص';
     }
 
     public function status()
