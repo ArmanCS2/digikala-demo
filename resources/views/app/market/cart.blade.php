@@ -40,6 +40,13 @@
                                             <a class="fw-bold text-decoration-none text-dark"
                                                href="{{route('market.product',[$cartItem->product])}}">
                                                 <p>{{$cartItem->product->name}}</p></a>
+                                            @if(!empty($cartItem->product_size_id))
+                                                <p><i class="fa fa-text-height cart-product-selected-warranty me-1"></i>
+                                                    <span>سایز</span>
+                                                    :
+                                                    <span>{{$cartItem->size->name}}</span>
+                                                </p>
+                                            @endif
                                             @if(!empty($cartItem->color_id))
                                                 <p><span style="background-color: {{$cartItem->color->color}};"
                                                          class="cart-product-selected-color me-1 border"></span>

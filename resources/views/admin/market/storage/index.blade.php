@@ -37,6 +37,7 @@
                             <th>#</th>
                             <th>نام کالا</th>
                             <th>تصویر کالا</th>
+                            <th>اندازه ها</th>
                             <th>قابل فروش</th>
                             <th>رزرو شده</th>
                             <th>فروخته شده</th>
@@ -50,6 +51,15 @@
                                 <td>{{$product->name}}</td>
                                 <td><img src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
                                          width="100px"></td>
+                                <td>
+                                    @foreach($product->sizes as $size)
+                                        <div>
+                                            {{$size->name}}
+                                            -
+                                            {{$size->marketable_number}}
+                                        </div>
+                                    @endforeach
+                                </td>
                                 <td>{{$product->marketable_number}}</td>
                                 <td>{{$product->frozen_number}}</td>
                                 <td>{{$product->sold_number}}</td>

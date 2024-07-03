@@ -26,6 +26,7 @@ class CartRequest extends FormRequest
         return [
             'color'=>'exists:product_colors,id',
             'guarantee'=>'exists:guarantees,id',
+            'product_size_id'=>'exists:product_sizes,id',
             'number'=>'numeric|min:1|max:5',
         ];
     }

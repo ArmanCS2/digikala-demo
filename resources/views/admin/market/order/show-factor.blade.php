@@ -125,7 +125,13 @@
                         </tr>
                         @foreach($order->items as $item)
                             <tr class="border-bottom font-weight-bolder">
-                                <th>{{$item->product->name}}</th>
+                                <th>
+                                    <span>{{$item->product->name}}</span>
+                                    -
+                                    <span> سایز </span>
+                                    :
+                                    <span> {{$item->size->name ?? '-'}} </span>
+                                </th>
                                 <td class="text-left">
                                     {{number_format($item->product->price)}} تومان
                                 </td>

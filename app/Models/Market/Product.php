@@ -28,7 +28,7 @@ class Product extends Model
 
     public function categories()
     {
-     return $this->belongsToMany(ProductCategory::class);
+        return $this->belongsToMany(ProductCategory::class);
     }
 
     public function comments()
@@ -54,6 +54,11 @@ class Product extends Model
     public function colors()
     {
         return $this->hasMany(ProductColor::class);
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(ProductSize::class);
     }
 
     public function guarantees()

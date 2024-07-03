@@ -31,13 +31,14 @@
                             <th>#</th>
                             <th>نام محصول</th>
                             <th>تصویر</th>
+                            <th>سایز</th>
+                            <th>رنگ</th>
+                            <th>گارانتی</th>
                             <th>درصد فروش شگفت انگیز</th>
                             <th>مبلغ فروش شگفت انگیز</th>
                             <th>تعداد</th>
                             <th>جمع قیمت محصول</th>
                             <th>مبلغ نهایی</th>
-                            <th>رنگ</th>
-                            <th>گارانتی</th>
                             <th>ویژگی</th>
                         </tr>
                         </thead>
@@ -51,13 +52,14 @@
                                 <td><a href="{{route('market.product',$item->product()->first())}}"><img
                                             src="{{asset($item->product->image->indexArray->medium)}}"
                                             width="100px"></a></td>
+                                <td>{{ $item->size->name ?? '-' }}</td>
+                                <td>{{ $item->color->color_name ?? '-' }}</td>
+                                <td>{{ $item->guarantee->name ?? '-' }}</td>
                                 <td>{{ $item->amazingSale->percentage ?? '-' }} %</td>
                                 <td>{{ number_format($item->amazing_sale_discount_amount) ?? '-' }} تومان</td>
                                 <td>{{ $item->number }} </td>
                                 <td>{{ number_format($item->final_product_price) ?? '-' }} تومان</td>
                                 <td>{{ number_format($item->final_total_price) ?? '-'}} تومان</td>
-                                <td>{{ $item->color->color_name ?? '-' }}</td>
-                                <td>{{ $item->guarantee->name ?? '-' }}</td>
                                 <td>
                                     @forelse($item->orderItemAttributes as $attribute)
                                         {{ $attribute->categoryAttribute->name ?? '-' }}

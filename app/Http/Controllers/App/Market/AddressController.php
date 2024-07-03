@@ -23,6 +23,9 @@ class AddressController extends Controller
         $user = Auth::user();
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
         if (!empty($order)) {
+            if (!empty($order->payment)) {
+                $order->payment->delete();
+            }
             $order->delete();
         }
         $cartItems = CartItem::where('user_id', $user->id)->get();
@@ -137,7 +140,6 @@ class AddressController extends Controller
         if (!empty($order)) {
             $order->delete();
         }
-
 
 
         $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();

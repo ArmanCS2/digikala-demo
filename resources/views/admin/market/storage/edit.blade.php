@@ -75,6 +75,21 @@
                                 @enderror
                             </section>
 
+                            @foreach($product->sizes as $key => $size)
+                                <section class="col-12 col-md-6 my-1">
+                                    <div class="form-group">
+                                        <label for="">موجودی سایز {{$size->name}}</label>
+                                        <input type="text" name="sizes[]" class="form-control form-control-sm" value="{{$size->marketable_number}}">
+                                        <input type="text" name="sizeIds[]" class="d-none" value="{{$size->id}}">
+                                    </div>
+                                    @error("sizes[$key]")
+                                    <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                    @enderror
+                                </section>
+                            @endforeach
+
 
                             <section class="col-12 my-1">
                                 <button class="btn btn-primary btn-sm">ثبت</button>

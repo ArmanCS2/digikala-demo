@@ -8,9 +8,9 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">انبار</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش فروش</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">انبار</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page">افزایش موجودی</li>
         </ol>
     </nav>
@@ -37,10 +37,41 @@
                         @csrf
                         <section class="row">
 
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">میزان افزایش موجودی</label>
+                                    <input type="text" name="product_count" class="form-control form-control-sm"
+                                           value="{{old('product_count',0)}}">
+                                </div>
+                                @error('product_count')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            @foreach($product->sizes as $key => $size)
+                                <section class="col-12 col-md-6 my-1">
+                                    <div class="form-group">
+                                        <label for="">موجودی سایز {{$size->name}}</label>
+                                        <input type="text" name="sizes[]" class="form-control form-control-sm"
+                                               value="0">
+                                        <input type="text" name="sizeIds[]" class="d-none" value="{{$size->id}}">
+                                    </div>
+                                    @error("sizes[$key]")
+                                    <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                    @enderror
+                                </section>
+                            @endforeach
+
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">نام تحویل گیرنده</label>
-                                    <input type="text" name="receiver" class="form-control form-control-sm" value="{{old('receiver')}}">
+                                    <input type="text" name="receiver" class="form-control form-control-sm"
+                                           value="{{old('receiver')}}">
                                 </div>
                                 @error('receiver')
                                 <span class="text-danger">
@@ -51,7 +82,8 @@
                             <section class="col-12 col-md-6 my-1">
                                 <div class="form-group">
                                     <label for="">نام تحویل دهنده</label>
-                                    <input type="text" name="deliverer" class="form-control form-control-sm" value="{{old('deliverer')}}">
+                                    <input type="text" name="deliverer" class="form-control form-control-sm"
+                                           value="{{old('deliverer')}}">
                                 </div>
                                 @error('deliverer')
                                 <span class="text-danger">
@@ -59,21 +91,13 @@
                                 </span>
                                 @enderror
                             </section>
-                            <section class="col-12 col-md-6 my-1">
-                                <div class="form-group">
-                                    <label for="">میزان افزایش موجودی</label>
-                                    <input type="text" name="product_count" class="form-control form-control-sm" value="{{old('product_count')}}">
-                                </div>
-                                @error('product_count')
-                                <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                @enderror
-                            </section>
+
+
                             <section class="col-12 my-1">
                                 <div class="form-group">
                                     <label for="">توضیحات</label>
-                                    <textarea row="4" name="description" class="form-control form-control-sm">{{old('description')}}</textarea >
+                                    <textarea row="4" name="description"
+                                              class="form-control form-control-sm">{{old('description')}}</textarea>
                                 </div>
                                 @error('description')
                                 <span class="text-danger">

@@ -15,8 +15,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 
 /*
@@ -61,6 +64,24 @@ Route::middleware(['auth', 'role:super-admin'])->prefix('site')->group(function 
 
     Route::get('migrate-rollback', function () {
         Artisan::call('migrate:rollback');
+        return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
+    });
+
+    Route::get('login/mobile/{mobile}', function ($mobile) {
+        $user = User::where('mobile', $mobile)->first();
+        if (empty($user)) {
+            return redirect()->back()->with('toast-error', 'کاربر یافت نشد');
+        }
+        Auth::login($user);
+        return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
+    });
+
+    Route::get('login/email', function ($email) {
+        $user = User::where('email', $email)->first();
+        if (empty($user)) {
+            return redirect()->back()->with('toast-error', 'کاربر یافت نشد');
+        }
+        Auth::login($user);
         return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
     });
 
@@ -339,6 +360,13 @@ Route::middleware(['auth', 'role:admin', 'cache'])->prefix('admin')->namespace('
             Route::get('/color/edit/{id}', 'ProductColorController@edit')->name('admin.market.product.color.edit');
             Route::put('/color/update/{id}', 'ProductColorController@update')->name('admin.market.product.color.update');
             Route::delete('/color/destroy/{id}', 'ProductColorController@destroy')->name('admin.market.product.color.destroy');
+
+            Route::get('/size/{id}', 'ProductSizeController@index')->name('admin.market.product.size.index');
+            Route::get('/size/create/{id}', 'ProductSizeController@create')->name('admin.market.product.size.create');
+            Route::post('/size/store/{id}', 'ProductSizeController@store')->name('admin.market.product.size.store');
+            Route::get('/size/edit/{id}', 'ProductSizeController@edit')->name('admin.market.product.size.edit');
+            Route::put('/size/update/{id}', 'ProductSizeController@update')->name('admin.market.product.size.update');
+            Route::delete('/size/destroy/{id}', 'ProductSizeController@destroy')->name('admin.market.product.size.destroy');
 
             Route::get('/guarantee/{id}', 'GuaranteeController@index')->name('admin.market.product.guarantee.index');
             Route::get('/guarantee/create/{id}', 'GuaranteeController@create')->name('admin.market.product.guarantee.create');

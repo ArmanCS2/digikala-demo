@@ -18,6 +18,9 @@ class CartController extends Controller
             $user = Auth::user();
             $order = Order::where('user_id', $user->id)->where('order_status', 0)->first();
             if (!empty($order)) {
+                if (!empty($order->payment)) {
+                    $order->payment->delete();
+                }
                 $order->delete();
             }
             $cartItems = CartItem::where('user_id', $user->id)->get();
@@ -61,7 +64,7 @@ class CartController extends Controller
                 $user = Auth::user();
                 $cartItems = CartItem::where('user_id', $user->id)->where('product_id', $product->id)->get();
                 foreach ($cartItems as $cartItem) {
-                    if ($cartItem->product->id == $product->id && ($cartItem->color_id ?? null) == $request->color) {
+                    if ($cartItem->product->id == $product->id && ($cartItem->color_id ?? null) == $request->color && ($cartItem->product_size_id ?? null) == $request->product_size_id) {
                         /*if ($cartItem->number != ($request->number ?? 1)) {
                             $cartItem->update([
                                 'number' => $request->number ?? 1
@@ -76,6 +79,7 @@ class CartController extends Controller
                     'product_id' => $product->id,
                     'color_id' => $request->color ?? ($product->colors()->first()->id ?? null),
                     'guarantee_id' => $request->guarantee ?? null,
+                    'product_size_id' => $request->product_size_id ?? null,
                     'number' => $request->number ?? 1
                 ]);
                 $product->frozen_number = $product->frozen_number + 1;

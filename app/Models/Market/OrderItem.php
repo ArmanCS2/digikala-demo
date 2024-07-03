@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $guarded=[];
-    protected $casts=['product'=>'object'];
+    protected $guarded = [];
+    protected $casts = ['product' => 'object'];
 
     public function order()
     {
@@ -20,17 +20,22 @@ class OrderItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class,'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
     public function color()
     {
-        return $this->belongsTo(ProductColor::class,'color_id');
+        return $this->belongsTo(ProductColor::class, 'color_id');
     }
 
     public function guarantee()
     {
         return $this->belongsTo(Guarantee::class);
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(ProductSize::class, 'product_size_id');
     }
 
     public function amazingSale()
@@ -40,6 +45,6 @@ class OrderItem extends Model
 
     public function orderItemAttributes()
     {
-        return $this->hasMany(OrderItemSelectedAttribute::class,'order_item_id');
+        return $this->hasMany(OrderItemSelectedAttribute::class, 'order_item_id');
     }
 }

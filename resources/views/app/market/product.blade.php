@@ -164,8 +164,9 @@
                                         @endif
                                         @if(!empty($product->guarantees()->get()->toArray()))
                                             <section class="my-3 col-6">
-                                                <i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i>
-                                                گارانتی :
+                                                <div class="fw-bolder">
+                                                    گارانتی :
+                                                </div>
                                                 <select name="guarantee" id="guarantee"
                                                         class="form-control form-control-sm">
 
@@ -179,6 +180,39 @@
                                                     @endforeach
 
                                                 </select>
+                                            </section>
+                                        @endif
+                                        @if(!empty($product->sizes()->get()->toArray()))
+                                            <section class="my-3 col-6">
+                                                <div class="fw-bolder">
+                                                    اندازه ها :
+                                                </div>
+                                                <select name="product_size_id" id="product_size_id"
+                                                        class="form-control form-control-sm">
+
+                                                    @foreach($product->sizes as $key => $size)
+                                                        @if($size->marketable_number > -1)
+                                                            <option value="{{$size->id}}"
+                                                                    @if($key==0) selected @endif>
+                                                                <div>
+                                                                    {{$size->name}}
+                                                                </div>
+                                                                :
+                                                                <div>
+                                                                    عرض {{$size->width}} cm
+                                                                </div>
+                                                                -
+                                                                <div>
+                                                                    قد {{$size->height}} cm
+                                                                </div>
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+
+                                                </select>
+                                                <div class="text-danger mt-1">
+                                                    مشتری گرامی در هنگام انتخاب سایز به عرض و قد کالا دقت کنید!
+                                                </div>
                                             </section>
                                         @endif
 

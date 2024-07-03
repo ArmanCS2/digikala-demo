@@ -99,6 +99,9 @@
                                             <a href="{{route('admin.market.product.image.index',[$product->id])}}"
                                                class="dropdown-item text-right"><i class="fa fa-images"></i>
                                                 تصاویر </a>
+                                            <a href="{{route('admin.market.product.size.index',[$product->id])}}"
+                                               class="dropdown-item text-right"><i class="fa fa-text-height"></i>
+                                                سایز ها </a>
                                             <a href="{{route('admin.market.product.color.index',[$product->id])}}"
                                                class="dropdown-item text-right"><i class="fa fa-paint-brush"></i>
                                                 رنگ کالا </a>

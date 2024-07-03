@@ -199,6 +199,7 @@ class PaymentController extends Controller
                 'product' => $cartItem->product,
                 'color_id' => $cartItem->color_id,
                 'guarantee_id' => $cartItem->guarantee_id,
+                'product_size_id' => $cartItem->product_size_id,
                 'amazing_sale_id' => $cartItem->product->activeAmazingSale()->id ?? null,
                 'amazing_sale_object' => $cartItem->product->activeAmazingSale() ?? null,
                 'amazing_sale_discount_amount' => $cartItem->productDiscount(),
@@ -230,6 +231,11 @@ class PaymentController extends Controller
         $smsService->setText($text);
         $messageService = new MessageService($smsService);
         $messageService->send();
+
+        $smsService->setTo('09396754815');
+        $messageService = new MessageService($smsService);
+        $messageService->send();
+
         return redirect()->route('home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
     }
 
@@ -247,6 +253,7 @@ class PaymentController extends Controller
                     'product' => $cartItem->product,
                     'color_id' => $cartItem->color_id,
                     'guarantee_id' => $cartItem->guarantee_id,
+                    'product_size_id' => $cartItem->product_size_id,
                     'amazing_sale_id' => $cartItem->product->activeAmazingSale()->id ?? null,
                     'amazing_sale_object' => $cartItem->product->activeAmazingSale() ?? null,
                     'amazing_sale_discount_amount' => $cartItem->productDiscount(),
@@ -274,7 +281,15 @@ class PaymentController extends Controller
             $smsService->setText($text);
             $messageService = new MessageService($smsService);
             $messageService->send();
+
+            $smsService->setTo('09396754815');
+            $messageService = new MessageService($smsService);
+            $messageService->send();
+
             return redirect()->route('home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
+        }
+        if (!empty($order->payment)){
+            $order->payment->delete();
         }
         $order->delete();
         $onlinePayment->delete();
