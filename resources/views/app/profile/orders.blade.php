@@ -53,7 +53,8 @@
                     <section>
                         <section class="order-item-date"><i
                                 class="fa fa-calendar-alt"></i>{{jalaliDate($order->created_at)}}</section>
-                        <section class="order-item-id"><i class="fa fa-id-card-alt"></i>کد سفارش : {{'BK-' . $order->id}}
+                        <section class="order-item-id"><i class="fa fa-id-card-alt"></i>کد سفارش
+                            : {{'BK-' . $order->id}}
                         </section>
                         <section class="order-item-status"><i class="fa fa-check-circle"></i> وضعیت سفارش
                             : {{$order->order_status()}}</section>
@@ -67,6 +68,11 @@
                             : {{$order->delivery_status()}}</section>
                         <section class="order-item-status"><i class="fa fa-box"></i> کد رهگیری
                             : {{$order->tracking_code ?? 'بعد از تحویل به پست کد رهگیری نمایش داده میشود'}}</section>
+                        @if(!empty($order->tracking_code))
+                            <section class="order-item-status"><a
+                                    href="{{"https://tracking.post.ir/?id=$order->tracking_code"}}">رهگیری سفارش از
+                                    پست</a></section>
+                        @endif
                         <section class="order-item-products">
                             @foreach($order->items as $item)
                                 <a href="{{route('market.product',$item->product->slug)}}"><img
