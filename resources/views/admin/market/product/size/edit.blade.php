@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>رنگ کالا</title>
+    <title>سایز کالا</title>
 @endsection
 
 @section('content')

@@ -210,6 +210,9 @@ class PaymentController extends Controller
             $cartItem->product->marketable_number = $cartItem->product->marketable_number > 0 ? $cartItem->product->marketable_number - 1 : 0;
             $cartItem->product->sold_number = $cartItem->product->sold_number + 1;
             $cartItem->product->frozen_number = $cartItem->product->frozen_number > 0 ? $cartItem->product->frozen_number - 1 : 0;
+            if (!empty($cartItem->size)) {
+                $cartItem->size->marketable_number = $cartItem->size->marketable_number > 0 ? $cartItem->size->marketable_number - 1 : 0;
+            }
             $cartItem->product->save();
 
 
@@ -264,6 +267,9 @@ class PaymentController extends Controller
                 $cartItem->product->marketable_number = $cartItem->product->marketable_number > 0 ? $cartItem->product->marketable_number - 1 : 0;
                 $cartItem->product->sold_number = $cartItem->product->sold_number + 1;
                 $cartItem->product->frozen_number = $cartItem->product->frozen_number > 0 ? $cartItem->product->frozen_number - 1 : 0;
+                if (!empty($cartItem->size)) {
+                    $cartItem->size->marketable_number = $cartItem->size->marketable_number > 0 ? $cartItem->size->marketable_number - 1 : 0;
+                }
                 $cartItem->product->save();
                 $cartItem->delete();
             }
@@ -288,7 +294,7 @@ class PaymentController extends Controller
 
             return redirect()->route('home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
         }
-        if (!empty($order->payment)){
+        if (!empty($order->payment)) {
             $order->payment->delete();
         }
         $order->delete();

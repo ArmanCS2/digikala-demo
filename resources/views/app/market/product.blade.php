@@ -3,6 +3,10 @@
 @section('head-tag')
     <meta name="product_id" content="{{$product->id}}">
     <meta name="product_name" content="{{$product->name}}">
+    <meta name="product" content="{{$product->name}}">
+    <meta name="product_title" content="{{$product->name}}">
+    <meta name="product_image"
+          content="{{asset(str_replace('\\','/',$product->image['indexArray'][$product->image['currentImage']]))}}">
     <meta property="og:title" content="{{$product->name}}"/>
     <meta property="og:description" content="{{$product->name}}"/>
     <meta property="og:url" content="{{url()->current()}}"/>
@@ -11,19 +15,26 @@
     @if($commonDiscount)
         <meta name="product_price"
               content="{{$product->price - ($product->price * $commonDiscount->percentage / 100)}}">
+        <meta name="product_off"
+              content="{{$commonDiscount->percentage}}">
         <meta name="product_old_price" content="{{$product->price}}">
     @elseif(!empty($product->activeAmazingSale()))
         <meta name="product_price"
               content="{{$product->price - ($product->price * $product->activeAmazingSale()->percentage / 100)}}">
+        <meta name="product_off"
+              content="{{$product->activeAmazingSale()->percentage}}">
         <meta name="product_old_price" content="{{$product->price}}">
     @else
         <meta name="product_price" content="{{$product->price}}">
         <meta name="product_old_price" content="{{$product->price}}">
+        <meta name="product_off" content="0">
     @endif
     @if($product->status && $product->marketable_number > 0 )
         <meta name="availability" content="instock">
+        <meta name="product_available" content="1">
     @else
         <meta name="availability" content="outofstock">
+        <meta name="product_available" content="0">
     @endif
     <meta name="description" content="{{$product->name}}">
     <meta name="keywords" content="{{$product->tags}}">
@@ -191,7 +202,7 @@
                                                         class="form-control form-control-sm">
 
                                                     @foreach($product->sizes as $key => $size)
-                                                        @if($size->marketable_number > -1)
+                                                        @if($size->marketable_number > 0)
                                                             <option value="{{$size->id}}"
                                                                     @if($key==0) selected @endif>
                                                                 <div>
@@ -210,7 +221,7 @@
                                                     @endforeach
 
                                                 </select>
-                                                <div class="text-danger mt-1">
+                                                <div class="text-primary mt-1">
                                                     مشتری گرامی در هنگام انتخاب سایز به عرض و قد کالا دقت کنید!
                                                 </div>
                                             </section>

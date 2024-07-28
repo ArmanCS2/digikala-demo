@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>رنگ کالا</title>
+    <title>سایز کالا</title>
 @endsection
 
 @section('content')
@@ -30,69 +30,69 @@
                 </section>
 
                 <section class="mx-4">
-                    <form action="{{route('admin.market.product.size.store',[$product->id])}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('admin.market.product.size.store',[$product->id])}}" method="post"
+                          enctype="multipart/form-data">
                         @csrf
 
-                            <section class="row">
+                        <section class="row">
 
 
-
-                                <section class="col-12 col-md-6 my-1">
-                                    <div class="form-group">
-                                        <label for="">سایز</label>
-                                        <input type="text" class="form-control form-control-sm" name="name"
-                                               value="{{old('name')}}">
-                                    </div>
-                                    @error('name')
-                                    <span class="text-danger">
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">سایز</label>
+                                    <input type="text" class="form-control form-control-sm" name="name"
+                                           value="{{old('name')}}">
+                                </div>
+                                @error('name')
+                                <span class="text-danger">
                                     <strong>{{$message}}</strong>
                                 </span>
-                                    @enderror
-                                </section>
-                                <section class="col-12 col-md-6 my-1">
-                                    <div class="form-group">
-                                        <label for="">عرض</label>
-                                        <input type="text" class="form-control form-control-sm" name="width"
-                                               value="{{old('width')}}">
-                                    </div>
-                                    @error('width')
-                                    <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                    @enderror
-                                </section>
-
-                                <section class="col-12 col-md-6 my-1">
-                                    <div class="form-group">
-                                        <label for="">قد</label>
-                                        <input type="text" class="form-control form-control-sm" name="height"
-                                               value="{{old('height')}}">
-                                    </div>
-                                    @error('height')
-                                    <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                    @enderror
-                                </section>
-
-                                <section class="col-12 col-md-6 my-1">
-                                    <div class="form-group">
-                                        <label for="">میزان افزایش قیمت</label>
-                                        <input type="text" class="form-control form-control-sm" name="price_increase"
-                                               value="{{old('price_increase')}}">
-                                    </div>
-                                    @error('price_increase')
-                                    <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                    @enderror
-                                </section>
-
-
-                                <section class="col-12 my-1">
-                                    <button class="btn btn-primary btn-sm">ثبت</button>
-                                </section>
+                                @enderror
                             </section>
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">عرض</label>
+                                    <input type="text" class="form-control form-control-sm" name="width"
+                                           value="{{old('width')}}">
+                                </div>
+                                @error('width')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">قد</label>
+                                    <input type="text" class="form-control form-control-sm" name="height"
+                                           value="{{old('height')}}">
+                                </div>
+                                @error('height')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+                            <section class="col-12 col-md-6 my-1">
+                                <div class="form-group">
+                                    <label for="">میزان افزایش قیمت</label>
+                                    <input type="text" class="form-control form-control-sm" name="price_increase"
+                                           value="{{old('price_increase')}}">
+                                </div>
+                                @error('price_increase')
+                                <span class="text-danger">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
+                            </section>
+
+
+                            <section class="col-12 my-1">
+                                <button class="btn btn-primary btn-sm">ثبت</button>
+                            </section>
+                        </section>
                     </form>
                 </section>
 
