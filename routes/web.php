@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Spatie\Sitemap\SitemapGenerator;
 
 
 /*
@@ -82,6 +83,13 @@ Route::middleware(['auth', 'role:super-admin'])->prefix('site')->group(function 
             return redirect()->back()->with('toast-error', 'کاربر یافت نشد');
         }
         Auth::login($user);
+        return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
+    });
+
+    Route::get('sitemap', function ($email) {
+        set_time_limit(300);
+        $path = public_path('sitemap.xml');
+        SitemapGenerator::create('https://www.butikala.ir')->writeToFile($path);
         return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
     });
 

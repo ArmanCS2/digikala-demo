@@ -70,9 +70,10 @@
                                             </section>
                                             <section class="mb-2">
                                                 <i class="fa fa-map-marker-alt mx-1"></i>
-                                                آدرس : {{$address->address ?? '-'}}،
-                                                ، پلاک {{convertEnglishToPersian($address->no ?? '-')}}،
-                                                واحد {{convertEnglishToPersian($address->unit ?? '-')}}
+                                                آدرس : {{$address->address ?? '-'}}
+{{--                                                --}}
+{{--                                                ، پلاک {{convertEnglishToPersian($address->no ?? '-')}}،--}}
+{{--                                                واحد {{convertEnglishToPersian($address->unit ?? '-')}}--}}
                                             </section>
                                             <section class="mb-2">
                                                 <i class="fa fa-box mx-1"></i>
@@ -177,50 +178,51 @@
                                                                     @enderror
                                                                 </section>
 
-                                                                <section class="col-3 mb-2">
-                                                                    <label for="no" class="form-label mb-1">پلاک
-                                                                        (اختیاری)</label>
-                                                                    <input name="no" type="text"
-                                                                           class="form-control form-control-sm"
-                                                                           id="no" placeholder="پلاک"
-                                                                           value="{{$address->no}}">
-                                                                    @error('no')
-                                                                    <span class="text-danger">
-                                                                    <strong>{{$message}}</strong>
-                                                                </span>
-                                                                    @enderror
-                                                                </section>
+{{--                                                                <section class="col-3 mb-2">--}}
+{{--                                                                    <label for="no" class="form-label mb-1">پلاک--}}
+{{--                                                                        (اختیاری)</label>--}}
+{{--                                                                    <input name="no" type="text"--}}
+{{--                                                                           class="form-control form-control-sm"--}}
+{{--                                                                           id="no" placeholder="پلاک"--}}
+{{--                                                                           value="{{$address->no}}">--}}
+{{--                                                                    @error('no')--}}
+{{--                                                                    <span class="text-danger">--}}
+{{--                                                                    <strong>{{$message}}</strong>--}}
+{{--                                                                </span>--}}
+{{--                                                                    @enderror--}}
+{{--                                                                </section>--}}
 
-                                                                <section class="col-3 mb-2">
-                                                                    <label for="unit"
-                                                                           class="form-label mb-1">واحد
-                                                                        (اختیاری)</label>
-                                                                    <input name="unit" type="text"
-                                                                           class="form-control form-control-sm"
-                                                                           id="unit" placeholder="واحد"
-                                                                           value="{{$address->unit}}">
-                                                                    @error('unit')
-                                                                    <span class="text-danger">
-                                                                    <strong>{{$message}}</strong>
-                                                                </span>
-                                                                    @enderror
-                                                                </section>
+{{--                                                                <section class="col-3 mb-2">--}}
+{{--                                                                    <label for="unit"--}}
+{{--                                                                           class="form-label mb-1">واحد--}}
+{{--                                                                        (اختیاری)</label>--}}
+{{--                                                                    <input name="unit" type="text"--}}
+{{--                                                                           class="form-control form-control-sm"--}}
+{{--                                                                           id="unit" placeholder="واحد"--}}
+{{--                                                                           value="{{$address->unit}}">--}}
+{{--                                                                    @error('unit')--}}
+{{--                                                                    <span class="text-danger">--}}
+{{--                                                                    <strong>{{$message}}</strong>--}}
+{{--                                                                </span>--}}
+{{--                                                                    @enderror--}}
+{{--                                                                </section>--}}
 
                                                                 <section class="border-bottom mt-2 mb-3"></section>
 
                                                                 <section class="col-12 mb-2">
                                                                     <section class="form-check">
+                                                                        <label class="form-check-label" for="receiver">
+                                                                            مشخصات گیرنده را
+                                                                            وارد
+                                                                            کنید
+                                                                        </label>
                                                                         <input
-                                                                            @if(auth()->user()->mobile != $address->mobile) checked
-                                                                            @endif name="receiver"
-                                                                            class="form-check-input"
+                                                                            checked
+                                                                            name="receiver"
+                                                                            class="form-check-input d-none"
                                                                             type="checkbox"
                                                                             id="receiver">
-                                                                        <label class="form-check-label" for="receiver">
-                                                                            گیرنده سفارش خودم نیستم (مشخصات گیرنده را
-                                                                            وارد
-                                                                            کنید)
-                                                                        </label>
+
                                                                     </section>
                                                                 </section>
 
@@ -369,44 +371,44 @@
                                                                 @enderror
                                                             </section>
 
-                                                            <section class="col-3 mb-2">
-                                                                <label for="no" class="form-label mb-1">پلاک
-                                                                    (اختیاری)</label>
-                                                                <input name="no" type="text"
-                                                                       class="form-control form-control-sm"
-                                                                       id="no" placeholder="پلاک" value="{{old('no')}}">
-                                                                @error('no')
-                                                                <span class="text-danger">
-                                                                    <strong>{{$message}}</strong>
-                                                                </span>
-                                                                @enderror
-                                                            </section>
+                                                            {{--                                                            <section class="col-3 mb-2">--}}
+                                                            {{--                                                                <label for="no" class="form-label mb-1">پلاک--}}
+                                                            {{--                                                                    (اختیاری)</label>--}}
+                                                            {{--                                                                <input name="no" type="text"--}}
+                                                            {{--                                                                       class="form-control form-control-sm"--}}
+                                                            {{--                                                                       id="no" placeholder="پلاک" value="{{old('no')}}">--}}
+                                                            {{--                                                                @error('no')--}}
+                                                            {{--                                                                <span class="text-danger">--}}
+                                                            {{--                                                                    <strong>{{$message}}</strong>--}}
+                                                            {{--                                                                </span>--}}
+                                                            {{--                                                                @enderror--}}
+                                                            {{--                                                            </section>--}}
 
-                                                            <section class="col-3 mb-2">
-                                                                <label for="unit" class="form-label mb-1">واحد
-                                                                    (اختیاری)</label>
-                                                                <input name="unit" type="text"
-                                                                       class="form-control form-control-sm"
-                                                                       id="unit" placeholder="واحد"
-                                                                       value="{{old('unit')}}">
-                                                                @error('unit')
-                                                                <span class="text-danger">
-                                                                    <strong>{{$message}}</strong>
-                                                                </span>
-                                                                @enderror
-                                                            </section>
+                                                            {{--                                                            <section class="col-3 mb-2">--}}
+                                                            {{--                                                                <label for="unit" class="form-label mb-1">واحد--}}
+                                                            {{--                                                                    (اختیاری)</label>--}}
+                                                            {{--                                                                <input name="unit" type="text"--}}
+                                                            {{--                                                                       class="form-control form-control-sm"--}}
+                                                            {{--                                                                       id="unit" placeholder="واحد"--}}
+                                                            {{--                                                                       value="{{old('unit')}}">--}}
+                                                            {{--                                                                @error('unit')--}}
+                                                            {{--                                                                <span class="text-danger">--}}
+                                                            {{--                                                                    <strong>{{$message}}</strong>--}}
+                                                            {{--                                                                </span>--}}
+                                                            {{--                                                                @enderror--}}
+                                                            {{--                                                            </section>--}}
 
                                                             <section class="border-bottom mt-2 mb-3"></section>
 
                                                             <section class="col-12 mb-2">
                                                                 <section class="form-check">
-                                                                    <input name="receiver" class="form-check-input"
-                                                                           type="checkbox"
-                                                                           id="receiver">
                                                                     <label class="form-check-label" for="receiver">
-                                                                        گیرنده سفارش خودم نیستم (مشخصات گیرنده را وارد
-                                                                        کنید)
+                                                                        مشخصات گیرنده را وارد کنید
                                                                     </label>
+                                                                    <input name="receiver"
+                                                                           class="form-check-input d-none"
+                                                                           type="checkbox"
+                                                                           id="receiver" checked>
                                                                 </section>
                                                             </section>
 

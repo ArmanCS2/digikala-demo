@@ -13,7 +13,6 @@ use App\Models\Market\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Spatie\Sitemap\SitemapGenerator;
 
 class HomeController extends Controller
 {
@@ -33,9 +32,6 @@ class HomeController extends Controller
         $bestSalesProducts = Product::orderBy('marketable_number', 'DESC')->where('status', 1)->take(15)->get();
         $offerProducts = Product::inRandomOrder()->where('status', 1)->where('marketable_number', '>', 0)->take(15)->get();
         $newProducts = Product::orderBy('created_at', 'DESC')->where('status', 1)->take(15)->get();
-        /*set_time_limit(300);
-        $path = public_path('sitemap.xml');
-        SitemapGenerator::create('https://www.butikala.ir')->writeToFile($path);*/
         return view('app.index', compact('slideShows', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostViewedProducts', 'offerProducts', 'ads', 'bestSalesProducts', 'posts', 'newProducts', 'albums', 'topAds', 'videos'));
     }
 

@@ -59,9 +59,9 @@ class AddressController extends Controller
                 'postal_code' => $request->postal_code,
                 'no' => $request->no,
                 'unit' => $request->unit,
-                'recipient_first_name' => $request->recipient_first_name,
-                'recipient_last_name' => $request->recipient_last_name,
-                'mobile' => $request->mobile,
+                'recipient_first_name' => $request->recipient_first_name ?? $user->first_name,
+                'recipient_last_name' => $request->recipient_last_name ?? $user->last_name,
+                'mobile' => $request->mobile ?? $user->mobile,
             ]);
         } else {
             Address::create([
@@ -91,9 +91,9 @@ class AddressController extends Controller
                 'postal_code' => $request->postal_code,
                 'no' => $request->no,
                 'unit' => $request->unit,
-                'recipient_first_name' => $request->recipient_first_name,
-                'recipient_last_name' => $request->recipient_last_name,
-                'mobile' => $request->mobile,
+                'recipient_first_name' => $request->recipient_first_name ?? $user->first_name,
+                'recipient_last_name' => $request->recipient_last_name ?? $user->last_name,
+                'mobile' => $request->mobile ?? $user->mobile,
             ]);
         } else {
             $address->update([

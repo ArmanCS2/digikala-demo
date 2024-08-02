@@ -29,7 +29,7 @@ class ProfileCompleteRequest extends FormRequest
             'last_name' => 'nullable|string',
             'mobile' => 'nullable|numeric|digits:11',
             'email' => 'nullable|string|email',
-            'national_code' => ['nullable', 'numeric', 'digits:10', 'unique:users,national_code', new NationalCode()],
+            //'national_code' => ['nullable', 'numeric', 'digits:10', 'unique:users,national_code', new NationalCode()],
         ];
     }
 }

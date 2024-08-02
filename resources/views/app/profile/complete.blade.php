@@ -78,7 +78,7 @@
                                             <div class="form-group">
                                                 <label for="mobile">موبایل</label>
                                                 <input type="text" class="form-control form-control-sm" name="mobile"
-                                                       id="mobile" value="{{ old('mobile') }}">
+                                                       id="mobile" value="{{ old('mobile') }}" placeholder="09xxxxxxxxx">
                                             </div>
                                             @error('mobile')
                                             <span class="text-danger">
@@ -89,21 +89,21 @@
                                     @endif
 
 
-                                    @if(empty($user->national_code))
-                                        <section class="col-12 col-md-6 my-2">
-                                            <div class="form-group">
-                                                <label for="national_code">کد ملی</label>
-                                                <input type="text" class="form-control form-control-sm"
-                                                       name="national_code" id="national_code"
-                                                       value="{{ old('national_code') }}">
-                                            </div>
-                                            @error('national_code')
-                                            <span class="text-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                                            @enderror
-                                        </section>
-                                    @endif
+{{--                                    @if(empty($user->national_code))--}}
+{{--                                        <section class="col-12 col-md-6 my-2">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <label for="national_code">کد ملی</label>--}}
+{{--                                                <input type="text" class="form-control form-control-sm"--}}
+{{--                                                       name="national_code" id="national_code"--}}
+{{--                                                       value="{{ old('national_code') }}">--}}
+{{--                                            </div>--}}
+{{--                                            @error('national_code')--}}
+{{--                                            <span class="text-danger">--}}
+{{--                                    <strong>{{$message}}</strong>--}}
+{{--                                </span>--}}
+{{--                                            @enderror--}}
+{{--                                        </section>--}}
+{{--                                    @endif--}}
 
                                     @if(empty($user->email))
                                         <section class="col-12 col-md-6 my-2">
