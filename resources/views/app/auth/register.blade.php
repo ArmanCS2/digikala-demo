@@ -45,7 +45,7 @@
                     <section class="login-input-text">
                         <input type="password" name="password_confirmation">
                     </section>
-                    @error('confirm')
+                    @error('password_confirmation')
                     <span class="text-danger">
                                     <span class="small">{{$message}}</span>
                                 </span>

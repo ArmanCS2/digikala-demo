@@ -22,7 +22,7 @@ class ProductController extends Controller
         $product->view += 1;
         $product->save();
         $category = $product->categories()->whereNull('parent_id')->where('status', 1)->inRandomOrder()->first();
-        $relatedProducts = $category->products()->inRandomOrder()->take(10)->get()->except($product->id);
+        $relatedProducts = $category->products()->inRandomOrder()->where('marketable_number','>',0)->where('status', 1)->take(10)->get()->except($product->id);
         return view('app.market.product', compact('product', 'relatedProducts'));
     }
 

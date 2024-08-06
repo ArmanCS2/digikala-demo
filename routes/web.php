@@ -34,6 +34,17 @@ use Spatie\Sitemap\SitemapGenerator;
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Livewire Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('livewire')->group(function (){
+    Route::prefix('auth')->group(function (){
+        Route::get('/',\App\Http\Livewire\Auth\Index::class);
+    });
+});
 
 /*
 |--------------------------------------------------------------------------

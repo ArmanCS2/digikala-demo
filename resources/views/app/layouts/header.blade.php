@@ -12,38 +12,7 @@
                         <i class="fa fa-bars me-1"></i>
                     </button>
                 </section>
-                <section class="mt-3 mt-md-auto search-wrapper mb-4">
-                    <section class="search-box">
-                        <section class="search-textbox">
-                            <span class="pointer mx-2" onclick="document.getElementById('search-form').submit()"><i
-                                    class="fa fa-search"></i></span>
-                            <form id="search-form" action="{{route('market.products')}}" method="get">
-                                <input id="search" type="text" size="500" name="search" placeholder="جستجو ..."
-                                       value="{{!empty(request()->search) ? request()->search : '' }}"
-                                       autocomplete="off">
-                            </form>
-                        </section>
-                        {{--                        <section class="search-result visually-hidden">--}}
-                        {{--                            <section class="search-result-title">برای دیدن نتایج کلید Enter را فشار دهید</section>--}}
-                        {{--                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
-                        {{--                                        class="fa fa-link"></i> دسته موبایل و وسایل جانبی</a></section>--}}
-
-                        {{--                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل شیا"</span><span--}}
-                        {{--                                    class="search-result-type">در برندها</span></section>--}}
-                        {{--                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
-                        {{--                                        class="fa fa-link"></i> برند شیائومی</a></section>--}}
-                        {{--                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
-                        {{--                                        class="fa fa-link"></i> برند توشیبا</a></section>--}}
-                        {{--                            <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
-                        {{--                                        class="fa fa-link"></i> برند شیانگ پینگ</a></section>--}}
-
-                        {{--                            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل شیا"</span><span--}}
-                        {{--                                    class="search-result-type">در کالاها</span></section>--}}
-                        {{--                            <section class="search-result-item"><span class="search-no-result">موردی یافت نشد</span>--}}
-                        {{--                            </section>--}}
-                        {{--                        </section>--}}
-                    </section>
-                </section>
+                @livewire('app.search.search')
                 <section class="mt-3 mt-md-auto text-end mb-3">
                     @auth
                         <section class="d-inline px-md-3">

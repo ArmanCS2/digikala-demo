@@ -36,7 +36,7 @@ class CartController extends Controller
                 $finalProductDiscounts += $cartItem->finalProductDiscount();
                 $totalProductPrices += $cartItem->totalProductPrice();
             }
-            $relatedProducts = Product::inRandomOrder()->take(10)->get();
+            $relatedProducts = Product::inRandomOrder()->where('marketable_number','>',0)->where('status', 1)->take(10)->get();
             return view('app.market.cart', compact('cartItems', 'relatedProducts', 'productPrices', 'productDiscounts', 'finalProductPrices', 'finalProductDiscounts', 'totalProductPrices'));
         }
 

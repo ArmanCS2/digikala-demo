@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
+    @livewireStyles
     @include('app.layouts.head-tag')
     @yield('head-tag')
 </head>
@@ -27,7 +28,7 @@
 
 @include('app.layouts.footer')
 
-
+@livewireScripts
 @include('app.layouts.scripts')
 @yield('scripts')
 

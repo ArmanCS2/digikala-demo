@@ -29,9 +29,9 @@ class HomeController extends Controller
         $ads = Banner::where('position', 4)->where('status', 1)->get();
         $brands = Brand::where('status', 1)->get();
         $mostViewedProducts = Product::orderBy('view', 'DESC')->where('marketable_number','>',0)->where('status', 1)->take(15)->get();
-        $bestSalesProducts = Product::orderBy('marketable_number', 'DESC')->where('status', 1)->take(15)->get();
+        $bestSalesProducts = Product::orderBy('marketable_number', 'DESC')->where('marketable_number','>',0)->where('status', 1)->take(15)->get();
         $offerProducts = Product::inRandomOrder()->where('status', 1)->where('marketable_number', '>', 0)->take(15)->get();
-        $newProducts = Product::orderBy('created_at', 'DESC')->where('status', 1)->take(15)->get();
+        $newProducts = Product::orderBy('created_at', 'DESC')->where('marketable_number','>',0)->where('status', 1)->take(15)->get();
         return view('app.index', compact('slideShows', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostViewedProducts', 'offerProducts', 'ads', 'bestSalesProducts', 'posts', 'newProducts', 'albums', 'topAds', 'videos'));
     }
 
