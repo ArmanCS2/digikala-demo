@@ -109,4 +109,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Compare::class);
     }
+
+    public function imageUrl()
+    {
+        return asset($this->image['indexArray'][$this->image['currentImage']]);
+    }
 }

@@ -10,20 +10,27 @@
             </form>
         </section>
         @if(!empty($search))
-        <section class="result bg-white">
-            {{--                                    <section class="search-result-title">برای دیدن نتایج کلید Enter را فشار دهید</section>--}}
-            {{--                                    <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
-            {{--                                                class="fa fa-link"></i> دسته موبایل و وسایل جانبی</a></section>--}}
+            <section class="result bg-white">
+                {{--                                    <section class="search-result-title">برای دیدن نتایج کلید Enter را فشار دهید</section>--}}
+                {{--                                    <section class="search-result-item"><a class="text-decoration-none" href="#"><i--}}
+                {{--                                                class="fa fa-link"></i> دسته موبایل و وسایل جانبی</a></section>--}}
 
-            <section class="search-result-title">نتایج جستجو برای <span class="search-words">"{{$search}}"</span></section>
-            @forelse($products as $product)
-            <section class="search-result-item"><a class="text-decoration-none text-info" href="{{route('market.product',$product)}}"><i
-                        class="fa fa-link"></i>{{$product->name}}</a></section>
-            @empty
-            <section class="search-result-item"><span class="search-no-result">موردی یافت نشد</span>
-                @endforelse
+                <section class="search-result-title">نتایج جستجو برای <span class="search-words">"{{$search}}"</span>
+                </section>
+                @forelse($products as $product)
+                    <section class="search-result-item border-bottom">
+                        <div class="d-flex justify-content-between align-items-center mx-4">
+                            <a class="text-decoration-none text-info" href="{{route('market.product',$product)}}"><i
+                                    class="fa fa-link"></i>{{$product->name}}</a>
+                            <img src="{{$product->imageUrl()}}" width="50">
+                        </div>
+
+                    </section>
+                @empty
+                    <section class="search-result-item"><span class="search-no-result">موردی یافت نشد</span>
+                        @endforelse
+                    </section>
             </section>
-        </section>
         @endif
     </section>
 </section>

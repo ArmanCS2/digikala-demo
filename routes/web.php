@@ -48,7 +48,7 @@ Route::middleware(['auth', 'role:super-admin'])->prefix('livewire')->group(funct
     Route::get('task', \App\Http\Livewire\Task\Base::class)->name('livewire.task.base');
     Route::get('product', \App\Http\Livewire\Product\Base::class)->name('livewire.product.base');
     Route::get('cart', \App\Http\Livewire\Product\Cart::class)->name('livewire.cart');
-    Route::middleware('livewire-auth')->prefix('chat')->group(function (){
+    Route::middleware('livewire-auth')->prefix('chat')->group(function () {
         Route::get('rooms', \App\Http\Livewire\Chat\Rooms::class)->name('livewire.chat.rooms');
         Route::get('/{room:slug}', \App\Http\Livewire\Chat\Chats::class)->name('livewire.chat.chats');
     });
@@ -119,7 +119,7 @@ Route::middleware(['auth', 'role:super-admin'])->prefix('site')->group(function 
         return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
     });
 
-    Route::get('sitemap', function ($email) {
+    Route::get('sitemap', function () {
         set_time_limit(300);
         $path = public_path('sitemap.xml');
         SitemapGenerator::create('https://www.butikala.ir')->writeToFile($path);
