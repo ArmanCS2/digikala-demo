@@ -40,9 +40,26 @@ use Spatie\Sitemap\SitemapGenerator;
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('livewire')->group(function (){
-    Route::prefix('auth')->group(function (){
-        Route::get('/',\App\Http\Livewire\Auth\Index::class);
+Route::middleware(['auth', 'role:super-admin'])->prefix('livewire')->group(function () {
+    Route::get('/', function () {
+        return view('livewire.index');
+    })->name('livewire.index');
+
+    Route::get('task', \App\Http\Livewire\Task\Base::class)->name('livewire.task.base');
+    Route::get('product', \App\Http\Livewire\Product\Base::class)->name('livewire.product.base');
+    Route::get('cart', \App\Http\Livewire\Product\Cart::class)->name('livewire.cart');
+    Route::middleware('livewire-auth')->prefix('chat')->group(function (){
+        Route::get('rooms', \App\Http\Livewire\Chat\Rooms::class)->name('livewire.chat.rooms');
+        Route::get('/{room:slug}', \App\Http\Livewire\Chat\Chats::class)->name('livewire.chat.chats');
+    });
+
+
+    Route::prefix('auth')->group(function () {
+        Route::get('/', \App\Http\Livewire\Auth\Index::class)->name('livewire.auth.index');
+        Route::get('/logout', function () {
+            Auth::logout();
+            return redirect()->route('livewire.index');
+        })->name('livewire.auth.logout');
     });
 });
 
@@ -76,6 +93,11 @@ Route::middleware(['auth', 'role:super-admin'])->prefix('site')->group(function 
 
     Route::get('migrate-rollback', function () {
         Artisan::call('migrate:rollback');
+        return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
+    });
+
+    Route::get('storage-link', function () {
+        Artisan::call('storage:link');
         return redirect()->back()->with('toast-success', 'عملیات با موفقیت انجام شد');
     });
 

@@ -8,7 +8,7 @@ class Index extends Component
 {
     public $showRegisterForm = false;
 
-    protected $listeners=['changeView'=>'changeShowRegisterForm'];
+    protected $listeners = ['changeView' => 'changeShowRegisterForm'];
 
     public function changeShowRegisterForm()
     {
@@ -17,6 +17,6 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.auth.index')->extends('app.layouts.livewire')->section('content');
+        return view('livewire.auth.index')->extends('livewire.layouts.master')->section('content');
     }
 }

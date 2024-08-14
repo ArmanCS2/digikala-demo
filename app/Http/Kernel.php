@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CacheMiddleware;
 use App\Http\Middleware\CartEmpty;
+use App\Http\Middleware\livewire\LivewireAuthMiddleware;
 use App\Http\Middleware\PermissionMiddleware;
 use App\Http\Middleware\ProductMarketable;
 use App\Http\Middleware\ProfileComplete;
@@ -73,6 +74,7 @@ class Kernel extends HttpKernel
         'role' => RoleMiddleware::class,
         'permission' => PermissionMiddleware::class,
         'product-marketable' => ProductMarketable::class,
-        'cache' => CacheMiddleware::class
+        'cache' => CacheMiddleware::class,
+        'livewire-auth'=>LivewireAuthMiddleware::class
     ];
 }

@@ -111,7 +111,7 @@
                         <section class="col-md-4">
                             <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
                                 <section class="product-gallery">
-                                    <section class="product-gallery-selected-image mb-3">
+                                    <section class="product-gallery-selected-image mb-1">
                                         <img
                                             src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
                                             alt="{{$product->name}}">

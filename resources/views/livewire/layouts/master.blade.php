@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-    @livewireStyles
     @include('app.layouts.head-tag')
     @yield('head-tag')
+    @livewireStyles
 </head>
 <body>
 
@@ -17,24 +17,32 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="">خانه</a>
+                    <a class="nav-link active" aria-current="page" href="{{route('livewire.index')}}">خانه</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">لینک</a>
+                    <a class="nav-link" href="{{route('livewire.task.base')}}">وظایف</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('livewire.product.base')}}">محصولات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('livewire.chat.rooms')}}">چت روم</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('livewire.cart')}}">
+                        <livewire:product.cart-header/>
+                    </a>
+                </li>
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="#"></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" >خروج</a>
+                        <a class="nav-link" href="{{route('livewire.auth.logout')}}">خروج</a>
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="">ورود</a>
+                        <a class="nav-link" href="{{route('livewire.auth.index')}}">ورود</a>
                     </li>
                 @endif
             </ul>
@@ -63,8 +71,6 @@
     </main>
 </section>
 <!-- end body -->
-
-@livewireScripts
 @include('app.layouts.scripts')
 @yield('scripts')
 
@@ -77,5 +83,21 @@
 @include('alerts.sweetalert.success')
 @include('alerts.sweetalert.error')
 @include('alerts.sweetalert.delete-confirm',['className'=>'delete'])
+@livewireScripts
+<script>
+    let modal=document.getElementById('exampleModal');
+    if (modal){
+        var editModal= new bootstrap.Modal(modal);
+    }
+    Livewire.on('showEditForm',()=>{
+        editModal.show();
+    });
+    Livewire.on('hideEditForm',()=>{
+        editModal.hide();
+    });
+    Livewire.on('swal',(params)=>{
+        Swal.fire(params);
+    });
+</script>
 </body>
 </html>

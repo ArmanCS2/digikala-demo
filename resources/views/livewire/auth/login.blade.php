@@ -13,13 +13,13 @@
     @endif
 
     <h5 class="text-center text-muted">ورود</h5>
-    <form wire:submit.prevent="login"  >
+    <form wire:submit.prevent="login">
 
         <div class="mb-3">
             <label class="form-label">ایمیل</label>
-            <input wire:model.lazy="email" type="email" class="form-control">
+            <input wire:model.lazy="email" type="text" class="form-control">
             @error('email')
-                <div class="form-text text-danger">{{ $message }}</div>
+            <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
 
@@ -27,7 +27,7 @@
             <label class="form-label">رمز</label>
             <input wire:model.lazy="password" type="password" class="form-control">
             @error('password')
-                <div class="form-text text-danger">{{ $message }}</div>
+            <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
 
@@ -44,7 +44,7 @@
         </button>
 
         <div wire:click="$emitUp('changeView')" class="text-center mt-3">
-            <span  style="cursor: pointer">اکانت ندارید ؟ ثبت نام</span>
+            <span style="cursor: pointer">اکانت ندارید ؟ ثبت نام</span>
         </div>
     </form>
 </div>

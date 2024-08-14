@@ -10,6 +10,7 @@
 
 .product-gallery-selected-image img {
     width: 100%;
+    object-fit: contain;
     border-radius: 0.25rem;
 }
 

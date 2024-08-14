@@ -130,4 +130,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Compare::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }
