@@ -1,6 +1,8 @@
 <?php
 
+use App\Mail\UserMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +15,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::apiResource('product',\App\Http\Controllers\Api\ProductController::class)->middleware('auth:sanctum');
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('send-mail',function (Request $request){
+    \App\Jobs\UserMailJob::dispatch($request->email,$request->mail);
+    return response()->json(['message'=>'Mail Sent']);
+})->middleware('auth:sanctum');;
+
+Route::prefix('auth')->group(function () {
+    Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+    Route::post('register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
 });
-Route::namespace('App\Http\Controllers')->group(function (){
-    Route::get('/cat','Admin\Content\CategoryController@getCategories');
-}
-);*/
 
