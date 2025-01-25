@@ -69,9 +69,7 @@ class LoginRegisterController extends Controller
             $smsService->setTo($user->mobile);
             $text = "فروشگاه بوتیکالا
 
-            کد تایید : $otpCode
-
-            وبسایت : www.butikala.ir";
+            کد تایید : $otpCode";
             $smsService->setText($text);
 
             $messageService = new MessageService($smsService);
@@ -155,9 +153,7 @@ class LoginRegisterController extends Controller
             $smsService->setTo($user->mobile);
             $text = "فروشگاه بوتیکالا
 
-            کد تایید : $otpCode
-
-            وبسایت : www.butikala.ir";
+            کد تایید : $otpCode";
             $smsService->setText($text);
 
             $messageService = new MessageService($smsService);

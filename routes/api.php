@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::apiResource('product',\App\Http\Controllers\Api\ProductController::class)->middleware('auth:sanctum');
+Route::apiResource('product', \App\Http\Controllers\Api\ProductController::class)->middleware('auth:sanctum');
 
-Route::post('send-mail',function (Request $request){
-    \App\Jobs\UserMailJob::dispatch($request->email,$request->mail);
-    return response()->json(['message'=>'Mail Sent']);
-})->middleware('auth:sanctum');;
+Route::post('send-mail', function (Request $request) {
+    \App\Jobs\UserMailJob::dispatch($request->email, $request->mail);
+    return response()->json(['message' => 'Mail Sent']);
+})->middleware('auth:sanctum');
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
