@@ -43,10 +43,11 @@
                             {{-- Image --}}
                             <section class="product-image">
                                 <img
-                                    loading="lazy"
                                     src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
                                     alt="خرید {{ $product->name }} | بوتیکالا"
                                     width="300" height="300"
+                                    loading="lazy"
+                                    decoding="async"
                                 >
 
                             </section>

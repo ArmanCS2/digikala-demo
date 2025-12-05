@@ -92,6 +92,8 @@
                         <section class="item">
                             <span class="w-100 d-block h-auto text-decoration-none">
                                 <img
+                                    loading="lazy"
+                                    decoding="async"
                                     class="w-100 rounded-2 d-block h-auto"
                                     src="{{ asset($slideShow->image) }}"
                                     alt="اسلاید {{ $loop->iteration }} - {{ $slideShow->title }}"
