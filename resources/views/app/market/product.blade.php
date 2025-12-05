@@ -1,34 +1,62 @@
 @extends('app.layouts.master-one-col')
 
 @section('head-tag')
-    <meta name="product_id" content="{{$product->id}}">
-    <meta name="product_name" content="{{$product->name}}">
-    <meta name="product" content="{{$product->name}}">
-    <meta name="product_title" content="{{$product->name}}">
+    @php
+        $rawDescription = trim(strip_tags($product->introduction));
+        if (function_exists('mb_substr')) {
+            $metaDescription = $rawDescription
+                ? (mb_strlen($rawDescription) > 160 ? mb_substr($rawDescription, 0, 157) . '...' : $rawDescription)
+                : $product->name;
+        } else {
+            $metaDescription = $rawDescription ?: $product->name;
+        }
+
+        if (!empty($commonDiscount)) {
+            $finalPrice = $product->price - ($product->price * $commonDiscount->percentage / 100);
+            $discountPercent = $commonDiscount->percentage;
+        } elseif (!empty($product->activeAmazingSale())) {
+            $finalPrice = $product->price - ($product->price * $product->activeAmazingSale()->percentage / 100);
+            $discountPercent = $product->activeAmazingSale()->percentage;
+        } else {
+            $finalPrice = $product->price;
+            $discountPercent = 0;
+        }
+    @endphp
+
+    {{-- === Meta tags پایه === --}}
+    <meta name="product_id" content="{{ $product->id }}">
+    <meta name="product_name" content="{{ $product->name }}">
+    <meta name="product" content="{{ $product->name }}">
+    <meta name="product_title" content="{{ $product->name }}">
     <meta name="product_image"
-          content="{{asset(str_replace('\\','/',$product->image['indexArray'][$product->image['currentImage']]))}}">
-    <meta property="og:title" content="{{$product->name}}"/>
-    <meta property="og:description" content="{{$product->name}}"/>
-    <meta property="og:url" content="{{url()->current()}}"/>
+          content="{{ asset(str_replace('\\','/',$product->image['indexArray'][$product->image['currentImage']])) }}">
+
+    {{-- SEO پایه --}}
+    <meta name="description" content="{{ $metaDescription }}">
+    <meta name="keywords" content="{{ $product->tags }}">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    {{-- OpenGraph --}}
+    <meta property="og:type" content="product"/>
+    <meta property="og:title" content="{{ $product->name }}"/>
+    <meta property="og:description" content="{{ $metaDescription }}"/>
+    <meta property="og:url" content="{{ url()->current() }}"/>
     <meta property="og:image"
-          content="{{asset(str_replace('\\','/',$product->image['indexArray'][$product->image['currentImage']]))}}">
-    @if($commonDiscount)
-        <meta name="product_price"
-              content="{{$product->price - ($product->price * $commonDiscount->percentage / 100)}}">
-        <meta name="product_off"
-              content="{{$commonDiscount->percentage}}">
-        <meta name="product_old_price" content="{{$product->price}}">
-    @elseif(!empty($product->activeAmazingSale()))
-        <meta name="product_price"
-              content="{{$product->price - ($product->price * $product->activeAmazingSale()->percentage / 100)}}">
-        <meta name="product_off"
-              content="{{$product->activeAmazingSale()->percentage}}">
-        <meta name="product_old_price" content="{{$product->price}}">
-    @else
-        <meta name="product_price" content="{{$product->price}}">
-        <meta name="product_old_price" content="{{$product->price}}">
-        <meta name="product_off" content="0">
-    @endif
+          content="{{ asset(str_replace('\\','/',$product->image['indexArray'][$product->image['currentImage']])) }}"/>
+    <meta property="og:site_name" content="{{ config('app.name') }}"/>
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $product->name }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
+    <meta name="twitter:image"
+          content="{{ asset(str_replace('\\','/',$product->image['indexArray'][$product->image['currentImage']])) }}">
+
+    {{-- قیمت و موجودی برای آنالیتیکس / تگ‌منیجر --}}
+    <meta name="product_price" content="{{ $finalPrice }}">
+    <meta name="product_old_price" content="{{ $product->price }}">
+    <meta name="product_off" content="{{ $discountPercent }}">
     @if($product->status && $product->marketable_number > 0 )
         <meta name="availability" content="instock">
         <meta name="product_available" content="1">
@@ -36,21 +64,16 @@
         <meta name="availability" content="outofstock">
         <meta name="product_available" content="0">
     @endif
-    <meta name="description" content="{{$product->name}}">
-    <meta name="keywords" content="{{$product->tags}}">
-    <title>{{$product->name}}</title>
+
+    <title>{{ $product->name }}</title>
+
     <style>
-        /* Styling h1 and links
-    ––––––––––––––––––––––––––––––––– */
         .starrating > input {
             display: none;
         }
 
-        /* Remove radio buttons */
-
         .starrating > label:before {
             content: "\f005";
-            /* Star */
             margin: 2px;
             font-size: 1em;
             font-family: FontAwesome;
@@ -59,23 +82,134 @@
 
         .starrating > label {
             color: #222222;
-            /* Start color when not clicked */
         }
 
         .starrating > input:checked ~ label {
             color: #ffca08;
         }
 
-        /* Set yellow color when star checked */
-
         .starrating > input:hover ~ label {
             color: #ffca08;
         }
-
-        /* Set yellow color when star hover */
     </style>
-@endsection
 
+    {{-- ================== PRODUCT SCHEMA ================== --}}
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": @json($product->name),
+  "image": [
+    @json(asset(str_replace('\\','/',$product->image['indexArray'][$product->image['currentImage']])))
+        ],
+        "description": @json($metaDescription),
+  "sku": @json($product->id),
+  "mpn": @json($product->id),
+  "brand": {
+    "@type": "Brand",
+    "name": @json($product->brand->persian_name ?? 'نامشخص')
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": @json(url()->current()),
+    "priceCurrency": "IRR",
+    "price": {{ $finalPrice }},
+    "availability": "{{ $product->marketable_number > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' }}",
+    "itemCondition": "https://schema.org/NewCondition"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ $product->ratingsAvg() ?? 0 }},
+    "ratingCount": {{ $product->ratingsCount() ?? 0 }}
+        },
+        "review": [
+@foreach($product->approvedComments() as $comment)
+            {
+              "@type": "Review",
+              "author": @json($comment->user->full_name ?? 'کاربر'),
+        "datePublished": @json(optional($comment->created_at)->toIso8601String()),
+        "reviewBody": @json($comment->body),
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": {{ $comment->rating ?? 5 }},
+          "bestRating": 5,
+          "worstRating": 1
+        }
+      }@if(!$loop->last),@endif
+        @endforeach
+        ]
+      }
+</script>
+
+    {{-- ================== BREADCRUMB SCHEMA ================== --}}
+    <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+   {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "صفحه اصلی",
+     "item": @json(route('home'))
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "کالاها",
+          "item": @json(route('market.products'))
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": @json($product->name),
+     "item": @json(url()->current())
+        }
+      ]
+     }
+</script>
+
+    {{-- ================== FAQ SCHEMA (اختیاری اما قوی) ================== --}}
+    @if(!empty($product->introduction))
+        <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+   {
+     "@type": "Question",
+     "name": @json("ویژگی‌های محصول {$product->name} چیست؟"),
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": @json(strip_tags($product->introduction))
+            }
+          },
+          {
+            "@type": "Question",
+            "name": @json("قیمت {$product->name} چقدر است؟"),
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": @json(
+            'قیمت این محصول در حال حاضر ' .
+            priceFormat($product->price) .
+            ' تومان است' .
+            (!empty($product->activeAmazingSale()) ? ' و شامل تخفیف شگفت‌انگیز می‌باشد.' : '')
+       )
+            }
+          },
+          {
+            "@type": "Question",
+            "name": @json("آیا {$product->name} موجود است؟"),
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": @json($product->marketable_number > 0 ? 'بله، موجود است.' : 'در حال حاضر موجود نیست.')
+            }
+          }
+        ]
+       }
+</script>
+    @endif
+@endsection
 
 @section('content')
     <!-- start cart -->
@@ -83,22 +217,25 @@
         <section class="container-xxl">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
-                                                                href="{{route('home')}}">صفحه اصلی</a></li>
-                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
-                                                                href="{{route('market.products')}}">کالا ها</a></li>
-                    <li class="breadcrumb-item font-size-12"><a class="text-decoration-none text-dark"
-                                                                href="{{url()->current()}}">کالا</a></li>
-                    <li class="breadcrumb-item font-size-12 active d-none" aria-current="page">{{$product->name}}</li>
+                    <li class="breadcrumb-item font-size-12">
+                        <a class="text-decoration-none text-dark" href="{{ route('home') }}">صفحه اصلی</a>
+                    </li>
+                    <li class="breadcrumb-item font-size-12">
+                        <a class="text-decoration-none text-dark" href="{{ route('market.products') }}">کالا ها</a>
+                    </li>
+                    <li class="breadcrumb-item font-size-12">
+                        <a class="text-decoration-none text-dark" href="{{ url()->current() }}">کالا</a>
+                    </li>
+                    <li class="breadcrumb-item font-size-12 active d-none" aria-current="page">{{ $product->name }}</li>
                 </ol>
             </nav>
             <section class="row">
                 <section class="col">
-                    <!-- start vontent header -->
+                    <!-- start content header -->
                     <section class="content-header">
                         <section class="d-flex justify-content-between align-items-center">
                             <h1 class="content-header-title">
-                                <span>{{$product->name}}</span>
+                                <span>{{ $product->name }}</span>
                             </h1>
                             <section class="content-header-link">
                                 <!--<a href="#">مشاهده همه</a>-->
@@ -113,18 +250,19 @@
                                 <section class="product-gallery">
                                     <section class="product-gallery-selected-image mb-1">
                                         <img
-                                            src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
-                                            alt="{{$product->name}}">
+                                            src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
+                                            alt="{{ $product->name }}">
                                     </section>
                                     <section class="product-gallery-thumbs">
                                         <img class="product-gallery-thumb"
-                                             src="{{asset($product->image['indexArray'][$product->image['currentImage']])}}"
-                                             alt="{{$product->name}}"
-                                             data-input="{{asset($product->image['indexArray'][$product->image['currentImage']])}}">
+                                             src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
+                                             alt="{{ $product->name }}"
+                                             data-input="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}">
                                         @foreach($product->images as $image)
-                                            <img class="product-gallery-thumb" src="{{asset($image->image)}}"
-                                                 alt="{{$product->name}}"
-                                                 data-input="{{asset($image->image)}}">
+                                            <img class="product-gallery-thumb"
+                                                 src="{{ asset($image->image) }}"
+                                                 alt="{{ $product->name }}"
+                                                 data-input="{{ asset($image->image) }}">
                                         @endforeach
                                     </section>
                                 </section>
@@ -132,47 +270,57 @@
                         </section>
                         <!-- end image gallery -->
 
-
                         <!-- start product info -->
                         <section class="col-md-5">
-
                             <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
 
-                                <!-- start vontent header -->
+                                <!-- start content header -->
                                 <section class="content-header mb-3">
                                     <section class="d-flex justify-content-between align-items-center">
                                         <h2 class="content-header-title content-header-title-small">
-                                            {{$product->name}}
+                                            {{ $product->name }}
                                         </h2>
                                         <section class="content-header-link">
                                             <!--<a href="#">مشاهده همه</a>-->
                                         </section>
                                     </section>
                                 </section>
+
                                 <section class="product-info">
-                                    <form action="{{route('market.cart.add-product',[$product])}}" method="post"
+                                    <form action="{{ route('market.cart.add-product', [$product]) }}"
+                                          method="post"
                                           id="add-product-form">
                                         @csrf
+
                                         @if(!empty($product->colors()->get()->toArray()))
-                                            <p><span>رنگ انتخاب شده : <span id="selected-color-name"></span></span></p>
+                                            <p>
+                                                <span>
+                                                    رنگ انتخاب شده :
+                                                    <span id="selected-color-name"></span>
+                                                </span>
+                                            </p>
                                             <section class="d-flex">
                                                 @foreach($product->colors as $key => $color)
                                                     <section class="mx-2">
-                                                        <label for="{{'color_' . $color->id}}"
-                                                               style="background-color: {{$color->color}};"
+                                                        <label for="{{ 'color_' . $color->id }}"
+                                                               style="background-color: {{ $color->color }};"
                                                                class="product-info-colors mx-0 border"
                                                                data-bs-toggle="tooltip"
                                                                data-bs-placement="bottom"
-                                                               title="{{$color->name}}"></label>
-                                                        <input class="mx-0" type="radio" name="color"
-                                                               id="{{'color_' . $color->id}}" value="{{$color->id}}"
-                                                               data-color-name="{{$color->name}}"
-                                                               data-color-price="{{$color->price_increase}}"
+                                                               title="{{ $color->name }}"></label>
+                                                        <input class="mx-0"
+                                                               type="radio"
+                                                               name="color"
+                                                               id="{{ 'color_' . $color->id }}"
+                                                               value="{{ $color->id }}"
+                                                               data-color-name="{{ $color->name }}"
+                                                               data-color-price="{{ $color->price_increase }}"
                                                                @if($key==0) checked @endif>
                                                     </section>
                                                 @endforeach
                                             </section>
                                         @endif
+
                                         @if(!empty($product->guarantees()->get()->toArray()))
                                             <section class="my-3 col-6">
                                                 <div class="fw-bolder">
@@ -180,19 +328,17 @@
                                                 </div>
                                                 <select name="guarantee" id="guarantee"
                                                         class="form-control form-control-sm">
-
                                                     @foreach($product->guarantees as $key => $guarantee)
-                                                        <option value="{{$guarantee->id}}"
-                                                                data-guarantee-price="{{$guarantee->price_increase}}"
+                                                        <option value="{{ $guarantee->id }}"
+                                                                data-guarantee-price="{{ $guarantee->price_increase }}"
                                                                 @if($key==0) selected @endif>
-                                                            {{$guarantee->name}}
+                                                            {{ $guarantee->name }}
                                                         </option>
-
                                                     @endforeach
-
                                                 </select>
                                             </section>
                                         @endif
+
                                         @if(!empty($product->sizes()->get()->toArray()))
                                             <section class="my-3 col-6">
                                                 <div class="fw-bolder">
@@ -200,26 +346,18 @@
                                                 </div>
                                                 <select name="product_size_id" id="product_size_id"
                                                         class="form-control form-control-sm">
-
                                                     @foreach($product->sizes as $key => $size)
                                                         @if($size->marketable_number > 0)
-                                                            <option value="{{$size->id}}"
+                                                            <option value="{{ $size->id }}"
                                                                     @if($key==0) selected @endif>
-                                                                <div>
-                                                                    {{$size->name}}
-                                                                </div>
+                                                                <div>{{ $size->name }}</div>
                                                                 :
-                                                                <div>
-                                                                    عرض {{$size->width}} cm
-                                                                </div>
+                                                                <div>عرض {{ $size->width }} cm</div>
                                                                 -
-                                                                <div>
-                                                                    قد {{$size->height}} cm
-                                                                </div>
+                                                                <div>قد {{ $size->height }} cm</div>
                                                             </option>
                                                         @endif
                                                     @endforeach
-
                                                 </select>
                                                 <div class="text-primary mt-1">
                                                     مشتری گرامی در هنگام انتخاب سایز به عرض و قد کالا دقت کنید!
@@ -230,37 +368,37 @@
                                         @if(!empty($product->material))
                                             <section class="my-4">
                                                 <i class="fa fa-tshirt"></i>
-                                                <span class="fw-bold">جنس : {{$product->material ?? '-'}}</span>
+                                                <span class="fw-bold">جنس : {{ $product->material ?? '-' }}</span>
                                             </section>
                                         @endif
 
                                         @if(!empty($product->size))
                                             <section class="my-4">
                                                 <i class="fa fa-text-height"></i>
-                                                <span class="fw-bold">سایز : {{$product->size ?? '-'}}</span>
+                                                <span class="fw-bold">سایز : {{ $product->size ?? '-' }}</span>
                                             </section>
                                         @endif
 
                                         @if(!empty($product->width))
                                             <section class="my-4">
                                                 <i class="fa fa-text-width"></i>
-                                                <span class="fw-bold">عرض : {{$product->width ?? '-'}} سانتی متر </span>
+                                                <span class="fw-bold">عرض : {{ $product->width ?? '-' }} سانتی متر</span>
                                             </section>
                                         @endif
 
                                         @if(!empty($product->height))
                                             <section class="my-4">
                                                 <i class="fa fa-text-height"></i>
-                                                <span
-                                                    class="fw-bold">ارتفاع : {{$product->height ?? '-'}} سانتی متر </span>
+                                                <span class="fw-bold">ارتفاع : {{ $product->height ?? '-' }} سانتی متر</span>
                                             </section>
                                         @endif
 
                                         @if(!empty($product->brand->persian_name))
                                             <section class="my-4">
                                                 <i class="fa fa-tag"></i>
-                                                <span
-                                                    class="fw-bold">برند : {{$product->brand->persian_name ?? 'فاقد برند'}}</span>
+                                                <span class="fw-bold">
+                                                    برند : {{ $product->brand->persian_name ?? 'فاقد برند' }}
+                                                </span>
                                             </section>
                                         @endif
 
@@ -268,7 +406,7 @@
                                             <i class="fa fa-list-alt"></i>
                                             <span class="fw-bold">دسته بندی : </span>
                                             @forelse($product->categories as $category)
-                                                <span class="fw-bold">{{$category->name}}, </span>
+                                                <span class="fw-bold">{{ $category->name }}, </span>
                                             @empty
                                                 <span class="fw-bold">فاقد دسته بندی</span>
                                             @endforelse
@@ -286,32 +424,27 @@
 
                                         <section class="my-4">
                                             <i class="fa fa-tags"></i>
-                                            <span>برچسب ها : {{$product->tags ?? '-'}}</span>
+                                            <span>برچسب ها : {{ $product->tags ?? '-' }}</span>
                                         </section>
 
                                         <section class="my-4">
                                             @if($product->compares->contains(auth()->user()->compare ?? null))
-                                                <a href="{{route('market.product.remove-from-compare',$product)}}"
-                                                   class="btn btn-dark btn-sm"> حذف از لیست مقایسه <i
-                                                        class="fa fa-balance-scale"></i></a>
+                                                <a href="{{ route('market.product.remove-from-compare', $product) }}"
+                                                   class="btn btn-dark btn-sm">
+                                                    حذف از لیست مقایسه
+                                                    <i class="fa fa-balance-scale"></i>
+                                                </a>
                                             @else
-                                                <a href="{{route('market.product.add-to-compare',$product)}}"
-                                                   class="btn btn-dark btn-sm"> افزودن به لیست مقایسه <i
-                                                        class="fa fa-balance-scale"></i></a>
+                                                <a href="{{ route('market.product.add-to-compare', $product) }}"
+                                                   class="btn btn-dark btn-sm">
+                                                    افزودن به لیست مقایسه
+                                                    <i class="fa fa-balance-scale"></i>
+                                                </a>
                                             @endif
-
                                         </section>
 
                                         <section>
-                                            <section class="cart-product-number d-none ">
-                                                {{--                                                <button class="cart-number cart-number-down" type="button">---}}
-                                                {{--                                                </button>--}}
-                                                {{--                                                <input class="" type="number" name="number" id="number" min="1"--}}
-                                                {{--                                                       max="5"--}}
-                                                {{--                                                       step="1" value="1"--}}
-                                                {{--                                                       readonly="readonly">--}}
-                                                {{--                                                <button class="cart-number cart-number-up" type="button">+--}}
-                                                {{--                                                </button>--}}
+                                            <section class="cart-product-number d-none">
                                                 <input class="d-none" type="number" name="number" id="number" value="1">
                                             </section>
                                         </section>
@@ -319,7 +452,6 @@
                                     </form>
                                 </section>
                             </section>
-
                         </section>
                         <!-- end product info -->
 
@@ -327,110 +459,133 @@
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">قیمت کالا</p>
-                                    <p class="text-muted"><span id="product-price"
-                                                                data-product-original-price="{{$product->price}}">{{priceFormat($product->price)}}</span><span
-                                            class="small"> تومان </span></p>
+                                    <p class="text-muted">
+                                        <span id="product-price"
+                                              data-product-original-price="{{ $product->price }}">
+                                            {{ priceFormat($product->price) }}
+                                        </span>
+                                        <span class="small"> تومان </span>
+                                    </p>
                                 </section>
+
                                 @if(!empty($product->activeAmazingSale()))
                                     <section class="d-flex justify-content-between align-items-center">
                                         <p class="text-muted">درصد تخفیف</p>
-                                        <p class="text-danger fw-bolder"><span id="product-discount-percentage"
-                                                                               data-product-discount-percentage="{{$product->activeAmazingSale()->percentage}}"></span>
-                                            <span class="small"> % </span></p>
-                                        <p class="text-muted">تخفیف کالا</p>
-                                        <p class="text-danger fw-bolder"><span id="product-discount-price"
-                                                                               data-product-discount-price="{{$product->price * $product->activeAmazingSale()->percentage / 100}}"></span>
-                                            <span class="small">تومان</span></p>
-                                    </section>
-                                    <section class="border-bottom mb-3"></section>
-
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">قیمت نهایی</p>
-                                        <p class="fw-bolder"><span id="final-price"></span>
-                                            <span class="small">تومان</span></p>
-                                    </section>
-                                @elseif(!empty($commonDiscount))
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">درصد تخفیف</p>
                                         <p class="text-danger fw-bolder">
-                                            <span>{{convertEnglishToPersian($commonDiscount->percentage)}}</span>
-                                            <span class="small"> % </span></p>
+                                            <span id="product-discount-percentage"
+                                                  data-product-discount-percentage="{{ $product->activeAmazingSale()->percentage }}"></span>
+                                            <span class="small"> % </span>
+                                        </p>
                                         <p class="text-muted">تخفیف کالا</p>
                                         <p class="text-danger fw-bolder">
-                                            <span>{{priceFormat($product->price * $commonDiscount->percentage / 100)}}</span>
-                                            <span class="small">تومان</span></p>
+                                            <span id="product-discount-price"
+                                                  data-product-discount-price="{{ $product->price * $product->activeAmazingSale()->percentage / 100 }}"></span>
+                                            <span class="small">تومان</span>
+                                        </p>
                                     </section>
                                     <section class="border-bottom mb-3"></section>
 
                                     <section class="d-flex justify-content-between align-items-center">
                                         <p class="text-muted">قیمت نهایی</p>
                                         <p class="fw-bolder">
-                                            <span>{{priceFormat($product->price - ($product->price * $commonDiscount->percentage / 100))}}</span>
-                                            <span class="small">تومان</span></p>
+                                            <span id="final-price"></span>
+                                            <span class="small">تومان</span>
+                                        </p>
+                                    </section>
+                                @elseif(!empty($commonDiscount))
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted">درصد تخفیف</p>
+                                        <p class="text-danger fw-bolder">
+                                            <span>{{ convertEnglishToPersian($commonDiscount->percentage) }}</span>
+                                            <span class="small"> % </span>
+                                        </p>
+                                        <p class="text-muted">تخفیف کالا</p>
+                                        <p class="text-danger fw-bolder">
+                                            <span>{{ priceFormat($product->price * $commonDiscount->percentage / 100) }}</span>
+                                            <span class="small">تومان</span>
+                                        </p>
+                                    </section>
+                                    <section class="border-bottom mb-3"></section>
+
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted">قیمت نهایی</p>
+                                        <p class="fw-bolder">
+                                            <span>{{ priceFormat($product->price - ($product->price * $commonDiscount->percentage / 100)) }}</span>
+                                            <span class="small">تومان</span>
+                                        </p>
                                     </section>
                                 @else
                                     <section class="border-bottom mb-3"></section>
 
                                     <section class="d-flex justify-content-between align-items-center">
                                         <p class="text-muted">قیمت نهایی</p>
-                                        <p class="fw-bolder"><span id="final-price"></span>
-                                            <span class="small">تومان</span></p>
+                                        <p class="fw-bolder">
+                                            <span id="final-price"></span>
+                                            <span class="small">تومان</span>
+                                        </p>
                                     </section>
                                 @endif
+
                                 @if($product->marketable_number > 0)
-                                    <section class="">
-                                        <button id="next-level" href="#"
+                                    <section>
+                                        <button id="next-level"
                                                 onclick="document.getElementById('add-product-form').submit();"
-                                                class="btn btn-danger d-block w-100">افزودن به سبد
-                                            خرید
+                                                class="btn btn-danger d-block w-100">
+                                            افزودن به سبد خرید
                                         </button>
                                     </section>
                                 @else
-                                    <section class="">
-                                        <button id="next-level" class="btn btn-dark d-block disabled w-100">کالا
-                                            ناموجود
-                                            است
+                                    <section>
+                                        <button id="next-level"
+                                                class="btn btn-dark d-block disabled w-100">
+                                            کالا ناموجود است
                                         </button>
                                     </section>
                                 @endif
+
                                 <section class="mt-3">
                                     <p class="mb-3">
                                         <i class="fa fa-info-circle me-1"></i>
                                         کاربر گرامی در هنگام سفارش کالا به جزئیات کالا نظیر سایز و رنگ دقت کنید!
                                     </p>
                                 </section>
+
                                 @auth
                                     @if($product->user->contains(auth()->user()->id))
                                         <section class="add-to-favorite mt-3">
                                             <button type="button"
                                                     class="btn btn-light btn-sm"
-                                                    data-url="{{route('market.product.is-favorite',$product)}}"
+                                                    data-url="{{ route('market.product.is-favorite', $product) }}"
                                                     data-bs-toggle="tooltip"
                                                     data-bs-placement="left"
-                                                    title="حذف از علاقه مندی"><i
-                                                    class="fa fa-heart text-danger"></i></button>
+                                                    title="حذف از علاقه مندی">
+                                                <i class="fa fa-heart text-danger"></i>
+                                            </button>
                                         </section>
                                     @else
                                         <section class="add-to-favorite my-2">
                                             <button type="button"
                                                     class="btn btn-light btn-sm"
-                                                    data-url="{{route('market.product.is-favorite',$product)}}"
+                                                    data-url="{{ route('market.product.is-favorite', $product) }}"
                                                     data-bs-toggle="tooltip"
                                                     data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i
-                                                    class="fa fa-heart"></i></button>
+                                                    title="افزودن به علاقه مندی">
+                                                <i class="fa fa-heart"></i>
+                                            </button>
                                         </section>
                                     @endif
                                 @endauth
+
                                 @guest
                                     <section class="add-to-favorite my-2">
                                         <button type="button"
                                                 class="btn btn-light btn-sm"
-                                                data-url="{{route('market.product.is-favorite',$product)}}"
+                                                data-url="{{ route('market.product.is-favorite', $product) }}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="left"
-                                                title="افزودن به علاقه مندی"><i
-                                                class="fa fa-heart"></i></button>
+                                                title="افزودن به علاقه مندی">
+                                            <i class="fa fa-heart"></i>
+                                        </button>
                                     </section>
                                 @endguest
 
@@ -445,15 +600,13 @@
     </section>
     <!-- end cart -->
 
-
-
     <!-- start product lazy load -->
     <section class="mb-4">
         <section class="container-xxl">
             <section class="row">
                 <section class="col">
                     <section class="content-wrapper bg-white p-3 rounded-2">
-                        <!-- start vontent header -->
+                        <!-- start content header -->
                         <section class="content-header">
                             <section class="d-flex justify-content-between align-items-center">
                                 <h2 class="content-header-title">
@@ -464,7 +617,8 @@
                                 </section>
                             </section>
                         </section>
-                        <!-- start vontent header -->
+                        <!-- end content header -->
+
                         <section class="lazyload-wrapper">
                             <section class="lazyload light-owl-nav owl-carousel owl-theme">
 
@@ -472,87 +626,98 @@
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
-                                                <section class="product-add-to-cart"><a
-                                                        href="{{route('market.cart.add-product',[$relatedProduct])}}"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="left"
-                                                        title="افزودن به سبد خرید"><i
-                                                            class="fa fa-cart-plus"></i></a></section>
+                                                <section class="product-add-to-cart">
+                                                    <a href="{{ route('market.cart.add-product', [$relatedProduct]) }}"
+                                                       data-bs-toggle="tooltip"
+                                                       data-bs-placement="left"
+                                                       title="افزودن به سبد خرید">
+                                                        <i class="fa fa-cart-plus"></i>
+                                                    </a>
+                                                </section>
+
                                                 @auth
                                                     @if($relatedProduct->user->contains(auth()->user()->id))
                                                         <section class="product-add-to-favorite">
                                                             <button class="btn btn-light btn-sm"
-                                                                    data-url="{{route('market.product.is-favorite',$relatedProduct)}}"
+                                                                    data-url="{{ route('market.product.is-favorite', $relatedProduct) }}"
                                                                     data-bs-toggle="tooltip"
                                                                     data-bs-placement="left"
-                                                                    title="حذف از علاقه مندی"><i
-                                                                    class="fa fa-heart text-danger"></i></button>
+                                                                    title="حذف از علاقه مندی">
+                                                                <i class="fa fa-heart text-danger"></i>
+                                                            </button>
                                                         </section>
                                                     @else
                                                         <section class="product-add-to-favorite">
                                                             <button class="btn btn-light btn-sm"
-                                                                    data-url="{{route('market.product.is-favorite',$relatedProduct)}}"
+                                                                    data-url="{{ route('market.product.is-favorite', $relatedProduct) }}"
                                                                     data-bs-toggle="tooltip"
                                                                     data-bs-placement="left"
-                                                                    title="افزودن به علاقه مندی"><i
-                                                                    class="fa fa-heart"></i></button>
+                                                                    title="افزودن به علاقه مندی">
+                                                                <i class="fa fa-heart"></i>
+                                                            </button>
                                                         </section>
                                                     @endif
                                                 @endauth
+
                                                 @guest
                                                     <section class="product-add-to-favorite">
                                                         <button class="btn btn-light btn-sm"
-                                                                data-url="{{route('market.product.is-favorite',$relatedProduct)}}"
+                                                                data-url="{{ route('market.product.is-favorite', $relatedProduct) }}"
                                                                 data-bs-toggle="tooltip"
                                                                 data-bs-placement="left"
-                                                                title="افزودن به علاقه مندی"><i
-                                                                class="fa fa-heart"></i></button>
+                                                                title="افزودن به علاقه مندی">
+                                                            <i class="fa fa-heart"></i>
+                                                        </button>
                                                     </section>
                                                 @endguest
+
                                                 <a class="product-link"
-                                                   href="{{route('market.product',$relatedProduct)}}">
+                                                   href="{{ route('market.product', $relatedProduct) }}">
                                                     <section class="product-image">
-                                                        <img class=""
-                                                             src="{{asset($relatedProduct->image['indexArray'][$relatedProduct->image['currentImage']])}}"
-                                                             alt="{{$relatedProduct->name}}">
+                                                        <img
+                                                            src="{{ asset($relatedProduct->image['indexArray'][$relatedProduct->image['currentImage']]) }}"
+                                                            alt="{{ $relatedProduct->name }}">
                                                     </section>
                                                     <section class="product-name">
-                                                        <h3>{{$relatedProduct->name}}</h3>
+                                                        <h3>{{ $relatedProduct->name }}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         @if(!empty($relatedProduct->activeAmazingSale() ?? []))
                                                             <section class="product-discount">
-                                                                <span
-                                                                    class="product-old-price">{{priceFormat($relatedProduct->price)}}</span>
-                                                                <span
-                                                                    class="product-discount-amount"> % {{convertEnglishToPersian($relatedProduct->activeAmazingSale()->percentage)}}</span>
+                                                                <span class="product-old-price">
+                                                                    {{ priceFormat($relatedProduct->price) }}
+                                                                </span>
+                                                                <span class="product-discount-amount">
+                                                                    % {{ convertEnglishToPersian($relatedProduct->activeAmazingSale()->percentage) }}
+                                                                </span>
                                                             </section>
-                                                            <section
-                                                                class="product-price">{{priceFormat($relatedProduct->price - ($relatedProduct->price * $relatedProduct->activeAmazingSale()->percentage / 100))}}
+                                                            <section class="product-price">
+                                                                {{ priceFormat($relatedProduct->price - ($relatedProduct->price * $relatedProduct->activeAmazingSale()->percentage / 100)) }}
                                                                 تومان
                                                             </section>
                                                         @elseif(!empty($commonDiscount))
                                                             <section class="product-discount">
-                                                                <span
-                                                                    class="product-old-price">{{priceFormat($relatedProduct->price)}}</span>
-                                                                <span
-                                                                    class="product-discount-amount"> % {{convertEnglishToPersian($commonDiscount->percentage)}}</span>
+                                                                <span class="product-old-price">
+                                                                    {{ priceFormat($relatedProduct->price) }}
+                                                                </span>
+                                                                <span class="product-discount-amount">
+                                                                    % {{ convertEnglishToPersian($commonDiscount->percentage) }}
+                                                                </span>
                                                             </section>
-                                                            <section
-                                                                class="product-price">{{priceFormat($relatedProduct->price - ($relatedProduct->price * $commonDiscount->percentage / 100))}}
+                                                            <section class="product-price">
+                                                                {{ priceFormat($relatedProduct->price - ($relatedProduct->price * $commonDiscount->percentage / 100)) }}
                                                                 تومان
                                                             </section>
                                                         @else
-                                                            <section
-                                                                class="product-price">{{priceFormat($relatedProduct->price)}}
-                                                                تومان
+                                                            <section class="product-price">
+                                                                {{ priceFormat($relatedProduct->price) }} تومان
                                                             </section>
                                                         @endif
                                                     </section>
                                                     <section class="product-colors">
                                                         @foreach($relatedProduct->colors ?? [] as $productColor)
                                                             <section class="product-colors-item"
-                                                                     style="background-color: {{$productColor->color}};"></section>
+                                                                     style="background-color: {{ $productColor->color }};"></section>
                                                         @endforeach
                                                     </section>
                                                 </a>
@@ -581,11 +746,18 @@
                             <section class="content-header">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <h2 class="content-header-title">
-                                        <span class="me-2"><a class="text-decoration-none text-dark"
-                                                              href="#introduction">معرفی</a></span>
-                                        <span class="me-2"><a class="text-decoration-none text-dark" href="#features">ویژگی ها</a></span>
-                                        <span class="me-2"><a class="text-decoration-none text-dark" href="#rates">امتیاز ها</a></span>
-                                        <span class="me-2"><a class="text-decoration-none text-dark" href="#comments">دیدگاه ها</a></span>
+                                        <span class="me-2">
+                                            <a class="text-decoration-none text-dark" href="#introduction">معرفی</a>
+                                        </span>
+                                        <span class="me-2">
+                                            <a class="text-decoration-none text-dark" href="#features">ویژگی ها</a>
+                                        </span>
+                                        <span class="me-2">
+                                            <a class="text-decoration-none text-dark" href="#rates">امتیاز ها</a>
+                                        </span>
+                                        <span class="me-2">
+                                            <a class="text-decoration-none text-dark" href="#comments">دیدگاه ها</a>
+                                        </span>
                                     </h2>
                                     <section class="content-header-link">
                                         <!--<a href="#">مشاهده همه</a>-->
@@ -593,11 +765,10 @@
                                 </section>
                             </section>
                         </section>
-                        <!-- start content header -->
+                        <!-- end content header -->
 
                         <section class="py-4">
-
-                            <!-- start vontent header -->
+                            <!-- معرفی -->
                             <section id="introduction" class="content-header mt-2 mb-4">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <h2 class="content-header-title content-header-title-small">
@@ -614,7 +785,7 @@
                                 </section>
                             </section>
 
-                            <!-- start vontent header -->
+                            <!-- ویژگی‌ها -->
                             <section id="features" class="content-header mt-2 mb-4">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <h2 class="content-header-title content-header-title-small">
@@ -627,24 +798,23 @@
                             </section>
                             <section class="product-features mb-4 table-responsive">
                                 <table class="table table-bordered border-white">
-
                                     @foreach($product->values as $value)
                                         <tr>
-                                            <td>{{$value->attribute->name}}</td>
-                                            <td>{{json_decode($value->value)->value}} {{$value->attribute->unit}}</td>
+                                            <td>{{ $value->attribute->name }}</td>
+                                            <td>{{ json_decode($value->value)->value }} {{ $value->attribute->unit }}</td>
                                         </tr>
                                     @endforeach
 
                                     @foreach($product->metas ?? [] as $meta)
                                         <tr>
-                                            <td>{{$meta->meta_key}}</td>
-                                            <td>{{$meta->meta_value}}</td>
+                                            <td>{{ $meta->meta_key }}</td>
+                                            <td>{{ $meta->meta_value }}</td>
                                         </tr>
                                     @endforeach
                                 </table>
                             </section>
 
-                            <!-- start rating -->
+                            <!-- امتیازها -->
                             <section id="rates" class="content-header mt-2 mb-4">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <h2 class="content-header-title content-header-title-small">
@@ -656,11 +826,11 @@
                                 </section>
                             </section>
                             <section class="product-rating mb-4">
-
                                 <div class="container">
                                     <form
                                         class="starrating risingstar d-flex justify-content-end flex-row-reverse align-items-center"
-                                        action="{{route('market.product.rate',$product)}}" method="post">
+                                        action="{{ route('market.product.rate', $product) }}"
+                                        method="post">
                                         @csrf
                                         <div class="mx-3">
                                             <button class="btn btn-info btn-sm">ثبت امتیاز</button>
@@ -675,21 +845,17 @@
                                         <label for="star2" title="2 star"></label>
                                         <input type="radio" id="star1" name="rating" value="1"/>
                                         <label for="star1" title="1 star"></label>
-
                                     </form>
                                     <p class="my-1">
-                                        میانگین امتیاز
-                                        : {{ number_format($product->ratingsAvg(), 1, '/') ?? 0 }} از {{ $product->ratingsCount() ?? 0
-                                }} نفر
+                                        میانگین امتیاز :
+                                        {{ number_format($product->ratingsAvg(), 1, '/') ?? 0 }}
+                                        از
+                                        {{ $product->ratingsCount() ?? 0 }} نفر
                                     </p>
-
-
                                 </div>
-
                             </section>
 
-
-                            <!-- start vontent header -->
+                            <!-- دیدگاه‌ها -->
                             <section id="comments" class="content-header mt-2 mb-4">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <h2 class="content-header-title content-header-title-small">
@@ -704,98 +870,110 @@
                                 @guest
                                     <section class="comment-add-wrapper">
                                         <p>برای افزودن دیدگاه وارد حساب کاربری خود شوید</p>
-                                        <a href="{{route('auth.customer.login-register-form')}}"
-                                           class="btn btn-primary">ورود
-                                            یا ثبت نام</a>
+                                        <a href="{{ route('auth.customer.login-register-form') }}"
+                                           class="btn btn-primary">
+                                            ورود یا ثبت نام
+                                        </a>
                                     </section>
                                 @endguest
+
                                 @auth
                                     <section class="comment-add-wrapper">
-                                        <button class="comment-add-button" type="button"
+                                        <button class="comment-add-button"
+                                                type="button"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#add-comment"><i class="fa fa-plus"></i>
-                                            افزودن
-                                            دیدگاه
+                                                data-bs-target="#add-comment">
+                                            <i class="fa fa-plus"></i>
+                                            افزودن دیدگاه
                                         </button>
+
                                         <!-- start add comment Modal -->
                                         <section class="modal fade" id="add-comment" tabindex="-1"
                                                  aria-labelledby="add-comment-label" aria-hidden="true">
                                             <section class="modal-dialog">
                                                 <section class="modal-content">
                                                     <section class="modal-header">
-                                                        <h5 class="modal-title" id="add-comment-label"><i
-                                                                class="fa fa-plus"></i> افزودن دیدگاه</h5>
+                                                        <h5 class="modal-title" id="add-comment-label">
+                                                            <i class="fa fa-plus"></i>
+                                                            افزودن دیدگاه
+                                                        </h5>
                                                         <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                     </section>
                                                     <section class="modal-body">
                                                         <form class="row"
-                                                              action="{{route('market.product.store-comment',$product)}}"
+                                                              action="{{ route('market.product.store-comment', $product) }}"
                                                               method="post">
                                                             @csrf
                                                             <section class="col-12 mb-2">
                                                                 <label for="comment"
-                                                                       class="form-label mb-1">دیدگاه
-                                                                    شما</label>
+                                                                       class="form-label mb-1">
+                                                                    دیدگاه شما
+                                                                </label>
                                                                 <textarea
                                                                     class="form-control form-control-sm"
                                                                     id="comment"
                                                                     placeholder="دیدگاه شما ..."
-                                                                    rows="4" name="body"></textarea>
+                                                                    rows="4"
+                                                                    name="body"></textarea>
                                                                 @error('body')
                                                                 <span class="text-danger">
-                                                                    <strong>{{$message}}</strong>
+                                                                    <strong>{{ $message }}</strong>
                                                                 </span>
                                                                 @enderror
                                                             </section>
                                                             <section class="modal-footer py-1">
                                                                 <button type="submit"
-                                                                        class="btn btn-sm btn-primary">ثبت
-                                                                    دیدگاه
+                                                                        class="btn btn-sm btn-primary">
+                                                                    ثبت دیدگاه
                                                                 </button>
                                                                 <button type="button"
                                                                         class="btn btn-sm btn-danger"
-                                                                        data-bs-dismiss="modal">بستن
+                                                                        data-bs-dismiss="modal">
+                                                                    بستن
                                                                 </button>
                                                             </section>
                                                         </form>
                                                     </section>
-
                                                 </section>
                                             </section>
                                         </section>
+                                        <!-- end add comment Modal -->
                                     </section>
                                 @endauth
 
                                 @foreach($product->approvedComments() as $comment)
                                     <section class="product-comment">
-                                        <section
-                                            class="product-comment-header d-flex justify-content-start">
-                                            <section
-                                                class="product-comment-date">{{jalaliDate($comment->created_at)}}</section>
-                                            <section
-                                                class="product-comment-title">{{$comment->user->full_name ?? 'ناشناس'}}</section>
+                                        <section class="product-comment-header d-flex justify-content-start">
+                                            <section class="product-comment-date">
+                                                {{ jalaliDate($comment->created_at) }}
+                                            </section>
+                                            <section class="product-comment-title">
+                                                {{ $comment->user->full_name ?? 'ناشناس' }}
+                                            </section>
                                         </section>
                                         <section class="product-comment-body">
-                                            {{$comment->body}}
+                                            {{ $comment->body }}
                                         </section>
+
                                         @if(!empty($comment->answer))
                                             <section class="product-comment ms-5 border-bottom-0">
-                                                <section
-                                                    class="product-comment-header d-flex justify-content-start">
-                                                    <section
-                                                        class="product-comment-date">{{jalaliDate($comment->answer->created_at)}}</section>
-                                                    <section class="product-comment-title">ادمین</section>
+                                                <section class="product-comment-header d-flex justify-content-start">
+                                                    <section class="product-comment-date">
+                                                        {{ jalaliDate($comment->answer->created_at) }}
+                                                    </section>
+                                                    <section class="product-comment-title">
+                                                        ادمین
+                                                    </section>
                                                 </section>
                                                 <section class="product-comment-body">
-                                                    {{$comment->answer->body}}
+                                                    {{ $comment->answer->body }}
                                                 </section>
                                             </section>
                                         @endif
                                     </section>
                                 @endforeach
-
 
                             </section>
                         </section>
@@ -812,27 +990,24 @@
     <script>
         $(document).ready(function () {
             bill();
-            //input color
             $('input[name="color"]').change(function () {
                 bill();
-            })
-            //guarantee
+            });
             $('select[name="guarantee"]').change(function () {
                 bill();
-            })
-            //number
+            });
             $('.cart-number').click(function () {
                 bill();
-            })
-        })
+            });
+        });
 
         function bill() {
-            if ($('input[name="color"]:checked').length != 0) {
+            if ($('input[name="color"]:checked').length !== 0) {
                 var selected_color = $('input[name="color"]:checked');
-                $("#selected_color_name").html(selected_color.attr('data-color-name'));
+                // فیکس id: selected-color-name
+                $("#selected-color-name").html(selected_color.attr('data-color-name'));
             }
 
-            //price computing
             var selected_color_price = 0;
             var selected_guarantee_price = 0;
             var number = 1;
@@ -840,30 +1015,27 @@
             var product_discount_percentage = 0;
             var product_original_price = parseFloat($('#product-price').attr('data-product-original-price'));
 
-            if ($('input[name="color"]:checked').length != 0) {
-                selected_color_price = parseFloat(selected_color.attr('data-color-price'));
+            if ($('input[name="color"]:checked').length !== 0) {
+                selected_color_price = parseFloat($('input[name="color"]:checked').attr('data-color-price'));
             }
 
-            if ($('#guarantee option:selected').length != 0) {
+            if ($('#guarantee option:selected').length !== 0) {
                 selected_guarantee_price = parseFloat($('#guarantee option:selected').attr('data-guarantee-price'));
             }
 
             var product_price = product_original_price + selected_color_price + selected_guarantee_price;
-
             $('#product-price').html(toPersianNumber(product_price));
 
-
-            if ($('#product-discount-percentage').length != 0) {
+            if ($('#product-discount-percentage').length !== 0) {
                 product_discount_percentage = parseFloat($('#product-discount-percentage').attr('data-product-discount-percentage'));
                 product_discount_price = product_price * product_discount_percentage / 100;
             }
 
-
             if ($('#number').val() > 0) {
                 number = parseFloat($('#number').val());
             }
-            var final_price = number * (product_price - product_discount_price);
 
+            var final_price = number * (product_price - product_discount_price);
 
             $('#product-discount-percentage').html(toPersianNumber(product_discount_percentage));
             $('#product-discount-price').html(toPersianNumber(product_discount_price));
@@ -872,9 +1044,7 @@
 
         function toPersianNumber(number) {
             const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            // add comma
             number = new Intl.NumberFormat().format(number);
-            //convert to persian
             return number.toString().replace(/\d/g, x => farsiDigits[x]);
         }
     </script>
@@ -886,30 +1056,28 @@
             $.ajax({
                 url: url,
                 success: function (result) {
-                    console.log(result)
-                    if (result.status == 1) {
+                    if (result.status === 1) {
                         $(element).children().first().addClass('text-danger');
                         $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
                         $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
                         successToast('محصول به علاقه مندی ها اضافه شد');
-                    } else if (result.status == 2) {
-                        $(element).children().first().removeClass('text-danger')
+                    } else if (result.status === 2) {
+                        $(element).children().first().removeClass('text-danger');
                         $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
                         $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
                         successToast('محصول از علاقه مندی ها حذف شد');
-                    } else if (result.status == 3) {
+                    } else if (result.status === 3) {
                         infoToast('برای افزودن به علاقه مندی وارد حساب کاربری خود شوید');
                     }
                 }
-            })
-
+            });
 
             function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="4000">\n' +
+                var successToastTag =
+                    '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
+                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close"></a>\n' +
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
@@ -921,11 +1089,11 @@
             }
 
             function infoToast(message) {
-                var successToastTag = '<section class="toast" data-delay="4000">\n' +
+                var successToastTag =
+                    '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
+                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close"></a>\n' +
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
@@ -937,11 +1105,11 @@
             }
 
             function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
+                var errorToastTag =
+                    '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
+                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close"></a>\n' +
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(errorToastTag);
@@ -951,9 +1119,8 @@
                     $(this).remove();
                 });
             }
-        })
+        });
     </script>
-
 
     <script>
         $('.product-add-to-favorite button').click(function () {
@@ -962,30 +1129,28 @@
             $.ajax({
                 url: url,
                 success: function (result) {
-                    console.log(result)
-                    if (result.status == 1) {
+                    if (result.status === 1) {
                         $(element).children().first().addClass('text-danger');
                         $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
                         $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
                         successToast('محصول به علاقه مندی ها اضافه شد');
-                    } else if (result.status == 2) {
-                        $(element).children().first().removeClass('text-danger')
+                    } else if (result.status === 2) {
+                        $(element).children().first().removeClass('text-danger');
                         $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
                         $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
                         successToast('محصول از علاقه مندی ها حذف شد');
-                    } else if (result.status == 3) {
+                    } else if (result.status === 3) {
                         infoToast('برای افزودن به علاقه مندی وارد حساب کاربری خود شوید');
                     }
                 }
-            })
-
+            });
 
             function successToast(message) {
-                var successToastTag = '<section class="toast" data-delay="4000">\n' +
+                var successToastTag =
+                    '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
+                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close"></a>\n' +
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
@@ -997,11 +1162,11 @@
             }
 
             function infoToast(message) {
-                var successToastTag = '<section class="toast" data-delay="4000">\n' +
+                var successToastTag =
+                    '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-info text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
+                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close"></a>\n' +
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(successToastTag);
@@ -1013,11 +1178,11 @@
             }
 
             function errorToast(message) {
-                var errorToastTag = '<section class="toast" data-delay="4000">\n' +
+                var errorToastTag =
+                    '<section class="toast" data-delay="4000">\n' +
                     '<section class="toast-body py-3 d-flex bg-danger text-white">\n' +
                     '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '</a>\n' +
+                    '<a class="mr-2 close" data-dismiss="toast" aria-label="Close"></a>\n' +
                     '</section>\n' +
                     '</section>';
                 $('.toast-wrapper').append(errorToastTag);
@@ -1027,7 +1192,7 @@
                     $(this).remove();
                 });
             }
-        })
+        });
     </script>
 
     <script>
@@ -1047,9 +1212,4 @@
         });
         //end product introduction, features and comment
     </script>
-
-
 @endsection
-
-
-

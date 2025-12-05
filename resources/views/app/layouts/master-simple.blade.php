@@ -1,45 +1,65 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
+
 <head>
-    @livewireStyles
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    {{-- Global Head --}}
     @include('app.layouts.head-tag')
+
+    {{-- Page-specific Head --}}
     @yield('head-tag')
+
+    {{-- Livewire Styles --}}
+    @livewireStyles
+
 </head>
+
 <body>
 
-
-<!-- start main one col -->
+<!-- START MAIN CONTAINER -->
 <main id="main-body-one-col" class="main-body">
 
-  @yield('content')
+    {{-- Page Content --}}
+    @yield('content')
 
 </main>
-<!-- end main one col -->
+<!-- END MAIN CONTAINER -->
 
 
-<!-- start body -->
+<!-- SECONDARY LAYOUT (kept for UI compatibility, not as <main>) -->
 <section class="container-xxl body-container">
     <aside id="sidebar" class="sidebar">
-
+        {{-- Reserved for sidebar content --}}
     </aside>
-    <main id="main-body" class="main-body">
 
-    </main>
+    <section id="main-body" class="main-body">
+        {{-- Reserved for two-column layout pages --}}
+    </section>
 </section>
-<!-- end body -->
 
+
+{{-- Livewire Scripts --}}
 @livewireScripts
+
+{{-- Global Scripts --}}
 @include('app.layouts.scripts')
+
+{{-- Page Scripts --}}
 @yield('scripts')
 
 
+<!-- Toasts -->
 @include('alerts.toast.success')
 @include('alerts.toast.error')
 @include('alerts.toast.info')
 
-
+<!-- SweetAlerts -->
 @include('alerts.sweetalert.success')
 @include('alerts.sweetalert.error')
-@include('alerts.sweetalert.delete-confirm',['className'=>'delete'])
+@include('alerts.sweetalert.delete-confirm', ['className' => 'delete'])
+
 </body>
 </html>

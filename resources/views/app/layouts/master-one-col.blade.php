@@ -1,54 +1,62 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head>
-    @livewireStyles
-    @include('app.layouts.head-tag')
-    @yield('head-tag')
-</head>
-<body>
 
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    {{-- Head Global --}}
+    @include('app.layouts.head-tag')
+
+    {{-- Head Dynamic --}}
+    @yield('head-tag')
+
+    {{-- Livewire Styles --}}
+    @livewireStyles
+
+</head>
+
+
+<body>
 
 @include('app.layouts.header')
 
 
-<!-- start main one col -->
-<main id="main-body-one-col" class="main-body">
+<!-- START MAIN CONTENT WRAPPER -->
+<main id="main-body" class="main-body">
 
+    {{-- Page Content --}}
     @yield('content')
 
 </main>
-<!-- end main one col -->
-
-
-<!-- start body -->
-<section class="container-xxl body-container">
-    <aside id="sidebar" class="sidebar">
-
-    </aside>
-    <main id="main-body" class="main-body">
-
-    </main>
-</section>
-<!-- end body -->
+<!-- END MAIN CONTENT WRAPPER -->
 
 
 @include('app.layouts.footer')
 
+
+{{-- Livewire --}}
 @livewireScripts
+
+
+{{-- Global Scripts --}}
 @include('app.layouts.scripts')
+
+{{-- Page Scripts --}}
 @yield('scripts')
 
 
-
-<section class="toast-wrapper flex-row-reverse d-none">
-</section>
+<!-- Toasts -->
+<section class="toast-wrapper flex-row-reverse d-none"></section>
 @include('alerts.toast.success')
 @include('alerts.toast.error')
 @include('alerts.toast.info')
 
-
+<!-- SweetAlerts -->
 @include('alerts.sweetalert.success')
 @include('alerts.sweetalert.error')
-@include('alerts.sweetalert.delete-confirm',['className'=>'delete'])
+@include('alerts.sweetalert.delete-confirm', ['className' => 'delete'])
+
 </body>
 </html>

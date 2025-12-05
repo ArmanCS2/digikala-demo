@@ -36,7 +36,7 @@ class PaymentService
             }
 
         } catch (\Exception $e) {
-            $onlinePayment->update(['bank_first_response' => ($response)]);
+            $onlinePayment->update(['bank_first_response' => $e->getMessage()]);
             return false;
 
         }

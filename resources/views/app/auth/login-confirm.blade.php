@@ -2,6 +2,7 @@
 
 @section('head-tag')
     <title>کد تایید</title>
+    <meta name="robots" content="noindex, nofollow">
     <style>
         #resend-otp {
             font-size: 1rem;
